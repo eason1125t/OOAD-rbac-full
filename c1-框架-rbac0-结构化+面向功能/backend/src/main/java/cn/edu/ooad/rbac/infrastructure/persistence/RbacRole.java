@@ -27,4 +27,9 @@ public class RbacRole {
         this.name = name;
         this.ownerOrganizationId = ownerOrganizationId;
     }
+
+    /** 更新角色展示名称，保留角色归属和关联。 */
+    public void rename(String name) {
+        this.name = name;
+    }
 }

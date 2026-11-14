@@ -34,6 +34,7 @@ public class InitializationService {
     private final RolePermissionRepository rolePermissions;
     private final AdministratorScopeRepository scopes;
     private final OrganizationPermissionRepository organizationPermissions;
+    private final SimulatedRequestRepository simulatedRequests;
 
     /** 导入统计，只包含数量。 */
     public record ImportResult(int employees, int organizations, int catalogEntries, long pending) {}
@@ -179,6 +180,7 @@ public class InitializationService {
     @Transactional
     public void initializeDemo() {
         if (organizations.findByCode("demo-company-a").isPresent()) {
+            initializeDemoRequests();
             return;
         }
         Organization company = organizations.save(new Organization("demo-company-a", "示例甲公司", "COMPANY", null, null, null));
@@ -197,13 +199,14 @@ public class InitializationService {
         scopes.saveAll(List.of(new AdministratorScope(root.getId(), "GLOBAL", null),
                 new AdministratorScope(companyAdmin.getId(), "ORGANIZATION", company.getId()),
                 new AdministratorScope(departmentAdmin.getId(), "ORGANIZATION", engineering.getId())));
-        BusinessSystem companySystem = systems.save(new BusinessSystem("demo-company-app", "示例公司申请系统", company.getId()));
+        BusinessSystem companySystem = systems.save(new BusinessSystem("demo-company-app", "示例公司申请系统", company.getId(), true));
         BusinessSystem departmentSystem = systems.save(new BusinessSystem("demo-engineering-app", "示例工程申请系统",
-                engineering.getId()));
-        systems.saveAll(List.of(new BusinessSystem("demo-finance-app", "示例财务申请系统", finance.getId()),
-                new BusinessSystem("demo-company-b-app", "示例乙公司申请系统", other.getId())));
-        Permission companyApproval = permissions.save(new Permission("request:approve", "公司申请审批", companySystem.getId(), null));
-        Permission departmentApproval = permissions.save(new Permission("request:approve", "工程申请审批",
+                engineering.getId(), true));
+        systems.saveAll(List.of(new BusinessSystem("demo-finance-app", "示例财务申请系统", finance.getId(), true),
+                new BusinessSystem("demo-company-b-app", "示例乙公司申请系统", other.getId(), true)));
+        Permission companyApproval = permissions.save(new Permission(BusinessRequestService.APPROVE_PERMISSION, "公司申请审批",
+                companySystem.getId(), null));
+        Permission departmentApproval = permissions.save(new Permission(BusinessRequestService.APPROVE_PERMISSION, "工程申请审批",
                 departmentSystem.getId(), null));
         RbacRole approver = roles.save(new RbacRole("示例工程审批员", engineering.getId()));
         employeeRoles.save(new EmployeeRole(employee.getId(), approver.getId()));
@@ -211,5 +214,25 @@ public class InitializationService {
         organizationPermissions.saveAll(List.of(
                 new OrganizationPermission(engineering.getId(), departmentApproval.getId(), "OPEN"),
                 new OrganizationPermission(finance.getId(), companyApproval.getId(), "DISABLED")));
+        initializeDemoRequests();
+    }
+
+    /** 为既有或新建的演示系统准备申请，重复运行保留申请及审批结果。 */
+    private void initializeDemoRequests() {
+        for (String systemCode : List.of("demo-company-app", "demo-engineering-app", "demo-finance-app", "demo-company-b-app")) {
+            systems.findByCode(systemCode).ifPresent(system -> {
+                if (!simulatedRequests.existsBySystemId(system.getId())) {
+                    if (permissions.findBySystemIdAndCode(system.getId(), BusinessRequestService.APPROVE_PERMISSION).isEmpty()) {
+                        permissions.save(new Permission(BusinessRequestService.APPROVE_PERMISSION, "模拟申请审批",
+                                system.getId(), null));
+                    }
+                    List<SimulatedRequest> fixtures = new ArrayList<>();
+                    for (int number = 1; number <= 6; number++) {
+                        fixtures.add(new SimulatedRequest(system.getId(), "示例申请 " + number));
+                    }
+                    simulatedRequests.saveAll(fixtures);
+                }
+            });
+        }
     }
 }

@@ -1,0 +1,5 @@
+# Docker 构建只发送 pom.xml 和源码。
+**
+!pom.xml
+!src/
+!src/**

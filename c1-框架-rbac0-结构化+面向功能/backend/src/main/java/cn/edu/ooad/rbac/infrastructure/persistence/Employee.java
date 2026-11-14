@@ -26,6 +26,7 @@ public class Employee {
     private String sourceDepartmentName;
     private String jobTitle;
     private String phone;
+    private boolean enabled = true;
 
     /** 构建待保存记录，由数据库维护审计时间。 */
     public Employee(String username, String name, Long organizationId, String sourceBranchName, String sourceDepartmentName, String jobTitle, String phone) {
@@ -36,5 +37,26 @@ public class Employee {
         this.sourceDepartmentName = sourceDepartmentName;
         this.jobTitle = jobTitle;
         this.phone = phone;
+    }
+
+    /** 更新可维护资料，保留用户名及原表归属字段。 */
+    public void updateProfile(String name, Long organizationId, String jobTitle, String phone) {
+        if (name != null) {
+            this.name = name;
+        }
+        if (organizationId != null) {
+            this.organizationId = organizationId;
+        }
+        if (jobTitle != null) {
+            this.jobTitle = jobTitle.isBlank() ? null : jobTitle;
+        }
+        if (phone != null) {
+            this.phone = phone.isBlank() ? null : phone;
+        }
+    }
+
+    /** 停用员工，保留历史分配和账号引用。 */
+    public void disable() {
+        enabled = false;
     }
 }

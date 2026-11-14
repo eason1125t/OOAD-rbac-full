@@ -3,6 +3,7 @@ package cn.edu.ooad.rbac;
 import cn.edu.ooad.rbac.infrastructure.persistence.EmployeeRepository;
 import cn.edu.ooad.rbac.infrastructure.persistence.OrganizationRepository;
 import cn.edu.ooad.rbac.infrastructure.persistence.RolePermissionRepository;
+import cn.edu.ooad.rbac.infrastructure.persistence.SimulatedRequestRepository;
 import cn.edu.ooad.rbac.service.InitializationService;
 import java.nio.file.Path;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -27,6 +28,7 @@ class InitializationTest {
     @Autowired private EmployeeRepository employees;
     @Autowired private OrganizationRepository organizations;
     @Autowired private RolePermissionRepository rolePermissions;
+    @Autowired private SimulatedRequestRepository simulatedRequests;
     @TempDir private Path temporaryDirectory;
 
     /** 验证首次创建和重复运行，并通过测试事务回滚本用例生成的演示数据。 */
@@ -37,6 +39,7 @@ class InitializationTest {
         assertThat(organizations.findByCode("demo-company-a")).as("专用测试库在用例前无演示数据").isEmpty();
         long employeesBefore = employees.count();
         long assignmentsBefore = rolePermissions.count();
+        long requestsBefore = simulatedRequests.count();
 
         initialization.initializeDemo();
         long count = employees.count();
@@ -44,10 +47,12 @@ class InitializationTest {
         assertThat(count).isEqualTo(employeesBefore + 4);
         assertThat(assignments).isEqualTo(assignmentsBefore + 1);
         assertThat(employees.findByUsername("super-admin")).isPresent();
+        assertThat(simulatedRequests.count()).isEqualTo(requestsBefore + 24);
 
         initialization.initializeDemo();
         assertThat(employees.count()).isEqualTo(count);
         assertThat(rolePermissions.count()).isEqualTo(assignments);
+        assertThat(simulatedRequests.count()).isEqualTo(requestsBefore + 24);
     }
 
     /** 后一张表发生内容冲突时，前面已写入的员工与组织也回滚。 */

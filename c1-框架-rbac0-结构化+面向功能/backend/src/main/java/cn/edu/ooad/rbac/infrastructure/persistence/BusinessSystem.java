@@ -22,11 +22,18 @@ public class BusinessSystem {
     private String code;
     private String name;
     private Long ownerOrganizationId;
+    private boolean defaultWorkspace;
 
     /** 构建待保存记录，由数据库维护审计时间。 */
     public BusinessSystem(String code, String name, Long ownerOrganizationId) {
+        this(code, name, ownerOrganizationId, false);
+    }
+
+    /** 构建业务系统，可将其配置为所属组织的默认工作区。 */
+    public BusinessSystem(String code, String name, Long ownerOrganizationId, boolean defaultWorkspace) {
         this.code = code;
         this.name = name;
         this.ownerOrganizationId = ownerOrganizationId;
+        this.defaultWorkspace = defaultWorkspace;
     }
 }

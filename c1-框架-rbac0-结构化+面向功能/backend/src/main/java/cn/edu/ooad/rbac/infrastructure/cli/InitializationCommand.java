@@ -7,10 +7,12 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 /** 将显式命令行选项转交初始化 Service，不提供上传接口。 */
 @Component
+@Order(10)
 @RequiredArgsConstructor
 public class InitializationCommand implements ApplicationRunner {
     private final InitializationService initialization;

@@ -31,4 +31,9 @@ public class Permission {
         this.systemId = systemId;
         this.ownerOrganizationId = ownerOrganizationId;
     }
+
+    /** 更新权限展示名称，保持系统和权限码稳定。 */
+    public void rename(String name) {
+        this.name = name;
+    }
 }

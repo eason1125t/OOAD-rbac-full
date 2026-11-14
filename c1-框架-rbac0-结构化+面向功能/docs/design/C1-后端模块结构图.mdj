@@ -1,0 +1,960 @@
+{
+  "_type": "Project",
+  "_id": "rbac0-module-0001",
+  "name": "C1 后端模块结构",
+  "ownedElements": [
+    {
+      "_type": "UMLComponentDiagram",
+      "_id": "rbac0-module-0002",
+      "name": "C1 后端模块结构图",
+      "_parent": {
+        "$ref": "rbac0-module-0001"
+      },
+      "ownedViews": [
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0010",
+          "points": "130:157;130:192",
+          "lineStyle": 1,
+          "lineColor": "#52718e",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0015",
+          "points": "338:157;338:192",
+          "lineStyle": 1,
+          "lineColor": "#52718e",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0020",
+          "points": "546:157;546:192",
+          "lineStyle": 1,
+          "lineColor": "#52718e",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0025",
+          "points": "754:157;754:192",
+          "lineStyle": 1,
+          "lineColor": "#52718e",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0030",
+          "points": "962:157;962:192",
+          "lineStyle": 1,
+          "lineColor": "#52718e",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0035",
+          "points": "1170:157;1170:192",
+          "lineStyle": 1,
+          "lineColor": "#52718e",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0036",
+          "points": "650:131;650:157",
+          "lineStyle": 1,
+          "lineColor": "#52718e",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0037",
+          "points": "130:157;1170:157",
+          "lineStyle": 1,
+          "lineColor": "#52718e",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0044",
+          "points": "338:281;338:367",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0045",
+          "points": "333:359;338:367;343:359",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0046",
+          "points": "546:281;546:345;624:345;624:367",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0047",
+          "points": "619:359;624:367;629:359",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0048",
+          "points": "754:281;754:367",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0049",
+          "points": "749:359;754:367;759:359",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0050",
+          "points": "962:281;962:367",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0051",
+          "points": "957:359;962:367;967:359",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0052",
+          "points": "1170:281;1170:345;1090:345;1090:367",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0053",
+          "points": "1085:359;1090:367;1095:359",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0054",
+          "points": "578:402;432:402",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0055",
+          "points": "440:397;432:402;440:407",
+          "lineStyle": 1,
+          "lineColor": "#4b806b",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0065",
+          "points": "130:281;130:498",
+          "lineStyle": 1,
+          "lineColor": "#8a7653",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0066",
+          "points": "125:490;130:498;135:490",
+          "lineStyle": 1,
+          "lineColor": "#8a7653",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0067",
+          "points": "302:281;302:317;222:317;222:469;338:469;338:498",
+          "lineStyle": 1,
+          "lineColor": "#8a7653",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0068",
+          "points": "333:490;338:498;343:490",
+          "lineStyle": 1,
+          "lineColor": "#8a7653",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0069",
+          "points": "858:437;858:498",
+          "lineStyle": 1,
+          "lineColor": "#8a7653",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "FreelineEdgeView",
+          "_id": "rbac0-module-0070",
+          "points": "853:490;858:498;863:490",
+          "lineStyle": 1,
+          "lineColor": "#8a7653",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0004",
+          "left": 520,
+          "top": 84,
+          "width": 260,
+          "height": 47,
+          "lineColor": "#456582",
+          "fillColor": "#dcebf8",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0006",
+          "left": 36,
+          "top": 192,
+          "width": 188,
+          "height": 89,
+          "lineColor": "#52718e",
+          "fillColor": "#eef5fc",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0011",
+          "left": 244,
+          "top": 192,
+          "width": 188,
+          "height": 89,
+          "lineColor": "#52718e",
+          "fillColor": "#eef5fc",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0016",
+          "left": 452,
+          "top": 192,
+          "width": 188,
+          "height": 89,
+          "lineColor": "#52718e",
+          "fillColor": "#eef5fc",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0021",
+          "left": 660,
+          "top": 192,
+          "width": 188,
+          "height": 89,
+          "lineColor": "#52718e",
+          "fillColor": "#eef5fc",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0026",
+          "left": 868,
+          "top": 192,
+          "width": 188,
+          "height": 89,
+          "lineColor": "#52718e",
+          "fillColor": "#eef5fc",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0031",
+          "left": 1076,
+          "top": 192,
+          "width": 188,
+          "height": 89,
+          "lineColor": "#52718e",
+          "fillColor": "#eef5fc",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0038",
+          "left": 244,
+          "top": 367,
+          "width": 188,
+          "height": 70,
+          "lineColor": "#4b806b",
+          "fillColor": "#e8f6ed",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0041",
+          "left": 578,
+          "top": 367,
+          "width": 560,
+          "height": 70,
+          "lineColor": "#4b806b",
+          "fillColor": "#e8f6ed",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0056",
+          "left": 36,
+          "top": 498,
+          "width": 188,
+          "height": 70,
+          "lineColor": "#8a7653",
+          "fillColor": "#fcf5e9",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0059",
+          "left": 244,
+          "top": 498,
+          "width": 188,
+          "height": 70,
+          "lineColor": "#8a7653",
+          "fillColor": "#fcf5e9",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "RectangleView",
+          "_id": "rbac0-module-0062",
+          "left": 658,
+          "top": 498,
+          "width": 400,
+          "height": 70,
+          "lineColor": "#8a7653",
+          "fillColor": "#fcf5e9",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0003",
+          "text": "C1 后端模块结构图",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 340,
+          "top": 30,
+          "width": 620,
+          "height": 30,
+          "font": "Microsoft YaHei;28;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0005",
+          "text": "C1 · RBAC0 后端",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 526,
+          "top": 92,
+          "width": 248,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0007",
+          "text": "数据与初始化",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 42,
+          "top": 199,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0008",
+          "text": "三份 Excel 导入",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 42,
+          "top": 224,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0009",
+          "text": "演示数据与账号",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 42,
+          "top": 244,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0012",
+          "text": "登录与会话",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 250,
+          "top": 199,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0013",
+          "text": "登录、退出、当前身份",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 250,
+          "top": 224,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0014",
+          "text": "可访问工作区",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 250,
+          "top": 244,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0017",
+          "text": "管理查询与维护",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 458,
+          "top": 199,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0018",
+          "text": "组织、员工、角色、权限",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 458,
+          "top": 224,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0019",
+          "text": "原表清单与关系查询",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 458,
+          "top": 244,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0022",
+          "text": "关系授予与撤销",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 666,
+          "top": 199,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0023",
+          "text": "员工—角色",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 666,
+          "top": 224,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0024",
+          "text": "角色—权限",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 666,
+          "top": 244,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0027",
+          "text": "组织权限策略",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 874,
+          "top": 199,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0028",
+          "text": "停用、重新开放",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 874,
+          "top": 224,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0029",
+          "text": "范围内重新授予",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 874,
+          "top": 244,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0032",
+          "text": "业务模拟",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 1082,
+          "top": 199,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0033",
+          "text": "系统目录、申请分页",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 1082,
+          "top": 224,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0034",
+          "text": "模拟申请审批",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 1082,
+          "top": 244,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0039",
+          "text": "工作区与身份查询",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 250,
+          "top": 374,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0040",
+          "text": "员工状态、可见系统",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 250,
+          "top": 399,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0042",
+          "text": "统一实时鉴权",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 584,
+          "top": 374,
+          "width": 548,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0043",
+          "text": "管理动作与组织范围 · 系统准入 · 审批权限与组织策略",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 584,
+          "top": 399,
+          "width": 548,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0057",
+          "text": "Excel 工作簿",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 42,
+          "top": 505,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0058",
+          "text": "初始化适配器读取",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 42,
+          "top": 530,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0060",
+          "text": "Redis 会话",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 250,
+          "top": 505,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0061",
+          "text": "Spring Session 管理",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 250,
+          "top": 530,
+          "width": 176,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0063",
+          "text": "MySQL",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 664,
+          "top": 505,
+          "width": 388,
+          "height": 30,
+          "font": "Microsoft YaHei;17;1",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0064",
+          "text": "业务持久化经 JPA Repository · 表结构由 Flyway 管理",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 664,
+          "top": 530,
+          "width": 388,
+          "height": 30,
+          "font": "Microsoft YaHei;13;0",
+          "fontColor": "#24384d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        },
+        {
+          "_type": "UMLTextView",
+          "_id": "rbac0-module-0071",
+          "text": "无箭头连线表示功能分解，箭头表示主要调用或依赖。",
+          "wordWrap": false,
+          "horzAlign": 2,
+          "vertAlign": 5,
+          "left": 175,
+          "top": 587,
+          "width": 950,
+          "height": 30,
+          "font": "Microsoft YaHei;14;0",
+          "fontColor": "#60768d",
+          "_parent": {
+            "$ref": "rbac0-module-0002"
+          }
+        }
+      ]
+    }
+  ]
+}

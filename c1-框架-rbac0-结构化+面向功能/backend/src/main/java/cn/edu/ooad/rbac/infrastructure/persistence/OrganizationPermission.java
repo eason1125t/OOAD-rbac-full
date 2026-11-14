@@ -15,6 +15,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @IdClass(OrganizationPermission.Key.class)
 public class OrganizationPermission {
+    public static final String OPEN = "OPEN";
+    public static final String DISABLED = "DISABLED";
+    public static final String REOPENED = "REOPENED";
+
     @Id
     private Long organizationId;
     @Id
