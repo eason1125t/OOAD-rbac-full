@@ -1,0 +1,1951 @@
+{
+  "_type": "Project",
+  "_id": "rbac0-chen-0001",
+  "name": "RBAC0 陈氏 ER 图",
+  "ownedElements": [
+    {
+      "_type": "ERDDataModel",
+      "_id": "rbac0-chen-0002",
+      "name": "C1 概念模型",
+      "_parent": {
+        "$ref": "rbac0-chen-0001"
+      },
+      "ownedElements": [
+        {
+          "_type": "ERDDiagram",
+          "_id": "rbac0-chen-0003",
+          "name": "01-核心授权",
+          "ownedViews": [
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0011",
+              "points": "320:220;380:186;440:220;380:254;320:220",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0013",
+              "points": "240:220;320:220",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0014",
+              "points": "440:220;520:220",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0017",
+              "points": "740:220;800:186;860:220;800:254;740:220",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0019",
+              "points": "660:220;740:220",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0020",
+              "points": "860:220;940:220",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0023",
+              "points": "170:192;170:125",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0027",
+              "points": "590:192;590:125",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0031",
+              "points": "1010:192;1010:125",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0035",
+              "points": "145:248;95:325",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0038",
+              "points": "195:248;245:325",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0041",
+              "points": "590:248;590:325",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0044",
+              "points": "985:248;935:325",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0047",
+              "points": "1035:248;1085:325",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0005",
+              "left": 100,
+              "top": 192,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0007",
+              "left": 520,
+              "top": 192,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0009",
+              "left": 940,
+              "top": 192,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0024",
+              "left": 107,
+              "top": 104,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0026",
+              "points": "135:135;205:135",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0028",
+              "left": 527,
+              "top": 104,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0030",
+              "points": "555:135;625:135",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0032",
+              "left": 947,
+              "top": 104,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0034",
+              "points": "975:135;1045:135",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0036",
+              "left": 32,
+              "top": 304,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0039",
+              "left": 182,
+              "top": 304,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0042",
+              "left": 527,
+              "top": 304,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0045",
+              "left": 872,
+              "top": 304,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0048",
+              "left": 1022,
+              "top": 304,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0004",
+              "left": 280,
+              "top": 29,
+              "width": 620,
+              "height": 32,
+              "text": "RBAC0 核心授权 · 陈氏 ER 图",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;26;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0006",
+              "left": 98,
+              "top": 204,
+              "width": 145,
+              "height": 32,
+              "text": "员工",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0008",
+              "left": 518,
+              "top": 204,
+              "width": 145,
+              "height": 32,
+              "text": "角色",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0010",
+              "left": 938,
+              "top": 204,
+              "width": 145,
+              "height": 32,
+              "text": "权限",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0012",
+              "left": 320,
+              "top": 204,
+              "width": 120,
+              "height": 32,
+              "text": "分配角色",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0015",
+              "left": 196,
+              "top": 184,
+              "width": 145,
+              "height": 32,
+              "text": "N",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0016",
+              "left": 420,
+              "top": 184,
+              "width": 145,
+              "height": 32,
+              "text": "M",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0018",
+              "left": 740,
+              "top": 204,
+              "width": 120,
+              "height": 32,
+              "text": "授予权限",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0021",
+              "left": 616,
+              "top": 184,
+              "width": 145,
+              "height": 32,
+              "text": "N",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0022",
+              "left": 840,
+              "top": 184,
+              "width": 145,
+              "height": 32,
+              "text": "M",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0025",
+              "left": 107,
+              "top": 109,
+              "width": 126,
+              "height": 32,
+              "text": "员工 ID",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0029",
+              "left": 527,
+              "top": 109,
+              "width": 126,
+              "height": 32,
+              "text": "角色 ID",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0033",
+              "left": 947,
+              "top": 109,
+              "width": 126,
+              "height": 32,
+              "text": "权限 ID",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0037",
+              "left": 32,
+              "top": 309,
+              "width": 126,
+              "height": 32,
+              "text": "用户名",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0040",
+              "left": 182,
+              "top": 309,
+              "width": 126,
+              "height": 32,
+              "text": "姓名",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0043",
+              "left": 527,
+              "top": 309,
+              "width": 126,
+              "height": 32,
+              "text": "角色名",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0046",
+              "left": 872,
+              "top": 309,
+              "width": 126,
+              "height": 32,
+              "text": "权限编码",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0049",
+              "left": 1022,
+              "top": 309,
+              "width": 126,
+              "height": 32,
+              "text": "权限名称",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0050",
+              "left": 160,
+              "top": 394,
+              "width": 860,
+              "height": 32,
+              "text": "矩形：实体　菱形：联系　椭圆：属性　下划线：主标识　M / N：多",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0051",
+              "left": 110,
+              "top": 433,
+              "width": 960,
+              "height": 32,
+              "text": "两组多对多联系均可为空。落库分别使用 employee_role 与 role_permission。",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0003"
+              }
+            }
+          ],
+          "_parent": {
+            "$ref": "rbac0-chen-0002"
+          }
+        },
+        {
+          "_type": "ERDDiagram",
+          "_id": "rbac0-chen-0052",
+          "name": "02-组织与授权范围",
+          "ownedViews": [
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0061",
+              "points": "327:195;387:161;447:195;387:229;327:195",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0063",
+              "points": "215:195;327:195",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0064",
+              "points": "447:195;560:195",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0067",
+              "points": "812:195;872:161;932:195;872:229;812:195",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0069",
+              "points": "700:195;812:195",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0070",
+              "points": "932:195;1045:195",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0073",
+              "points": "610:167;555:130",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0077",
+              "points": "650:167;705:130",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0080",
+              "points": "570:288;630:254;690:288;630:322;570:288",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0082",
+              "points": "600:223;600:254;630:254",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0083",
+              "points": "662:223;770:223;770:288;690:288",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0094",
+              "points": "327:501;387:467;447:501;387:535;327:501",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0096",
+              "points": "215:501;327:501",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0097",
+              "points": "447:501;560:501",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0100",
+              "points": "812:501;872:467;932:501;872:535;812:501",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0102",
+              "points": "700:501;812:501",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0103",
+              "points": "932:501;1045:501",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0114",
+              "points": "327:741;387:707;447:741;387:775;327:741",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0116",
+              "points": "215:741;327:741",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0117",
+              "points": "447:741;560:741",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0120",
+              "points": "812:741;872:707;932:741;872:775;812:741",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0122",
+              "points": "700:741;812:741",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0123",
+              "points": "932:741;1045:741",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0126",
+              "points": "872:707;872:675",
+              "lineStyle": 1,
+              "lineColor": "#637d92",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0135",
+              "points": "569:950;629:916;689:950;629:984;569:950",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0137",
+              "points": "438:950;569:950",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0138",
+              "points": "689:950;820:950",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0055",
+              "left": 75,
+              "top": 167,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0057",
+              "left": 560,
+              "top": 167,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0059",
+              "left": 1045,
+              "top": 167,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0074",
+              "left": 492,
+              "top": 109,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "FreelineEdgeView",
+              "_id": "rbac0-chen-0076",
+              "points": "520:140;590:140",
+              "lineStyle": 1,
+              "lineColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0078",
+              "left": 642,
+              "top": 109,
+              "width": 126,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0088",
+              "left": 75,
+              "top": 473,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0090",
+              "left": 560,
+              "top": 473,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0092",
+              "left": 1045,
+              "top": 473,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0108",
+              "left": 75,
+              "top": 713,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0110",
+              "left": 560,
+              "top": 713,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0112",
+              "left": 1045,
+              "top": 713,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "EllipseView",
+              "_id": "rbac0-chen-0127",
+              "left": 795,
+              "top": 654,
+              "width": 154,
+              "height": 42,
+              "lineColor": "#24384a",
+              "fillColor": "#ffffff",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0131",
+              "left": 298,
+              "top": 922,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "RectangleView",
+              "_id": "rbac0-chen-0133",
+              "left": 820,
+              "top": 922,
+              "width": 140,
+              "height": 56,
+              "lineColor": "#24384a",
+              "fillColor": "#dceefb",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0053",
+              "left": 205,
+              "top": 28,
+              "width": 850,
+              "height": 32,
+              "text": "RBAC0 组织与授权范围 · 陈氏 ER 图",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;26;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0054",
+              "left": 480,
+              "top": 80,
+              "width": 300,
+              "height": 32,
+              "text": "组织归属",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;18;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0056",
+              "left": 73,
+              "top": 179,
+              "width": 145,
+              "height": 32,
+              "text": "员工",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0058",
+              "left": 558,
+              "top": 179,
+              "width": 145,
+              "height": 32,
+              "text": "组织",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0060",
+              "left": 1043,
+              "top": 179,
+              "width": 145,
+              "height": 32,
+              "text": "业务系统",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0062",
+              "left": 327,
+              "top": 179,
+              "width": 120,
+              "height": 32,
+              "text": "归属",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0065",
+              "left": 171,
+              "top": 159,
+              "width": 145,
+              "height": 32,
+              "text": "N",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0066",
+              "left": 460,
+              "top": 159,
+              "width": 145,
+              "height": 32,
+              "text": "1",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0068",
+              "left": 812,
+              "top": 179,
+              "width": 120,
+              "height": 32,
+              "text": "拥有系统",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0071",
+              "left": 656,
+              "top": 159,
+              "width": 145,
+              "height": 32,
+              "text": "1",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0072",
+              "left": 945,
+              "top": 159,
+              "width": 145,
+              "height": 32,
+              "text": "N",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0075",
+              "left": 492,
+              "top": 114,
+              "width": 126,
+              "height": 32,
+              "text": "组织 ID",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0079",
+              "left": 642,
+              "top": 114,
+              "width": 126,
+              "height": 32,
+              "text": "组织类型",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0081",
+              "left": 570,
+              "top": 272,
+              "width": 120,
+              "height": 32,
+              "text": "上下级",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0084",
+              "left": 468,
+              "top": 238,
+              "width": 145,
+              "height": 32,
+              "text": "N 下级",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0085",
+              "left": 748,
+              "top": 242,
+              "width": 145,
+              "height": 32,
+              "text": "1 上级",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0086",
+              "left": 155,
+              "top": 335,
+              "width": 950,
+              "height": 32,
+              "text": "公司为根，部门属于一家分公司。待匹配员工可暂缺归属。",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0087",
+              "left": 315,
+              "top": 396,
+              "width": 630,
+              "height": 32,
+              "text": "管理范围与定义归属",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;18;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0089",
+              "left": 73,
+              "top": 485,
+              "width": 145,
+              "height": 32,
+              "text": "员工",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0091",
+              "left": 558,
+              "top": 485,
+              "width": 145,
+              "height": 32,
+              "text": "组织",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0093",
+              "left": 1043,
+              "top": 485,
+              "width": 145,
+              "height": 32,
+              "text": "角色",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0095",
+              "left": 327,
+              "top": 485,
+              "width": 120,
+              "height": 32,
+              "text": "管理范围",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0098",
+              "left": 171,
+              "top": 465,
+              "width": 145,
+              "height": 32,
+              "text": "N",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0099",
+              "left": 460,
+              "top": 465,
+              "width": 145,
+              "height": 32,
+              "text": "1",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0101",
+              "left": 812,
+              "top": 485,
+              "width": 120,
+              "height": 32,
+              "text": "拥有角色",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0104",
+              "left": 656,
+              "top": 465,
+              "width": 145,
+              "height": 32,
+              "text": "1",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0105",
+              "left": 945,
+              "top": 465,
+              "width": 145,
+              "height": 32,
+              "text": "N",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0106",
+              "left": 90,
+              "top": 550,
+              "width": 1080,
+              "height": 32,
+              "text": "普通员工可无管理范围，超级管理员使用全局范围。全局角色可无所属组织。",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0107",
+              "left": 205,
+              "top": 618,
+              "width": 850,
+              "height": 32,
+              "text": "按系统定义权限，按组织开放或停用",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;18;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0109",
+              "left": 73,
+              "top": 725,
+              "width": 145,
+              "height": 32,
+              "text": "业务系统",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0111",
+              "left": 558,
+              "top": 725,
+              "width": 145,
+              "height": 32,
+              "text": "权限",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0113",
+              "left": 1043,
+              "top": 725,
+              "width": 145,
+              "height": 32,
+              "text": "组织",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0115",
+              "left": 327,
+              "top": 725,
+              "width": 120,
+              "height": 32,
+              "text": "定义权限",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0118",
+              "left": 171,
+              "top": 705,
+              "width": 145,
+              "height": 32,
+              "text": "1",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0119",
+              "left": 460,
+              "top": 705,
+              "width": 145,
+              "height": 32,
+              "text": "N",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0121",
+              "left": 812,
+              "top": 725,
+              "width": 120,
+              "height": 32,
+              "text": "配置权限",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0124",
+              "left": 656,
+              "top": 705,
+              "width": 145,
+              "height": 32,
+              "text": "M",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0125",
+              "left": 945,
+              "top": 705,
+              "width": 145,
+              "height": 32,
+              "text": "N",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0128",
+              "left": 795,
+              "top": 659,
+              "width": 154,
+              "height": 32,
+              "text": "开放／停用",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;14;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0129",
+              "left": 85,
+              "top": 794,
+              "width": 1090,
+              "height": 32,
+              "text": "管理权限可无业务系统。同一系统内权限码唯一。",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0130",
+              "left": 380,
+              "top": 857,
+              "width": 500,
+              "height": 32,
+              "text": "权限定义归属",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;18;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0132",
+              "left": 296,
+              "top": 934,
+              "width": 145,
+              "height": 32,
+              "text": "组织",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0134",
+              "left": 818,
+              "top": 934,
+              "width": 145,
+              "height": 32,
+              "text": "权限",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0136",
+              "left": 569,
+              "top": 934,
+              "width": 120,
+              "height": 32,
+              "text": "拥有定义",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;15;1",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0139",
+              "left": 394,
+              "top": 914,
+              "width": 145,
+              "height": 32,
+              "text": "1",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0140",
+              "left": 720,
+              "top": 914,
+              "width": 145,
+              "height": 32,
+              "text": "N",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;13;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "rbac0-chen-0141",
+              "left": 85,
+              "top": 1002,
+              "width": 1090,
+              "height": 32,
+              "text": "全局权限可无所属组织。组织停用优先于角色授权。",
+              "wordWrap": false,
+              "horzAlign": 2,
+              "vertAlign": 5,
+              "font": "Microsoft YaHei;16;0",
+              "fontColor": "#24384a",
+              "_parent": {
+                "$ref": "rbac0-chen-0052"
+              }
+            }
+          ],
+          "_parent": {
+            "$ref": "rbac0-chen-0002"
+          }
+        }
+      ]
+    }
+  ]
+}

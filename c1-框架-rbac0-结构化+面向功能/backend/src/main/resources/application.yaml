@@ -1,0 +1,14 @@
+# Flyway 管理表结构，Hibernate 在启动时核对 JPA 映射。
+spring:
+  application:
+    name: rbac0
+  datasource:
+    url: ${RBAC_DB_URL:jdbc:mysql://localhost:3306/ooad_rbac0}
+    username: ${RBAC_DB_USER}
+    password: ${RBAC_DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    clean-disabled: true

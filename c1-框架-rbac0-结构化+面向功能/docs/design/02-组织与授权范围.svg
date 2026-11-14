@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='utf-8'?>
+<svg xmlns="http://www.w3.org/2000/svg" role="img" viewBox="0 0 1220 1058" width="1220" height="1058">
+  <title>02-组织与授权范围</title>
+  <rect width="100%" height="100%" fill="white" />
+  <polyline points="327,195 387,161 447,195 387,229 327,195" stroke="#24384a" fill="#edf7ff" stroke-width="1.5" />
+  <polyline points="215,195 327,195" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="447,195 560,195" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="812,195 872,161 932,195 872,229 812,195" stroke="#24384a" fill="#edf7ff" stroke-width="1.5" />
+  <polyline points="700,195 812,195" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="932,195 1045,195" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="610,167 555,130" stroke="#637d92" fill="none" stroke-width="1.5" />
+  <polyline points="650,167 705,130" stroke="#637d92" fill="none" stroke-width="1.5" />
+  <polyline points="570,288 630,254 690,288 630,322 570,288" stroke="#24384a" fill="#edf7ff" stroke-width="1.5" />
+  <polyline points="600,223 600,254 630,254" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="662,223 770,223 770,288 690,288" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="327,501 387,467 447,501 387,535 327,501" stroke="#24384a" fill="#edf7ff" stroke-width="1.5" />
+  <polyline points="215,501 327,501" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="447,501 560,501" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="812,501 872,467 932,501 872,535 812,501" stroke="#24384a" fill="#edf7ff" stroke-width="1.5" />
+  <polyline points="700,501 812,501" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="932,501 1045,501" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="327,741 387,707 447,741 387,775 327,741" stroke="#24384a" fill="#edf7ff" stroke-width="1.5" />
+  <polyline points="215,741 327,741" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="447,741 560,741" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="812,741 872,707 932,741 872,775 812,741" stroke="#24384a" fill="#edf7ff" stroke-width="1.5" />
+  <polyline points="700,741 812,741" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="932,741 1045,741" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="872,707 872,675" stroke="#637d92" fill="none" stroke-width="1.5" />
+  <polyline points="569,950 629,916 689,950 629,984 569,950" stroke="#24384a" fill="#edf7ff" stroke-width="1.5" />
+  <polyline points="438,950 569,950" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <polyline points="689,950 820,950" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <rect x="75" y="167" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <rect x="560" y="167" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <rect x="1045" y="167" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <ellipse cx="555" cy="130" rx="63" ry="21" fill="#ffffff" stroke="#24384a" />
+  <polyline points="520,140 590,140" stroke="#24384a" fill="none" stroke-width="1.5" />
+  <ellipse cx="705" cy="130" rx="63" ry="21" fill="#ffffff" stroke="#24384a" />
+  <rect x="75" y="473" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <rect x="560" y="473" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <rect x="1045" y="473" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <rect x="75" y="713" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <rect x="560" y="713" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <rect x="1045" y="713" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <ellipse cx="872" cy="675" rx="77" ry="21" fill="#ffffff" stroke="#24384a" />
+  <rect x="298" y="922" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <rect x="820" y="922" width="140" height="56" fill="#dceefb" stroke="#24384a" />
+  <text x="630" y="44" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="26" font-weight="700" text-anchor="middle" dominant-baseline="central">RBAC0 组织与授权范围 · 陈氏 ER 图</text>
+  <text x="630" y="96" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="18" font-weight="700" text-anchor="middle" dominant-baseline="central">组织归属</text>
+  <text x="145" y="195" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">员工</text>
+  <text x="630" y="195" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">组织</text>
+  <text x="1115" y="195" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">业务系统</text>
+  <text x="387" y="195" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="central">归属</text>
+  <text x="243" y="175" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">N</text>
+  <text x="532" y="175" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">1</text>
+  <text x="872" y="195" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="central">拥有系统</text>
+  <text x="728" y="175" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">1</text>
+  <text x="1017" y="175" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">N</text>
+  <text x="555" y="130" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="14" font-weight="400" text-anchor="middle" dominant-baseline="central">组织 ID</text>
+  <text x="705" y="130" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="14" font-weight="400" text-anchor="middle" dominant-baseline="central">组织类型</text>
+  <text x="630" y="288" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="central">上下级</text>
+  <text x="540" y="254" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">N 下级</text>
+  <text x="820" y="258" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">1 上级</text>
+  <text x="630" y="351" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="400" text-anchor="middle" dominant-baseline="central">公司为根，部门属于一家分公司。待匹配员工可暂缺归属。</text>
+  <text x="630" y="412" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="18" font-weight="700" text-anchor="middle" dominant-baseline="central">管理范围与定义归属</text>
+  <text x="145" y="501" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">员工</text>
+  <text x="630" y="501" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">组织</text>
+  <text x="1115" y="501" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">角色</text>
+  <text x="387" y="501" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="central">管理范围</text>
+  <text x="243" y="481" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">N</text>
+  <text x="532" y="481" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">1</text>
+  <text x="872" y="501" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="central">拥有角色</text>
+  <text x="728" y="481" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">1</text>
+  <text x="1017" y="481" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">N</text>
+  <text x="630" y="566" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="400" text-anchor="middle" dominant-baseline="central">普通员工可无管理范围，超级管理员使用全局范围。全局角色可无所属组织。</text>
+  <text x="630" y="634" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="18" font-weight="700" text-anchor="middle" dominant-baseline="central">按系统定义权限，按组织开放或停用</text>
+  <text x="145" y="741" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">业务系统</text>
+  <text x="630" y="741" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">权限</text>
+  <text x="1115" y="741" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">组织</text>
+  <text x="387" y="741" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="central">定义权限</text>
+  <text x="243" y="721" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">1</text>
+  <text x="532" y="721" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">N</text>
+  <text x="872" y="741" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="central">配置权限</text>
+  <text x="728" y="721" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">M</text>
+  <text x="1017" y="721" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">N</text>
+  <text x="872" y="675" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="14" font-weight="400" text-anchor="middle" dominant-baseline="central">开放／停用</text>
+  <text x="630" y="810" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="400" text-anchor="middle" dominant-baseline="central">管理权限可无业务系统。同一系统内权限码唯一。</text>
+  <text x="630" y="873" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="18" font-weight="700" text-anchor="middle" dominant-baseline="central">权限定义归属</text>
+  <text x="368" y="950" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">组织</text>
+  <text x="890" y="950" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="700" text-anchor="middle" dominant-baseline="central">权限</text>
+  <text x="629" y="950" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="central">拥有定义</text>
+  <text x="466" y="930" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">1</text>
+  <text x="792" y="930" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="13" font-weight="400" text-anchor="middle" dominant-baseline="central">N</text>
+  <text x="630" y="1018" fill="#24384a" font-family="Microsoft YaHei, SimHei, sans-serif" font-size="16" font-weight="400" text-anchor="middle" dominant-baseline="central">全局权限可无所属组织。组织停用优先于角色授权。</text>
+</svg>

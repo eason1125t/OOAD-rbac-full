@@ -1,0 +1,29 @@
+# Maven 和本地构建产物
+target/
+node_modules/
+dist/
+coverage/
+*.log
+*.jacoco.exec
+
+# IDE、系统和脚本缓存
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
+__pycache__/
+*.py[cod]
+
+# 本地凭据和环境配置
+.env
+.env.*
+!.env.example
+application-local.properties
+application-local.yml
+application-local.yaml
+
+# 课程原表含员工个人信息
+/excel/*
+!/excel/README.md
+~$*.xlsx
