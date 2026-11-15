@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 876 630" role="img" aria-labelledby="title desc">
+  <title id="title">实时鉴权与申请审批</title>
+  <desc id="desc">从申请所属系统定位动作，鉴权通过后才执行</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#3b746d"/></marker></defs>
+  <rect width="876" height="630" rx="16" fill="#f1f6f6"/>
+  <g font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif">
+    <text x="42" y="51" font-size="29" font-weight="700" fill="#183a45">实时鉴权与申请审批</text>
+    <text x="42" y="80" font-size="16" fill="#46616b">从申请所属系统定位动作，鉴权通过后才执行</text>
+    <rect x="42" y="106" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="134" font-size="19" font-weight="700" fill="#183a45">验证请求身份</text>
+    <text x="61" y="158" font-size="15" fill="#46616b">Cookie → Redis 会话 → 当前员工；写入检查 CSRF</text>
+    <path d="M290 176v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M538 142h41" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="590" y="120" width="246" height="44" rx="6" fill="#fcefe7" stroke="#d0997b"/>
+    <text x="603" y="148" fill="#7e3929" font-size="15">401／403／503 · 不执行</text>
+    <rect x="42" y="202" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="230" font-size="19" font-weight="700" fill="#183a45">读取申请与所属系统</text>
+    <text x="61" y="254" font-size="15" fill="#46616b">由申请记录定位系统与业务权限</text>
+    <path d="M290 272v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M538 238h41" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="590" y="216" width="246" height="44" rx="6" fill="#fcefe7" stroke="#d0997b"/>
+    <text x="603" y="244" fill="#7e3929" font-size="15">404／503 · 不执行</text>
+    <rect x="42" y="298" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="326" font-size="19" font-weight="700" fill="#183a45">统一授权守卫</text>
+    <text x="61" y="350" font-size="15" fill="#46616b">检查系统准入、组织停用、直接路径和重授</text>
+    <path d="M290 368v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M538 334h41" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="590" y="312" width="246" height="44" rx="6" fill="#fcefe7" stroke="#d0997b"/>
+    <text x="603" y="340" fill="#7e3929" font-size="15">403 · 权限拒绝</text>
+    <rect x="42" y="394" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="422" font-size="19" font-weight="700" fill="#183a45">尝试更新待审批记录</text>
+    <text x="61" y="446" font-size="15" fill="#46616b">在事务内条件更新 PENDING → APPROVED</text>
+    <path d="M290 464v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M538 430h41" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="590" y="408" width="246" height="44" rx="6" fill="#fcefe7" stroke="#d0997b"/>
+    <text x="603" y="436" fill="#7e3929" font-size="15">409 · 已审批，执行失败</text>
+    <rect x="42" y="490" width="496" height="70" rx="7" fill="#e0f2eb" stroke="#96b9b8"/>
+    <text x="61" y="518" font-size="19" font-weight="700" fill="#183a45">提交后返回审批结果</text>
+    <text x="61" y="542" font-size="15" fill="#46616b">鉴权通过，执行成功；前端分别展示</text>
+  </g>
+</svg>

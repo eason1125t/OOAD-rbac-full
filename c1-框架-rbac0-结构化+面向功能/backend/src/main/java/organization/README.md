@@ -1,0 +1,27 @@
+# 组织与员工
+
+状态：公司及部门目录、员工查询与维护已实现。参见 [C1 后端开发规划](../../../../../后端开发规划.md)。
+
+## 应有功能
+
+负责公司、部门目录的只读查询，员工新增、查询、编辑、停用和待匹配员工归属。
+
+## 实现方式
+
+管理员可在其管理范围内维护员工。变更归属检查新旧组织，已有角色或管理员配置需先解除。创建仅生成员工资料。员工删除表现为停用，保留历史关联。组织目录保留 Excel 上级展示字段，鉴权按正式组织 ID。
+
+## 与其他模块的关键联系
+
+依赖数据初始化的公司和部门记录，依赖实时授权的范围校验。员工归属和启用状态供登录、授权配置及业务系统准入使用。
+
+## 代码与接口
+
+公司、部门目录和 Excel 权限清单的响应使用课程 CloneFactory 生成同名字段映射。员工响应继续显式遮盖电话，员工维护保留归属校验和实体更新入口。
+
+[ManagementQueryController](ManagementQueryController.java) 与 [ManagementMaintenanceController](ManagementMaintenanceController.java) 对接本包的查询和维护 Service。这组入口也处理[角色与权限](../rolepermission/README.md)的查询与维护。
+
+`ManagementQueryService` 负责范围分页，`ManagementMaintenanceService` 负责员工写入。公司和部门目录为只读，员工支持列表、详情、新增、编辑和停用。
+
+## 验收
+
+已测试范围分页和总数、电话遮盖、原表上级、调岗冲突及停用后的旧会话失效。

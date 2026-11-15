@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 876 630" role="img" aria-labelledby="title desc">
+  <title id="title">权限撤销</title>
+  <desc id="desc">删除一条授权路径后，重新判断其他路径</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#3b746d"/></marker></defs>
+  <rect width="876" height="630" rx="16" fill="#f1f6f6"/>
+  <g font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif">
+    <text x="42" y="51" font-size="29" font-weight="700" fill="#183a45">权限撤销</text>
+    <text x="42" y="80" font-size="16" fill="#46616b">删除一条授权路径后，重新判断其他路径</text>
+    <rect x="42" y="106" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="134" font-size="19" font-weight="700" fill="#183a45">接收 DELETE 撤销请求</text>
+    <text x="61" y="158" font-size="15" fill="#46616b">校验登录、CSRF、管理动作及资源范围</text>
+    <path d="M290 176v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M538 142h41" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="590" y="120" width="246" height="44" rx="6" fill="#fcefe7" stroke="#d0997b"/>
+    <text x="603" y="148" fill="#7e3929" font-size="15">401／403／404 · 关系不变</text>
+    <rect x="42" y="202" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="230" font-size="19" font-weight="700" fill="#183a45">获取事务锁</text>
+    <text x="61" y="254" font-size="15" fill="#46616b">锁定角色及相应员工或权限</text>
+    <path d="M290 272v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="42" y="298" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="326" font-size="19" font-weight="700" fill="#183a45">删除指定关系并提交</text>
+    <text x="61" y="350" font-size="15" fill="#46616b">删除角色权限时级联清理对应重授</text>
+    <path d="M290 368v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M538 334h41" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="590" y="312" width="246" height="44" rx="6" fill="#fcefe7" stroke="#d0997b"/>
+    <text x="603" y="340" fill="#7e3929" font-size="15">关系已不存在 · 幂等 204</text>
+    <rect x="42" y="394" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="422" font-size="19" font-weight="700" fill="#183a45">员工继续发起业务请求</text>
+    <text x="61" y="446" font-size="15" fill="#46616b">使用原 Cookie 重新计算该系统的权限</text>
+    <path d="M290 464v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="42" y="490" width="496" height="70" rx="7" fill="#e0f2eb" stroke="#96b9b8"/>
+    <text x="61" y="518" font-size="19" font-weight="700" fill="#183a45">根据剩余路径决定结果</text>
+    <text x="61" y="542" font-size="15" fill="#46616b">存在有效路径则允许，否则返回 403</text>
+  </g>
+</svg>

@@ -55,6 +55,13 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    healthcheck:
+      # 未登录返回 401，检查应用已经能够处理 HTTP 请求。
+      test: ["CMD-SHELL", "test \"$$(curl --silent --show-error --noproxy '*' --output /dev/null --write-out '%{http_code}' --max-time 3 http://127.0.0.1:8080/api/auth/me)\" = 401"]
+      interval: 5s
+      timeout: 4s
+      retries: 15
+      start_period: 20s
 
 volumes:
   mysql-data:

@@ -2,9 +2,9 @@
 logging:
   level:
     root: INFO
-    cn.edu.ooad.rbac.api: ${RBAC_LOG_API:DEBUG}
-    cn.edu.ooad.rbac.service: ${RBAC_LOG_SERVICE:DEBUG}
-    cn.edu.ooad.rbac.infrastructure: ${RBAC_LOG_INFRASTRUCTURE:DEBUG}
+    rbac0.api: ${RBAC_LOG_API:DEBUG}
+    rbac0.service: ${RBAC_LOG_SERVICE:DEBUG}
+    rbac0.infrastructure: ${RBAC_LOG_INFRASTRUCTURE:DEBUG}
 server:
   servlet:
     session:

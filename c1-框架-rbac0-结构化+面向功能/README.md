@@ -2,17 +2,24 @@
 
 队友可按 [部署运行说明](./部署运行说明/README.md) 用 Docker Compose 启动后端、MySQL 和 Redis。下文保留直接使用 Java 和 Maven 的开发方式。
 
+权限管理平台和业务模拟系统共用同源登录与会话，可按 [前端运行与验收](./frontend/README.md) 启动。C1 是后续 RBAC1 与 RBAC3 的 RBAC0 基线。
+
+后端代码按原有八个功能模块组织。查找包、代码入口及同目录说明请打开 [后端模块索引](./backend/docs/模块索引.md)。
+
+设计资料见 [数据库设计](./docs/数据库设计.adoc)、[结构化详细设计](./docs/详细设计.adoc) 和 [本地验收记录](./docs/本地验收记录.md)。
+
 ## 运行后端与初始化
 
-使用 Java 21、Maven 3.9、Spring Boot 3.5.16 和 MySQL 8.4。IntelliJ IDEA 可直接打开 [backend/pom.xml](./backend/pom.xml)。在 Navicat 的 `ooad_rbac` 连接下确认 `ooad_rbac0` 库及本地项目账号可用。启动后 Flyway 写入表结构与迁移历史，Hibernate 校验映射。
+使用 Java 21、Maven 3.9、Spring Boot 3.5.16 和 MySQL 8.4。IntelliJ IDEA 可直接打开 [backend/pom.xml](./backend/pom.xml)，运行主类 `app.RbacApplication`。已有运行配置时，更新其中的 Main class。在 Navicat 的 `ooad_rbac` 连接下确认 `ooad_rbac0` 库及本地项目账号可用。启动后 Flyway 写入表结构与迁移历史，Hibernate 校验映射。
 
-从 C1 的 `backend` 目录运行。使用 Docker Desktop 启动 MySQL 和 Redis，按本地端口设置环境变量。数据库用户和密码使用本地配置，勿将密码写进项目文件。
+从 C1 的 `backend` 目录运行。首次构建先安装课程配套的 [CloneFactory 注解处理器](./backend/tools/clonefactory/README.md)，再在 IntelliJ 中重新加载 Maven。使用 Docker Desktop 启动 MySQL 和 Redis，按本地端口设置环境变量。数据库用户和密码使用本地配置，勿将密码写进项目文件。
 
 ```powershell
 $env:RBAC_DB_URL = 'jdbc:mysql://localhost:3306/ooad_rbac0'
 $env:RBAC_DB_USER = '你的 MySQL 项目账号'
 $env:RBAC_DB_PASSWORD = Read-Host 'MySQL 密码' -MaskInput
 $env:RBAC_REDIS_PORT = '6379'
+mvn -f tools/clonefactory/pom.xml install
 mvn package -DskipTests
 java -jar target/rbac0-0.1.0-SNAPSHOT.jar
 ```
@@ -39,7 +46,7 @@ java -jar target/rbac0-0.1.0-SNAPSHOT.jar '--import-excel=../../excel'
 
 准备独立的 MySQL 测试库 `ooad_rbac0_test`，将 `RBAC_DB_URL` 指向该库，显式设置测试 Redis 的 `RBAC_REDIS_PORT`，再运行 `mvn verify`。数据源指向其他数据库时只运行单元测试。测试库无需运行 `--init-demo`。首次演示初始化用例在测试事务中写入并回滚，HTTP 集成用例使用唯一标识的合成数据。JaCoCo HTML 生成在 `backend/target/site/jacoco/index.html`。
 
-在隔离 MySQL 和 Redis 上运行 `mvn verify`，29 项测试覆盖 Flyway V1 至 V5、三表导入、会话、审批、授撤权、组织策略并发及管理维护。手动联调时，先调用 `GET /api/auth/csrf` 并保存 Cookie，用响应的令牌在 `X-CSRF-TOKEN` 请求头提交登录。登录后使用新 Cookie，写请求前重新领取 CSRF 令牌。请求样例见 [首批接口验收](./api/首批接口验收.md)，数据库结构见 [数据库设计](./docs/数据库设计.adoc)。
+在隔离 MySQL 和 Redis 上运行 `mvn verify`，30 项测试全部通过，覆盖 Flyway V1 至 V5、三表导入、会话与日志、审批、授撤权、组织策略并发及管理维护。手动联调时，先调用 `GET /api/auth/csrf` 并保存 Cookie，用响应的令牌在 `X-CSRF-TOKEN` 请求头提交登录。登录后使用新 Cookie，写请求前重新领取 CSRF 令牌。请求样例见 [首批接口验收](./api/首批接口验收.md)，数据库结构见 [数据库设计](./docs/数据库设计.adoc)。
 
 ### 依赖故障复验
 
@@ -57,6 +64,6 @@ Flyway V4 新增模拟申请表。运行 `--init-demo` 后，四个演示系统�
 
 使用管理员 Cookie 调用 `GET /api/employees`、`/api/companies`、`/api/departments`、`/api/roles`、`/api/permissions` 或 `/api/catalog-entries`。授权页面可另外查询 `GET /api/employees/{employeeId}/roles` 和 `GET /api/roles/{roleId}/permissions`。分页默认 `page=1&pageSize=20`，`total` 是可见范围内的记录数。员工电话已遮盖，Excel 权限清单保持原文本和空值。具体字段及错误响应见 [OpenAPI](./api/openapi.yaml)。
 
-## 后续模块
+## 管理对象维护与验收
 
-员工、角色和权限支持新增、详情、编辑及删除操作。员工删除采用停用，并保留历史分配；调岗前须先解除现有角色和管理员配置。新增员工只创建资料，演示登录凭据仍沿用初始化流程。角色和权限编辑只改展示名称，被引用时需先解除相关关系。授权流程用管理员和员工各自的会话按 [首批接口验收](./api/首批接口验收.md) 复现。接下来复验课程环境，并接入最小可运行的管理端和业务模拟端。
+员工、角色和权限支持新增、详情、编辑及删除操作。员工删除采用停用，并保留历史分配；调岗前须先解除现有角色和管理员配置。新增员工只创建资料，演示登录凭据仍沿用初始化流程。角色和权限编辑只改展示名称，被引用时需先解除相关关系。授权流程用管理员和员工各自的会话按 [首批接口验收](./api/首批接口验收.md) 复现。管理端和业务模拟端已完成本地联调，课程环境待复验。

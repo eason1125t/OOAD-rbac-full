@@ -455,7 +455,7 @@ paths:
       operationId: "listManagementDepartments"
       tags: ["授权配置"]
       summary: "查询部门原表三列及正式组织引用"
-      description: "限当前管理员的可见范围，结果按 ID 升序，total 为范围内总数。"
+      description: "含原表中归类为公司的组织行和演示部门。按管理员可见范围分页，total 为范围内总数。"
       parameters:
         - $ref: "#/components/parameters/ManagementPageNumber"
         - $ref: "#/components/parameters/PageSize"
@@ -911,6 +911,33 @@ paths:
           $ref: "#/components/responses/MissingResource"
         "409":
           $ref: "#/components/responses/ManagementConflict"
+        "503":
+          $ref: "#/components/responses/Unavailable"
+  "/api/organizations/{organizationId}/business-systems/{systemCode}/permissions/{permissionCode}":
+    parameters:
+      - $ref: "#/components/parameters/OrganizationId"
+      - $ref: "#/components/parameters/SystemCode"
+      - $ref: "#/components/parameters/PermissionCode"
+    get:
+      operationId: "getOrganizationPermissionPolicy"
+      tags: ["授权配置"]
+      summary: "查询组织自身的业务权限策略"
+      description: "限超级管理员。返回所选组织的直接状态及重授角色。"
+      responses:
+        "200":
+          description: "组织策略和已重授角色"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/OrganizationPermissionPolicy"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/NoSession"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/MissingResource"
         "503":
           $ref: "#/components/responses/Unavailable"
 components:
@@ -1478,9 +1505,25 @@ components:
         - "username"
         - "name"
         - "organizationId"
+    OrganizationPermissionPolicy:
+      type: "object"
+      properties:
+        status:
+          type: "string"
+          enum: ["OPEN", "DISABLED", "REOPENED"]
+        roleIds:
+          type: "array"
+          items:
+            type: "integer"
+            format: "int64"
+      required: [status, roleIds]
     BusinessSystem:
       type: "object"
       properties:
+        id:
+          type: "integer"
+          format: "int64"
+          minimum: 1
         code:
           type: "string"
         name:
@@ -1492,6 +1535,7 @@ components:
         ownerOrganizationName:
           type: "string"
       required:
+        - "id"
         - "code"
         - "name"
         - "ownerOrganizationId"

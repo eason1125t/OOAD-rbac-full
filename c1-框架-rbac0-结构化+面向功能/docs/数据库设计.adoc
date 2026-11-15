@@ -1,7 +1,7 @@
 = C1 RBAC0 数据库设计
 :imagesdir: design
 
-状态：陈氏图已确认。Flyway V1、V2 与 JPA 映射已在隔离的 MySQL 8.4.8 实例验证。
+陈氏图已确认。Flyway V1–V5 与 JPA 映射已在隔离 MySQL 8.4 实例验证。处理过程、事务与异常分支见 link:详细设计.adoc[结构化详细设计]。
 
 == 陈氏 ER 图
 

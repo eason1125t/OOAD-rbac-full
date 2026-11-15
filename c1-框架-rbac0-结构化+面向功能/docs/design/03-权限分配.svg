@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 876 630" role="img" aria-labelledby="title desc">
+  <title id="title">权限分配</title>
+  <desc id="desc">员工—角色与角色—权限共用管理写入流程</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#3b746d"/></marker></defs>
+  <rect width="876" height="630" rx="16" fill="#f1f6f6"/>
+  <g font-family="Microsoft YaHei, Noto Sans CJK SC, sans-serif">
+    <text x="42" y="51" font-size="29" font-weight="700" fill="#183a45">权限分配</text>
+    <text x="42" y="80" font-size="16" fill="#46616b">员工—角色与角色—权限共用管理写入流程</text>
+    <rect x="42" y="106" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="134" font-size="19" font-weight="700" fill="#183a45">接收 PUT 分配请求</text>
+    <text x="61" y="158" font-size="15" fill="#46616b">接收关系两端 ID，校验登录及 CSRF</text>
+    <path d="M290 176v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="42" y="202" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="230" font-size="19" font-weight="700" fill="#183a45">检查管理动作和对象范围</text>
+    <text x="61" y="254" font-size="15" fill="#46616b">检查操作者、目标组织与共享定义</text>
+    <path d="M290 272v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M538 238h41" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="590" y="216" width="246" height="44" rx="6" fill="#fcefe7" stroke="#d0997b"/>
+    <text x="603" y="244" fill="#7e3929" font-size="15">401／403 · 拒绝写入</text>
+    <rect x="42" y="298" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="326" font-size="19" font-weight="700" fill="#183a45">事务内锁定并检查两端</text>
+    <text x="61" y="350" font-size="15" fill="#46616b">锁角色，再锁员工或权限，确认记录存在</text>
+    <path d="M290 368v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M538 334h41" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="590" y="312" width="246" height="44" rx="6" fill="#fcefe7" stroke="#d0997b"/>
+    <text x="603" y="340" fill="#7e3929" font-size="15">404 · 资源不存在</text>
+    <rect x="42" y="394" width="496" height="70" rx="7" fill="#fff" stroke="#96b9b8"/>
+    <text x="61" y="422" font-size="19" font-weight="700" fill="#183a45">校验可授予条件</text>
+    <text x="61" y="446" font-size="15" fill="#46616b">校验员工状态、组织停用及权限范围</text>
+    <path d="M290 464v22" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <path d="M538 430h41" stroke="#3b746d" stroke-width="2" marker-end="url(#arrow)"/>
+    <rect x="590" y="408" width="246" height="44" rx="6" fill="#fcefe7" stroke="#d0997b"/>
+    <text x="603" y="436" fill="#7e3929" font-size="15">403／409 · 拒绝写入</text>
+    <rect x="42" y="490" width="496" height="70" rx="7" fill="#e0f2eb" stroke="#96b9b8"/>
+    <text x="61" y="518" font-size="19" font-weight="700" fill="#183a45">提交关系并返回 204</text>
+    <text x="61" y="542" font-size="15" fill="#46616b">重复 PUT 保持幂等，提交后下一请求生效</text>
+  </g>
+</svg>
