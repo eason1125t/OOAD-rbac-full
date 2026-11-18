@@ -1,6 +1,6 @@
 # RBAC 鉴权与接口设计
 
-2026-11-14 · C1、C2、C3 共用设计。适用于面向功能和面向对象两条实现线。
+C1、C2、C3 共用设计。适用于面向功能和面向对象两条实现线。
 
 已确认采用 **Spring Security 请求授权 + 统一授权 Service**。管理端按资源和分配关系设计 API，业务模拟端按具体业务动作设计 API。本文的路径、字段和错误码用于详细设计，后续按模块写入 `api/openapi.yaml`。参见 [项目需求总览](../项目需求总览.md)、[技术规范](./RBAC_Technical_Conventions.md) 和 [阶段开发规划](./RBAC_Development_Plan.md)。
 
@@ -16,7 +16,7 @@
 
 两个独立前端采用同源路径和共用 Cookie 会话。保留 CSRF 校验，写操作按契约提交 CSRF 令牌，登录前取得令牌，登录或退出后按配置重新获取。Cookie 名称与令牌获取方式在登录模块落定。 [Spring Security CSRF](https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html)
 
-后端提供默认工作区和当前可进入的工作区列表。管理员默认进入管理平台；员工依次采用可进入的部门默认系统和公司默认系统，无可用项时展示空状态。顶部下拉改变当前系统路由，账户与会话保持一致。C2、C3 沿用导航，C3 若引入角色激活则使用独立操作。
+后端提供默认工作区和当前可进入的工作区列表。管理员默认进入管理平台；员工依次采用可进入的部门默认系统和公司默认系统，无可用项时展示空状态。顶部下拉改变当前系统路由，账户与会话保持一致。C2 在导航外增加 `/func/` 与 `/oo/` 版本入口。网关将版本路径下的请求转发到对应后端的 `/api`。两版共用 Redis 实例，各用自己的会话命名空间、Cookie 名与路径，并读写各自的 MySQL 库。C3 若引入角色激活则使用独立操作。
 
 ### 2. 固定权限在 HTTP 请求入口检查
 
@@ -59,7 +59,7 @@
 | 阶段 | 实现方式 | 例子 | 目的与优点 |
 | --- | --- | --- | --- |
 | C1 · RBAC0 | 取直接分配角色的权限并集 | 员工 42 直接分到「审批员」，审批通过。撤销唯一分配后拒绝 | 建立可重复演示的基础授权与撤权链路 |
-| C2 · RBAC1 | 直接角色加上可达的继承角色，汇总权限并去重。新增继承边时拒绝自继承和环路 | 「主管」继承「审批员」，只分到「主管」的员工也能审批。删除唯一继承路径后拒绝 | 沿用现有审批调用，验证授权来源可以扩展到角色层级 |
+| C2 · RBAC1 | 同归属内，高级角色继承低级角色。汇总直接及传递继承来源，拒绝自继承与环路。组织停用优先，重授绑定直接权限来源角色 | 「主管」继承「审批员」。删除唯一合格路径后，同一会话的下一次审批拒绝 | 保留现有审批调用并扩展申请 CRUD，用共同 HTTP 测试核对两版权限及业务状态 |
 | C3 · RBAC3 | 保留继承。静态约束在关系写入时检查。若确认动态互斥，在角色激活时校验，并在请求时按当前仍有效的激活角色计算权限 | 假设约定「发起员」与「审批员」互斥。若约束覆盖继承角色，新增继承边可能导致已有组合冲突，按 C3 确认的策略处理。若动态互斥纳入范围，可演示同时激活两者被拒绝 | 沿用同一业务入口，展示约束怎样影响授权来源和会话 |
 
 面向功能版以读关系、展开角色、计算权限等步骤组织 Service。面向对象版由应用 Service 协调用例，角色层级和约束规则由相应领域对象或领域服务承担。两版共用接口契约、演示数据和预期结果。C3 是否包含动态互斥、静态约束覆盖哪些角色集合，以及变更后如何处理已有分配和会话，按阶段需求另行确认。参见 [C2 阶段需求](<../c2-rbac1-面向功能+面向对象（后端+部分前端）/阶段需求与验收.md>) 和 [C3 阶段需求](<../c3-rbac3-面向功能+面向对象+部分函数式设计（完整前后端）/阶段需求与验收.md>)。
@@ -77,14 +77,16 @@
 | C1 用例 | 接口示例 | 鉴权要求示例 |
 | --- | --- | --- |
 | 登录、当前员工、退出 | `POST /api/auth/login`、`GET /api/auth/me`、`POST /api/auth/logout` | 登录验凭据。当前员工与退出要求有效会话 |
-| 查看员工、部门、Excel 功能权限清单 | `GET /api/employees`、`GET /api/departments`、`GET /api/permission-catalog` | `employee:read`、`department:read`、`permission-catalog:read` |
+| 查看员工、部门、Excel 功能权限清单 | `GET /api/employees`、`GET /api/departments`、`GET /api/catalog-entries` | `employee:read`、`department:read`、`permission-catalog:read` |
 | 员工、角色、实际权限维护 | 例如 `PATCH /api/employees/{employeeId}`、`POST /api/roles`、`GET /api/permissions` | `employee:write`、`role:write`、`permission:read` |
 | 员工分配、撤销角色 | `PUT`、`DELETE /api/employees/{employeeId}/roles/{roleId}` | `employee-role:write` |
 | 角色分配、撤销权限 | `PUT`、`DELETE /api/roles/{roleId}/permissions/{permissionId}` | `role-permission:write` |
 
 C1 的超级管理员、公司管理员和部门管理员可按各自范围写入两类关系。入口检查管理端准入和对应的写入权限，Service 检查关系两端的组织范围和可授予权限。检查适用于新增、替换和移除，也适用于通过角色编辑改变已有分配的效果。仅有 `request:approve` 的审批员调用分配接口时得到 403，数据库中的分配关系保持原样。
 
-C2 沿用表中已有路径，新增如 `GET /api/roles/{roleId}/parents` 与 `PUT`、`DELETE /api/roles/{roleId}/parents/{parentRoleId}`。这里 `parentRoleId` 表示被当前角色继承、提供权限的角色。员工有效权限可用 `GET /api/employees/{employeeId}/effective-permissions` 查询，按后台管理权限保护。C3 新增如 `GET`、`POST /api/constraints`；若启用动态互斥，可用 `PUT /api/auth/me/active-roles` 更新当前会话的激活角色集合，由后端验证可激活范围和约束。新增接口按阶段录入契约和鉴权映射。
+C2 沿用表中已有路径，新增如 `GET /api/roles/{roleId}/parents` 与 `PUT`、`DELETE /api/roles/{roleId}/parents/{parentRoleId}`。这里 `parentRoleId` 表示被当前角色继承、提供权限的角色。员工有效权限可用 `GET /api/employees/{employeeId}/effective-permissions` 查询，按后台管理权限保护。C2 同时扩展申请列表、发起与详情，使用 `PATCH /api/requests/{requestId}` 修改本人的待审批单，用 `/withdraw`、`/reject` 动作管理状态，并用 `DELETE /api/requests/{requestId}` 删除本人已驳回的申请。撤回单保留且不可重提，操作结果入 Logback。具体 API 以共同契约定稿为准。
+
+C3 新增如 `GET`、`POST /api/constraints`；若启用动态互斥，可用 `PUT /api/auth/me/active-roles` 更新当前会话的激活角色集合，由后端验证可激活范围和约束。新增接口按阶段录入契约和鉴权映射。
 
 ### 2. 业务模拟采用动作接口
 
@@ -128,7 +130,7 @@ C2 沿用表中已有路径，新增如 `GET /api/roles/{roleId}/parents` 与 `P
 | 授权管理入口 | 普通审批员调用任一关系写接口均返回 403，分配关系不变。管理员重复建立或撤销同一关系，按接口的幂等规则返回 |
 | 组织范围与超级管理员 | 公司管理员可管理下属部门。部门管理员越部门查询或尝试分配上级管理角色时被拒绝。普通员工跨部门专属系统操作被拒绝，超级管理员可操作任意系统的待处理申请 |
 | 安全过滤器与失败路径 | 通过实际过滤器链验证无会话的受保护 GET 返回 401、有效会话且缺权返回 403、缺失或过期 CSRF 令牌返回 403、授权查询临时不可用返回 503。核对错误码及受保护业务未执行 |
-| 同阶段两版契约 | C2 两版共同测试继承、环路拒绝和多路径。C3 两版在同样的约束配置下得到相同的冲突、写入和授权结果 |
+| 同阶段两版契约 | C2 两版共同测试继承与实时撤权、组织重授、申请状态、Excel 对照和会话隔离。C3 两版在同样的约束配置下得到相同的冲突、写入和授权结果 |
 | 新增路由的登记规则 | 每条受保护 API 都有 OpenAPI 条目、鉴权配置或明确的 Service 检查位置，以及成功与拒绝用例。验证未登记的业务路由默认拒绝 |
 
 进入详细设计时，先用审批场景定稿「路由 → 权限 → 授权位置 → 状态码 → 测试」，再按同一格式补齐员工、部门、角色、权限和两类分配的契约。先落实 C1 需要的接口，后续阶段按新增能力增补。
