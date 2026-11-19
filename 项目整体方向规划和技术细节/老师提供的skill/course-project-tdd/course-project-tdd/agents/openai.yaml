@@ -1,0 +1,3 @@
+interface:
+  display_name: "课程项目 · TDD"
+  short_description: "本项目的测试先行开发流程（先写失败测试再实现）"

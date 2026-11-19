@@ -1,0 +1,3 @@
+interface:
+  display_name: "课程项目管理 · 代码规范"
+  short_description: "API 校验、@HttpExchange、分层 DEBUG 日志、CloneFactory、Lombok、持久化与 TDD 规范"

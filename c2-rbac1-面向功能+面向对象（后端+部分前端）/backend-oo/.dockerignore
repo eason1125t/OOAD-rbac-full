@@ -1,0 +1,11 @@
+# Docker 构建只发送应用和课程注解处理器所需的文件。
+**
+!pom.xml
+!src/
+!src/**
+!tools/
+!tools/clonefactory/
+!tools/clonefactory/pom.xml
+!tools/clonefactory/LICENSE
+!tools/clonefactory/src/
+!tools/clonefactory/src/**

@@ -1,0 +1,891 @@
+[
+  {
+    "name": "01-func-后端包图",
+    "version": "func",
+    "kind": "package",
+    "operationId": "—",
+    "summary": "源代码核心包及直接 import 依赖；非完整运行部署图。",
+    "sources": [
+      "backend-func/src/main/java/"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "02-func-新增角色继承-类图",
+    "version": "func",
+    "kind": "class",
+    "operationId": "addRoleParent",
+    "summary": "同归属、非自继承、无环、授权增量与串行写锁；OO 端口与领域图 / func 静态规则。",
+    "sources": [
+      "backend-func/src/main/java/rolepermission/RoleInheritanceService.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceController.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceStore.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/assignment/AssignmentService.java",
+      "backend-func/src/main/java/rolepermission/RbacRoleRepository.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceGraph.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceRules.java"
+    ],
+    "requirements": "C2-01、03、05、07",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+    ],
+    "browserTest": "frontend/tests/authorization.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "03-func-新增角色继承-时序图",
+    "version": "func",
+    "kind": "sequence",
+    "operationId": "addRoleParent",
+    "summary": "同一 READ_COMMITTED 事务：先全图写锁，再范围、环路和授权增量校验。",
+    "sources": [
+      "backend-func/src/main/java/rolepermission/RoleInheritanceController.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceService.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceStore.java",
+      "backend-func/src/main/java/rolepermission/RbacRoleRepository.java",
+      "backend-func/src/main/java/assignment/AssignmentService.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceGraph.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceRules.java"
+    ],
+    "requirements": "C2-01、03、05、07",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+    ],
+    "browserTest": "frontend/tests/authorization.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "04-func-有效权限-类图",
+    "version": "func",
+    "kind": "class",
+    "operationId": "listEmployeeEffectivePermissions",
+    "summary": "查询用例使用统一 AuthorizationService；组织停用优先，多路径来源 Set 去重。",
+    "sources": [
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/organization/ManagementQueryService.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceStore.java",
+      "backend-func/src/main/java/authentication/WorkspaceService.java",
+      "backend-func/src/main/java/assignment/OrganizationPermissionRepository.java",
+      "backend-func/src/main/java/assignment/EmployeeRoleRepository.java",
+      "backend-func/src/main/java/rolepermission/PermissionRepository.java",
+      "backend-func/src/main/java/assignment/RolePermissionRepository.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceGraph.java"
+    ],
+    "requirements": "C2-01、02、05、06",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+    ],
+    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "05-func-有效权限-时序图",
+    "version": "func",
+    "kind": "sequence",
+    "operationId": "listEmployeeEffectivePermissions",
+    "summary": "先管理员可见范围，再目标员工系统准入、继承闭包及组织策略；分页不改变判权。",
+    "sources": [
+      "backend-func/src/main/java/organization/ManagementQueryService.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/authentication/WorkspaceService.java",
+      "backend-func/src/main/java/assignment/EmployeeRoleRepository.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceStore.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceGraph.java",
+      "backend-func/src/main/java/simulation/BusinessSystemRepository.java",
+      "backend-func/src/main/java/rolepermission/PermissionRepository.java",
+      "backend-func/src/main/java/assignment/OrganizationPermissionRepository.java",
+      "backend-func/src/main/java/assignment/RolePermissionRepository.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceRules.java"
+    ],
+    "requirements": "C2-01、02、05、06",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+    ],
+    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "06-func-审批申请-类图",
+    "version": "func",
+    "kind": "class",
+    "operationId": "approveRequest",
+    "summary": "OO：Service 协调端口、领域对象维护状态；func：Service 检查状态并修改 JPA 实体。",
+    "sources": [
+      "backend-func/src/main/java/simulation/BusinessRequestService.java",
+      "backend-func/src/main/java/simulation/BusinessRequestController.java",
+      "backend-func/src/main/java/simulation/SimulatedRequestRepository.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/simulation/BusinessSystemRepository.java",
+      "backend-func/src/main/java/simulation/SimulatedRequest.java",
+      "backend-func/src/main/java/simulation/BusinessRequestAudit.java"
+    ],
+    "requirements": "C2-11、12、13、14、15、16",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+    ],
+    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "07-func-审批申请-时序图",
+    "version": "func",
+    "kind": "sequence",
+    "operationId": "approveRequest",
+    "summary": "请求行锁、read+approve 实时检查、状态变更、CloneFactory 映射、提交后记录审计。",
+    "sources": [
+      "backend-func/src/main/java/simulation/BusinessRequestService.java",
+      "backend-func/src/main/java/simulation/BusinessRequestAudit.java",
+      "backend-func/src/main/java/simulation/SimulatedRequestRepository.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/simulation/BusinessSystemRepository.java",
+      "backend-func/src/main/java/simulation/SimulatedRequest.java",
+      "backend-func/src/main/java/simulation/BusinessRequestService.java"
+    ],
+    "requirements": "C2-11、12、13、14、15、16",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+    ],
+    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "08-func-同会话实时撤权-时序图",
+    "version": "func",
+    "kind": "sequence",
+    "operationId": "removeRoleParent / approveRequest",
+    "summary": "三次独立 HTTP 请求；先成功，再提交删边，再用原会话操作另一待审批申请被拒绝。",
+    "sources": [
+      "backend-func/src/main/java/simulation/BusinessRequestService.java",
+      "backend-func/src/main/java/simulation/BusinessRequestAudit.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceService.java",
+      "backend-func/src/main/java/rolepermission/RoleInheritanceStore.java"
+    ],
+    "requirements": "C2-04、10、15",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+    ],
+    "browserTest": "frontend/tests/authorization.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "09-oo-后端包图",
+    "version": "oo",
+    "kind": "package",
+    "operationId": "—",
+    "summary": "源代码核心包及直接 import 依赖；非完整运行部署图。",
+    "sources": [
+      "backend-oo/src/main/java/"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "10-oo-新增角色继承-类图",
+    "version": "oo",
+    "kind": "class",
+    "operationId": "addRoleParent",
+    "summary": "同归属、非自继承、无环、授权增量与串行写锁；OO 端口与领域图 / func 静态规则。",
+    "sources": [
+      "backend-oo/src/main/java/rolepermission/RoleInheritanceService.java",
+      "backend-oo/src/main/java/rolepermission/RoleInheritanceController.java",
+      "backend-oo/src/main/java/rolepermission/RoleInheritanceStore.java",
+      "backend-oo/src/main/java/authorization/AuthorizationService.java",
+      "backend-oo/src/main/java/assignment/AssignmentService.java",
+      "backend-oo/src/main/java/rolepermission/RbacRoleRepository.java",
+      "backend-oo/src/main/java/rolepermission/domain/RoleHierarchy.java",
+      "backend-oo/src/main/java/rolepermission/JpaRoleInheritanceStore.java"
+    ],
+    "requirements": "C2-01、03、05、07",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+    ],
+    "browserTest": "frontend/tests/authorization.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "11-oo-新增角色继承-时序图",
+    "version": "oo",
+    "kind": "sequence",
+    "operationId": "addRoleParent",
+    "summary": "同一 READ_COMMITTED 事务：先全图写锁，再范围、环路和授权增量校验。",
+    "sources": [
+      "backend-oo/src/main/java/rolepermission/RoleInheritanceController.java",
+      "backend-oo/src/main/java/rolepermission/RoleInheritanceService.java",
+      "backend-oo/src/main/java/authorization/AuthorizationService.java",
+      "backend-oo/src/main/java/rolepermission/JpaRoleInheritanceStore.java",
+      "backend-oo/src/main/java/rolepermission/RbacRoleRepository.java",
+      "backend-oo/src/main/java/assignment/AssignmentService.java",
+      "backend-oo/src/main/java/rolepermission/domain/RoleHierarchy.java"
+    ],
+    "requirements": "C2-01、03、05、07",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+    ],
+    "browserTest": "frontend/tests/authorization.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "12-oo-有效权限-类图",
+    "version": "oo",
+    "kind": "class",
+    "operationId": "listEmployeeEffectivePermissions",
+    "summary": "查询用例使用统一 AuthorizationService；组织停用优先，多路径来源 Set 去重。",
+    "sources": [
+      "backend-oo/src/main/java/authorization/AuthorizationService.java",
+      "backend-oo/src/main/java/organization/ManagementQueryService.java",
+      "backend-oo/src/main/java/rolepermission/RoleInheritanceStore.java",
+      "backend-oo/src/main/java/authentication/WorkspaceService.java",
+      "backend-oo/src/main/java/assignment/OrganizationPermissionRepository.java",
+      "backend-oo/src/main/java/assignment/EmployeeRoleRepository.java",
+      "backend-oo/src/main/java/rolepermission/PermissionRepository.java",
+      "backend-oo/src/main/java/assignment/RolePermissionRepository.java",
+      "backend-oo/src/main/java/rolepermission/domain/RoleHierarchy.java"
+    ],
+    "requirements": "C2-01、02、05、06",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+    ],
+    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "13-oo-有效权限-时序图",
+    "version": "oo",
+    "kind": "sequence",
+    "operationId": "listEmployeeEffectivePermissions",
+    "summary": "先管理员可见范围，再目标员工系统准入、继承闭包及组织策略；分页不改变判权。",
+    "sources": [
+      "backend-oo/src/main/java/organization/ManagementQueryService.java",
+      "backend-oo/src/main/java/authorization/AuthorizationService.java",
+      "backend-oo/src/main/java/authentication/WorkspaceService.java",
+      "backend-oo/src/main/java/assignment/EmployeeRoleRepository.java",
+      "backend-oo/src/main/java/rolepermission/RoleInheritanceStore.java",
+      "backend-oo/src/main/java/rolepermission/domain/RoleHierarchy.java",
+      "backend-oo/src/main/java/simulation/BusinessSystemRepository.java",
+      "backend-oo/src/main/java/rolepermission/PermissionRepository.java",
+      "backend-oo/src/main/java/assignment/OrganizationPermissionRepository.java",
+      "backend-oo/src/main/java/assignment/RolePermissionRepository.java"
+    ],
+    "requirements": "C2-01、02、05、06",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+    ],
+    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "14-oo-审批申请-类图",
+    "version": "oo",
+    "kind": "class",
+    "operationId": "approveRequest",
+    "summary": "OO：Service 协调端口、领域对象维护状态；func：Service 检查状态并修改 JPA 实体。",
+    "sources": [
+      "backend-oo/src/main/java/simulation/BusinessRequestService.java",
+      "backend-oo/src/main/java/simulation/BusinessRequestController.java",
+      "backend-oo/src/main/java/simulation/port/RequestRepository.java",
+      "backend-oo/src/main/java/simulation/port/RequestAccess.java",
+      "backend-oo/src/main/java/simulation/port/RequestSystems.java",
+      "backend-oo/src/main/java/simulation/infrastructure/RequestContextAdapter.java",
+      "backend-oo/src/main/java/simulation/infrastructure/JpaRequestRepository.java",
+      "backend-oo/src/main/java/simulation/domain/BusinessRequest.java",
+      "backend-oo/src/main/java/simulation/BusinessRequestAudit.java"
+    ],
+    "requirements": "C2-11、12、13、14、15、16",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+    ],
+    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "15-oo-审批申请-时序图",
+    "version": "oo",
+    "kind": "sequence",
+    "operationId": "approveRequest",
+    "summary": "请求行锁、read+approve 实时检查、状态变更、CloneFactory 映射、提交后记录审计。",
+    "sources": [
+      "backend-oo/src/main/java/simulation/BusinessRequestService.java",
+      "backend-oo/src/main/java/simulation/BusinessRequestAudit.java",
+      "backend-oo/src/main/java/simulation/infrastructure/JpaRequestRepository.java",
+      "backend-oo/src/main/java/simulation/infrastructure/RequestContextAdapter.java",
+      "backend-oo/src/main/java/authorization/AuthorizationService.java",
+      "backend-oo/src/main/java/simulation/domain/BusinessRequest.java",
+      "backend-oo/src/main/java/simulation/SimulatedRequestRepository.java"
+    ],
+    "requirements": "C2-11、12、13、14、15、16",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+    ],
+    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "16-oo-同会话实时撤权-时序图",
+    "version": "oo",
+    "kind": "sequence",
+    "operationId": "removeRoleParent / approveRequest",
+    "summary": "三次独立 HTTP 请求；先成功，再提交删边，再用原会话操作另一待审批申请被拒绝。",
+    "sources": [
+      "backend-oo/src/main/java/simulation/BusinessRequestService.java",
+      "backend-oo/src/main/java/simulation/BusinessRequestAudit.java",
+      "backend-oo/src/main/java/authorization/AuthorizationService.java",
+      "backend-oo/src/main/java/rolepermission/RoleInheritanceService.java",
+      "backend-oo/src/main/java/rolepermission/JpaRoleInheritanceStore.java"
+    ],
+    "requirements": "C2-04、10、15",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+    ],
+    "browserTest": "frontend/tests/authorization.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "17-shared-角色继承-陈氏ER图",
+    "kind": "chen",
+    "version": "shared",
+    "operationId": "—",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-oo/src/main/resources/db/migration/V6__create_role_inheritance.sql"
+    ],
+    "requirements": "C2-01、03、05",
+    "testMethods": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "18-shared-角色继承-逻辑ER图",
+    "kind": "logical-er",
+    "version": "shared",
+    "operationId": "—",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-oo/src/main/resources/db/migration/"
+    ],
+    "requirements": "C2-01、03、11、12",
+    "testMethods": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "19-shared-业务申请-逻辑ER图",
+    "kind": "logical-er",
+    "version": "shared",
+    "operationId": "—",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-oo/src/main/resources/db/migration/"
+    ],
+    "requirements": "C2-01、03、11、12",
+    "testMethods": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "20-func-功能模块结构图",
+    "kind": "component",
+    "version": "func",
+    "operationId": "—",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-func/src/main/java/"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "21-oo-领域与基础设施协作图",
+    "kind": "component",
+    "version": "oo",
+    "operationId": "—",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-oo/src/main/java/"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "22-func-继承维护-活动流程图",
+    "kind": "activity",
+    "version": "func",
+    "operationId": "addRoleParent / removeRoleParent",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-func/src/main/java/rolepermission/RoleInheritanceService.java",
+      "backend-func/src/main/java/assignment/AssignmentService.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [
+      "serializesInheritanceWritesWithDisjointEndpoints"
+    ],
+    "browserTest": "frontend/tests/authorization.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+    ],
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "23-func-实时授权-活动流程图",
+    "kind": "activity",
+    "version": "func",
+    "operationId": "listEmployeeEffectivePermissions / approveRequest",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-func/src/main/java/authorization/AuthorizationService.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [
+      "matchesReopenedScopesToOneInheritedPermissionSource"
+    ],
+    "browserTest": "frontend/tests/authorization.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+    ],
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "24-func-申请CRUD-活动流程图",
+    "kind": "activity",
+    "version": "func",
+    "operationId": "createRequest / updateRequest / withdrawRequest / rejectRequest / deleteRejectedRequest",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-func/src/main/java/simulation/BusinessRequestService.java",
+      "backend-func/src/main/java/simulation/BusinessRequestAudit.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [
+      "updatesAndWithdrawsPendingRequest",
+      "rejectsAndDeletesOnlyOwnRejectedRequest"
+    ],
+    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-func/src/test/java/contract/AuthSessionTest.java#updatesAndWithdrawsPendingRequest",
+      "backend-func/src/test/java/contract/AuthSessionTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
+    ],
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "25-shared-申请生命周期-状态图",
+    "kind": "state",
+    "version": "shared",
+    "operationId": "createRequest / updateRequest / withdrawRequest / approveRequest / rejectRequest / deleteRejectedRequest",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-oo/src/main/java/simulation/domain/BusinessRequest.java",
+      "backend-func/src/main/java/simulation/BusinessRequestService.java"
+    ],
+    "requirements": "C2-11 至 C2-16",
+    "testMethods": [
+      "rejectsAndDeletesOnlyOwnRejectedRequest"
+    ],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
+    ],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "26-func-组织策略-类图",
+    "version": "func",
+    "kind": "class",
+    "operationId": "disableOrganizationPermission / reopenOrganizationPermission / regrantOrganizationPermission",
+    "summary": "两版组织策略仍保留 C1 Service/JPA；权限行锁、重开与直接来源重授。",
+    "sources": [
+      "backend-func/src/main/java/assignment/OrganizationPermissionService.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/assignment/OrganizationPermissionRepository.java",
+      "backend-func/src/main/java/assignment/PermissionRegrantRepository.java",
+      "backend-func/src/main/java/rolepermission/PermissionRepository.java",
+      "backend-func/src/main/java/rolepermission/RbacRoleRepository.java",
+      "backend-func/src/main/java/assignment/RolePermissionRepository.java",
+      "backend-func/src/main/java/organization/OrganizationRepository.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "27-func-组织停用重开重授-时序图",
+    "version": "func",
+    "kind": "sequence",
+    "operationId": "disableOrganizationPermission / reopenOrganizationPermission / regrantOrganizationPermission",
+    "summary": "三个独立事务，停用清理本组织及子组织重授，重开不自动恢复。",
+    "sources": [
+      "backend-func/src/main/java/assignment/OrganizationPermissionService.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/rolepermission/PermissionRepository.java",
+      "backend-func/src/main/java/assignment/OrganizationPermissionRepository.java",
+      "backend-func/src/main/java/assignment/PermissionRegrantRepository.java",
+      "backend-func/src/main/java/rolepermission/RbacRoleRepository.java",
+      "backend-func/src/main/java/assignment/RolePermissionRepository.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "28-oo-组织策略-类图",
+    "version": "oo",
+    "kind": "class",
+    "operationId": "disableOrganizationPermission / reopenOrganizationPermission / regrantOrganizationPermission",
+    "summary": "两版组织策略仍保留 C1 Service/JPA；权限行锁、重开与直接来源重授。",
+    "sources": [
+      "backend-oo/src/main/java/assignment/OrganizationPermissionService.java",
+      "backend-oo/src/main/java/authorization/AuthorizationService.java",
+      "backend-oo/src/main/java/assignment/OrganizationPermissionRepository.java",
+      "backend-oo/src/main/java/assignment/PermissionRegrantRepository.java",
+      "backend-oo/src/main/java/rolepermission/PermissionRepository.java",
+      "backend-oo/src/main/java/rolepermission/RbacRoleRepository.java",
+      "backend-oo/src/main/java/assignment/RolePermissionRepository.java",
+      "backend-oo/src/main/java/organization/OrganizationRepository.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "29-oo-组织停用重开重授-时序图",
+    "version": "oo",
+    "kind": "sequence",
+    "operationId": "disableOrganizationPermission / reopenOrganizationPermission / regrantOrganizationPermission",
+    "summary": "三个独立事务，停用清理本组织及子组织重授，重开不自动恢复。",
+    "sources": [
+      "backend-oo/src/main/java/assignment/OrganizationPermissionService.java",
+      "backend-oo/src/main/java/authorization/AuthorizationService.java",
+      "backend-oo/src/main/java/rolepermission/PermissionRepository.java",
+      "backend-oo/src/main/java/assignment/OrganizationPermissionRepository.java",
+      "backend-oo/src/main/java/assignment/PermissionRegrantRepository.java",
+      "backend-oo/src/main/java/rolepermission/RbacRoleRepository.java",
+      "backend-oo/src/main/java/assignment/RolePermissionRepository.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "30-func-申请发起修改-时序图",
+    "version": "func",
+    "kind": "sequence",
+    "operationId": "createRequest / updateRequest",
+    "summary": "每个操作是独立 HTTP/事务；展开该用例的共同锁、实时授权与两版状态职责。",
+    "sources": [
+      "backend-func/src/main/java/simulation/BusinessRequestService.java",
+      "backend-func/src/main/java/simulation/SimulatedRequestRepository.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/simulation/SimulatedRequest.java",
+      "backend-func/src/main/java/simulation/BusinessRequestService.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "31-func-申请撤回驳回删除-时序图",
+    "version": "func",
+    "kind": "sequence",
+    "operationId": "withdrawRequest / rejectRequest / deleteRejectedRequest",
+    "summary": "每个操作是独立 HTTP/事务；展开该用例的共同锁、实时授权与两版状态职责。",
+    "sources": [
+      "backend-func/src/main/java/simulation/BusinessRequestService.java",
+      "backend-func/src/main/java/simulation/SimulatedRequestRepository.java",
+      "backend-func/src/main/java/authorization/AuthorizationService.java",
+      "backend-func/src/main/java/simulation/SimulatedRequest.java",
+      "backend-func/src/main/java/simulation/BusinessRequestService.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/func/admin/；/func/business/demo-engineering-app/"
+  },
+  {
+    "name": "32-oo-申请发起修改-时序图",
+    "version": "oo",
+    "kind": "sequence",
+    "operationId": "createRequest / updateRequest",
+    "summary": "每个操作是独立 HTTP/事务；展开该用例的共同锁、实时授权与两版状态职责。",
+    "sources": [
+      "backend-oo/src/main/java/simulation/BusinessRequestService.java",
+      "backend-oo/src/main/java/simulation/infrastructure/JpaRequestRepository.java",
+      "backend-oo/src/main/java/simulation/infrastructure/RequestContextAdapter.java",
+      "backend-oo/src/main/java/simulation/domain/BusinessRequest.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "33-oo-申请撤回驳回删除-时序图",
+    "version": "oo",
+    "kind": "sequence",
+    "operationId": "withdrawRequest / rejectRequest / deleteRejectedRequest",
+    "summary": "每个操作是独立 HTTP/事务；展开该用例的共同锁、实时授权与两版状态职责。",
+    "sources": [
+      "backend-oo/src/main/java/simulation/BusinessRequestService.java",
+      "backend-oo/src/main/java/simulation/infrastructure/JpaRequestRepository.java",
+      "backend-oo/src/main/java/simulation/infrastructure/RequestContextAdapter.java",
+      "backend-oo/src/main/java/simulation/domain/BusinessRequest.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
+  },
+  {
+    "name": "34-shared-双标签页登录退出-时序图",
+    "version": "shared",
+    "kind": "sequence",
+    "operationId": "getCsrf / login / getCurrentSession / logout",
+    "summary": "共用前端按 URL 固定版本；独立 Cookie 与 Redis 命名空间。",
+    "sources": [
+      "frontend/src/App.vue",
+      "frontend/src/api.ts",
+      "frontend/vite.config.ts",
+      "backend-oo/src/main/java/authentication/SessionAuthentication.java",
+      "backend-oo/src/main/resources/application.yaml",
+      "backend-func/src/main/resources/application.yaml"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "35-shared-前端组件与API路由图",
+    "kind": "component",
+    "version": "shared",
+    "operationId": "—",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "frontend/src/",
+      "frontend/vite.config.ts"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "36-shared-前端申请操作-活动图",
+    "kind": "activity",
+    "version": "shared",
+    "operationId": "—",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "frontend/src/BusinessPage.vue",
+      "frontend/src/api.ts"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [
+      "requiresReadPermissionForRequests"
+    ],
+    "browserTest": "frontend/tests/request-read.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+    ],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "37-shared-Excel全量浏览-活动图",
+    "kind": "activity",
+    "version": "shared",
+    "operationId": "—",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "frontend/src/AdminDirectory.vue",
+      "frontend/src/referenceData.ts",
+      "backend-oo/src/main/java/organization/ManagementQueryService.java"
+    ],
+    "requirements": "C2-09",
+    "testMethods": [],
+    "browserTest": "frontend/tests/excel-review.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "39-shared-角色权限页面-活动图",
+    "kind": "activity",
+    "version": "shared",
+    "operationId": "—",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "frontend/src/RolePermissions.vue",
+      "frontend/src/AssignmentEditor.vue"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [],
+    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "38-shared-事务提交与审计-时序图",
+    "version": "shared",
+    "kind": "sequence",
+    "operationId": "approveRequest",
+    "summary": "审计包装、lambda、事务提交和 afterCompletion 的真实次序；不把 save 等同于提交。",
+    "sources": [
+      "backend-func/src/main/java/simulation/BusinessRequestAudit.java",
+      "backend-oo/src/main/java/simulation/BusinessRequestAudit.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "40-shared-登录与工作区-类图",
+    "version": "shared",
+    "kind": "class",
+    "operationId": "login / getCurrentSession / logout / listBusinessSystems",
+    "summary": "两版复用已验证 C1 登录及工作区，差异位于 Cookie/Redis/数据库配置。",
+    "sources": [
+      "backend-oo/src/main/java/authentication/WorkspaceService.java",
+      "backend-oo/src/main/java/authentication/AuthController.java",
+      "backend-oo/src/main/java/authentication/SessionAuthentication.java",
+      "backend-oo/src/main/java/organization/EmployeeRepository.java",
+      "backend-oo/src/main/java/authorization/AdministratorScopeRepository.java",
+      "backend-oo/src/main/java/organization/OrganizationRepository.java",
+      "backend-oo/src/main/java/simulation/BusinessSystemRepository.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "41-shared-申请并发状态竞争-活动图",
+    "kind": "activity",
+    "version": "shared",
+    "operationId": "approveRequest / withdrawRequest / rejectRequest",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-func/src/main/java/simulation/SimulatedRequestRepository.java",
+      "backend-oo/src/main/java/simulation/SimulatedRequestRepository.java",
+      "backend-oo/src/main/java/simulation/domain/BusinessRequest.java"
+    ],
+    "requirements": "C2-13、14、16",
+    "testMethods": [
+      "serializesCompetingRequestTransitions",
+      "approvesOnlyOnceConcurrently"
+    ],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#serializesCompetingRequestTransitions",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently"
+    ],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "42-shared-多路径权限与删边-活动图",
+    "kind": "activity",
+    "version": "shared",
+    "operationId": "listEmployeeEffectivePermissions / removeRoleParent / approveRequest",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-func/src/main/java/rolepermission/RoleInheritanceRules.java",
+      "backend-oo/src/main/java/rolepermission/domain/RoleHierarchy.java",
+      "backend-oo/src/main/java/authorization/AuthorizationService.java"
+    ],
+    "requirements": "C2-01、02、04、06",
+    "testMethods": [
+      "matchesReopenedScopesToOneInheritedPermissionSource",
+      "inheritanceRevocationAppliesToExistingSession"
+    ],
+    "browserTest": "frontend/tests/isolation.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource",
+      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession"
+    ],
+    "frontend": "/func/ 与 /oo/"
+  }
+]

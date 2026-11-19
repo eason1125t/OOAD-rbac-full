@@ -2,7 +2,7 @@
 
 C1、C2、C3 共用设计。适用于面向功能和面向对象两条实现线。
 
-已确认采用 **Spring Security 请求授权 + 统一授权 Service**。管理端按资源和分配关系设计 API，业务模拟端按具体业务动作设计 API。本文的路径、字段和错误码用于详细设计，后续按模块写入 `api/openapi.yaml`。参见 [项目需求总览](../项目需求总览.md)、[技术规范](./RBAC_Technical_Conventions.md) 和 [阶段开发规划](./RBAC_Development_Plan.md)。
+已确认采用 **Spring Security 请求授权 + 统一授权 Service**。管理端按资源和分配关系设计 API，业务模拟端按具体业务动作设计 API。本文说明共用接口设计原则；C1、C2 已实现接口以各阶段 `api/openapi.yaml` 为准，C3 为规划。C2 已实现申请 CRUD、查看权与继承授权，收尾状态见 [C2 收尾清单](<../c2-rbac1-面向功能+面向对象（后端+部分前端）/收尾清单.md>)。参见 [项目需求总览](../项目需求总览.md)、[技术规范](./RBAC_Technical_Conventions.md) 和 [阶段开发规划](./RBAC_Development_Plan.md)。
 
 ## 一、鉴权设计
 
@@ -84,7 +84,7 @@ C1、C2、C3 共用设计。适用于面向功能和面向对象两条实现线�
 
 C1 的超级管理员、公司管理员和部门管理员可按各自范围写入两类关系。入口检查管理端准入和对应的写入权限，Service 检查关系两端的组织范围和可授予权限。检查适用于新增、替换和移除，也适用于通过角色编辑改变已有分配的效果。仅有 `request:approve` 的审批员调用分配接口时得到 403，数据库中的分配关系保持原样。
 
-C2 沿用表中已有路径，新增如 `GET /api/roles/{roleId}/parents` 与 `PUT`、`DELETE /api/roles/{roleId}/parents/{parentRoleId}`。这里 `parentRoleId` 表示被当前角色继承、提供权限的角色。员工有效权限可用 `GET /api/employees/{employeeId}/effective-permissions` 查询，按后台管理权限保护。C2 同时扩展申请列表、发起与详情，使用 `PATCH /api/requests/{requestId}` 修改本人的待审批单，用 `/withdraw`、`/reject` 动作管理状态，并用 `DELETE /api/requests/{requestId}` 删除本人已驳回的申请。撤回单保留且不可重提，操作结果入 Logback。具体 API 以共同契约定稿为准。
+C2 沿用表中已有路径，新增如 `GET /api/roles/{roleId}/parents` 与 `PUT`、`DELETE /api/roles/{roleId}/parents/{parentRoleId}`。这里 `parentRoleId` 表示被当前角色继承、提供权限的角色。员工有效权限通过 `GET /api/employees/{employeeId}/effective-permissions` 查询，按后台管理权限保护。C2 同时扩展申请列表、发起与详情，使用 `PATCH /api/requests/{requestId}` 修改本人的待审批单，用 `/withdraw`、`/reject` 动作管理状态，并用 `DELETE /api/requests/{requestId}` 删除本人已驳回的申请。撤回单保留且不可重提，操作结果入 Logback。申请列表与详情要求目标系统的 `request:read`，已有申请的写操作同时要求查看权和动作权，发起只要求 `request:create`。具体 API 见 [C2 共同契约](<../c2-rbac1-面向功能+面向对象（后端+部分前端）/api/openapi.yaml>)。
 
 C3 新增如 `GET`、`POST /api/constraints`；若启用动态互斥，可用 `PUT /api/auth/me/active-roles` 更新当前会话的激活角色集合，由后端验证可激活范围和约束。新增接口按阶段录入契约和鉴权映射。
 

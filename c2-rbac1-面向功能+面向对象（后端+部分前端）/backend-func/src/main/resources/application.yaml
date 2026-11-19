@@ -1,0 +1,40 @@
+# Flyway 管理表结构，Hibernate 在启动时核对 JPA 映射。
+logging:
+  level:
+    root: INFO
+    rbac0.api: ${RBAC_LOG_API:DEBUG}
+    rbac0.service: ${RBAC_LOG_SERVICE:DEBUG}
+    rbac0.infrastructure: ${RBAC_LOG_INFRASTRUCTURE:DEBUG}
+server:
+  servlet:
+    session:
+      cookie:
+        name: ${RBAC_SESSION_COOKIE_NAME:RBAC1_FUNC_SESSION}
+        path: ${RBAC_SESSION_COOKIE_PATH:/func/}
+        http-only: true
+        same-site: lax
+        secure: ${RBAC_SESSION_SECURE:false}
+spring:
+  application:
+    name: rbac1-func
+  datasource:
+    url: ${RBAC_DB_URL:jdbc:mysql://localhost:3306/ooad_rbac1_func}
+    username: ${RBAC_DB_USER}
+    password: ${RBAC_DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    clean-disabled: true
+  data:
+    redis:
+      host: ${RBAC_REDIS_HOST:localhost}
+      port: ${RBAC_REDIS_PORT:6379}
+      password: ${RBAC_REDIS_PASSWORD:}
+      repositories:
+        enabled: false
+  session:
+    timeout: ${RBAC_SESSION_TIMEOUT:30m}
+    redis:
+      namespace: ${RBAC_SESSION_NAMESPACE:rbac1:func:session}
