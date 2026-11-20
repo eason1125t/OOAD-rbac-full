@@ -1,4 +1,5 @@
-// 申请的 JPA 映射，领域行为由 simulation.domain.BusinessRequest 承担。
+// 文件职责：映射申请记录的系统、申请人、状态及逻辑删除字段。
+// 协作关系：由申请仓储持久化，兼容 C1 没有申请人的历史记录。
 package simulation;
 
 import jakarta.persistence.Entity;
@@ -11,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/** 映射申请记录的系统、申请人、状态及逻辑删除字段，由申请仓储持久化，兼容 C1 没有申请人的历史记录。 */
 @Entity
 @Table(name = "simulated_request")
 @Getter
@@ -35,6 +37,7 @@ public class SimulatedRequest {
         this(systemId, null, title);
     }
 
+    /** 构造待持久化申请，兼容历史无申请人记录与新建申请。 */
     public SimulatedRequest(Long systemId, Long applicantId, String title) {
         this.systemId = systemId;
         this.applicantId = applicantId;

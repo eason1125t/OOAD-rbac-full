@@ -1,17 +1,18 @@
-// 按业务过程执行申请授权、状态校验、数据变更和日志记录。
+// 文件职责：编排申请读取和写入的实时授权、事务与结果映射。
+// 协作关系：由申请 Controller 调用，并通过 BusinessRequestAudit 记录事务结果。
 package simulation;
 
 import authorization.AuthorizationService;
 import cn.edu.xmu.clonefactory.CopyFrom;
 import cn.edu.xmu.clonefactory.util.CloneFactory;
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import rolepermission.Permission;
 import simulation.BusinessRequestAudit.Action;
 
+/** 编排申请读取和写入的实时授权、事务与结果映射，由申请 Controller 调用，并通过 BusinessRequestAudit 记录事务结果。 */
 @Service
 @RequiredArgsConstructor
 public class BusinessRequestService {
@@ -49,6 +51,7 @@ public class BusinessRequestService {
         private String status;
     }
 
+    /** 同一系统的分页结果及当前可用写动作；逐行所有权和状态由写入口复核。 */
     public record RequestPage(List<RequestSummary> items, long total, List<String> allowedActions) {
     }
 
@@ -84,6 +87,7 @@ public class BusinessRequestService {
         });
     }
 
+    /** 按系统发起待审批申请，申请人身份由可信会话确定。 */
     @Transactional
     public RequestDetail create(Long employeeId, String systemCode, String title) {
         return BusinessRequestAudit.record(Action.CREATE, employeeId, null, target -> {
@@ -96,6 +100,7 @@ public class BusinessRequestService {
         });
     }
 
+    /** 读取未删除申请并校验所属系统的查看权。 */
     @Transactional(readOnly = true)
     public RequestDetail detail(Long employeeId, Long requestId) {
         return BusinessRequestAudit.record(Action.DETAIL, employeeId, requestId, target -> {
@@ -107,40 +112,46 @@ public class BusinessRequestService {
         });
     }
 
+    /** 在查看权和修改权通过后，修改本人待审批申请的标题。 */
     @Transactional
     public RequestDetail update(Long employeeId, Long requestId, String title) {
         return change(Action.UPDATE, employeeId, requestId, UPDATE_PERMISSION, title);
     }
 
+    /** 在实时授权后撤回本人待审批申请，原单保留且不可重提。 */
     @Transactional
     public RequestDetail withdraw(Long employeeId, Long requestId) {
         return change(Action.WITHDRAW, employeeId, requestId, WITHDRAW_PERMISSION, null);
     }
 
+    /** 执行实时查看与审批授权，重复审批保留兼容错误码。 */
     @Transactional
     public void approve(Long employeeId, Long requestId) {
         change(Action.APPROVE, employeeId, requestId, APPROVE_PERMISSION, null);
     }
 
+    /** 在查看权和驳回权通过后将待审批申请置为已驳回。 */
     @Transactional
     public RequestDetail reject(Long employeeId, Long requestId) {
         return change(Action.REJECT, employeeId, requestId, REJECT_PERMISSION, null);
     }
 
+    /** 仅逻辑删除本人已驳回申请，后续列表与详情隐藏记录。 */
     @Transactional
     public void delete(Long employeeId, Long requestId) {
         change(Action.DELETE, employeeId, requestId, DELETE_PERMISSION, null);
     }
 
-    /** 先锁定当前申请，再根据系统与权限执行领域操作。 */
+    /** 先锁定当前申请并检查查看权及动作权，再由过程式规则修改托管字段。 */
     private RequestDetail change(Action action, Long employeeId, Long requestId, String permission,
                                  String title) {
         return BusinessRequestAudit.record(action, employeeId, requestId, target -> {
             SimulatedRequest row = requests.findLockedByIdAndDeletedAtIsNull(requestId)
                     .orElseThrow(() -> new BusinessAccessException(Reason.REQUEST_NOT_FOUND));
             target.identifySystem(row.getSystemId());
-            authorization.requireBusinessPermission(employeeId, systemFor(row), READ_PERMISSION);
-            authorization.requireBusinessPermission(employeeId, systemFor(row), permission);
+            BusinessSystem system = systemFor(row);
+            authorization.requireBusinessPermission(employeeId, system, READ_PERMISSION);
+            authorization.requireBusinessPermission(employeeId, system, permission);
             applyChange(action, employeeId, row, title);
             return detailOf(row);
         });
@@ -179,27 +190,32 @@ public class BusinessRequestService {
         }
     }
 
+    /** 仅允许明确登记的申请人执行本人专属动作，历史空申请人不能匹配。 */
     private static void requireApplicant(SimulatedRequest row, Long employeeId) {
         if (!employeeId.equals(row.getApplicantId())) {
             throw new BusinessAccessException(Reason.PERMISSION_DENIED, "无权执行该申请操作");
         }
     }
 
+    /** 校验当前申请状态，拒绝非法迁移而不修改原记录。 */
     private static void requireState(SimulatedRequest row, String expected) {
         if (!expected.equals(row.getStatus())) {
             throw new BusinessAccessException(Reason.REQUEST_STATE_CONFLICT);
         }
     }
 
+    /** 以 URL 系统代码解析持久化系统，不存在时返回系统错误。 */
     private BusinessSystem systemByCode(String code) {
         return systems.findByCode(code).orElseThrow(() -> new BusinessAccessException(Reason.SYSTEM_NOT_FOUND));
     }
 
+    /** 从申请记录解析所属系统，避免客户端改变后续鉴权目标。 */
     private BusinessSystem systemFor(SimulatedRequest row) {
         return systems.findById(row.getSystemId())
                 .orElseThrow(() -> new BusinessAccessException(Reason.SYSTEM_NOT_FOUND));
     }
 
+    /** 将当前申请的公开字段映射为服务结果，不暴露持久化实体。 */
     private static RequestDetail detailOf(SimulatedRequest row) {
         return CloneFactory.copy(new RequestDetail(), row);
     }

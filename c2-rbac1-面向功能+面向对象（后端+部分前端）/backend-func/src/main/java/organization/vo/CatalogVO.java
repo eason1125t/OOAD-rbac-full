@@ -1,3 +1,5 @@
+// 文件职责：返回课程软件功能权限原表的只读字段。
+// 协作关系：由管理查询输出，与运行时 Permission 的授权含义分开。
 package organization.vo;
 
 import cn.edu.xmu.clonefactory.CopyFrom;

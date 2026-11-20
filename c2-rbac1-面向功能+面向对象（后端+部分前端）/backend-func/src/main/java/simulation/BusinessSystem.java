@@ -1,3 +1,5 @@
+// 文件职责：映射业务系统目录、组织归属及默认入口标志。
+// 协作关系：供工作区导航、授权上下文和申请归属查询。
 package simulation;
 
 import jakarta.persistence.Entity;

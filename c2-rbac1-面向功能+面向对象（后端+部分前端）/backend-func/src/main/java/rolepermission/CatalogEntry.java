@@ -1,3 +1,5 @@
+// 文件职责：映射课程功能权限清单的原始展示字段。
+// 协作关系：由原表初始化写入，管理目录只读展示，不直接形成业务授权。
 package rolepermission;
 
 import jakarta.persistence.Entity;
@@ -30,7 +32,9 @@ public class CatalogEntry {
     private String employeeCell;
 
     /** 构建待保存记录，由数据库维护审计时间。 */
-    public CatalogEntry(String systemName, String moduleName, String featureName, String description, String administratorCell, String executiveCell, String departmentManagerCell, String projectManagerCell, String employeeCell) {
+    public CatalogEntry(String systemName, String moduleName, String featureName, String description,
+                        String administratorCell, String executiveCell, String departmentManagerCell,
+                        String projectManagerCell, String employeeCell) {
         this.systemName = systemName;
         this.moduleName = moduleName;
         this.featureName = featureName;

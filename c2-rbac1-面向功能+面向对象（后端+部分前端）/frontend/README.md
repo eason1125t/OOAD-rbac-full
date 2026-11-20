@@ -35,4 +35,11 @@ npm run test:e2e -- --timeout=60000
 
 设置 `RBAC_EXCEL_REVIEW_DIR` 时，用 Python 3 核对两版的三份 Excel 全量分页内容。测试报告保留摘要，不包含原表行内容。业务日志归口 `rbac1.func.request` 和 `rbac1.oo.request`。参见 [C2 后端运行说明](../README.md)。
 
-当前命令使用现有 `frontend/tests/`。后续按 [收尾清单](../收尾清单.md) 在 C2 的 `测试/` 重新制作并集中交付测试代码、说明和执行结果，调整后同步 Playwright 配置及本页命令。本次未迁移文件或重跑验收。
+浏览器测试已迁入 C2 的 `测试/前端/`，本页 npm 入口转发到新目录。完整安装、运行、结果和覆盖率说明见 [测试说明](../测试/README.md) 和 [执行报告](../测试/执行报告.md)。
+
+
+## 生产入口与交接
+
+只发布这一份前端构建，分别通过 /func/、/oo/ 访问两个 Swarm 后端。Vite 的本地 server/preview 代理不会随 dist 生效；生产网关须实现 API 前缀去除、Cookie/CSRF 透传与页面深链回退，API 优先于 SPA 回退。前端、两后端和数据库均进入 Swarm；具体参数、Apifox 环境与双版服务器 Logback 验收见 [部署交接文档](../部署交接文档.md)。
+
+现有 Playwright 默认运行本地 Vite；本机 23 项报告不等于集群验收结果。部署后从浏览器/Apifox 请求真实入口验证，新增远程配置通过 RBAC_DEPLOY_BASE_URL 直接访问站点，复用 3 项入口/隔离测试；见 [部署验证](../测试/部署/README.md)。项目整体讲解见 [项目总结](../项目总结.md)，老师追问见 `答辩文档.md`（本地待完善，暂不上传）。

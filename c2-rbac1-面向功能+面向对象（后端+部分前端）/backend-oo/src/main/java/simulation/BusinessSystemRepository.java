@@ -1,3 +1,5 @@
+// 文件职责：按代码或 ID 读取业务系统目录。
+// 协作关系：供工作区、管理维护和申请系统解析使用。
 package simulation;
 
 import java.util.Optional;

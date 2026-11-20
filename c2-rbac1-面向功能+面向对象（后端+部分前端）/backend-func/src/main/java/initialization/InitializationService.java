@@ -1,3 +1,5 @@
+// 文件职责：事务化导入课程原表并准备幂等演示数据。
+// 协作关系：协作 WorkbookReader 与各 JPA 仓储，为登录和业务演示准备基础记录。
 package initialization;
 
 import assignment.EmployeeRole;
@@ -42,7 +44,7 @@ import simulation.BusinessSystemRepository;
 import simulation.SimulatedRequest;
 import simulation.SimulatedRequestRepository;
 
-/** C1 结构化初始化用例，负责三份工作簿和演示数据的原子写入。 */
+/** C2 初始化用例，原子导入课程工作簿，幂等补齐演示场景并保留人工授权变更。 */
 @Service
 @RequiredArgsConstructor
 public class InitializationService {
@@ -188,16 +190,19 @@ public class InitializationService {
         }
     }
 
+    /** 按原表字段构造员工对比快照，幂等重导入时不比较生成 ID。 */
     private List<?> employeeValues(Employee item) {
         return Arrays.asList(item.getName(), item.getOrganizationId(), item.getSourceBranchName(),
                 item.getSourceDepartmentName(), item.getJobTitle(), item.getPhone());
     }
 
+    /** 按来源层级构造组织对比快照，用于识别冲突导入。 */
     private List<?> organizationValues(Organization item) {
         return Arrays.asList(item.getName(), item.getOrganizationType(), item.getParentId(),
                 item.getManagerName(), item.getSourceParentName());
     }
 
+    /** 按原表列构造清单对比快照，保留空值及动作文本。 */
     private List<?> catalogValues(CatalogEntry item) {
         return Arrays.asList(item.getDescription(), item.getAdministratorCell(), item.getExecutiveCell(),
                 item.getDepartmentManagerCell(), item.getProjectManagerCell(), item.getEmployeeCell());
@@ -220,6 +225,7 @@ public class InitializationService {
         createDemoReadRole("demo-company-b-app", List.of("company-b-employee"));
     }
 
+    /** 补齐演示组织、员工、系统和初始授权；已有用户策略不在此重置。 */
     private void initializeDemoBaseline() {
         Organization company = organizations.save(new Organization("demo-company-a", "示例甲公司", "COMPANY", null, null, null));
         Organization other = organizations.save(new Organization("demo-company-b", "示例乙公司", "COMPANY", null, null, null));
@@ -310,6 +316,7 @@ public class InitializationService {
         createDemoRequestRole("demo-finance-app", "finance-employee");
     }
 
+    /** 为指定演示系统和员工补齐申请写动作及直接角色关系。 */
     private void createDemoRequestRole(String systemCode, String username) {
         BusinessSystem system = systems.findByCode(systemCode).orElseThrow();
         Long organizationId = system.getOwnerOrganizationId();

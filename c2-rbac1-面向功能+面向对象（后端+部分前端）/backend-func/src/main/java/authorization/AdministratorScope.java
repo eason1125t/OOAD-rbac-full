@@ -1,3 +1,5 @@
+// 文件职责：映射管理员类型及其组织管理范围。
+// 协作关系：由 WorkspaceService 和 AuthorizationService 读取以限定管理操作。
 package authorization;
 
 import jakarta.persistence.Entity;

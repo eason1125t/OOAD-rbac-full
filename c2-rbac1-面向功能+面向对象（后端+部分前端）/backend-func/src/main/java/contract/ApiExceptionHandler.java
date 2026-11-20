@@ -1,3 +1,5 @@
+// 文件职责：将业务拒绝、输入错误和依赖故障转换为稳定 HTTP 错误。
+// 协作关系：协作 BusinessAccessException、SessionStoreFailure 和 ApiErrorVO。
 package contract;
 
 import authentication.SessionStoreFailure;

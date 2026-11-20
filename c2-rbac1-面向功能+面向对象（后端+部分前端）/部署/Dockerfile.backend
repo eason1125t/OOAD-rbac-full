@@ -1,0 +1,25 @@
+# 功能：构建 func/oo 后端。上下文为 C2，EDITION 选择现有源码，不改变业务实现。
+ARG MAVEN_IMAGE=maven:3.9.11-eclipse-temurin-21
+ARG JAVA_IMAGE=eclipse-temurin:21-jre-noble
+FROM ${MAVEN_IMAGE} AS build
+ARG EDITION=func
+WORKDIR /workspace
+COPY backend-${EDITION}/tools/clonefactory/ tools/clonefactory/
+RUN --mount=type=cache,target=/root/.m2/repository mvn -B -f tools/clonefactory/pom.xml install
+COPY backend-${EDITION}/pom.xml pom.xml
+COPY backend-${EDITION}/src/ src/
+# 生产镜像不编译和携带统一测试目录；完整回归由测试工程独立执行。
+RUN --mount=type=cache,target=/root/.m2/repository mvn -B -Dmaven.test.skip=true package \
+    && cp target/rbac1-${EDITION}-0.1.0-SNAPSHOT.jar /workspace/rbac1.jar
+
+FROM ${JAVA_IMAGE}
+WORKDIR /app
+COPY --from=build /workspace/rbac1.jar /app/rbac1.jar
+COPY 部署/backend-entrypoint.sh /app/entrypoint.sh
+RUN chmod 0555 /app/entrypoint.sh
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=65.0 -Dfile.encoding=UTF-8"
+USER 10001:10001
+EXPOSE 8080
+HEALTHCHECK --interval=10s --timeout=5s --start-period=60s --retries=12 \
+    CMD test "$(curl --silent --noproxy '*' --output /dev/null --write-out '%{http_code}' --max-time 3 http://127.0.0.1:8080/api/auth/me)" = 401
+ENTRYPOINT ["/app/entrypoint.sh"]

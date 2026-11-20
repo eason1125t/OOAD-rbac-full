@@ -1,17 +1,18 @@
-// 员工与角色分配入口，由角色继承管理复用授权范围规则。
+// 文件职责：编排角色和权限分配事务及继承增量授权校验。
+// 协作关系：协作 RoleInheritanceStore、AuthorizationService 和分配仓储。
 package assignment;
 
 import authentication.WorkspaceService;
 import authorization.AdministratorScope;
 import authorization.AuthorizationService;
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Set;
+import java.util.TreeMap;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;

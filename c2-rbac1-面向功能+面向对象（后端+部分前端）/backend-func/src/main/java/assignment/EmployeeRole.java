@@ -1,3 +1,5 @@
+// 文件职责：映射员工与角色的直接分配关系。
+// 协作关系：供 AssignmentService 写入和 AuthorizationService 查询角色根节点。
 package assignment;
 
 import jakarta.persistence.Entity;

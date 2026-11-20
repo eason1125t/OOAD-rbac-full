@@ -1,3 +1,5 @@
+// 文件职责：启动 C2 RBAC1 独立后端并选择 Web 或初始化模式。
+// 协作关系：扫描各业务包，由 InitializationCommand 执行显式初始化。
 package app;
 
 import org.springframework.boot.DefaultApplicationArguments;
@@ -8,7 +10,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-/** RBAC0 启动入口，加载同级功能包中的组件、实体和仓储。 */
+/** C2 RBAC1 启动入口，加载同级功能包中的组件、实体和仓储。 */
 @SpringBootApplication(
         scanBasePackages = {"app", "initialization", "authentication", "organization", "rolepermission",
                 "assignment", "authorization", "simulation", "contract"},

@@ -1,3 +1,5 @@
+// 文件职责：提供登录、退出、当前会话和 CSRF API。
+// 协作关系：协作 SessionAuthentication 与 WorkspaceService。
 package authentication;
 
 import authentication.dto.LoginDTO;
@@ -28,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import organization.Employee;
 
-/** HTTP 适配层，发布登录、会话与工作区的 C1 接口。 */
+/** HTTP 适配层，沿用 C1 契约并发布 C2 登录、会话与工作区接口。 */
 @RestController
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
 @RequiredArgsConstructor

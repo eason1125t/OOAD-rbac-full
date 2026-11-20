@@ -1,3 +1,5 @@
+// 文件职责：按权限及组织集合读取策略并保存策略变更。
+// 协作关系：支撑组织策略管理和实时授权的停用优先判定。
 package assignment;
 
 import java.util.List;

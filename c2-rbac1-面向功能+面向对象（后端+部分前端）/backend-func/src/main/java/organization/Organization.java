@@ -1,3 +1,5 @@
+// 文件职责：映射公司与部门目录及原表父级信息。
+// 协作关系：供工作区、管理范围、导入匹配及组织策略范围计算。
 package organization;
 
 import jakarta.persistence.Entity;

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="comparison.FullRoleHierarchyTest" time="0.096" tests="10" errors="0" skipped="0" failures="0" flakes="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.class.path" value="D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\三模型比较\小样\target\test-classes;D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\三模型比较\小样\target\classes;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter\5.12.2\junit-jupiter-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.12.2\junit-jupiter-api-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\kaoyu\.m2\repository\org\junit\platform\junit-platform-commons\1.12.2\junit-platform-commons-1.12.2.jar;C:\Users\kaoyu\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.12.2\junit-jupiter-params-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.12.2\junit-jupiter-engine-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\platform\junit-platform-engine\1.12.2\junit-platform-engine-1.12.2.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.boot.library.path" value="D:\codetool\environment\java-21jdk\bin"/>
+    <property name="sun.java.command" value="C:\Users\kaoyu\AppData\Local\Temp\surefire6936813674946762974\surefirebooter-20261119221318920_3.jar C:\Users\kaoyu\AppData\Local\Temp\surefire6936813674946762974 2026-11-19T22-13-18_803-jvmRun1 surefire-20261119221318920_1tmp surefire_0-20261119221318920_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\三模型比较\小样\target\test-classes;D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\三模型比较\小样\target\classes;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter\5.12.2\junit-jupiter-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.12.2\junit-jupiter-api-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\kaoyu\.m2\repository\org\junit\platform\junit-platform-commons\1.12.2\junit-platform-commons-1.12.2.jar;C:\Users\kaoyu\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.12.2\junit-jupiter-params-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.12.2\junit-jupiter-engine-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\platform\junit-platform-engine\1.12.2\junit-platform-engine-1.12.2.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\kaoyu"/>
+    <property name="user.language" value="zh"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-10-21"/>
+    <property name="java.home" value="D:\codetool\environment\java-21jdk"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\三模型比较\小样"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="surefire.real.class.path" value="C:\Users\kaoyu\AppData\Local\Temp\surefire6936813674946762974\surefirebooter-20261119221318920_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.9+7-LTS-338"/>
+    <property name="user.name" value="kaoyu"/>
+    <property name="stdout.encoding" value="GBK"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\kaoyu\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\kaoyu\AppData\Local\Temp\"/>
+    <property name="java.version" value="21.0.9"/>
+    <property name="user.dir" value="D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\三模型比较\小样"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="native.encoding" value="GBK"/>
+    <property name="java.library.path" value="D:\codetool\environment\java-21jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\dependencies\native\powershell;C:\Users\kaoyu\.codex\tmp\arg0-windows\codex-arg0Wey4Ha;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\dependencies\native\powershell;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\dependencies\native\libheif\libheif\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\dependencies\native\jxrlib\jxrlib\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\dependencies\native\poppler\Library\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\dependencies\bin\override;D:\codetool\environment\java-21jdk\bin;C:\Python314\Scripts\;C:\Python314\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;D:\codetool\environment\mingw64\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;D:\codetool\Git\cmd;D:\codetool\environment\mingw64\bin;D:\codetool\environment\java-21jdk\bin;D:\codetool\msys2\ucrt64\bin;D:\codetool\Mysql\bin;D:\codetool\environment\cmake-4.3.0-rc3-windows-x86_64\bin;D:\codetool\environment\opencv460\bin;D:\codetool\environment\opencv460\lib;D:\codetool\environment\opencv460\include;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\GitHub CLI\;D:\codetool\CodeArts Agent\bin;C:\Program Files (x86)\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\180\Tools\Binn\;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\170\DTS\Binn\;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;D:\pyt\Scripts\;D:\pyt\;C:\Users\kaoyu\AppData\Local\Programs\Python\Launcher\;C:\Users\kaoyu\AppData\Local\Microsoft\WindowsApps;D:\codetool\mingw-w64\mingw64\bin;C:\Users\kaoyu\.dotnet\tools;D:\Download\mingw64\bin;D:\codetool\Microsoft VS Code\bin;C:\Users\kaoyu\AppData\Roaming\npm;D:\codetool\environment\FFmpeg\bin;D:\codetool\Microsoft VS Code\bin\copilot-shim;C:\Users\kaoyu\AppData\Local\Programs\DockerDesktop\resources\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\dependencies\bin\fallback;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\dependencies\node\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1117-835-0_26.1117.835.0_x64__3k8sg7r9htsxt\dependencies\native\git\cmd;C:\Program Files\WindowsApps\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\app\resources;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="GBK"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="21.0.9+7-LTS-338"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="65.0"/>
+  </properties>
+  <testcase name="rejectsPolicyMutation" classname="comparison.FullRoleHierarchyTest" time="0.036"/>
+  <testcase name="isolatesLoadedData" classname="comparison.FullRoleHierarchyTest" time="0.003"/>
+  <testcase name="rejectsCycles" classname="comparison.FullRoleHierarchyTest" time="0.003"/>
+  <testcase name="rejectsInvalidScope" classname="comparison.FullRoleHierarchyTest" time="0.002"/>
+  <testcase name="expandsDiamond" classname="comparison.FullRoleHierarchyTest" time="0.003"/>
+  <testcase name="acceptsShortcut" classname="comparison.FullRoleHierarchyTest" time="0.001"/>
+  <testcase name="addsAndKeepsIdempotent" classname="comparison.FullRoleHierarchyTest" time="0.002"/>
+  <testcase name="rejectsMissingAndDisabled" classname="comparison.FullRoleHierarchyTest" time="0.001"/>
+  <testcase name="preservesGraphOnSaveFailure" classname="comparison.FullRoleHierarchyTest" time="0.001"/>
+  <testcase name="rejectsSelf" classname="comparison.FullRoleHierarchyTest" time="0.001"/>
+</testsuite>

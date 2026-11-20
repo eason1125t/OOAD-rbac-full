@@ -1,9 +1,11 @@
+// 文件职责：按管理员可见范围分页查询目录和授权关系。
+// 协作关系：协作 WorkspaceService、AuthorizationService、继承快照及 JPA 仓储。
 package organization;
 
 import authorization.AdministratorScope;
 import authorization.AuthorizationService;
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,13 +19,13 @@ import rolepermission.CatalogEntry;
 import rolepermission.CatalogEntryRepository;
 import rolepermission.Permission;
 import rolepermission.PermissionRepository;
-import rolepermission.RoleInheritanceStore;
 import rolepermission.RbacRole;
 import rolepermission.RbacRoleRepository;
+import rolepermission.RoleInheritanceStore;
 import simulation.BusinessSystem;
 import simulation.BusinessSystemRepository;
 
-/** 管理端的目录和分配查询，在数据库内限定列表及总数。 */
+/** 按管理范围查询目录和关系；有效权限先实时计算再分页，其余目录在数据库分页。 */
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

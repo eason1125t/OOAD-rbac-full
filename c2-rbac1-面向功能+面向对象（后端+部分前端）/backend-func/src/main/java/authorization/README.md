@@ -1,27 +1,51 @@
-# 实时授权
+# 请求安全与统一实时授权
 
-C2 阶段进度以 [开发方案](../../../../../开发方向细节.md) 和 [收尾清单](../../../../../收尾清单.md) 为准，以下 C1 文档作为沿用功能的基线参考。
+## 责任边界
 
-状态：业务系统准入、审批判权和两类分配关系的管理入口授权已实现。参见 [C1 基线开发规划](<../../../../../../c1-框架-rbac0-结构化+面向功能/后端开发规划.md>)。
+本模块分成请求安全和业务判权两部分。[SecurityConfiguration](SecurityConfiguration.java) 负责会话身份、CSRF、请求路由和故障响应；[AuthorizationService](AuthorizationService.java) 负责管理员资格及指定系统业务动作的实时权限。页面隐藏按钮不替代本模块的服务端检查。
 
-## 应有功能
+[AdministratorScope](AdministratorScope.java) 及仓储记录管理员类型和组织范围。管理动作来自管理员配置，普通业务角色不能通过获得 `request:approve` 变成管理员。
 
-负责管理端准入、管理范围、业务系统准入、业务操作权限和组织停用。
+## 核心函数和判权顺序
 
-## 实现方式
+### `assignmentScope`
 
-Spring Security 检查申请接口的登录和 CSRF，审批 Service 从记录查出所属系统后调用统一授权 Service。授权查询使用目标系统和动作编码，从 MySQL 读取最新关系。目标系统所属组织或其上级公司停用即拒绝；非超级管理员还受员工所属部门及公司停用限制，并且必须拥有一条直接或经继承展开的有效授权路径。重开时，同一个直接权限来源须满足全部适用范围的重授，不能拼接不同角色的重授。超级管理员可执行已配置且仍开放的动作。
+只识别代码中五类管理动作。组织策略管理仅允许 GLOBAL，其他受支持管理动作返回现有管理员范围。该函数不完成具体资源的组织检查；后续 management、assignment 或继承用例继续检查目标资源和受影响范围。
 
-## 代码入口
+### `requireBusinessPermission` 与 `permissionContext/isAllowed`
 
-[SecurityConfiguration](SecurityConfiguration.java) 配置 Spring Security，[AuthorizationService](AuthorizationService.java) 根据当前管理范围和授权关系判定操作。系统准入复用 [WorkspaceService](../authentication/WorkspaceService.java)。
+1. `systemContext` 通过 `WorkspaceService.findActiveEmployee` 复验员工；失效身份 401。再使用 `Context.canEnter` 校验系统准入，越界为 `SYSTEM_ACCESS_DENIED`。
+2. 按 `systemId + code` 查动作定义，目标系统没有该动作时拒绝，避免同码跨系统借权。
+3. `permissionContext` 收集系统归属及其上级组织；普通身份还加入员工组织及上级。读取直接角色作为 roots，再展开本次继承快照；roots 为空时不扫描继承图。
+4. `isAllowed` 先查适用组织策略，存在任一 DISABLED 就拒绝，早于全局管理员特权。
+5. 未停用时 GLOBAL 通过；普通员工没有可达来源则拒绝。
+6. 无 REOPENED 时任一可达角色直接拥有权限即可；存在 REOPENED 时用 `RolePermissionRepository.hasRegrantedSource` 要求某一个直接来源覆盖全部重开组织。子查询按来源统计，防止把不同来源的重授拼接。
 
-## 与其他模块的关键联系
+系统准入统一由私有 `systemContext` 随业务授权执行；原独立 `requireSystemAccess` 因没有调用已移除。申请列表和详情继续调用 `requireBusinessPermission(..., request:read)`，不能仅凭系统准入读取申请。
 
-业务模拟和管理入口调用统一授权 Service。登录导航与授权复用系统准入规则。已按 [组织权限停用与重新开放](<../../../../../../c1-框架-rbac0-结构化+面向功能/docs/组织权限停用与重新开放.md>) 加入范围重授校验，C2 已增加继承展开及有效权限去重，C3 的约束和可选角色激活仍属后续阶段。
+### `effectivePermissions`
 
-## 故障处理与验收
+先构造同一授权上下文，再按系统权限 ID 升序逐动作调用 `isAllowed`。结果按权限 ID 唯一，直接和多条继承路径不会重复展示。员工有效权限查询在 organization 先校验查询者范围，再调用本函数计算目标员工结果。
 
-审批前的数据库不可用返回 `503 AUTHORIZATION_UNAVAILABLE`。Redis 会话连接和命令故障返回 `503 SESSION_UNAVAILABLE`。使用隔离实例、真实 HTTP 会话和断连脚本确认待审批数据没有变化。
+## 实时性的准确含义
 
-已覆盖跨部门专属系统拒绝、同码权限隔离、组织停用拦截超级管理员，以及经管理接口授撤权后的同会话多路径验证。
+Redis 只保存身份会话，权限来自当前版本 MySQL 的分配、继承和策略记录，不做跨请求权限缓存。授权读取不获取图写锁，也不承诺整个多次查询处于串行化快照。撤权事务提交后，员工同一会话的下一次请求按新关系判断；当前实现不取消已经通过鉴权的在途事务。
+
+功能版的闭包通过 `RoleInheritanceGraph/RoleInheritanceRules`，对象版通过 `RoleHierarchy`；其余组织授权规则相同，不能声称对象版此模块已全面领域化。
+
+## 请求过滤与会话故障边界
+
+- 安全配置只在 Servlet Web 模式启用，初始化命令不建立 Web 安全链。
+- 使用 `HttpSessionSecurityContextRepository` 和 `HttpSessionCsrfTokenRepository`，Spring Session 将会话持久化到 Redis。禁用默认 Basic、formLogin、默认 logout 和 request cache，沿用项目认证端点。
+- 登录、领取 CSRF 的访问规则与业务资源分开；`permitAll` 不等于关闭 CSRF。已声明路由采用 authenticated 或管理动作检查，未知请求 `denyAll`。
+- `activeEmployeeFilter` 在 `AuthorizationFilter` 前复验 Long 员工 principal，停用或待匹配时结束旧会话并返回 401；数据库故障为 `503 AUTHORIZATION_UNAVAILABLE`。
+- `redisSessionErrors` 在 `SessionRepositoryFilter` 之外捕获会话存储异常链，尚未提交响应时返回 `503 SESSION_UNAVAILABLE`；已提交的响应不能重新写入。
+- 过滤器边界直接输出统一 `ApiErrorVO` 和 `no-store`，不假设所有安全异常都进入 MVC Advice。
+
+## 调用关系、技术与验证
+
+`HTTP → Session/CSRF/活跃员工/路由检查 → Controller → Service → AuthorizationService`。申请用例或对象版 `RequestContextAdapter` 调统一授权；管理与分配用例使用 `assignmentScope`；本模块依赖 WorkspaceService、管理员、组织、权限、直接分配、策略和继承存储。
+
+技术包括 Spring Security FilterChain、Servlet 过滤器顺序、SecurityContext、服务端 CSRF、JPA 当前关系查询、相关子查询及集合闭包。错误按 401/403 与基础设施 503 区分，鉴权无法完成时拒绝执行业务。
+
+现有 `AuthSessionTest` 覆盖登录、范围、停用、同源重授、原会话撤权和依赖故障；执行条件与历史结果见 [测试记录](../../../../../测试/历史/双版本测试记录.md)。本次未改变路由、Cookie 或授权语义，C3 角色约束及激活仍为后续阶段。

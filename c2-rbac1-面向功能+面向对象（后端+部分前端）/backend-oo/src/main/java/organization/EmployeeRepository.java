@@ -1,3 +1,5 @@
+// 文件职责：分页查询、定位和锁定员工资料。
+// 协作关系：供管理维护、工作区验证、初始化和角色分配使用。
 package organization;
 
 import jakarta.persistence.LockModeType;

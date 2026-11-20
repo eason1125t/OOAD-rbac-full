@@ -1,0 +1,12 @@
+{
+  "name": "rbac1-acceptance",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:remote": "playwright test -c playwright.remote.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1"
+  }
+}

@@ -1,0 +1,4 @@
+func	1,2,3,4,5,6,7,8
+oo	1,2,3,4,5,6,7,8
+func cross-database SELECT denied: ERROR 1142 (42000) at line 1: SELECT command denied to user 'rbac_func'@'127.0.0.1' for table 'rbac_role'
+oo cross-database SELECT denied: ERROR 1142 (42000) at line 1: SELECT command denied to user 'rbac_oo'@'127.0.0.1' for table 'rbac_role'

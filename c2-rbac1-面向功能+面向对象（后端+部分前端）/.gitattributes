@@ -1,0 +1,8 @@
+# Linux 容器中的脚本必须使用 LF，避免 Windows 检出导致入口无法执行。
+部署/*.sh text eol=lf
+部署/*.yaml text eol=lf
+部署/nginx.conf text eol=lf
+部署/Dockerfile.* text eol=lf
+# 测试结果为原始工具输出，保留其空行和行尾格式；源码仍按默认规则检查。
+测试/结果/** -whitespace
+测试/模型比较/*.txt -whitespace

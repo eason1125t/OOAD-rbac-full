@@ -1,0 +1,1900 @@
+{
+  "_type": "Project",
+  "_id": "c2-uml-00001",
+  "name": "C2 三模型比较 · 满血内存小样",
+  "ownedElements": [
+    {
+      "_type": "UMLModel",
+      "_id": "c2-uml-00002",
+      "name": "full-sample",
+      "ownedElements": [
+        {
+          "_type": "UMLClass",
+          "_id": "c2-uml-00004",
+          "name": "FullRoleHierarchy",
+          "documentation": "源码: 三模型比较/小样/src/main/java/comparison/FullRoleHierarchy.java",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "c2-uml-00005",
+              "name": "store",
+              "type": "InheritanceStore",
+              "visibility": "private",
+              "_parent": {
+                "$ref": "c2-uml-00004"
+              }
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "c2-uml-00006",
+              "name": "policy",
+              "type": "GrantPolicy",
+              "visibility": "private",
+              "_parent": {
+                "$ref": "c2-uml-00004"
+              }
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "c2-uml-00007",
+              "name": "parents",
+              "type": "Map<Long, Set<Long>>",
+              "visibility": "private",
+              "_parent": {
+                "$ref": "c2-uml-00004"
+              }
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00008",
+              "name": "addInheritance",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00009",
+                  "name": "actor",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00008"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00010",
+                  "name": "senior",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00008"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00011",
+                  "name": "junior",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00008"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00012",
+                  "name": "",
+                  "type": "String",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00008"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00004"
+              }
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00013",
+              "name": "inheritedRoles",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00014",
+                  "name": "roots",
+                  "type": "Set<Long>",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00013"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00015",
+                  "name": "",
+                  "type": "Set<Long>",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00013"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00004"
+              }
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00016",
+              "name": "dependingRoles",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00017",
+                  "name": "role",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00016"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00018",
+                  "name": "",
+                  "type": "Set<Long>",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00016"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00004"
+              }
+            }
+          ],
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "c2-uml-00020",
+          "name": "ExampleMain",
+          "documentation": "源码: 三模型比较/小样/src/main/java/comparison/ExampleMain.java",
+          "attributes": [],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00021",
+              "name": "main",
+              "visibility": "public",
+              "isStatic": true,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00022",
+                  "name": "args",
+                  "type": "String[]",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00021"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00023",
+                  "name": "",
+                  "type": "void",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00021"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00020"
+              }
+            }
+          ],
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        },
+        {
+          "_type": "UMLInterface",
+          "_id": "c2-uml-00025",
+          "name": "InheritanceStore",
+          "documentation": "源码: 三模型比较/小样/src/main/java/comparison/InheritanceStore.java",
+          "attributes": [],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00026",
+              "name": "lockWrites",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00027",
+                  "name": "",
+                  "type": "void",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00026"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00025"
+              }
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00028",
+              "name": "role",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00029",
+                  "name": "id",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00028"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00030",
+                  "name": "",
+                  "type": "Role",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00028"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00025"
+              }
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00031",
+              "name": "load",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00032",
+                  "name": "",
+                  "type": "Map<Long, Set<Long>>",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00031"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00025"
+              }
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00033",
+              "name": "save",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00034",
+                  "name": "senior",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00033"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00035",
+                  "name": "junior",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00033"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00036",
+                  "name": "",
+                  "type": "void",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00033"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00025"
+              }
+            }
+          ],
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        },
+        {
+          "_type": "UMLInterface",
+          "_id": "c2-uml-00038",
+          "name": "GrantPolicy",
+          "documentation": "源码: 三模型比较/小样/src/main/java/comparison/GrantPolicy.java",
+          "attributes": [],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00039",
+              "name": "requireManaged",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00040",
+                  "name": "actor",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00039"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00041",
+                  "name": "role",
+                  "type": "InheritanceStore.Role",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00039"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00042",
+                  "name": "",
+                  "type": "void",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00039"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00038"
+              }
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00043",
+              "name": "requireGrant",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00044",
+                  "name": "actor",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00043"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00045",
+                  "name": "senior",
+                  "type": "InheritanceStore.Role",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00043"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00046",
+                  "name": "junior",
+                  "type": "InheritanceStore.Role",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00043"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00047",
+                  "name": "before",
+                  "type": "Map<Long, Set<Long>>",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00043"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00048",
+                  "name": "",
+                  "type": "void",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00043"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00038"
+              }
+            }
+          ],
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "c2-uml-00050",
+          "name": "InMemoryInheritanceStore",
+          "documentation": "源码: 三模型比较/小样/src/main/java/comparison/InMemoryInheritanceStore.java",
+          "attributes": [],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00051",
+              "name": "load",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00052",
+                  "name": "",
+                  "type": "Map<Long, Set<Long>>",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00051"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00050"
+              }
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "c2-uml-00053",
+              "name": "save",
+              "visibility": "public",
+              "isStatic": false,
+              "parameters": [
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00054",
+                  "name": "senior",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00053"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00055",
+                  "name": "junior",
+                  "type": "Long",
+                  "direction": "in",
+                  "_parent": {
+                    "$ref": "c2-uml-00053"
+                  }
+                },
+                {
+                  "_type": "UMLParameter",
+                  "_id": "c2-uml-00056",
+                  "name": "",
+                  "type": "void",
+                  "direction": "return",
+                  "_parent": {
+                    "$ref": "c2-uml-00053"
+                  }
+                }
+              ],
+              "_parent": {
+                "$ref": "c2-uml-00050"
+              }
+            }
+          ],
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        },
+        {
+          "_type": "UMLDependency",
+          "_id": "c2-uml-00058",
+          "source": {
+            "$ref": "c2-uml-00020"
+          },
+          "target": {
+            "$ref": "c2-uml-00004"
+          },
+          "name": "",
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        },
+        {
+          "_type": "UMLDependency",
+          "_id": "c2-uml-00060",
+          "source": {
+            "$ref": "c2-uml-00020"
+          },
+          "target": {
+            "$ref": "c2-uml-00050"
+          },
+          "name": "",
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        },
+        {
+          "_type": "UMLAssociation",
+          "_id": "c2-uml-00062",
+          "name": "",
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          },
+          "end1": {
+            "_type": "UMLAssociationEnd",
+            "_id": "c2-uml-00063",
+            "reference": {
+              "$ref": "c2-uml-00004"
+            },
+            "navigable": "unspecified",
+            "_parent": {
+              "$ref": "c2-uml-00062"
+            }
+          },
+          "end2": {
+            "_type": "UMLAssociationEnd",
+            "_id": "c2-uml-00064",
+            "reference": {
+              "$ref": "c2-uml-00025"
+            },
+            "navigable": "navigable",
+            "name": "store",
+            "_parent": {
+              "$ref": "c2-uml-00062"
+            }
+          }
+        },
+        {
+          "_type": "UMLAssociation",
+          "_id": "c2-uml-00066",
+          "name": "",
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          },
+          "end1": {
+            "_type": "UMLAssociationEnd",
+            "_id": "c2-uml-00067",
+            "reference": {
+              "$ref": "c2-uml-00004"
+            },
+            "navigable": "unspecified",
+            "_parent": {
+              "$ref": "c2-uml-00066"
+            }
+          },
+          "end2": {
+            "_type": "UMLAssociationEnd",
+            "_id": "c2-uml-00068",
+            "reference": {
+              "$ref": "c2-uml-00038"
+            },
+            "navigable": "navigable",
+            "name": "policy",
+            "_parent": {
+              "$ref": "c2-uml-00066"
+            }
+          }
+        },
+        {
+          "_type": "UMLInterfaceRealization",
+          "_id": "c2-uml-00070",
+          "source": {
+            "$ref": "c2-uml-00050"
+          },
+          "target": {
+            "$ref": "c2-uml-00025"
+          },
+          "name": "",
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        },
+        {
+          "_type": "UMLClassDiagram",
+          "_id": "c2-uml-00003",
+          "name": "01-full-class",
+          "ownedViews": [
+            {
+              "_type": "UMLInterfaceRealizationView",
+              "_id": "c2-uml-00071",
+              "model": {
+                "$ref": "c2-uml-00070"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "tail": {
+                "$ref": "c2-uml-00057"
+              },
+              "head": {
+                "$ref": "c2-uml-00037"
+              },
+              "lineStyle": 1,
+              "points": "2240:1080;2240:845",
+              "showVisibility": false,
+              "showMultiplicity": false,
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLAssociationView",
+              "_id": "c2-uml-00069",
+              "model": {
+                "$ref": "c2-uml-00066"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "tail": {
+                "$ref": "c2-uml-00019"
+              },
+              "head": {
+                "$ref": "c2-uml-00049"
+              },
+              "lineStyle": 1,
+              "points": "1300:580;1300:345",
+              "showVisibility": false,
+              "showMultiplicity": false,
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLAssociationView",
+              "_id": "c2-uml-00065",
+              "model": {
+                "$ref": "c2-uml-00062"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "tail": {
+                "$ref": "c2-uml-00019"
+              },
+              "head": {
+                "$ref": "c2-uml-00037"
+              },
+              "lineStyle": 1,
+              "points": "1570:712;1970:712",
+              "showVisibility": false,
+              "showMultiplicity": false,
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLDependencyView",
+              "_id": "c2-uml-00061",
+              "model": {
+                "$ref": "c2-uml-00060"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "tail": {
+                "$ref": "c2-uml-00024"
+              },
+              "head": {
+                "$ref": "c2-uml-00057"
+              },
+              "lineStyle": 1,
+              "points": "630:784;1970:1141",
+              "showVisibility": false,
+              "showMultiplicity": false,
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLDependencyView",
+              "_id": "c2-uml-00059",
+              "model": {
+                "$ref": "c2-uml-00058"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "tail": {
+                "$ref": "c2-uml-00024"
+              },
+              "head": {
+                "$ref": "c2-uml-00019"
+              },
+              "lineStyle": 1,
+              "points": "630:712;1030:712",
+              "showVisibility": false,
+              "showMultiplicity": false,
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLClassView",
+              "_id": "c2-uml-00019",
+              "model": {
+                "$ref": "c2-uml-00004"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "left": 1030,
+              "top": 580,
+              "width": 540,
+              "height": 265,
+              "fillColor": "#e7f0fd",
+              "stereotypeDisplay": "label",
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLClassView",
+              "_id": "c2-uml-00024",
+              "model": {
+                "$ref": "c2-uml-00020"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "left": 90,
+              "top": 580,
+              "width": 540,
+              "height": 265,
+              "fillColor": "#ffffff",
+              "stereotypeDisplay": "label",
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLInterfaceView",
+              "_id": "c2-uml-00037",
+              "model": {
+                "$ref": "c2-uml-00025"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "left": 1970,
+              "top": 580,
+              "width": 540,
+              "height": 265,
+              "fillColor": "#ffffff",
+              "stereotypeDisplay": "label",
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLInterfaceView",
+              "_id": "c2-uml-00049",
+              "model": {
+                "$ref": "c2-uml-00038"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "left": 1030,
+              "top": 80,
+              "width": 540,
+              "height": 265,
+              "fillColor": "#ffffff",
+              "stereotypeDisplay": "label",
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLClassView",
+              "_id": "c2-uml-00057",
+              "model": {
+                "$ref": "c2-uml-00050"
+              },
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "left": 1970,
+              "top": 1080,
+              "width": 540,
+              "height": 265,
+              "fillColor": "#ffffff",
+              "stereotypeDisplay": "label",
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            },
+            {
+              "_type": "UMLTextView",
+              "_id": "c2-uml-00072",
+              "font": "Microsoft YaHei;13;0",
+              "lineColor": "#30435b",
+              "fontColor": "#30435b",
+              "left": 90,
+              "top": 1450,
+              "width": 2400,
+              "height": 110,
+              "text": "本小样没有Service：以实际领域用例入口居中，避免空转发层。事务由外层界定；内存不提供数据库锁或回滚保证。",
+              "wordWrap": true,
+              "_parent": {
+                "$ref": "c2-uml-00003"
+              }
+            }
+          ],
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        },
+        {
+          "_type": "UMLInteraction",
+          "_id": "c2-uml-00073",
+          "name": "02-full-sequence",
+          "participants": [
+            {
+              "_type": "UMLLifeline",
+              "_id": "c2-uml-00075",
+              "name": "obj: 调用者",
+              "stereotype": "",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLLifeline",
+              "_id": "c2-uml-00078",
+              "name": "hierarchy: FullRoleHierarchy",
+              "stereotype": "",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLLifeline",
+              "_id": "c2-uml-00081",
+              "name": "store: InMemoryInheritanceStore",
+              "stereotype": "",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLLifeline",
+              "_id": "c2-uml-00084",
+              "name": "policy: GrantPolicy",
+              "stereotype": "",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLLifeline",
+              "_id": "c2-uml-00087",
+              "name": ": FullRoleHierarchy",
+              "stereotype": "MetaClass",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            }
+          ],
+          "messages": [
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00090",
+              "name": "外层传入可信身份；内存演示无真实事务",
+              "source": {
+                "$ref": "c2-uml-00075"
+              },
+              "target": {
+                "$ref": "c2-uml-00075"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "1",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00093",
+              "name": "addInheritance(actor, senior, junior)",
+              "source": {
+                "$ref": "c2-uml-00075"
+              },
+              "target": {
+                "$ref": "c2-uml-00078"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "2",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00096",
+              "name": "lockWrites()  // 内存不证明并发锁",
+              "source": {
+                "$ref": "c2-uml-00078"
+              },
+              "target": {
+                "$ref": "c2-uml-00081"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "3",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00099",
+              "name": "receiving = role(senior)",
+              "source": {
+                "$ref": "c2-uml-00078"
+              },
+              "target": {
+                "$ref": "c2-uml-00081"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "4",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00102",
+              "name": "providing = role(junior)  // 非自继承",
+              "source": {
+                "$ref": "c2-uml-00078"
+              },
+              "target": {
+                "$ref": "c2-uml-00081"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "5",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00105",
+              "name": "requireManaged(actor, receiving)",
+              "source": {
+                "$ref": "c2-uml-00078"
+              },
+              "target": {
+                "$ref": "c2-uml-00084"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "6",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00108",
+              "name": "requireManaged(actor, providing)",
+              "source": {
+                "$ref": "c2-uml-00078"
+              },
+              "target": {
+                "$ref": "c2-uml-00084"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "7",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00112",
+              "name": "before = load()",
+              "source": {
+                "$ref": "c2-uml-00078"
+              },
+              "target": {
+                "$ref": "c2-uml-00081"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "8",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00116",
+              "name": "reachable(before, Set.of(junior))",
+              "source": {
+                "$ref": "c2-uml-00078"
+              },
+              "target": {
+                "$ref": "c2-uml-00087"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "9",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00120",
+              "name": "requireGrant(actor, receiving, providing, immutable(before))",
+              "source": {
+                "$ref": "c2-uml-00078"
+              },
+              "target": {
+                "$ref": "c2-uml-00084"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "10",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            },
+            {
+              "_type": "UMLMessage",
+              "_id": "c2-uml-00123",
+              "name": "save(senior, junior)",
+              "source": {
+                "$ref": "c2-uml-00078"
+              },
+              "target": {
+                "$ref": "c2-uml-00081"
+              },
+              "messageSort": "synchCall",
+              "sequenceNumber": "11",
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            }
+          ],
+          "fragments": [],
+          "ownedElements": [
+            {
+              "_type": "UMLSequenceDiagram",
+              "_id": "c2-uml-00074",
+              "name": "02-full-sequence",
+              "ownedViews": [
+                {
+                  "_type": "UMLSeqLifelineView",
+                  "_id": "c2-uml-00076",
+                  "model": {
+                    "$ref": "c2-uml-00075"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 90,
+                  "top": 70,
+                  "width": 240,
+                  "height": 1434,
+                  "showType": false,
+                  "fillColor": "#edf3fc",
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLLinePartView",
+                      "_id": "c2-uml-00077",
+                      "model": {
+                        "$ref": "c2-uml-00075"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 210.0,
+                      "top": 132,
+                      "width": 1,
+                      "height": 1372,
+                      "_parent": {
+                        "$ref": "c2-uml-00076"
+                      }
+                    }
+                  ],
+                  "linePart": {
+                    "$ref": "c2-uml-00077"
+                  }
+                },
+                {
+                  "_type": "UMLSeqLifelineView",
+                  "_id": "c2-uml-00079",
+                  "model": {
+                    "$ref": "c2-uml-00078"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 410,
+                  "top": 70,
+                  "width": 272,
+                  "height": 1434,
+                  "showType": false,
+                  "fillColor": "#ffffff",
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLLinePartView",
+                      "_id": "c2-uml-00080",
+                      "model": {
+                        "$ref": "c2-uml-00078"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 546.0,
+                      "top": 132,
+                      "width": 1,
+                      "height": 1372,
+                      "_parent": {
+                        "$ref": "c2-uml-00079"
+                      }
+                    }
+                  ],
+                  "linePart": {
+                    "$ref": "c2-uml-00080"
+                  }
+                },
+                {
+                  "_type": "UMLSeqLifelineView",
+                  "_id": "c2-uml-00082",
+                  "model": {
+                    "$ref": "c2-uml-00081"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 762,
+                  "top": 70,
+                  "width": 296,
+                  "height": 1434,
+                  "showType": false,
+                  "fillColor": "#ffffff",
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLLinePartView",
+                      "_id": "c2-uml-00083",
+                      "model": {
+                        "$ref": "c2-uml-00081"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 910.0,
+                      "top": 132,
+                      "width": 1,
+                      "height": 1372,
+                      "_parent": {
+                        "$ref": "c2-uml-00082"
+                      }
+                    }
+                  ],
+                  "linePart": {
+                    "$ref": "c2-uml-00083"
+                  }
+                },
+                {
+                  "_type": "UMLSeqLifelineView",
+                  "_id": "c2-uml-00085",
+                  "model": {
+                    "$ref": "c2-uml-00084"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 1138,
+                  "top": 70,
+                  "width": 240,
+                  "height": 1434,
+                  "showType": false,
+                  "fillColor": "#ffffff",
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLLinePartView",
+                      "_id": "c2-uml-00086",
+                      "model": {
+                        "$ref": "c2-uml-00084"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 1258.0,
+                      "top": 132,
+                      "width": 1,
+                      "height": 1372,
+                      "_parent": {
+                        "$ref": "c2-uml-00085"
+                      }
+                    }
+                  ],
+                  "linePart": {
+                    "$ref": "c2-uml-00086"
+                  }
+                },
+                {
+                  "_type": "UMLSeqLifelineView",
+                  "_id": "c2-uml-00088",
+                  "model": {
+                    "$ref": "c2-uml-00087"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 1458,
+                  "top": 70,
+                  "width": 240,
+                  "height": 1434,
+                  "showType": false,
+                  "fillColor": "#ffffff",
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLLinePartView",
+                      "_id": "c2-uml-00089",
+                      "model": {
+                        "$ref": "c2-uml-00087"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 1578.0,
+                      "top": 132,
+                      "width": 1,
+                      "height": 1372,
+                      "_parent": {
+                        "$ref": "c2-uml-00088"
+                      }
+                    }
+                  ],
+                  "linePart": {
+                    "$ref": "c2-uml-00089"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00091",
+                  "model": {
+                    "$ref": "c2-uml-00090"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00077"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00077"
+                  },
+                  "points": "210.0:175;240.0:175;240.0:195;210.0:195",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00092",
+                      "model": {
+                        "$ref": "c2-uml-00090"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 203.0,
+                      "top": 195,
+                      "width": 14,
+                      "height": 1239,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00091"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00092"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00094",
+                  "model": {
+                    "$ref": "c2-uml-00093"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00077"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "points": "210.0:270;546.0:270",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00095",
+                      "model": {
+                        "$ref": "c2-uml-00093"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 539.0,
+                      "top": 270,
+                      "width": 14,
+                      "height": 1084,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00094"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00095"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00097",
+                  "model": {
+                    "$ref": "c2-uml-00096"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00083"
+                  },
+                  "points": "546.0:346;910.0:346",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00098",
+                      "model": {
+                        "$ref": "c2-uml-00096"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 903.0,
+                      "top": 346,
+                      "width": 14,
+                      "height": 30,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00097"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00098"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00100",
+                  "model": {
+                    "$ref": "c2-uml-00099"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00083"
+                  },
+                  "points": "546.0:422;910.0:422",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00101",
+                      "model": {
+                        "$ref": "c2-uml-00099"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 903.0,
+                      "top": 422,
+                      "width": 14,
+                      "height": 30,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00100"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00101"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00103",
+                  "model": {
+                    "$ref": "c2-uml-00102"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00083"
+                  },
+                  "points": "546.0:498;910.0:498",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00104",
+                      "model": {
+                        "$ref": "c2-uml-00102"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 903.0,
+                      "top": 498,
+                      "width": 14,
+                      "height": 30,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00103"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00104"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00106",
+                  "model": {
+                    "$ref": "c2-uml-00105"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00086"
+                  },
+                  "points": "546.0:574;1258.0:574",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00107",
+                      "model": {
+                        "$ref": "c2-uml-00105"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 1251.0,
+                      "top": 574,
+                      "width": 14,
+                      "height": 30,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00106"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00107"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00109",
+                  "model": {
+                    "$ref": "c2-uml-00108"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00086"
+                  },
+                  "points": "546.0:650;1258.0:650",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00110",
+                      "model": {
+                        "$ref": "c2-uml-00108"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 1251.0,
+                      "top": 650,
+                      "width": 14,
+                      "height": 30,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00109"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00110"
+                  }
+                },
+                {
+                  "_type": "UMLTextView",
+                  "_id": "c2-uml-00111",
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 581.0,
+                  "top": 712,
+                  "width": 780,
+                  "height": 54,
+                  "text": "同归属且非自继承；失败直接拒绝，不保存",
+                  "wordWrap": true,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00113",
+                  "model": {
+                    "$ref": "c2-uml-00112"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00083"
+                  },
+                  "points": "546.0:802;910.0:802",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00114",
+                      "model": {
+                        "$ref": "c2-uml-00112"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 903.0,
+                      "top": 802,
+                      "width": 14,
+                      "height": 30,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00113"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00114"
+                  }
+                },
+                {
+                  "_type": "UMLTextView",
+                  "_id": "c2-uml-00115",
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 581.0,
+                  "top": 864,
+                  "width": 780,
+                  "height": 54,
+                  "text": "已有直接边则返回UNCHANGED；以下为首次合法新增",
+                  "wordWrap": true,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00117",
+                  "model": {
+                    "$ref": "c2-uml-00116"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00089"
+                  },
+                  "points": "546.0:954;1578.0:954",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00118",
+                      "model": {
+                        "$ref": "c2-uml-00116"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 1571.0,
+                      "top": 954,
+                      "width": 14,
+                      "height": 30,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00117"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00118"
+                  }
+                },
+                {
+                  "_type": "UMLTextView",
+                  "_id": "c2-uml-00119",
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 581.0,
+                  "top": 1016,
+                  "width": 780,
+                  "height": 54,
+                  "text": "若可达senior则CYCLE；原关系不变",
+                  "wordWrap": true,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00121",
+                  "model": {
+                    "$ref": "c2-uml-00120"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00086"
+                  },
+                  "points": "546.0:1106;1258.0:1106",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00122",
+                      "model": {
+                        "$ref": "c2-uml-00120"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 1251.0,
+                      "top": 1106,
+                      "width": 14,
+                      "height": 30,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00121"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00122"
+                  }
+                },
+                {
+                  "_type": "UMLSeqMessageView",
+                  "_id": "c2-uml-00124",
+                  "model": {
+                    "$ref": "c2-uml-00123"
+                  },
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "tail": {
+                    "$ref": "c2-uml-00080"
+                  },
+                  "head": {
+                    "$ref": "c2-uml-00083"
+                  },
+                  "points": "546.0:1182;910.0:1182",
+                  "lineStyle": 0,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  },
+                  "subViews": [
+                    {
+                      "_type": "UMLActivationView",
+                      "_id": "c2-uml-00125",
+                      "model": {
+                        "$ref": "c2-uml-00123"
+                      },
+                      "font": "Microsoft YaHei;13;0",
+                      "lineColor": "#30435b",
+                      "fontColor": "#30435b",
+                      "left": 903.0,
+                      "top": 1182,
+                      "width": 14,
+                      "height": 30,
+                      "fillColor": "#ffffff",
+                      "_parent": {
+                        "$ref": "c2-uml-00124"
+                      }
+                    }
+                  ],
+                  "activation": {
+                    "$ref": "c2-uml-00125"
+                  }
+                },
+                {
+                  "_type": "UMLTextView",
+                  "_id": "c2-uml-00126",
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 581.0,
+                  "top": 1244,
+                  "width": 780,
+                  "height": 54,
+                  "text": "保存成功后更新parents，返回ADDED；保存失败不提前改图",
+                  "wordWrap": true,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  }
+                },
+                {
+                  "_type": "UMLTextView",
+                  "_id": "c2-uml-00127",
+                  "font": "Microsoft YaHei;13;0",
+                  "lineColor": "#30435b",
+                  "fontColor": "#30435b",
+                  "left": 90,
+                  "top": 1364,
+                  "width": 1598,
+                  "height": 115,
+                  "text": "本图是隔离内存小样，不代表HTTP、MySQL并发或完整组织重授。实际拒绝从抛出方返回调用者；本成功主链不穷举异常。",
+                  "wordWrap": true,
+                  "_parent": {
+                    "$ref": "c2-uml-00074"
+                  }
+                }
+              ],
+              "showSequenceNumber": true,
+              "sequenceNumbering": "custom",
+              "showActivation": true,
+              "_parent": {
+                "$ref": "c2-uml-00073"
+              }
+            }
+          ],
+          "_parent": {
+            "$ref": "c2-uml-00002"
+          }
+        }
+      ],
+      "_parent": {
+        "$ref": "c2-uml-00001"
+      }
+    }
+  ]
+}

@@ -1,9 +1,12 @@
+// 文件职责：集中声明员工、角色、权限和关系查询的公开响应。
+// 协作关系：由管理 Controller 通过 CloneFactory 或显式派生映射生成。
 package organization.vo;
 
 import java.util.List;
 
 /** 管理端目录和关联查询的公开响应。 */
 public final class ManagementVO {
+    /** 禁止实例化仅提供静态规则或嵌套模型的工具容器。 */
     private ManagementVO() {
     }
 

@@ -1,3 +1,5 @@
+// 文件职责：映射角色名称及所属组织。
+// 协作关系：由管理维护创建重命名，被分配、继承和实时授权共同引用。
 package rolepermission;
 
 import jakarta.persistence.Entity;

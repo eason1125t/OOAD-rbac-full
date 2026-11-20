@@ -1,8 +1,9 @@
-// 将申请仓储端口接到 Spring Data JPA，保留行锁和事务内持久化。
+// 文件职责：将申请领域对象与 JPA 持久化模型相互转换。
+// 协作关系：实现 RequestRepository，并委托 SimulatedRequestRepository 查询及行锁。
 package simulation.infrastructure;
 
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import simulation.port.RequestRepository;
 public class JpaRequestRepository implements RequestRepository {
     private final SimulatedRequestRepository requests;
 
+    /** 统一系统与删除过滤进行分页，超大偏移量返回空页和真实总数。 */
     @Override
     public Slice list(Long systemId, int page, int pageSize) {
         PageRequest pagination = PageRequest.of(page - 1, pageSize);
@@ -29,11 +31,13 @@ public class JpaRequestRepository implements RequestRepository {
         return new Slice(result.stream().map(JpaRequestRepository::domain).toList(), result.getTotalElements());
     }
 
+    /** 读取未删除记录并还原领域对象，不引入写锁。 */
     @Override
     public Optional<BusinessRequest> find(Long id) {
         return requests.findByIdAndDeletedAtIsNull(id).map(JpaRequestRepository::domain);
     }
 
+    /** 在调用方事务中锁定未删除申请行，再还原领域对象。 */
     @Override
     public Optional<BusinessRequest> lock(Long id) {
         return requests.findLockedByIdAndDeletedAtIsNull(id).map(JpaRequestRepository::domain);
@@ -50,6 +54,7 @@ public class JpaRequestRepository implements RequestRepository {
         return domain(requests.save(row));
     }
 
+    /** 从持久化字段还原领域状态，保留历史申请人的空值。 */
     private static BusinessRequest domain(SimulatedRequest row) {
         return new BusinessRequest(row.getId(), row.getSystemId(), row.getApplicantId(),
                 row.getTitle(), row.getStatus(), row.getDeletedAt());

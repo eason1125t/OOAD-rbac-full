@@ -1,3 +1,5 @@
+// 文件职责：维护 C2 员工、角色及权限定义并保护已有引用。
+// 协作关系：协作 AuthorizationService、继承写锁和各实体仓储。
 package organization;
 
 import assignment.EmployeeRoleRepository;
@@ -6,8 +8,8 @@ import assignment.RolePermissionRepository;
 import authorization.AdministratorScope;
 import authorization.AdministratorScopeRepository;
 import authorization.AuthorizationService;
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -22,7 +24,7 @@ import rolepermission.RoleInheritanceStore;
 import simulation.BusinessSystem;
 import simulation.BusinessSystemRepository;
 
-/** 维护 RBAC0 的员工、角色及权限定义，与分配事务共用实体锁。 */
+/** 维护 C2 员工、角色及权限定义，与分配和继承写入共用锁及引用保护。 */
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -96,7 +98,7 @@ public class ManagementMaintenanceService {
         }
     }
 
-    /** 员工或权限仍使用角色时拒绝删除。 */
+    /** 员工、权限分配或任一方向继承边仍引用角色时拒绝删除。 */
     public void deleteRole(Long actor, Long id) {
         AdministratorScope scope = scope(actor);
         hierarchy.lockWrites();

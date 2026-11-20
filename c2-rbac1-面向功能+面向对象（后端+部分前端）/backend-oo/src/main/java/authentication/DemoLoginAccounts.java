@@ -1,4 +1,5 @@
-// 显式初始化两版的合成账号，沿用现有密码编码器。
+// 文件职责：按显式开关初始化演示账号和密码哈希。
+// 协作关系：与 InitializationService 的合成员工数据协作，不自动开放普通账号。
 package authentication;
 
 import java.util.List;

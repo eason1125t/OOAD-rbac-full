@@ -1,11 +1,12 @@
-// 维护同归属角色的继承边，复用 C1 分配规则检查新增授权。
+// 文件职责：在单事务中校验并维护同归属继承边。
+// 协作关系：协作 AuthorizationService、AssignmentService 和继承存储。
 package rolepermission;
 
 import assignment.AssignmentService;
 import authorization.AdministratorScope;
 import authorization.AuthorizationService;
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import rolepermission.domain.RoleHierarchy;
 
+/** 在单事务中校验并维护同归属继承边，协作 AuthorizationService、AssignmentService 和继承存储。 */
 @Service
 @RequiredArgsConstructor
 @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -53,6 +55,7 @@ public class RoleInheritanceService {
         hierarchy.add(key);
     }
 
+    /** 读取继承边端点角色，不存在时转换为统一资源错误。 */
     private RbacRole role(Long id) {
         return roles.findById(id).orElseThrow(() -> new BusinessAccessException(Reason.RESOURCE_NOT_FOUND));
     }

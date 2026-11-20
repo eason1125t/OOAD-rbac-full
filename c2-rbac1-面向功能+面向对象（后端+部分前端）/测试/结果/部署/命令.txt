@@ -1,0 +1,26 @@
+执行日期：2026-11-20（Asia/Shanghai）
+工作目录：C2 根目录；基线 HEAD=721f48d，测试包含待交付工作区。
+环境：Docker Desktop Linux x86_64；Docker Compose 5.7.0；Edge。
+基础构建镜像使用 public.ecr.aws/docker/library 下对应 Maven/Temurin/Node/Nginx 标签；数据库为 MySQL 8.4.7、Redis 7.4.6。
+配置：独立 c2-delivery-check 项目，127.0.0.1:18080，生成的 .env.local 与 secret 不归档。
+
+python 部署/manage.py --env 部署/.env.local build
+退出码 0，三镜像从源码构建；未推送镜像仓库。
+python 部署/manage.py --env 部署/.env.local secrets
+python 部署/manage.py --env 部署/.env.local render
+python 部署/manage.py --env 部署/.env.local render --local
+均退出码 0；Swarm 配置仅渲染，未 stack deploy。
+docker compose -f 部署/local.json up -d --wait --wait-timeout 300
+退出码 0，五个服务健康。
+docker compose -f 部署/local.json run --rm -T -e RBAC_DEMO_ACCOUNTS_ENABLED=true backend-func --init-demo
+docker compose -f 部署/local.json run --rm -T -e RBAC_DEMO_ACCOUNTS_ENABLED=true backend-oo --init-demo
+均退出码 0。
+python 测试/部署/test_manage.py -v
+退出码 0，5 项通过。
+python 测试/部署/smoke.py --url http://127.0.0.1:18080 --exercise --output 部署/结果/smoke.json
+退出码 0，7 组检查通过；实际 JSON 复制到本批次。
+RBAC_DEPLOY_BASE_URL=http://127.0.0.1:18080，RBAC_BROWSER_CHANNEL=msedge
+npm --prefix 测试/前端 run test:remote
+退出码 0，3 项通过。
+
+附加验证：两库 Flyway 版本、跨库 SELECT 拒绝、双版申请日志、shell 语法和私有 SQL 导出已实测；未恢复数据库，未验证课程 Swarm。

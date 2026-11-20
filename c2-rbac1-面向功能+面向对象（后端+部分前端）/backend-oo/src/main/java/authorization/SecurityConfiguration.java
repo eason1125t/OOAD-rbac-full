@@ -1,3 +1,5 @@
+// 文件职责：配置请求认证、CSRF、路由保护及依赖故障拦截。
+// 协作关系：通过 SessionAuthentication 还原身份并调用 AuthorizationService 保护管理入口。
 package authorization;
 
 import assignment.OrganizationPermissionController;

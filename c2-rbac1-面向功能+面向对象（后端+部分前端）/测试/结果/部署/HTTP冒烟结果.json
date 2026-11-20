@@ -1,0 +1,37 @@
+{
+  "executed_utc": "2026-11-19T16:59:03.772384+00:00",
+  "base_url": "http://127.0.0.1:18080",
+  "exercise": true,
+  "checks": [
+    {
+      "check": "C2-DEPLOY static routes, deep links and JavaScript",
+      "status": "PASS"
+    },
+    {
+      "check": "C2-08 func login, Cookie Path and API error routing",
+      "status": "PASS"
+    },
+    {
+      "check": "C2-11/12 func create, update, withdraw and reject terminal transition",
+      "status": "PASS",
+      "requestId": 25
+    },
+    {
+      "check": "C2-08 oo login, Cookie Path and API error routing",
+      "status": "PASS"
+    },
+    {
+      "check": "C2-11/12 oo create, update, withdraw and reject terminal transition",
+      "status": "PASS",
+      "requestId": 25
+    },
+    {
+      "check": "C2-08 independent database writes",
+      "status": "PASS"
+    },
+    {
+      "check": "C2-08 func logout preserves oo session in the same client",
+      "status": "PASS"
+    }
+  ]
+}

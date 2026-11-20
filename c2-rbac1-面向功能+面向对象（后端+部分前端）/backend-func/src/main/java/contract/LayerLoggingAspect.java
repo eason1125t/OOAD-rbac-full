@@ -1,3 +1,5 @@
+// 文件职责：统一输出方法耗时和异常类型日志。
+// 协作关系：环绕 Controller、Service、会话适配器和初始化命令，不打印参数。
 package contract;
 
 import org.aspectj.lang.ProceedingJoinPoint;

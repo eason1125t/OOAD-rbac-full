@@ -1,3 +1,5 @@
+// 文件职责：返回当前员工、管理员范围和可选工作区。
+// 协作关系：由 WorkspaceService 构造，AuthController 输出给前端。
 package authentication.vo;
 
 import authentication.WorkspaceService.CurrentSession;

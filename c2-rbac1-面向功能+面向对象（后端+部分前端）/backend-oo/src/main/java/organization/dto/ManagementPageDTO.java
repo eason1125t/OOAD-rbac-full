@@ -1,3 +1,5 @@
+// 文件职责：约束管理查询的页码、页容量和可选系统条件。
+// 协作关系：由 ManagementQueryController 校验后传入查询 Service。
 package organization.dto;
 
 import jakarta.validation.constraints.Max;

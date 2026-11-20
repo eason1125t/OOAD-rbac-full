@@ -1,3 +1,5 @@
+// 文件职责：查询与清理组织范围重授记录。
+// 协作关系：服务组织策略变更及角色直接权限撤销。
 package assignment;
 
 import java.util.List;

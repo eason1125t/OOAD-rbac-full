@@ -1,3 +1,5 @@
+// 文件职责：适配员工、角色、权限维护的 HTTP 请求。
+// 协作关系：校验 ManagementWriteDTO 后调用 ManagementMaintenanceService 并映射 VO。
 package organization;
 
 import jakarta.validation.Valid;

@@ -1,8 +1,9 @@
-// 纯申请领域模型。持久化适配器还原状态，应用服务调用业务方法执行迁移。
+// 文件职责：维护申请人的操作边界及申请生命周期规则。
+// 协作关系：由对象版应用 Service 调用，由 JpaRequestRepository 还原及保存。
 package simulation.domain;
 
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.AllArgsConstructor;
@@ -74,6 +75,7 @@ public final class BusinessRequest {
         }
     }
 
+    /** 仅允许未删除的待审批申请继续修改或转换状态。 */
     private void requirePending() {
         if (!PENDING.equals(status) || deletedAt != null) {
             throw new BusinessAccessException(Reason.REQUEST_STATE_CONFLICT);

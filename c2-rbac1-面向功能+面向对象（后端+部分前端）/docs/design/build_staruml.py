@@ -801,25 +801,25 @@ def write_index():
         for path in entry["sources"]:
             if not (C2/path).exists():
                 raise ValueError(f"索引源码不存在: {path}")
-        contract = f"backend-{'oo' if version == 'shared' else version}/src/test/java/contract/AuthSessionTest.java"
+        contract = "测试/后端/common/java/contract/AuthSessionTest.java"
         if "新增角色继承" in name:
             requirements = "C2-01、03、05、07"
             methods = ["inheritanceRevocationAppliesToExistingSession", "serializesInheritanceWritesWithDisjointEndpoints"]
-            browser = "frontend/tests/authorization.spec.ts"
+            browser = "测试/前端/tests/authorization.spec.ts"
         elif "有效权限" in name:
             requirements = "C2-01、02、05、06"
             methods = ["inheritanceRevocationAppliesToExistingSession", "matchesReopenedScopesToOneInheritedPermissionSource"]
-            browser = "frontend/tests/role-permissions.spec.ts"
+            browser = "测试/前端/tests/role-permissions.spec.ts"
         elif "同会话" in name:
             requirements = "C2-04、10、15"
             methods = ["inheritanceRevocationAppliesToExistingSession", "requiresReadPermissionForRequests"]
-            browser = "frontend/tests/authorization.spec.ts"
+            browser = "测试/前端/tests/authorization.spec.ts"
         elif "审批" in name:
             requirements = "C2-11、12、13、14、15、16"
             methods = ["approvesOnlyInGrantedSystem", "approvesOnlyOnceConcurrently", "recordsRequestActionOutcomes", "requiresReadPermissionForRequests"]
-            browser = "frontend/tests/oo-entry.spec.ts"
+            browser = "测试/前端/tests/oo-entry.spec.ts"
         else:
-            requirements, methods, browser = "课程结构与职责检查", [], "frontend/tests/isolation.spec.ts"
+            requirements, methods, browser = "课程结构与职责检查", [], "测试/前端/tests/isolation.spec.ts"
         requirements = entry.get("requirements", requirements)
         methods = entry.get("testMethods", methods)
         browser = entry.get("browserTest", browser)

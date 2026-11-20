@@ -1,3 +1,5 @@
+// 文件职责：统一声明业务拒绝原因及中文错误消息。
+// 协作关系：由各 Service 和领域规则抛出，由安全边界或 ApiExceptionHandler 映射。
 package contract;
 
 import lombok.Getter;

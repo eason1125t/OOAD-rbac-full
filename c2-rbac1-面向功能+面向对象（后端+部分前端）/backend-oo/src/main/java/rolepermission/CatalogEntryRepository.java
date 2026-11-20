@@ -1,3 +1,5 @@
+// 文件职责：分页读取与定位原表功能权限清单。
+// 协作关系：供 InitializationService 幂等导入及 ManagementQueryService 展示。
 package rolepermission;
 
 import org.springframework.data.jpa.repository.JpaRepository;

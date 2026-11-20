@@ -1,4 +1,5 @@
-// 直接继承边的 JPA 映射，与 Flyway 的组合主键保持一致。
+// 文件职责：映射高级角色取得低级角色权限的直接继承边。
+// 协作关系：由继承存储维护，两个角色 ID 组成关系主键。
 package rolepermission;
 
 import jakarta.persistence.Entity;

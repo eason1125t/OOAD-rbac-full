@@ -1,3 +1,4 @@
+# 本版后端的连接、日志与会话配置；由 RbacApplication 装配，凭据从环境变量读取。
 # Flyway 管理表结构，Hibernate 在启动时核对 JPA 映射。
 logging:
   level:

@@ -1,3 +1,5 @@
+// 文件职责：映射按业务系统区分的运行时动作权限。
+// 协作关系：由角色权限分配引用，AuthorizationService 按系统和权限码判权。
 package rolepermission;
 
 import jakarta.persistence.Entity;

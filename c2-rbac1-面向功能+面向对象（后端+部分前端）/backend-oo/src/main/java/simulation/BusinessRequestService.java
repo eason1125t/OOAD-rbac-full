@@ -1,27 +1,29 @@
-// 申请应用服务，协调实时授权、仓储事务和操作日志，状态规则由申请实体执行。
+// 文件职责：编排申请读取和写入的实时授权、事务与结果映射。
+// 协作关系：由申请 Controller 调用，并通过 BusinessRequestAudit 记录事务结果。
 package simulation;
 
 import cn.edu.xmu.clonefactory.CopyFrom;
 import cn.edu.xmu.clonefactory.util.CloneFactory;
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import lombok.RequiredArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import simulation.BusinessRequestAudit.Action;
 import simulation.domain.BusinessRequest;
 import simulation.domain.RequestSystem;
 import simulation.port.RequestAccess;
 import simulation.port.RequestRepository;
 import simulation.port.RequestSystems;
-import simulation.BusinessRequestAudit.Action;
 
+/** 编排申请读取和写入的实时授权、事务与结果映射，由申请 Controller 调用，并通过 BusinessRequestAudit 记录事务结果。 */
 @Service
 @RequiredArgsConstructor
 public class BusinessRequestService {
@@ -51,6 +53,7 @@ public class BusinessRequestService {
         private String status;
     }
 
+    /** 同一系统的分页结果及当前可用写动作；逐行所有权和状态由写入口复核。 */
     public record RequestPage(List<RequestSummary> items, long total, List<String> allowedActions) {
     }
 
@@ -80,6 +83,7 @@ public class BusinessRequestService {
         });
     }
 
+    /** 按系统发起待审批申请，申请人身份由可信会话确定。 */
     @Transactional
     public RequestDetail create(Long employeeId, String systemCode, String title) {
         return BusinessRequestAudit.record(Action.CREATE, employeeId, null, target -> {
@@ -92,6 +96,7 @@ public class BusinessRequestService {
         });
     }
 
+    /** 读取未删除申请并校验所属系统的查看权。 */
     @Transactional(readOnly = true)
     public RequestDetail detail(Long employeeId, Long requestId) {
         return BusinessRequestAudit.record(Action.DETAIL, employeeId, requestId, target -> {
@@ -103,26 +108,31 @@ public class BusinessRequestService {
         });
     }
 
+    /** 在查看权和修改权通过后，修改本人待审批申请的标题。 */
     @Transactional
     public RequestDetail update(Long employeeId, Long requestId, String title) {
         return change(Action.UPDATE, employeeId, requestId, UPDATE_PERMISSION, row -> row.rename(employeeId, title));
     }
 
+    /** 在实时授权后撤回本人待审批申请，原单保留且不可重提。 */
     @Transactional
     public RequestDetail withdraw(Long employeeId, Long requestId) {
         return change(Action.WITHDRAW, employeeId, requestId, WITHDRAW_PERMISSION, row -> row.withdraw(employeeId));
     }
 
+    /** 执行实时查看与审批授权，重复审批保留兼容错误码。 */
     @Transactional
     public void approve(Long employeeId, Long requestId) {
         change(Action.APPROVE, employeeId, requestId, APPROVE_PERMISSION, BusinessRequest::approve);
     }
 
+    /** 在查看权和驳回权通过后将待审批申请置为已驳回。 */
     @Transactional
     public RequestDetail reject(Long employeeId, Long requestId) {
         return change(Action.REJECT, employeeId, requestId, REJECT_PERMISSION, BusinessRequest::reject);
     }
 
+    /** 仅逻辑删除本人已驳回申请，后续列表与详情隐藏记录。 */
     @Transactional
     public void delete(Long employeeId, Long requestId) {
         change(Action.DELETE, employeeId, requestId, DELETE_PERMISSION,
@@ -145,6 +155,7 @@ public class BusinessRequestService {
         });
     }
 
+    /** 将当前申请的公开字段映射为服务结果，不暴露持久化实体。 */
     private static RequestDetail detailOf(BusinessRequest row) {
         return CloneFactory.copy(new RequestDetail(), row);
     }

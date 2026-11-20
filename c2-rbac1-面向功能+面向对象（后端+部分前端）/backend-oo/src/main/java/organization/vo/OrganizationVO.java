@@ -1,3 +1,5 @@
+// 文件职责：返回组织目录及原表层级展示字段。
+// 协作关系：由 ManagementQueryController 映射组织分页结果。
 package organization.vo;
 
 import cn.edu.xmu.clonefactory.CopyFrom;

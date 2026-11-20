@@ -1,3 +1,5 @@
+// 文件职责：映射组织对某权限的停用或重新开放策略。
+// 协作关系：由 OrganizationPermissionService 维护，授权和分配时共同读取。
 package assignment;
 
 import jakarta.persistence.Entity;

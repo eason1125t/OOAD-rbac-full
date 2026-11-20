@@ -1,8 +1,10 @@
+// 文件职责：管理组织停用、重新开放和来源角色重授事务。
+// 协作关系：协作权限、角色、组织策略与重授仓储。
 package assignment;
 
 import authorization.AuthorizationService;
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;

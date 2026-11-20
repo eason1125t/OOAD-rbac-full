@@ -1,3 +1,5 @@
+// 文件职责：映射重开范围内直接权限来源角色的显式重授。
+// 协作关系：依赖角色权限关系，由组织策略服务维护和授权仓储读取。
 package assignment;
 
 import jakarta.persistence.Entity;

@@ -1,3 +1,5 @@
+// 文件职责：解析显式 Excel 导入或演示初始化启动参数。
+// 协作关系：调用 InitializationService 完成显式操作，非 Web 模式不监听端口。
 package initialization;
 
 import initialization.InitializationService.ImportResult;

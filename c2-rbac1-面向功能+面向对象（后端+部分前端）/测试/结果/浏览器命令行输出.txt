@@ -1,0 +1,42 @@
+
+> test
+> playwright test --timeout=90000
+
+[WebServer] (node:46232) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:38900) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 23 tests using 1 worker
+
+(node:48412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [oo] › tests\authorization.spec.ts:43:1 › C2-11 至 C2-14 三个系统完成申请操作并回查状态 (6.5s)
+  ok  2 [oo] › tests\authorization.spec.ts:103:1 › C2-04 / C2-11 演示申请人和继承审批人分工，乙公司无法进入工程系统 (2.0s)
+  ok  3 [oo] › tests\authorization.spec.ts:140:1 › C2-03 环路被拒绝后可继续维护该角色的继承关系 (2.6s)
+  ok  4 [oo] › tests\authorization.spec.ts:184:1 › C2-05 共享边仅全局管理员可维护，部门管理员无法查询外部角色 (1.9s)
+  ok  5 [oo] › tests\authorization.spec.ts:222:1 › C2-01、C2-02、C2-04、C2-06 直接与传递继承、权限去重及逐条撤权 (9.3s)
+  ok  6 [oo] › tests\excel-review.spec.ts:53:1 › C2-09 从管理端全量对照员工、部门和功能权限原表 (2.9s)
+  ok  7 [oo] › tests\oo-entry.spec.ts:4:1 › C2-08 首页进入指定版本 (343ms)
+  ok  8 [oo] › tests\request-read.spec.ts:4:1 › C2-15 撤销查看权后原页面清空列表和详情，重授后恢复读取 (2.1s)
+  ok  9 [oo] › tests\role-permissions.spec.ts:83:1 › C2-01 角色权限按系统名称选动作并显示演示继承权限 (1.6s)
+  ok 10 [oo] › tests\role-permissions.spec.ts:109:1 › C2-01 撤销同名直接授权保留继承权限 (3.6s)
+  ok 11 [oo] › tests\role-permissions.spec.ts:134:1 › C2-02 / C2-04 两个来源的权限去重，最后一条继承边移除后消失 (6.3s)
+(node:60524) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 12 [func] › tests\authorization.spec.ts:43:1 › C2-11 至 C2-14 三个系统完成申请操作并回查状态 (6.8s)
+  ok 13 [func] › tests\authorization.spec.ts:103:1 › C2-04 / C2-11 演示申请人和继承审批人分工，乙公司无法进入工程系统 (1.8s)
+  ok 14 [func] › tests\authorization.spec.ts:140:1 › C2-03 环路被拒绝后可继续维护该角色的继承关系 (1.9s)
+  ok 15 [func] › tests\authorization.spec.ts:184:1 › C2-05 共享边仅全局管理员可维护，部门管理员无法查询外部角色 (1.7s)
+  ok 16 [func] › tests\authorization.spec.ts:222:1 › C2-01、C2-02、C2-04、C2-06 直接与传递继承、权限去重及逐条撤权 (8.4s)
+  ok 17 [func] › tests\excel-review.spec.ts:53:1 › C2-09 从管理端全量对照员工、部门和功能权限原表 (2.4s)
+  ok 18 [func] › tests\oo-entry.spec.ts:4:1 › C2-08 首页进入指定版本 (253ms)
+  ok 19 [func] › tests\request-read.spec.ts:4:1 › C2-15 撤销查看权后原页面清空列表和详情，重授后恢复读取 (1.7s)
+  ok 20 [func] › tests\role-permissions.spec.ts:83:1 › C2-01 角色权限按系统名称选动作并显示演示继承权限 (917ms)
+  ok 21 [func] › tests\role-permissions.spec.ts:109:1 › C2-01 撤销同名直接授权保留继承权限 (2.0s)
+  ok 22 [func] › tests\role-permissions.spec.ts:134:1 › C2-02 / C2-04 两个来源的权限去重，最后一条继承边移除后消失 (2.7s)
+(node:59736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 23 [dual] › tests\isolation.spec.ts:12:1 › C2-10 同一浏览器两标签页各自登录、写入和退出 (9.2s)
+
+  23 passed (1.4m)

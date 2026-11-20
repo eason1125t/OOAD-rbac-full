@@ -1,3 +1,5 @@
+// 文件职责：查询运行时权限和直接或继承授权目录。
+// 协作关系：为管理展示、实时授权与分配策略提供查询及权限行锁。
 package rolepermission;
 
 import jakarta.persistence.LockModeType;
@@ -49,6 +51,7 @@ public interface PermissionRepository extends JpaRepository<Permission, Long> {
     /** 用系统与编码共同定位权限，同名权限属于各自系统。 */
     Optional<Permission> findBySystemIdAndCode(Long systemId, String code);
 
+    /** 按系统稳定排序读取动作定义，由授权入口逐项判断当前可用性。 */
     List<Permission> findBySystemIdOrderByIdAsc(Long systemId);
 
     /** 串行化同一动作的组织策略与分配变更。 */

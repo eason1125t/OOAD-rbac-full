@@ -1,3 +1,5 @@
+// 文件职责：提供组织策略查询、停用、重开与重授 API。
+// 协作关系：调用 OrganizationPermissionService 并输出 PolicyStateVO。
 package assignment;
 
 import assignment.vo.PolicyStateVO;

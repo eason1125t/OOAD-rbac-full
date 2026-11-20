@@ -1,3 +1,5 @@
+// 文件职责：映射登录名、密码哈希与员工账号关联。
+// 协作关系：由演示初始化创建，SessionAuthentication 校验凭据。
 package authentication;
 
 import jakarta.persistence.Entity;

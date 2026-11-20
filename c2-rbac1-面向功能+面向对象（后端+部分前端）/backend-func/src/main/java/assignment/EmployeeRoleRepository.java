@@ -1,3 +1,5 @@
+// 文件职责：查询与维护员工的直接角色关系。
+// 协作关系：为分配检查、员工维护和实时授权提供 JPA 查询。
 package assignment;
 
 import java.util.List;

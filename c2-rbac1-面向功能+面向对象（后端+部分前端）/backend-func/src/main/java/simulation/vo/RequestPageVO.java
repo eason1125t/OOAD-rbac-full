@@ -1,4 +1,5 @@
-// 分页申请记录与当前会话在该系统的动作权限。
+// 文件职责：组合申请分页、记录总数与当前可用写动作。
+// 协作关系：由申请 Controller 输出，动作列表不替代服务端再次鉴权。
 package simulation.vo;
 
 import java.util.List;

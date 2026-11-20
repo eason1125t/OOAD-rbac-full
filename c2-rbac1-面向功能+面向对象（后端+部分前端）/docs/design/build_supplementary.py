@@ -10,7 +10,7 @@ import itertools
 import re
 
 
-def record(u, name, kind, sources, operation="—", version="shared", requirements="课程结构与职责检查", methods=(), browser="frontend/tests/isolation.spec.ts"):
+def record(u, name, kind, sources, operation="—", version="shared", requirements="课程结构与职责检查", methods=(), browser="测试/前端/tests/isolation.spec.ts"):
     for path in sources:
         if not (u.C2/path).exists():
             raise ValueError(f"图件源码不存在: {path}")
@@ -95,7 +95,7 @@ class Graph:
                     raise ValueError(f"补充图连线穿框: {a}, {b}")
 
 
-def pipeline(u, parent, name, stages, note, sources, version="func", operation="—", methods=(), browser="frontend/tests/authorization.spec.ts"):
+def pipeline(u, parent, name, stages, note, sources, version="func", operation="—", methods=(), browser="测试/前端/tests/authorization.spec.ts"):
     """主流程由上到下，检查失败向右进入独立终止动作；箭头标签是真实条件。"""
     graph = Graph(u, parent, name, "activity")
     graph.add("start", "", 595, 40, 24, 24, initial=True)
@@ -284,7 +284,7 @@ def flows(u,parent):
         ("CloneFactory 映射详情；成功注册 afterCompletion；Spring 提交事务","提交失败 → FAILED；不得记录 COMMITTED"),
         ("提交成功后日志 COMMITTED；Controller 返回契约响应",None)],
         "本人专属检查只适用于修改、撤回和删除；审批／驳回允许有权限者处理本人。LIST/DETAIL 需 read、排除逻辑删除，不经过写入状态迁移。",["backend-func/src/main/java/simulation/BusinessRequestService.java","backend-func/src/main/java/simulation/BusinessRequestAudit.java"],
-        operation="createRequest / updateRequest / withdrawRequest / rejectRequest / deleteRejectedRequest",methods=["updatesAndWithdrawsPendingRequest","rejectsAndDeletesOnlyOwnRejectedRequest"],browser="frontend/tests/oo-entry.spec.ts")
+        operation="createRequest / updateRequest / withdrawRequest / rejectRequest / deleteRejectedRequest",methods=["updatesAndWithdrawsPendingRequest","rejectsAndDeletesOnlyOwnRejectedRequest"],browser="测试/前端/tests/oo-entry.spec.ts")
 
 
 def request_state(u,parent):
@@ -423,7 +423,7 @@ def frontend(u,parent):
         ("发起/修改标题或选择审批、驳回、撤回、删除",None),
         ("api.write 先获取当前 Cookie 的 CSRF，再发送动作请求","网络/接口错误：保留错误回执"),
         ("成功更新列表与详情状态；创建/修改/删除按需重新 load",None)],
-        "write 的错误分支：action() 收到 403/404/409 后重新 load，再按需 details；submitEditor() 保留编辑器与回执，不保证编辑错误自动刷新。\n按钮可见性不能替代后端鉴权；列表/详情拒绝时清空旧数据。",["frontend/src/BusinessPage.vue","frontend/src/api.ts"],"shared",methods=["requiresReadPermissionForRequests"],browser="frontend/tests/request-read.spec.ts")
+        "write 的错误分支：action() 收到 403/404/409 后重新 load，再按需 details；submitEditor() 保留编辑器与回执，不保证编辑错误自动刷新。\n按钮可见性不能替代后端鉴权；列表/详情拒绝时清空旧数据。",["frontend/src/BusinessPage.vue","frontend/src/api.ts"],"shared",methods=["requiresReadPermissionForRequests"],browser="测试/前端/tests/request-read.spec.ts")
     excel_browse(u,parent)
     pipeline(u,parent,"39-shared-角色权限页面-活动图",[
         ("RolePermissions.load 并行读取系统、权限定义、直接与继承分页",None),
@@ -431,7 +431,7 @@ def frontend(u,parent):
         ("直接授予：允许 PUT/DELETE；继承权限标记无法修改",None),
         ("change 只写 /roles/{id}/permissions/{permissionId}","接口拒绝/冲突：显示错误，不改为直接授权"),
         ("重读直接权限页；删空末页回退；继承来源通过重新读取更新",None)],
-        "继承权限来自 inherited-permissions，编辑的是当前角色的直接授权，不会修改提供权限的角色。\n继承关系由 AssignmentEditor 的 parents 入口维护；需要删除来源边或来源授权才能撤销继承权限。",["frontend/src/RolePermissions.vue","frontend/src/AssignmentEditor.vue"],"shared",browser="frontend/tests/role-permissions.spec.ts")
+        "继承权限来自 inherited-permissions，编辑的是当前角色的直接授权，不会修改提供权限的角色。\n继承关系由 AssignmentEditor 的 parents 入口维护；需要删除来源边或来源授权才能撤销继承权限。",["frontend/src/RolePermissions.vue","frontend/src/AssignmentEditor.vue"],"shared",browser="测试/前端/tests/role-permissions.spec.ts")
 
 
 def excel_browse(u,parent):
@@ -454,7 +454,7 @@ def excel_browse(u,parent):
     g.link("loop","all","未完成：page += 1",[(1335,1390),(1750,1390),(1750,1207),(1570,1207)])
     g.note("目录表按需分页，allPages 只用于表单选择项，不是一次下载全部员工。全局原表基线：10,000 员工、111 组织目录、359 功能清单；局部管理员只看到自己的范围。\n原表和演示角色/申请分别维护；电话脱敏及未匹配组织标记沿用现有页面。浏览目录和进入表单为用户选择，图中没有强制串联。")
     g.finish();record(u,name,"activity",["frontend/src/AdminDirectory.vue","frontend/src/referenceData.ts","backend-oo/src/main/java/organization/ManagementQueryService.java"],
-        version="shared",requirements="C2-09",browser="frontend/tests/excel-review.spec.ts")
+        version="shared",requirements="C2-09",browser="测试/前端/tests/excel-review.spec.ts")
 
 
 def login_sequence(u,parent):

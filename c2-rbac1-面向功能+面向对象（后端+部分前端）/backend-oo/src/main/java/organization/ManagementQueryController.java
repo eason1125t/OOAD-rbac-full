@@ -1,3 +1,5 @@
+// 文件职责：提供管理目录、关系及有效权限查询 API。
+// 协作关系：校验分页 DTO 后调用 ManagementQueryService 并输出公开 VO。
 package organization;
 
 import cn.edu.xmu.clonefactory.util.CloneFactory;

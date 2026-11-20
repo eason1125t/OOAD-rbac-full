@@ -1,3 +1,5 @@
+// 文件职责：集中声明管理维护请求的可写字段及格式约束。
+// 协作关系：由维护 Controller 接收，组织范围和引用规则交给 Service。
 package organization.dto;
 
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +10,7 @@ import jakarta.validation.constraints.Size;
 
 /** 维护接口输入，仅声明可写字段，组织范围由 Service 校验。 */
 public final class ManagementWriteDTO {
+    /** 禁止实例化仅提供静态规则或嵌套模型的工具容器。 */
     private ManagementWriteDTO() {
     }
 

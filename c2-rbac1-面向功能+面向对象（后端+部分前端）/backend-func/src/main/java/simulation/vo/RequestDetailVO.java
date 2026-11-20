@@ -1,4 +1,5 @@
-// 申请公开响应，由 CloneFactory 从应用结果复制同名同类型字段。
+// 文件职责：返回申请 ID、标题、状态及可空申请人。
+// 协作关系：由申请 Controller 使用 CloneFactory 映射服务详情结果。
 package simulation.vo;
 
 import cn.edu.xmu.clonefactory.CopyFrom;

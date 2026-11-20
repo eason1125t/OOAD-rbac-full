@@ -1,8 +1,8 @@
-// 管理直接角色权限，并查询可达角色是否满足权限和范围重授。
+// 文件职责：查询直接权限来源及同源组织重授。
+// 协作关系：为 AuthorizationService 判权和 AssignmentService 校验提供数据。
 package assignment;
 
 import java.util.Set;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

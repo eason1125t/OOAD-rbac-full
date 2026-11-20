@@ -1,0 +1,13 @@
+
+> test
+> playwright test --timeout=90000
+
+[WebServer] (node:55792) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:4912) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+Error: Cannot find module 'D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\前端\tests\support\management' imported from D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\前端\tests\authorization.spec.ts
+    at eval (<anonymous>:1:1)
+Error: Cannot find module 'D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\前端\tests\support\management' imported from D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\前端\tests\role-permissions.spec.ts
+    at eval (<anonymous>:1:1)
+

@@ -1,0 +1,29 @@
+[
+  {
+    "name": "01-full-class",
+    "version": "full",
+    "kind": "class",
+    "operationId": "sample.addInheritance",
+    "summary": "领域对象主导两个窄端口协作；内存无数据库事务。",
+    "sources": [
+      "三模型比较/小样/src/main/java/comparison/FullRoleHierarchy.java",
+      "三模型比较/小样/src/main/java/comparison/ExampleMain.java",
+      "三模型比较/小样/src/main/java/comparison/InheritanceStore.java",
+      "三模型比较/小样/src/main/java/comparison/GrantPolicy.java",
+      "三模型比较/小样/src/main/java/comparison/InMemoryInheritanceStore.java"
+    ]
+  },
+  {
+    "name": "02-full-sequence",
+    "version": "full",
+    "kind": "sequence",
+    "operationId": "sample.addInheritance",
+    "summary": "成功主链，异常不保存；省略纯集合操作和immutable辅助转换。",
+    "sources": [
+      "三模型比较/小样/src/main/java/comparison/FullRoleHierarchy.java",
+      "三模型比较/小样/src/main/java/comparison/InMemoryInheritanceStore.java",
+      "三模型比较/小样/src/main/java/comparison/GrantPolicy.java",
+      "三模型比较/小样/src/main/java/comparison/FullRoleHierarchy.java"
+    ]
+  }
+]

@@ -1,3 +1,5 @@
+// 文件职责：根据员工及管理员范围计算可访问系统和默认工作区。
+// 协作关系：复用组织、系统与管理员仓储，为登录导航及授权提供同一准入规则。
 package authentication;
 
 import authorization.AdministratorScope;

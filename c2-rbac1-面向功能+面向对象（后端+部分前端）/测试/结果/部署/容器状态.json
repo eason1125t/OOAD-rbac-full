@@ -1,0 +1,32 @@
+[
+  {
+    "Service": "backend-func",
+    "State": "running",
+    "Health": "healthy",
+    "Image": "rbac-c2/backend-func:delivery"
+  },
+  {
+    "Service": "backend-oo",
+    "State": "running",
+    "Health": "healthy",
+    "Image": "rbac-c2/backend-oo:delivery"
+  },
+  {
+    "Service": "frontend",
+    "State": "running",
+    "Health": "healthy",
+    "Image": "rbac-c2/frontend:delivery"
+  },
+  {
+    "Service": "mysql",
+    "State": "running",
+    "Health": "healthy",
+    "Image": "mysql:8.4.7"
+  },
+  {
+    "Service": "redis",
+    "State": "running",
+    "Health": "healthy",
+    "Image": "redis:7.4.6-alpine"
+  }
+]

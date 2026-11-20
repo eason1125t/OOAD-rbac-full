@@ -1,29 +1,58 @@
-# 组织与员工
+# 组织、员工及跨模块管理用例
 
-C2 阶段进度以 [开发方案](../../../../../开发方向细节.md) 和 [收尾清单](../../../../../收尾清单.md) 为准，以下 C1 文档作为沿用功能的基线参考。
+## 核心职责
 
-状态：公司及部门目录、员工查询与维护已实现。参见 [C1 基线开发规划](<../../../../../../c1-框架-rbac0-结构化+面向功能/后端开发规划.md>)。
+本包不仅映射公司、部门和员工，还承载管理端跨角色、权限、清单与关系的查询和维护入口。公司、部门目录当前只读；员工删除 API 实际执行停用；角色授权关系写入由 assignment 承担，继承边写入由 rolepermission 承担。
 
-## 应有功能
+两版在此保留相同的 Service/JPA 实现；对象版并未将本包整体改为 DDD。继承算法差异经各版 `RoleInheritanceStore` 接入。
 
-负责公司、部门目录的只读查询，员工新增、查询、编辑、停用和待匹配员工归属。
+## 核心文件与函数
 
-## 实现方式
+| 文件 / 函数 | 实现重点 |
+| --- | --- |
+| [ManagementQueryController](ManagementQueryController.java) | 校验分页与路径，将 Page/实体映射为公开 VO，设置 `no-store` |
+| [ManagementQueryService.scope](ManagementQueryService.java) | 先验证 `MANAGEMENT_READ`，再区分可见组织 `ids` 与可查看上级策略的 `policyIds` |
+| `employees/organizations/roles/permissions/catalog` | 各按管理员可见范围查询；原表清单为管理员核对目录，不等同员工业务权限 |
+| `employeeRoles/roleParents/rolePermissions/inheritedRolePermissions` | 分别查询员工直接角色、一跳继承、直接权限和继承来源配置 |
+| `effectivePermissions` | 核对管理员能查看目标员工及目标系统后，调用统一授权入口计算实际权限，再在内存切页 |
+| [ManagementMaintenanceController](ManagementMaintenanceController.java) | 接收受 Bean Validation 保护的可写字段，调用维护 Service，创建返回 201 和 Location |
+| [ManagementMaintenanceService](ManagementMaintenanceService.java) | 以 READ_COMMITTED 事务校验管理范围、锁定资源并保护已有关系 |
+| [Employee](Employee.java) / [Organization](Organization.java) 及仓储 | 保存正式归属、来源字段和启用状态，供多模块共用 |
 
-管理员可在其管理范围内维护员工。变更归属检查新旧组织，已有角色或管理员配置需先解除。创建仅生成员工资料。员工删除表现为停用，保留历史关联。组织目录保留 Excel 上级展示字段，鉴权按正式组织 ID。
+## 查询实现与三个权限概念
 
-## 与其他模块的关键联系
+`scope` 对 GLOBAL 开放全局目录；局部管理员可见本级，公司管理员增加直属部门。部门管理员的 `policyIds` 额外包含父公司，以便显示上级开放的权限，这不表示能修改上级资源。
 
-依赖数据初始化的公司和部门记录，依赖实时授权的范围校验。员工归属和启用状态供登录、授权配置及业务系统准入使用。
+目录分页主要在数据库执行，列表和总数接受同一范围条件。全局员工列表含待匹配记录；局部列表仅包含明确归属的员工。部门原表目录查询还保留 `xlsx-%` 来源行，因此原表中的某些行即使被建模为 COMPANY，仍可在原表目录核对。
 
-## 代码与接口
+- `rolePermissions`：该角色直接被授予的权限。
+- `inheritedRolePermissions`：对角色展开全部来源，移除根角色自身后，按权限 ID 去重查询来源角色的权限，并应用管理可见范围。这是配置清单，不是员工最终生效结论。
+- `effectivePermissions`：对指定员工、指定系统执行准入、继承与组织停用/重授判断；先完整计算再使用 `PageImpl` 内存分页。超过结果的页为空，但 total 保持真实总数。
 
-公司、部门目录和 Excel 权限清单的响应使用课程 CloneFactory 生成同名字段映射。员工响应继续显式遮盖电话，员工维护保留归属校验和实体更新入口。
+`requireEmployeeVisible/requireRoleVisible` 区分不存在的 404 与越范围的 403。共享角色的读取和写入权限不同：局部管理员可以查看相关共享定义，修改仍须全局管理员。
 
-[ManagementQueryController](ManagementQueryController.java) 与 [ManagementMaintenanceController](ManagementMaintenanceController.java) 对接本包的查询和维护 Service。这组入口也处理[角色与权限](../rolepermission/README.md)的查询与维护。
+## 维护实现与事务边界
 
-`ManagementQueryService` 负责范围分页，`ManagementMaintenanceService` 负责员工写入。公司和部门目录为只读，员工支持列表、详情、新增、编辑和停用。
+1. 每个用例通过 `scope(actor)` 实时取得管理资格；`requireManaged` 对全局与本级/直属部门作不同处理，空归属的共享定义只允许 GLOBAL。
+2. `createEmployee` 只建资料，不创建登录凭据。`updateEmployee` 先锁员工并复核其管理员配置；调岗须同时有原、新组织管理权，已有角色或管理员配置时返回分配冲突，要求先解绑。
+3. `Employee.updateProfile` 只更新非 null 字段，岗位/电话的空白字符串清空可选值，用户名和原表来源字段不变。
+4. `disableEmployee` 保留实体及历史引用。安全过滤器在下一受保护请求重新读员工，因此旧会话不能继续操作。
+5. `renameRole` 使用角色锁及 `saveAndFlush`，这是在当前边界捕获名称唯一约束的既有例外；不机械删除 flush。
+6. `deleteRole` 先取得图写锁再锁角色，检查员工分配、直接权限和双向继承引用，任一存在则 409，否则物理删除角色。
+7. `createPermission` 同时检查权限归属及系统管理范围，管理权限的空系统只允许全局管理员。重命名只改展示名；删除前锁权限并检查角色分配、组织策略引用。
 
-## 验收
+员工、角色、权限的悲观行锁与 assignment 的写入顺序协作；不得为了简化代码跳过范围或引用检查。
 
-已测试范围分页和总数、电话遮盖、原表上级、调岗冲突及停用后的旧会话失效。
+## 调用与被调用
+
+`管理页面 → QueryController / MaintenanceController → 对应 Service → AuthorizationService + 各 JPA 仓储 + RoleInheritanceStore`。
+
+本包的员工和组织仓储被登录工作区、角色分配、实时授权、初始化共用。维护 Controller 复用查询 Controller 的公开响应映射；涉及关系的写用例仍调用其专属模块。API 不直接序列化 JPA 实体。
+
+## 技术、展示与验证
+
+[ManagementPageDTO](dto/ManagementPageDTO.java) 使用 1 基页码和最大 100 的页容量，内部转为 0 基 `PageRequest`，按 ID 排序。`@Valid/@Positive/@NotBlank` 校验格式，Service 判断业务范围。组织和清单同名字段通过 CloneFactory 编译期映射；员工、角色、权限 record 使用显式字段构造，不把所有转换都声称为自动映射。
+
+`ManagementQueryController.employee` 遮盖电话：空值保持 null，短号全遮盖，长度至少 9 时保留前 3 后 4。脱敏属于响应映射，数据库原字段不因此改写。
+
+准确路径和响应见 [共同 OpenAPI](../../../../../api/openapi.yaml)。现有 `AuthSessionTest` 及前端目录、角色权限测试验证范围、拒绝与分页；本次源码说明整理不代表重新完成全量数据库或浏览器验收。历史证据及后续测试重做见 [双版本测试记录](../../../../../测试/历史/双版本测试记录.md)、[收尾清单](../../../../../收尾清单.md)。

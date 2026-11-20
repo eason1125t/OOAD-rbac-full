@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- C2 后端工程（OO），管理 Web、会话、关系库、Excel 和测试依赖。 -->
+<!-- 文件职责：构建本版 C2 后端；统一声明运行依赖、Lombok/CloneFactory 处理器及测试插件。 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -101,7 +102,25 @@
         </dependency>
     </dependencies>
     <build>
+        <!-- 测试集中在 C2/测试；本版源码与公共契约分别接入。 -->
+        <testSourceDirectory>${project.basedir}/../测试/后端/oo/java</testSourceDirectory>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.6.1</version>
+                <executions>
+                    <execution>
+                        <id>shared-contract-tests</id>
+                        <phase>generate-test-sources</phase>
+                        <goals><goal>add-test-source</goal></goals>
+                        <configuration>
+                            <sources><source>${project.basedir}/../测试/后端/common/java</source></sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -136,8 +155,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <systemPropertyVariables><rbac.test.edition>oo</rbac.test.edition></systemPropertyVariables>
                     <!-- 相对目标路径避免 Windows 测试进程损坏中文目录名。 -->
-                    <argLine>-javaagent:"${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar"=destfile=target/jacoco.exec</argLine>
+                    <argLine>-javaagent:"${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar"=destfile=target/jacoco.exec,append=false</argLine>
                 </configuration>
             </plugin>
             <plugin>

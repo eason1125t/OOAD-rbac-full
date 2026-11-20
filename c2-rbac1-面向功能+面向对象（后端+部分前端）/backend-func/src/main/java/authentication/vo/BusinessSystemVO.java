@@ -1,3 +1,5 @@
+// 文件职责：返回可访问业务系统的标识和展示名称。
+// 协作关系：由登录工作区响应使用，不暴露系统持久化实体。
 package authentication.vo;
 
 import authentication.WorkspaceService.SystemInfo;

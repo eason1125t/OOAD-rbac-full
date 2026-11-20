@@ -1,4 +1,5 @@
-// 统一实时授权入口，按系统和组织策略判定直接与继承权限。
+// 文件职责：统一计算目标系统中的实时直接与继承授权。
+// 协作关系：协作 WorkspaceService、继承快照、权限和组织策略仓储。
 package authorization;
 
 import assignment.EmployeeRoleRepository;
@@ -6,8 +7,8 @@ import assignment.OrganizationPermission;
 import assignment.OrganizationPermissionRepository;
 import assignment.RolePermissionRepository;
 import authentication.WorkspaceService;
-import contract.BusinessAccessException;
 import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -54,11 +55,6 @@ public class AuthorizationService {
         return administratorScopes.findById(employeeId);
     }
 
-    /** 查询申请列表时只校验系统准入。 */
-    public void requireSystemAccess(Long employeeId, BusinessSystem system) {
-        systemContext(employeeId, system);
-    }
-
     /** 动作必须属于目标系统，适用的组织停用早于超级管理员及角色判权。 */
     public void requireBusinessPermission(Long employeeId, BusinessSystem system, String code) {
         WorkspaceService.Context context = systemContext(employeeId, system);
@@ -77,6 +73,7 @@ public class AuthorizationService {
                 .filter(permission -> isAllowed(permission.getId(), target)).toList();
     }
 
+    /** 汇总系统及员工适用组织，并从直接角色根展开本次授权来源。 */
     private PermissionContext permissionContext(Long employeeId, BusinessSystem system,
                                                 WorkspaceService.Context context) {
         Organization owner = organizations.findById(system.getOwnerOrganizationId()).orElseThrow();
@@ -91,6 +88,7 @@ public class AuthorizationService {
         return new PermissionContext(false, affected, sources);
     }
 
+    /** 先拒绝停用，再判断全局身份或满足全部重开范围的同一权限来源。 */
     private boolean isAllowed(Long permissionId, PermissionContext target) {
         List<OrganizationPermission> policies = organizationPermissions
                 .findByPermissionIdAndOrganizationIdIn(permissionId, target.organizations());
@@ -112,6 +110,7 @@ public class AuthorizationService {
                 : rolePermissions.hasRegrantedSource(permissionId, target.sources(), reopened, reopened.size());
     }
 
+    /** 本次判权的适用组织和可达直接权限来源，不跨请求缓存。 */
     private record PermissionContext(boolean global, Set<Long> organizations, Set<Long> sources) {
     }
 

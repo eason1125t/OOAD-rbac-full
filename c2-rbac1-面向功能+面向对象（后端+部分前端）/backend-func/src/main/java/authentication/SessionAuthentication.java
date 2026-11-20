@@ -1,3 +1,5 @@
+// 文件职责：核验账号并建立、读取和结束可信登录会话。
+// 协作关系：衔接 Spring Security、Spring Session Redis 和员工启用状态。
 package authentication;
 
 import jakarta.servlet.http.HttpServletRequest;

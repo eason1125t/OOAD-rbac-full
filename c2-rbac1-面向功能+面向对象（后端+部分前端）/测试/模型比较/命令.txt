@@ -1,0 +1,7 @@
+工作目录: C2/三模型比较
+工具: Java21, Maven3.9.11, JUnit5.12.2
+命令: mvn -f 小样/pom.xml test
+退出码: RED=1, GREEN=0
+演示: java -cp 小样/target/classes comparison.ExampleMain
+预期: ADDED, UNCHANGED, 2
+范围: 隔离内存小样，未修改正式两版后端

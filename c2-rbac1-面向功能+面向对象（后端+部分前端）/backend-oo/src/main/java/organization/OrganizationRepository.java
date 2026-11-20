@@ -1,3 +1,5 @@
+// 文件职责：读取公司部门目录和组织层级。
+// 协作关系：为工作区、管理查询及分配规则提供 JPA 数据。
 package organization;
 
 import java.util.Set;

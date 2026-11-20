@@ -1,3 +1,5 @@
+// 文件职责：查询角色目录、直接分配及直接继承来源。
+// 协作关系：为管理展示、分配验证、继承维护和初始化提供 JPA 查询。
 package rolepermission;
 
 import jakarta.persistence.LockModeType;
@@ -11,6 +13,7 @@ import org.springframework.data.jpa.repository.Query;
 
 /** 对 rbac_role 提供 Spring Data JPA 数据访问。 */
 public interface RbacRoleRepository extends JpaRepository<RbacRole, Long> {
+    /** 在角色归属范围内定位名称，供幂等初始化复用现有角色。 */
     Optional<RbacRole> findByNameAndOwnerOrganizationId(String name, Long organizationId);
 
     /** 可见角色包含本范围角色和全局共享定义。 */

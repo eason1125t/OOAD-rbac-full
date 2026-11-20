@@ -11,7 +11,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -33,10 +33,10 @@
     "requirements": "C2-01、03、05、07",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
-    "browserTest": "frontend/tests/authorization.spec.ts",
+    "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -58,10 +58,10 @@
     "requirements": "C2-01、03、05、07",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
-    "browserTest": "frontend/tests/authorization.spec.ts",
+    "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -84,10 +84,10 @@
     "requirements": "C2-01、02、05、06",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
-    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "browserTest": "测试/前端/tests/role-permissions.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -112,10 +112,10 @@
     "requirements": "C2-01、02、05、06",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
-    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "browserTest": "测试/前端/tests/role-permissions.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -136,12 +136,12 @@
     "requirements": "C2-11、12、13、14、15、16",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
+      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
+      "测试/后端/common/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
+      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
     ],
-    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -162,12 +162,12 @@
     "requirements": "C2-11、12、13、14、15、16",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
+      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
+      "测试/后端/common/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
+      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
     ],
-    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -186,10 +186,10 @@
     "requirements": "C2-04、10、15",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
     ],
-    "browserTest": "frontend/tests/authorization.spec.ts",
+    "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -204,7 +204,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -226,10 +226,10 @@
     "requirements": "C2-01、03、05、07",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
-    "browserTest": "frontend/tests/authorization.spec.ts",
+    "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -250,10 +250,10 @@
     "requirements": "C2-01、03、05、07",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
-    "browserTest": "frontend/tests/authorization.spec.ts",
+    "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -276,10 +276,10 @@
     "requirements": "C2-01、02、05、06",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
-    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "browserTest": "测试/前端/tests/role-permissions.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -303,10 +303,10 @@
     "requirements": "C2-01、02、05、06",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
-    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "browserTest": "测试/前端/tests/role-permissions.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -329,12 +329,12 @@
     "requirements": "C2-11、12、13、14、15、16",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
+      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
+      "测试/后端/common/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
+      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
     ],
-    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -355,12 +355,12 @@
     "requirements": "C2-11、12、13、14、15、16",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
+      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
+      "测试/后端/common/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
+      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
     ],
-    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -379,10 +379,10 @@
     "requirements": "C2-04、10、15",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
     ],
-    "browserTest": "frontend/tests/authorization.spec.ts",
+    "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -396,7 +396,7 @@
     ],
     "requirements": "C2-01、03、05",
     "testMethods": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [],
     "frontend": "/func/ 与 /oo/"
@@ -412,7 +412,7 @@
     ],
     "requirements": "C2-01、03、11、12",
     "testMethods": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [],
     "frontend": "/func/ 与 /oo/"
@@ -428,7 +428,7 @@
     ],
     "requirements": "C2-01、03、11、12",
     "testMethods": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [],
     "frontend": "/func/ 与 /oo/"
@@ -444,7 +444,7 @@
     ],
     "requirements": "课程结构与职责检查",
     "testMethods": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [],
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
@@ -460,7 +460,7 @@
     ],
     "requirements": "课程结构与职责检查",
     "testMethods": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [],
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
@@ -479,10 +479,10 @@
     "testMethods": [
       "serializesInheritanceWritesWithDisjointEndpoints"
     ],
-    "browserTest": "frontend/tests/authorization.spec.ts",
+    "browserTest": "测试/前端/tests/authorization.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
@@ -499,10 +499,10 @@
     "testMethods": [
       "matchesReopenedScopesToOneInheritedPermissionSource"
     ],
-    "browserTest": "frontend/tests/authorization.spec.ts",
+    "browserTest": "测试/前端/tests/authorization.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
@@ -521,11 +521,11 @@
       "updatesAndWithdrawsPendingRequest",
       "rejectsAndDeletesOnlyOwnRejectedRequest"
     ],
-    "browserTest": "frontend/tests/oo-entry.spec.ts",
+    "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-func/src/test/java/contract/AuthSessionTest.java#updatesAndWithdrawsPendingRequest",
-      "backend-func/src/test/java/contract/AuthSessionTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
+      "测试/后端/common/java/contract/AuthSessionTest.java#updatesAndWithdrawsPendingRequest",
+      "测试/后端/common/java/contract/AuthSessionTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
     ],
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
@@ -543,10 +543,10 @@
     "testMethods": [
       "rejectsAndDeletesOnlyOwnRejectedRequest"
     ],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
+      "测试/后端/common/java/contract/AuthSessionTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
     ],
     "frontend": "/func/ 与 /oo/"
   },
@@ -569,7 +569,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -590,7 +590,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -612,7 +612,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -633,7 +633,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -652,7 +652,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -671,7 +671,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
   {
@@ -689,7 +689,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -707,7 +707,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
   },
   {
@@ -727,7 +727,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/func/ 与 /oo/"
   },
   {
@@ -742,7 +742,7 @@
     ],
     "requirements": "课程结构与职责检查",
     "testMethods": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [],
     "frontend": "/func/ 与 /oo/"
@@ -761,10 +761,10 @@
     "testMethods": [
       "requiresReadPermissionForRequests"
     ],
-    "browserTest": "frontend/tests/request-read.spec.ts",
+    "browserTest": "测试/前端/tests/request-read.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
     ],
     "frontend": "/func/ 与 /oo/"
   },
@@ -781,7 +781,7 @@
     ],
     "requirements": "C2-09",
     "testMethods": [],
-    "browserTest": "frontend/tests/excel-review.spec.ts",
+    "browserTest": "测试/前端/tests/excel-review.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [],
     "frontend": "/func/ 与 /oo/"
@@ -798,7 +798,7 @@
     ],
     "requirements": "课程结构与职责检查",
     "testMethods": [],
-    "browserTest": "frontend/tests/role-permissions.spec.ts",
+    "browserTest": "测试/前端/tests/role-permissions.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [],
     "frontend": "/func/ 与 /oo/"
@@ -816,7 +816,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/func/ 与 /oo/"
   },
   {
@@ -837,7 +837,7 @@
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
     "tests": [],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "frontend": "/func/ 与 /oo/"
   },
   {
@@ -856,11 +856,11 @@
       "serializesCompetingRequestTransitions",
       "approvesOnlyOnceConcurrently"
     ],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#serializesCompetingRequestTransitions",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently"
+      "测试/后端/common/java/contract/AuthSessionTest.java#serializesCompetingRequestTransitions",
+      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently"
     ],
     "frontend": "/func/ 与 /oo/"
   },
@@ -880,11 +880,11 @@
       "matchesReopenedScopesToOneInheritedPermissionSource",
       "inheritanceRevocationAppliesToExistingSession"
     ],
-    "browserTest": "frontend/tests/isolation.spec.ts",
+    "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource",
-      "backend-oo/src/test/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession"
+      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource",
+      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession"
     ],
     "frontend": "/func/ 与 /oo/"
   }

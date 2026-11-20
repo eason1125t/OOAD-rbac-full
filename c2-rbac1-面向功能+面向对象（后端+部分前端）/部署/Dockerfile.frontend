@@ -1,0 +1,16 @@
+# 功能：构建唯一的 Vue 产物，由生产网关同时提供 /func/、/oo/ 和 API 代理。
+ARG NODE_IMAGE=node:24-alpine
+ARG NGINX_IMAGE=nginx:1.28-alpine
+FROM ${NODE_IMAGE} AS build
+WORKDIR /workspace
+COPY frontend/package.json frontend/package-lock.json ./
+RUN --mount=type=cache,target=/root/.npm npm ci
+COPY frontend/ ./
+RUN npm run build
+
+FROM ${NGINX_IMAGE}
+COPY --from=build /workspace/dist/ /usr/share/nginx/html/
+COPY 部署/nginx.conf /etc/nginx/conf.d/default.conf
+EXPOSE 8080
+HEALTHCHECK --interval=10s --timeout=3s --retries=6 \
+    CMD wget -q -O /dev/null http://127.0.0.1:8080/healthz || exit 1

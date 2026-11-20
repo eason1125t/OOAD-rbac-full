@@ -1,3 +1,5 @@
+// 文件职责：提供员工授角与角色授权的关系写入 API。
+// 协作关系：委托 AssignmentService，可信操作者来自 Spring Security。
 package assignment;
 
 import jakarta.validation.constraints.Positive;

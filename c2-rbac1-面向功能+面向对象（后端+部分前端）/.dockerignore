@@ -1,0 +1,18 @@
+# 构建上下文为 C2；只交付源码和部署配置，不带原表、凭据及本机构建结果。
+**/target
+**/node_modules
+**/dist
+**/__pycache__
+**/*.pyc
+**/*.log
+**/.env
+**/.env.*
+测试
+三模型比较
+docs
+*.md
+部署/secrets
+部署/local.json
+部署/stack.rendered.yaml
+部署/备份
+部署/结果

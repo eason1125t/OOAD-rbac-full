@@ -1,3 +1,5 @@
+// 文件职责：映射员工资料、原表归属和启用状态。
+// 协作关系：供初始化、登录有效性验证及管理查询维护共用。
 package organization;
 
 import jakarta.persistence.Entity;
@@ -29,7 +31,8 @@ public class Employee {
     private boolean enabled = true;
 
     /** 构建待保存记录，由数据库维护审计时间。 */
-    public Employee(String username, String name, Long organizationId, String sourceBranchName, String sourceDepartmentName, String jobTitle, String phone) {
+    public Employee(String username, String name, Long organizationId, String sourceBranchName,
+                    String sourceDepartmentName, String jobTitle, String phone) {
         this.username = username;
         this.name = name;
         this.organizationId = organizationId;

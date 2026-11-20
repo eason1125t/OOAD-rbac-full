@@ -1,3 +1,5 @@
+// 文件职责：使用 Apache POI 解析 XLSX 行、单元格及合并区域。
+// 协作关系：向 InitializationService 提供带原表行号的数据，不直接写数据库。
 package initialization;
 
 import java.io.IOException;
