@@ -1,7 +1,7 @@
 """补齐现有 C2 实现的数据库、流程、状态、前端和辅助协作图。
 
 由 build_staruml.py 传入同一模型工厂和 ID 序列，统一索引、验证与 CLI 导出。
-仅描述已有实现；不包含尚未规划的模型比较和课程 Swarm 拓扑。
+仅描述已有实现；三模型比较单独维护，不包含未经实测的课程 Swarm 拓扑。
 """
 
 from __future__ import annotations
@@ -183,9 +183,14 @@ def logical(u,parent,name,tables,relationships,note):
         box=(x,y,500,220)
         node=u.view("ERDEntityView",diagram,model,left=x,top=y,width=500,height=220,fillColor="#ffffff")
         views[table],boxes[table]=node,box;diagram["ownedViews"].append(node)
-    for index,(child,column,parent_table,nullable) in enumerate(relationships):
-        columns[child,column]["referenceTo"]=u.ref(columns[parent_table,"id"])
-        relation=u.item("ERDRelationship",data,name=column,identifying=columns[child,column]["primaryKey"])
+    for index,relationship in enumerate(relationships):
+        child,column,parent_table,nullable = relationship[:4]
+        child_columns = column if isinstance(column,tuple) else (column,)
+        parent_columns = relationship[4] if len(relationship)>4 else ("id",)
+        for child_column,parent_column in zip(child_columns,parent_columns):
+            columns[child,child_column]["referenceTo"]=u.ref(columns[parent_table,parent_column])
+        relation=u.item("ERDRelationship",data,name=" + ".join(child_columns),
+                        identifying=all(columns[child,c]["primaryKey"] for c in child_columns))
         relation["end1"]=u.item("ERDRelationshipEnd",relation,reference=u.ref(nodes[parent_table]),cardinality="0..1" if nullable else "1")
         relation["end2"]=u.item("ERDRelationshipEnd",relation,reference=u.ref(nodes[child]),cardinality="0..*")
         data["ownedElements"].append(relation)
@@ -236,7 +241,7 @@ def structures(u,parent):
         ("query","管理查询与维护\nManagementQueryService / ManagementMaintenanceService"),
         ("auth","统一实时授权\nAuthorizationService"),("assignment","分配与组织策略\nAssignmentService / OrganizationPermissionService"),
         ("business","申请业务过程\nBusinessRequestService.change / applyChange"),
-        ("store","数据访问\nSpring Data JPA / RoleInheritanceStore"),("session","登录与工作区\nSessionAuthentication / WorkspaceService")],
+        ("store","数据访问\nSpring Data JPA / RoleInheritanceStore"),("session","登录与工作区\nAccountAuthentication / LoginAuthentication / WorkspaceService")],
         [("http","inherit"),("http","query"),("http","business"),("http","session"),("inherit","rules"),("inherit","assignment"),
          ("inherit","store"),("query","auth"),("business","auth"),("business","store"),("auth","store"),("auth","session")],
         "组件符号用于展示已存在的功能分解及调用依赖，不表示部署进程或新建类。流程与状态检查集中在各功能 Service；图计算由显式参数规则函数完成。",["backend-func/src/main/java/"],"func")
@@ -413,15 +418,16 @@ def frontend(u,parent):
     components(u,parent,"35-shared-前端组件与API路由图",[
         ("app","App.vue\n版本入口、身份与工作区"),("admin","AdminConsole.vue\n管理入口与目录"),("business","BusinessPage.vue\n申请列表、详情与动作"),
         ("role","RolePermissions / AssignmentEditor\n直接授权、继承来源与继承边"),("policy","PermissionPolicy / EffectivePermissions\n组织策略与员工有效权限"),("directory","AdminDirectory / DirectorySelect\n完整目录、范围内选择"),
-        ("reference","referenceData.ts\nbusinessSystems / allPages"),("api","api.ts\nedition / read / write / CSRF"),("proxy","vite.config.ts\n/func/api→18181；/oo/api→18182")],
-        [("app","admin"),("app","business"),("app","api"),("directory","role"),("directory","policy"),("admin","directory"),
+        ("self","CurrentAccess.vue\n当前系统角色来源、有效权限及两类检查"),("people","DepartmentEmployees.vue\n逐层部门、员工搜索分页及管理员资料"),
+        ("reference","referenceData.ts\nbusinessSystems / allPages"),("api","api.ts / auth.ts / auth.worker.ts\nBearer业务 / 内存JWT / Cookie串行队列"),("proxy","vite.config.ts\n/func/api→18181；/oo/api→18182")],
+        [("app","admin"),("app","business"),("app","api"),("app","people"),("business","self"),("people","api"),("self","api"),("directory","role"),("directory","policy"),("admin","directory"),
          ("role","reference"),("policy","reference"),("directory","api"),("reference","api"),("business","api"),("api","proxy")],
         "实线组件框为代码组织；虚线箭头为导入或请求协作。代理是本机 Vite 开发/预览已实现配置，不代表已部署的课程 Swarm 拓扑。\n前端显示按钮与权限提示只提供交互，后端每次操作仍执行实时授权。",["frontend/src/","frontend/vite.config.ts"])
     pipeline(u,parent,"36-shared-前端申请操作-活动图",[
-        ("BusinessPage.load：带版本前缀读取当前系统分页","401/403：清空列表、详情和动作权限；显示错误"),
-        ("展示 allowedActions；点击详情执行 details(item)","详情 401/403 清除旧数据；404 刷新列表"),
+        ("BusinessPage.load：先读指定systemCode的me授权，再按read权限读取分页","授权或列表失败：清空旧权限、列表、详情；显示错误"),
+        ("有效权限控制按钮；无read但有create仍允许发起；点击详情执行details(item)","详情 401/403 清除旧数据；404 刷新列表"),
         ("发起/修改标题或选择审批、驳回、撤回、删除",None),
-        ("api.write 先获取当前 Cookie 的 CSRF，再发送动作请求","网络/接口错误：保留错误回执"),
+        ("api.write携带内存Bearer；仅明确401过期时协调刷新并重试一次","网络或未知写入结果不重放；503保留凭证并提示故障"),
         ("成功更新列表与详情状态；创建/修改/删除按需重新 load",None)],
         "write 的错误分支：action() 收到 403/404/409 后重新 load，再按需 details；submitEditor() 保留编辑器与回执，不保证编辑错误自动刷新。\n按钮可见性不能替代后端鉴权；列表/详情拒绝时清空旧数据。",["frontend/src/BusinessPage.vue","frontend/src/api.ts"],"shared",methods=["requiresReadPermissionForRequests"],browser="测试/前端/tests/request-read.spec.ts")
     excel_browse(u,parent)
@@ -458,37 +464,38 @@ def excel_browse(u,parent):
 
 
 def login_sequence(u,parent):
+    """协议参与者涵盖安全链与控制器，不把框架/Redis箭头当作直接Java调用。"""
     name="34-shared-双标签页登录退出-时序图"
-    s=u.Sequence(parent,"oo",name,"getCsrf / login / getCurrentSession / logout","共用前端按 URL 固定版本；独立 Cookie 与 Redis 命名空间。")
-    for key,obj,label in [("obj","obj","调用者"),("front","app","App.vue / api.ts"),("proxy","proxy","ViteProxy"),
-                          ("func","func","AuthController"),("oo","oo","AuthController"),("redis","redis","Spring Session Redis")]:
-        s.life(key,obj,label=label)
-    s.begin("同一浏览器打开 /func/ 与 /oo/ 两个标签页")
-    for version,key in [("func","func"),("oo","oo")]:
+    s=u.Sequence(parent,"oo",name,"getCsrf / login / refreshLogin / getCurrentSession / logout",
+                 "同一浏览器func/oo独立SharedWorker、密钥、Cookie与sid；同版标签页共享一次登录。")
+    for key,obj,label in [("obj","obj","调用者"),("front","app","App.vue / api.ts"),
+                          ("worker","auth","auth.worker.ts"),("func","func","BackendHTTP"),
+                          ("oo","oo","BackendHTTP"),("redis","redis","RedisLoginStore / Lua")]:s.life(key,obj,label=label)
+    s.begin("同一浏览器打开func与oo；以下为HTTP协议协作，省略网关转发")
+    for edition in ("func","oo"):
         start=s.y-25;s.y+=55
-        front=s.call("obj","front",f"signIn()  // {version} 标签页",duration=550)
-        proxy=s.call("front","proxy",f"GET /{version}/api/auth/csrf",duration=115)
-        s.call("proxy",key,"GET /api/auth/csrf")
-        proxy2=s.call("front","proxy",f"POST /{version}/api/auth/login + X-CSRF-TOKEN",duration=270)
-        controller=s.call("proxy",key,"login(input, request, response)",duration=190)
-        s.call(key,"redis",f"Spring Session 保存 {version} 会话；响应独立 Cookie")
-        for edge in (proxy2,controller):end_at(edge,s.y+5)
-        end_at(front,s.y+10);s.y+=45
-        s.frame(start,s.y,f"{version} 登录；前端按 workspacePath 进入本版工作区",operator="seq");s.y+=80
+        page=s.call("obj","front",f"signIn()  // {edition}",duration=800)
+        worker=s.call("front","worker","identity = login(username, password)",duration=650)
+        s.call("worker",edition,f"GET /{edition}/api/auth/csrf；取得掩码CSRF")
+        backend=s.call("worker",edition,"POST /api/auth/login + Cookie / X-CSRF-TOKEN",duration=250)
+        s.call(edition,"redis","创建随机sid记录及刷新摘要；绝对期限8小时")
+        for call in (page,worker,backend):end_at(call,s.y+15)
+        s.y+=45;s.frame(start,s.y,f"{edition}：内存访问JWT≤15分钟，刷新凭证仅Set-Cookie；进入工作区",operator="seq");s.y+=80
     start=s.y-25;s.y+=55
-    front=s.call("obj","front","signOut()  // 仅 func",duration=550)
-    proxy=s.call("front","proxy","GET /func/api/auth/csrf；POST /func/api/auth/logout",duration=270)
-    controller=s.call("proxy","func","logout(request, response)",duration=190)
-    s.call("func","redis","SessionAuthentication.end → 当前 func 会话失效")
-    for edge in (proxy,controller):end_at(edge,s.y+5)
-    end_at(front,s.y+10);s.y+=45;s.frame(start,s.y,"func 返回 204 并回到 /func/；oo Cookie 不变",operator="seq");s.y+=80
-    front=s.call("obj","front","loadSession()  // oo 标签页",duration=400)
-    proxy=s.call("front","proxy","GET /oo/api/auth/me",duration=190)
-    s.call("proxy","oo","me(employeeId)  // oo 会话仍有效")
-    end_at(proxy,s.y+5)
-    end_at(front,s.y+15)
-    s.note("这是协议级时序：HTTP 与 Redis 箭头表示协议/框架协作，不是 AuthController 直接操作 Redis。\n控制器内部调用 sessions.verify → workspaces.current → sessions.start；start 轮换会话 ID、清旧 CSRF，仅保存可信员工 ID。\n会话配置来自 application.yaml；按版本独立库写业务数据，不画成复制同步。")
-    s.finish();s.entry.update(version="shared",sources=["frontend/src/App.vue","frontend/src/api.ts","frontend/vite.config.ts","backend-oo/src/main/java/authentication/SessionAuthentication.java","backend-oo/src/main/resources/application.yaml","backend-func/src/main/resources/application.yaml"])
+    page=s.call("obj","front","signOut()  // func",duration=700)
+    worker=s.call("front","worker","logout()  // 同版Cookie队列",duration=550)
+    backend=s.call("worker","func","CSRF + POST /api/auth/logout；不发送Bearer",duration=250)
+    s.call("func","redis","核验当前/已消费刷新摘要后撤销该sid")
+    for call in (page,worker,backend):end_at(call,s.y+15)
+    s.y+=45;s.frame(start,s.y,"204；func全部同版标签页卸载旧身份，oo登录不受影响",operator="seq");s.y+=80
+    page=s.call("obj","front","loadSession()  // oo",duration=650)
+    worker=s.call("front","worker","lease = accessLease()；仅缺失或过期才刷新",duration=130)
+    backend=s.call("front","oo","GET /oo/api/auth/me + Bearer JWT",duration=250)
+    s.call("oo","redis","安全链验签后在线CHECK sid、归属和绝对期限")
+    for call in (page,backend):end_at(call,s.y+15)
+    s.note("BackendHTTP表示Security过滤链与AuthController的整体协议边界，不表示Controller直接操作Redis。登录内部：accounts.verify → workspaces.current → logins.start → cookies.write。\n同版SharedWorker串行登录/刷新/退出；多处401过期复用一次刷新。前端不持久化JWT；Cookie不能认证业务，业务接口不依赖CSRF。\nRedis/数据库故障返回503，不按无权限或成功退出处理；网络结果未知不重试刷新/业务写入。旧Session不迁移，未采用tokenVersion。")
+    s.finish();s.entry.update(version="shared",sources=["frontend/src/App.vue","frontend/src/api.ts","frontend/src/auth.ts","frontend/src/auth.worker.ts","backend-oo/src/main/java/authentication/AuthController.java","backend-oo/src/main/java/authentication/LoginAuthentication.java","backend-oo/src/main/java/authorization/SecurityConfiguration.java"],
+        testSource="测试/后端/common/java/authentication/JwtLoginHttpTest.java",testMethods=["loginIssuesBearerAndCookieCannotAuthenticateBusiness","logoutIsImmediateAndIndependentOfOtherBrowsers"],browserTest="测试/前端/tests/jwt.spec.ts")
 
 
 def commit_sequence(u,parent):
@@ -517,16 +524,17 @@ def commit_sequence(u,parent):
 
 def login_class(u,parent):
     d=u.ClassDiagram(parent,"oo","40-shared-登录与工作区-类图","login / getCurrentSession / logout / listBusinessSystems",
-        "两版复用已验证 C1 登录及工作区，差异位于 Cookie/Redis/数据库配置。")
-    d.add("service","authentication.WorkspaceService","C",[("employees","EmployeeRepository"),("scopes","AdministratorScopeRepository"),
-          ("organizations","OrganizationRepository"),("systems","BusinessSystemRepository")],[("current","",""),("context","",""),("findActiveEmployee","","")])
+        "工作区选择保留；账号校验、登录生命周期与可信身份分开，Cookie只用于认证入口。")
+    d.add("service","authentication.WorkspaceService","C",[("scopes","AdministratorScopeRepository"),
+          ("organizations","OrganizationRepository"),("systems","BusinessSystemRepository")],[("current","",""),("context","","")])
     for key,cls,pos,interface,ops in [("controller","authentication.AuthController","L",False,[("login","",""),("me","","")]),
-        ("session","authentication.SessionAuthentication","B",False,[("verify","",""),("start","",""),("end","","")]),
-        ("employees","organization.EmployeeRepository","T",True,[]),("scopes","authorization.AdministratorScopeRepository","TL",True,[]),
+        ("session","authentication.LoginAuthentication","B",False,[("start","",""),("refresh","",""),("end","","")]),
+        ("accounts","authentication.AccountAuthentication","BL",False,[("verify","","")]),
+        ("current","authentication.CurrentEmployeeService","T",False,[("requireActive","","")]),("scopes","authorization.AdministratorScopeRepository","TL",True,[]),
         ("orgs","organization.OrganizationRepository","TR",True,[]),("systems","simulation.BusinessSystemRepository","R",True,[])]:d.add(key,cls,pos,interface=interface,ops=ops)
     for key in ("controller","session"):d.views[key]["showOperationSignature"]=False
-    d.link("controller","service","workspaces");d.link("controller","session","sessions")
-    for key,role in [("employees","employees"),("scopes","scopes"),("orgs","organizations"),("systems","systems")]:d.link("service",key,role)
+    d.link("controller","service","workspaces");d.link("controller","session","logins");d.link("controller","accounts","accounts");d.link("controller","current","currentEmployees")
+    for key,role in [("scopes","scopes"),("orgs","organizations"),("systems","systems")]:d.link("service",key,role)
     d.finish();d.entry["version"]="shared"
 
 
@@ -549,7 +557,7 @@ def competing_transitions(u,parent):
         ("choice","approve","审批先取得锁"),("choice","withdraw","撤回先取得锁"),
         ("approve","commitA","授权通过"),("withdraw","commitB","授权及本人检查通过"),
         ("commitA","readA",""),("commitB","readB",""),("readA","rejected",""),("readB","rejected","")]:g.link(a,b,label)
-    g.note("前提：双方 Cookie/CSRF、系统准入及动作权限有效，且撤回操作者为本人。调度胜者不固定；授权失败另按通用拒绝处理。\nOO 由 BusinessRequest 维护状态，func 由 applyChange 检查；两版都保留相同 JPA 行锁与事务边界。\n同理，驳回与审批只能提交一个状态；重复审批的 409 业务码为 REQUEST_ALREADY_APPROVED。")
+    g.note("前提：双方Bearer登录、系统准入及动作权限有效，且撤回操作者为本人。调度胜者不固定；授权失败另按通用拒绝处理。\nOO 由 BusinessRequest 维护状态，func 由 applyChange 检查；两版都保留相同 JPA 行锁与事务边界。\n同理，驳回与审批只能提交一个状态；重复审批的 409 业务码为 REQUEST_ALREADY_APPROVED。")
     g.finish();record(u,name,"activity",["backend-func/src/main/java/simulation/SimulatedRequestRepository.java","backend-oo/src/main/java/simulation/SimulatedRequestRepository.java","backend-oo/src/main/java/simulation/domain/BusinessRequest.java"],
         "approveRequest / withdrawRequest / rejectRequest",requirements="C2-13、14、16",methods=["serializesCompetingRequestTransitions","approvesOnlyOnceConcurrently"])
 
@@ -561,7 +569,7 @@ def alternative_paths(u,parent):
     g.add("start","",570,30,24,24,initial=True)
     g.add("setup","员工持有 A；A→B→D 且 A→C→D\nD 直接持有 request:approve；查看权限独立有效",330,120,570,115)
     g.add("unique","inheritedRoles({A})={A,B,C,D}\nD 与候选权限 ID 去重，有效权限只返回一条",330,360,570,115)
-    g.add("delete","管理员删除一条继承边并提交\n员工原 Cookie 发起下一次审批，重新读 MySQL",330,610,570,115)
+    g.add("delete","管理员删除一条继承边并提交\n员工原Bearer JWT发起下一次审批，重新读 MySQL",330,610,570,115)
     g.add("recompute","展开最新闭包，检查组织策略与权限来源\n是否仍有一条可用来源？",330,860,570,115)
     g.add("choice","",585,1055,65,65,decision=True)
     g.add("allow","仍可到达 D（或存在其他有效直接来源）\n且组织策略通过 → 200，允许审批",1030,1260,570,120)
@@ -583,3 +591,7 @@ def build(project,u):
         request_supplement(u,parent,version,base);request_supplement(u,parent,version,base+1,True)
     login_sequence(u,parent);frontend(u,parent);commit_sequence(u,parent);login_class(u,parent)
     competing_transitions(u,parent);alternative_paths(u,parent)
+    from build_identity import build as build_identity
+    build_identity(u,parent)
+    from build_jwt import build as build_jwt
+    build_jwt(u,parent)

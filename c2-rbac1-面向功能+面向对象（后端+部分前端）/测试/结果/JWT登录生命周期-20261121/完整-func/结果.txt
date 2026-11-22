@@ -1,0 +1,48 @@
+{
+  "edition": "func",
+  "startedUtc": "2026-11-21T14:49:42.877313+00:00",
+  "completedUtc": "2026-11-21T14:51:52.912609+00:00",
+  "exitCode": 0,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "a77bff69ed1b78a09c5d7c955a7045ea09620036ecb489f65c8f6be2b404b124",
+  "tests": {
+    "tests": 190,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {
+    "INSTRUCTION": {
+      "missed": 495,
+      "covered": 10552,
+      "ratio": 0.955191454693582
+    },
+    "BRANCH": {
+      "missed": 128,
+      "covered": 641,
+      "ratio": 0.8335500650195059
+    },
+    "LINE": {
+      "missed": 84,
+      "covered": 1712,
+      "ratio": 0.9532293986636972
+    },
+    "COMPLEXITY": {
+      "missed": 137,
+      "covered": 749,
+      "ratio": 0.845372460496614
+    },
+    "METHOD": {
+      "missed": 23,
+      "covered": 475,
+      "ratio": 0.9538152610441767
+    },
+    "CLASS": {
+      "missed": 2,
+      "covered": 130,
+      "ratio": 0.9848484848484849
+    }
+  },
+  "jwtTestPublicKeySha256": "cdca8ddc3d2fcadb6ebb01efc3565b54467236d7a19a008f678f37bea1bc82f5",
+  "authNamespace": "rbac1:func:jwt-test:anw997lg"
+}

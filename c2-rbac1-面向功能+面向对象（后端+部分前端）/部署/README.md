@@ -1,33 +1,67 @@
-# C2 部署包
+# C2 部署说明与队友交接
 
-本目录只负责 C2：一个 Vue/Nginx 前端、func/oo 两个 Java 后端、含两套独立库的 MySQL、共享 Redis。Swarm 服务使用预构建镜像、文件 secret、overlay 网络和数据节点约束。测试不作为常驻服务。
+更新：2026-11-22。本文是部署操作与交接的唯一维护入口。[项目总结](../docs/项目总结.md)解释实现，[测试说明](../测试/README.md)集中部署后验收。命令均从C2根目录执行。课程Swarm仍待队友实际部署，本机Compose通过不能替代集群结果。
 
-业务、Apifox、日志与验收分工见 [部署交接文档](../部署交接文档.md)。所有命令从 C2 根目录运行；Python 仅使用标准库。Dockerfile 的构建上下文必须是整个 C2，不能只传某个 backend 目录。
+## 1. 最终要达到什么结果
 
-## 1. 文件作用
-
-| 文件 | 用途 |
+| 目标 | 完成时应观察到的结果 |
 | --- | --- |
-| Dockerfile.backend | 通过 EDITION=func/oo 构建两个镜像，先安装 CloneFactory；运行镜像使用非 root 用户 |
-| Dockerfile.frontend、nginx.conf | 构建一份前端；处理两版 API 前缀、Cookie/CSRF、动态 DNS、页面深链 |
-| stack.yaml | 五个 Swarm 常驻服务，只发布前端端口 |
-| backend-entrypoint.sh | 从文件读数据库和 Redis 凭据，再启动应用或一次性初始化 |
-| mysql-init.sh | 首次空数据卷建立两个库及各自应用用户 |
-| redis-start.sh | 读取凭据生成只读私有配置，启用 AOF |
-| manage.py | 构建/可选推镜像、生成凭据、渲染配置、执行并等待一次性 Swarm 任务 |
-| mysql-backup.sh | 在数据节点按明确容器 ID 导出两库，不覆盖已有备份 |
+| 一个真实站点 | 首页、/func/、/oo/可从课程入口访问，深链刷新正常，API错误不回退成HTML |
+| 五项Swarm服务 | frontend、backend-func、backend-oo、mysql、redis都在课程集群，数据库不依赖开发者电脑 |
+| 两版可对照且隔离 | 共用前端、独立库和身份配置；可分别登录，退出一版不影响另一版 |
+| 功能与主契约一致 | OpenAPI2.5.0、49操作/44模型；八项身份能力、继承、策略与申请可实际演示 |
+| 持久化和凭据明确 | 两库Flyway V1—V9、Redis AOF、约定数据节点/卷和稳定密钥；重启后符合数据约定 |
+| 入口配置正确 | 生产HTTPS和Secure Cookie，正确公开Path；只发布前端业务端口，数据库/Redis不公开 |
+| 可查可恢复 | 两版Logback对应实际申请ID；备份、隔离恢复、镜像摘要和验收记录齐全 |
 
-## 2. 课程 Swarm 操作顺序
+初始单副本方案不代表数据库高可用。内存小样、测试运行器、Maven、Apifox、Navicat和UML工具不作为常驻服务。
 
-首次复制 `部署/.env.example` 为 `部署/.env`；已有配置应直接编辑，不覆盖。填入三个应用镜像的真实仓库标签、唯一数据节点 hostname、入口端口和是否 HTTPS。管理机运行 `docker node ls` 获取 hostname，三个镜像须与所有节点 CPU 架构兼容。
+请求路径：浏览器/Apifox → HTTPS/前端Nginx → /func或/oo对应后端 → 本版MySQL库＋共享Redis。网关去除前缀，透传Authorization和Cookie；Vite开发代理不会随dist部署。
+
+## 2. 部署前准备与交接
+
+| 项目 | 队友准备/填写 |
+| --- | --- |
+| 版本 | 本次“C2收尾（已对接api契约）”的Git SHA；所有节点使用同次构建 |
+| 集群 | manager、节点架构、唯一数据节点hostname、调度和磁盘条件 |
+| 入口 | 实际URL、端口、域名/TLS位置；HTTPS时RBAC_AUTH_COOKIE_SECURE=true |
+| 镜像 | 所有节点可拉取的仓库、三应用镜像标签及摘要、仓库权限 |
+| 数据 | 空卷初始化或已有库迁移；三份原始Excel私下交接 |
+| 凭据 | MySQL/Redis凭据、func/oo稳定RSA密钥、访问限制及私有备份 |
+| Apifox | OOAD RBAC项目9046536、C2模块8918000访问权限和课程站点环境 |
+| 回退 | 原镜像/配置、数据备份、负责人、维护窗口及恢复方案 |
+
+未知参数标“待填”，不能用localhost或示例域名代替部署地址。Git不包含原表、私钥、真实密码、SQL、本机卷、target或node_modules；按源码/锁文件重建。个人答辩草稿继续本地保留。
+
+## 3. 文件和运行条件
+
+| 文件 | 职责 |
+| --- | --- |
+| [Dockerfile.backend](Dockerfile.backend) | Java21多阶段构建，先安装CloneFactory，非root运行 |
+| [Dockerfile.frontend](Dockerfile.frontend)、[nginx.conf](nginx.conf) | 一份前端、两路API、深链、Worker与错误路由 |
+| [stack.yaml](stack.yaml) | 五服务、overlay、file secret、健康检查、数据节点、日志轮转 |
+| [manage.py](manage.py) | 构建/可选推镜像、凭据校验、渲染和一次性初始化 |
+| [mysql-init.sh](mysql-init.sh)、[redis-start.sh](redis-start.sh) | 空卷建两库/用户、读取Redis凭据和启用AOF |
+| [backend-entrypoint.sh](backend-entrypoint.sh)、[mysql-backup.sh](mysql-backup.sh) | 文件凭据读取、明确容器目标的两库备份 |
+| [local.ps1](local.ps1) | 本机Windows开发服务管理，不操作课程集群 |
+
+准备机需Git、Docker、Python3、OpenSSL和镜像仓库权限；Swarm由负责人预先准备。基线Java21、Maven3.9、Node24、MySQL8.4.7、Redis7.4.6；本机Node需满足frontend/package.json engines。Docker上下文必须为整个C2，不能只传backend目录。Linux入口脚本保持LF。
+
+## 4. 课程Swarm操作步骤
+
+### 4.1 检出同一提交，配置并构建镜像
+
+首次把部署/.env.example复制为部署/.env；已有文件直接编辑，不覆盖。填写实际仓库镜像、RBAC_DATA_NODE、RBAC_HTTP_PORT、RBAC_STACK_NAME和Secure设置。通过docker node ls核对hostname/架构，先登录镜像仓库：
 
 ```powershell
 python 部署/manage.py build --push
 ```
 
-先完成仓库登录，再执行带 `--push` 的命令。默认不带该选项只在本机构建；基础镜像可通过 RBAC_MAVEN_IMAGE、RBAC_JAVA_IMAGE、RBAC_NODE_IMAGE、RBAC_NGINX_IMAGE 指定可信镜像源。镜像标签请使用确定的发版版本，保存实际摘要。
+默认不加--push只本机构建；stack deploy不负责build。示例镜像名不等于队友可拉取的仓库。基础镜像可按.env.example的RBAC_*_IMAGE指定可信源，保存实际摘要与架构。
 
-在已准备好的 Swarm manager 检出同一版本，放好相应 `.env`，使用私有仓库时 manager 也先登录：
+### 4.2 在真实manager准备凭据、渲染、发布
+
+私有仓库也先在manager登录；在manager源码目录运行：
 
 ```bash
 python3 部署/manage.py secrets --create-in-swarm
@@ -37,82 +71,82 @@ docker stack services c2
 docker stack ps c2 --no-trunc
 ```
 
-以上 stack 名用默认 c2；修改 RBAC_STACK_NAME 后，部署与查看命令也要使用同名。管理脚本不会执行 swarm init，不自动改已有集群或删除数据。渲染后的配置包含所在机器绝对文件路径，因此应在实际 manager 的源码目录重新渲染，不直接搬用 Windows 生成文件。
+默认stack名c2，改RBAC_STACK_NAME后命令同步改名。渲染含本机路径，应在真实manager重新生成，不能直接搬用Windows渲染文件。脚本不执行swarm init，也不修改其他项目。
 
-首次生成四个 64 位小写十六进制随机凭据，文件保存在忽略的 secrets/，不打印内容。父目录限制访问，文件只读供非 root 容器挂载；Windows 另由用户目录 ACL 保护。Swarm 已存在的同名 secret 会保留而非旋转；新机器生成的本地文件不能视为已有 Swarm secret 的备份。已有数据库不可通过重新生成密码“重置”。
+首次生成四个随机数据库/Redis凭据和两版各一对RSA2048公私钥，共八个file secret。已有文件保留并校验，不每次生成；同版副本共用同一密钥，两版独立。已有Swarm同名secret不自动轮换，新机器生成的本地文件不是原secret的备份。私钥不进入环境值、镜像层、日志或Git。
 
-MySQL/Redis 健康、两后端已迁移后运行：
+认证使用RBAC_AUTH_*、RBAC_JWT_*；旧RBAC_SESSION_COOKIE_SECURE必须替换为RBAC_AUTH_COOKIE_SECURE，脚本会拒绝旧键。HTTPS设true，公开Cookie Path为/func/api/auth/、/oo/api/auth/。Spring Session已移除，但Redis仍保存在线sid，必须保留。
+
+### 4.3 初始化或迁移
+
+确认MySQL/Redis健康、后端迁移成功后再选择数据方案。空环境可分开运行：
 
 ```bash
 python3 部署/manage.py init --mode demo
-# 原表目录是数据节点上的绝对路径，通过只读挂载提供。
 python3 部署/manage.py init --mode excel --excel-dir /srv/c2-input
 ```
 
-默认依次初始化两版，也可加 `--edition func` 或 `--edition oo`。一次性任务设为不重启并禁用 HTTP 健康探针，避免非 Web 导入被误杀，同时传递仓库拉取授权；脚本等待退出码 0，失败/超时保留服务和任务供查日志。demo 与 excel 分两次运行，不能把初始化参数留在常驻后端命令中。演示初始化保留已有人工策略/关系变更，不能当作测试重置。
+原表目录为数据节点真实绝对路径，以只读挂载提供；默认两版，也可--edition func/oo。确认任务退出码0，失败/超时保留供查日志。初始化参数不能留在常驻服务命令中。
 
-首次建库脚本只在空 MySQL 数据卷运行。已存在的卷需使用原凭据，并确认两库/用户已存在；不通过删除卷修复。MySQL/Redis 固定到配置的数据节点，本地卷不能自动在其他节点恢复；备份/共享存储按课程环境落实。
+已有库先备份、核对原凭据/两库/flyway_schema_history。mysql-init仅空卷运行；不能用重新生成密码或删卷修复。JWT无新数据库迁移，V9是API映射两表。演示初始化保留已变更的继承/授权/组织策略，不用作测试重置。默认演示密码只用于约定课程演示，不用于真实业务。
 
-## 3. 本机完整容器验证
+### 4.4 检查服务和日志
 
-无需启用本地 Swarm。复制并填写 `部署/.env.local`：镜像可用本地标签，HTTP 使用未占用端口，RBAC_STACK_NAME 用独立名字如 c2-delivery-check；与日常开发数据库分开。
-
-```powershell
-python 部署/manage.py --env 部署/.env.local build
-python 部署/manage.py --env 部署/.env.local secrets
-python 部署/manage.py --env 部署/.env.local render --local
-docker compose -f 部署/local.json up -d --wait --wait-timeout 300
-docker compose -f 部署/local.json run --rm -e RBAC_DEMO_ACCOUNTS_ENABLED=true backend-func --init-demo
-docker compose -f 部署/local.json run --rm -e RBAC_DEMO_ACCOUNTS_ENABLED=true backend-oo --init-demo
-python 测试/部署/smoke.py --url http://127.0.0.1:18080 --exercise --output 部署/结果/smoke.json
-```
-
-最后一行端口替换为配置值。local.json 从 stack 配置生成 bridge 网络、文件 secret 和健康依赖，保持相同应用镜像与网关。它验证容器链路，不等于实际多节点 Swarm 调度、节点失效和镜像拉取已验收。
-
-配置、凭据和结果均被 Git 忽略。结束可用 `docker compose -f 部署/local.json stop` 停止该项目服务，数据卷保留；不要执行删除数据卷的命令来重置。
-
-## 4. 外部入口冒烟与服务器日志
-
-[外部冒烟脚本](../测试/部署/smoke.py) 直接访问真实站点，不启动 Vite。部署后可在有网络的本地电脑运行：
-
-```powershell
-python 测试/部署/smoke.py --url https://实际课程入口 --output 部署/结果/swarm-smoke.json
-```
-
-需要验证申请写入时增加 `--exercise`，每版新增、修改并撤回一条合成申请，验证终态拒绝和独立写入；请在约定的课程演示数据上执行。默认使用合成演示账号 super-admin/1234，可由 RBAC_SMOKE_USERNAME、RBAC_SMOKE_PASSWORD 环境变量覆盖，输出不会记录凭据、Cookie 或令牌。此账号必须具备脚本所需的查看、创建、修改与撤回权。
-
-脚本还检查 SPA 深链、JS 内容类型、API 错误路由、同一客户端分版 Cookie 及 func 退出不影响 oo。它不代替完整继承/组织策略/Excel/并发验收，完整清单见交接文档。
+核对五服务期望副本、无反复重启、卷和数据节点、两库V1—V9及应用账号跨库拒绝。MySQL/Redis固定数据节点，本地卷不会自动在其他节点恢复。
 
 ```bash
-docker service logs --follow --timestamps c2_backend-func
-docker service logs --follow --timestamps c2_backend-oo
+docker service logs --timestamps c2_backend-func
+docker service logs --timestamps c2_backend-oo
 ```
 
-前端/脚本产生的申请 ID 与日志中的 version、action、requestId、outcome 对照。json-file 日志驱动已配置轮转；申请审计为 INFO，不需开启敏感请求载荷日志。
+健康检查不替代业务测试。申请审计按version/action/requestId/outcome对应事务最终结果，不记录密码、Authorization、Cookie或刷新凭证。
 
-## 5. 更新、备份与回退
+## 5. 部署后还必须做什么
 
-更新前保存旧镜像摘要、配置和一致性 SQL 备份。数据节点上明确找到本项目 mysql 容器 ID，再执行：
+1. 按[测试说明第4节](../测试/README.md)，依次验证真实入口、HTTP、合成数据写入、浏览器、八项身份和原业务边界。
+2. 改授权/重启等场景安排维护窗口，避免与队友演示互相影响；测试后记录并恢复演示设置。
+3. 核对HTTPS、Secure、网关、Worker、同版密钥一致和时间同步；不为调试直接全开CORS。
+4. 验证MySQL/Redis重启持久化，对SQL备份做隔离恢复演练；节点故障和迁移另行验证。
+5. 配置Apifox课程真实站点环境，执行代表请求；保留已有C1/C2、环境和用例，已同步主契约不用重复导入替代测试。
+6. 回填下表；命令TXT、报告、日志和截图放测试/结果的新Swarm批次，更新测试说明的实际结果。
+
+| 最终回填项 | 当前状态 |
+| --- | --- |
+| Git SHA、镜像标签/摘要、节点架构 | 待队友填写 |
+| URL、TLS/Secure、执行人和时间 | 待队友填写 |
+| 五服务、两库迁移、账号隔离 | 待队友实测 |
+| 外部HTTP、浏览器、八项身份/业务 | 待队友实测并链接报告 |
+| Logback、持久化、备份恢复 | 待队友实测并链接证据 |
+| 未通过/未执行项、负责人和后续安排 | 待队友填写 |
+
+完成这些才能从“本机交付”更新为“课程部署验收完成”。已对接API契约不等于其他项目已完成系统联调。
+
+## 6. 更新、备份和回退
+
+更新前保存旧Git SHA、镜像摘要、配置和secret备份；数据节点明确本项目MySQL容器ID后运行：
 
 ```bash
 sh 部署/mysql-backup.sh 明确的mysql容器ID /安全目录/c2-更新前.sql
 ```
 
-备份失败可能留下不完整文件，只有退出码 0 的备份可作为候选，仍需隔离环境恢复验证。SQL 含业务资料，放私有备份目录；不要提交。恢复时停止两版写入，使用匹配 secret 的 MySQL 容器执行 mysql 导入，并核对两库和 flyway_schema_history。恢复操作由负责人确认范围后进行。
+退出码0并经隔离恢复验证后才能依赖；SQL不上传Git。恢复前和负责人确认范围，停止两版写入，以匹配凭据导入并核对两库、Flyway历史和业务数据。
 
-更新三个镜像标签/摘要后重建、推送、重新 render 和 stack deploy。backend 已设置滚动更新失败回退；这只回退服务，不会逆转数据库迁移。若修改 mysql-init.sh 或 redis-start.sh，递增 RBAC_CONFIG_VERSION，避免试图原地修改不可变 Swarm config；它也不会自动在已有数据卷重跑建库。
+更新镜像后重新构建/推送、render和stack deploy。服务回退不会逆转数据库迁移，需核对旧应用兼容性。修改mysql-init/redis-start配置时按管理工具更新RBAC_CONFIG_VERSION；这是Swarm配置发布标识，不用于用户或令牌撤销。凭据旋转单独安排，不自动轮换。
 
-凭据旋转、迁移回退和数据恢复分别处理。旧应用是否兼容新 schema 必须核对，课程集群服务状态和日志应实际留证。
+## 7. 本机开发与容器复验
 
-
-## 6. 浏览器入口与双标签页验证
-
-另有外部 Playwright 配置，复用现有 3 项页面/隔离用例，不启动 Vite。先在测试/前端安装锁定依赖并准备 Edge 或 Playwright Chromium，然后从 C2 目录运行：
+当前Windows本机已切JWT，PowerShell7执行：
 
 ```powershell
-$env:RBAC_DEPLOY_BASE_URL="https://实际课程入口"
-$env:RBAC_BROWSER_CHANNEL="msedge"
-npm --prefix 测试/前端 run test:remote
+./部署/local.ps1 -Action Status
+./部署/local.ps1 -Action Start
+./部署/local.ps1 -Action Stop
 ```
 
-Linux/CI 使用已安装的 Playwright Chromium 时不设置 RBAC_BROWSER_CHANNEL。此子集需要演示账号与可写合成数据，会新增并审批一条申请；结果与 HTTP 冒烟分开归档。本机实测见 [部署验证记录](../测试/部署/README.md)。
+后端18181/18182、前端5173；-Edition func/oo只管单版，-Preview用28181/28182且不管理前端。脚本核对工作目录、入口、创建时间和PID，不结束未知占用端口的进程。
+
+私有配置为%LOCALAPPDATA%/OOAD-RBAC/c2-jwt/func.json、oo.json，环境变量名到字符串的JSON，至少包含各自RBAC_DB_URL/USER/PASSWORD、RBAC_REDIS_HOST/PORT及RBAC_JWT_PRIVATE_KEY_LOCATION/PUBLIC_KEY_LOCATION，其他认证参数保持分版隔离。私有目录另存稳定密钥、进程记录、日志和原库备份，不随Git交接；新机器自备配置与密钥。
+
+现有运行JAR在两版target/jwt-final。新检出机器先安装CloneFactory，再分别执行`mvn -f backend-func/pom.xml -Dmaven.test.skip=true -Drbac.build.directory=target/jwt-final package`及对象版同等命令；前端执行npm ci。此打包跳过测试，不算验收通过。之后配置私有环境运行local.ps1，不能复制个人凭据。
+
+独立容器复验命令集中在测试说明；它新建专用Compose项目、构建同一源码，结束仅停止该批容器，保留卷与证据，不操作课程Swarm。旧验收容器已清理，8个测试卷按用户决定保留。历史说明放部署/归档，不再另行维护当前步骤。

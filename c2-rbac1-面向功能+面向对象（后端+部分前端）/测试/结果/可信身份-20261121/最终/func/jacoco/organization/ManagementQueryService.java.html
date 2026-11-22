@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManagementQueryService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">organization</a> &gt; <span class="el_source">ManagementQueryService.java</span></div><h1>ManagementQueryService.java</h1><pre class="source lang-java linenums">// 文件职责：按管理员可见范围分页查询目录和授权关系。
+// 协作关系：协作 WorkspaceService、AuthorizationService、继承快照及 JPA 仓储。
+package organization;
+
+import authorization.AdministratorScope;
+import authorization.AuthorizationService;
+import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import rolepermission.CatalogEntry;
+import rolepermission.CatalogEntryRepository;
+import rolepermission.Permission;
+import rolepermission.PermissionRepository;
+import rolepermission.RbacRole;
+import rolepermission.RbacRoleRepository;
+import rolepermission.RoleInheritanceStore;
+import simulation.BusinessSystem;
+import simulation.BusinessSystemRepository;
+
+/** 按管理范围查询目录和关系；有效权限先实时计算再分页，其余目录在数据库分页。 */
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class ManagementQueryService {
+    private final AuthorizationService authorization;
+    private final EmployeeRepository employees;
+    private final OrganizationRepository organizations;
+    private final RbacRoleRepository roles;
+    private final PermissionRepository permissions;
+    private final RoleInheritanceStore hierarchy;
+    private final CatalogEntryRepository catalog;
+    private final BusinessSystemRepository systems;
+
+    /** 超级管理员可核对待匹配员工，局部管理员只看有明确归属的范围内员工。 */
+    public Page&lt;Employee&gt; employees(Long operator, Pageable page) {
+<span class="fc" id="L44">        Scope scope = scope(operator);</span>
+<span class="pc bpc" id="L45" title="1 of 2 branches missed.">        return scope.global() ? employees.findAll(page) : employees.findByOrganizationIdIn(scope.ids(), page);</span>
+    }
+
+    /** 查询可见员工的单条资料。 */
+    public Employee employee(Long operator, Long id) {
+<span class="nc" id="L50">        return requireEmployeeVisible(id, scope(operator));</span>
+    }
+
+    /** 查询可见角色定义。 */
+    public RbacRole role(Long operator, Long id) {
+<span class="nc" id="L55">        return requireRoleVisible(id, scope(operator));</span>
+    }
+
+    /** 单条权限与列表使用相同的可见条件。 */
+    public Permission permission(Long operator, Long id) {
+<span class="fc" id="L60">        Scope scope = scope(operator);</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (!permissions.existsById(id)) {</span>
+<span class="nc" id="L62">            throw missing();</span>
+        }
+<span class="fc" id="L64">        return permissions.findVisibleById(id, scope.global(), scope.ids(), scope.policyIds())</span>
+<span class="fc" id="L65">                .orElseThrow(ManagementQueryService::denied);</span>
+    }
+
+    /** 根据查询的固定组织类型和管理员范围返回目录。 */
+    public Page&lt;Organization&gt; organizations(Long operator, String type, Pageable page) {
+<span class="fc" id="L70">        Scope scope = scope(operator);</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        if (&quot;DEPARTMENT&quot;.equals(type)) {</span>
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">            return scope.global() ? organizations.findDepartmentDirectory(page)</span>
+<span class="fc" id="L73">                    : organizations.findDepartmentDirectoryIn(scope.ids(), page);</span>
+        }
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        return scope.global() ? organizations.findByOrganizationType(type, page)</span>
+<span class="fc" id="L76">                : organizations.findByOrganizationTypeAndIdIn(type, scope.ids(), page);</span>
+    }
+
+    /** 分页返回可见的运行时角色。 */
+    public Page&lt;RbacRole&gt; roles(Long operator, Pageable page) {
+<span class="fc" id="L81">        Scope scope = scope(operator);</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        return scope.global() ? roles.findAll(page) : roles.findByOwnerOrganizationIdInOrOwnerOrganizationIdIsNull(</span>
+<span class="fc" id="L83">                scope.ids(), page);</span>
+    }
+
+    /** 分页查看范围内的运行时权限定义。 */
+    public Page&lt;Permission&gt; permissions(Long operator, Pageable page) {
+<span class="fc" id="L88">        Scope scope = scope(operator);</span>
+<span class="fc" id="L89">        return permissions.findVisible(scope.global(), scope.ids(), scope.policyIds(), page);</span>
+    }
+
+    /** 原表功能目录供所有管理员对照，不包含员工信息或实际授权关系。 */
+    public Page&lt;CatalogEntry&gt; catalog(Long operator, Pageable page) {
+<span class="fc" id="L94">        requireAdministrator(operator);</span>
+<span class="fc" id="L95">        return catalog.findAll(page);</span>
+    }
+
+    /** 确认目标员工在管理范围内，再读取其可见的角色分配。 */
+    public Page&lt;RbacRole&gt; employeeRoles(Long operator, Long employeeId, Pageable page) {
+<span class="fc" id="L100">        Scope scope = scope(operator);</span>
+<span class="fc" id="L101">        requireEmployeeVisible(employeeId, scope);</span>
+<span class="fc" id="L102">        return roles.findAssigned(employeeId, scope.global(), scope.ids(), page);</span>
+    }
+
+    /** 直接继承角色与角色目录采用同一管理读取范围。 */
+    public Page&lt;RbacRole&gt; roleParents(Long operator, Long roleId, Pageable page) {
+<span class="fc" id="L107">        requireRoleVisible(roleId, scope(operator));</span>
+<span class="fc" id="L108">        return roles.findParents(roleId, page);</span>
+    }
+
+    /** 管理员可见范围和目标员工的实际权限分别校验。 */
+    public Page&lt;Permission&gt; effectivePermissions(Long operator, Long employeeId, String systemCode, Pageable page) {
+<span class="fc" id="L113">        Scope scope = scope(operator);</span>
+<span class="fc" id="L114">        requireEmployeeVisible(employeeId, scope);</span>
+<span class="fc" id="L115">        BusinessSystem system = systems.findByCode(systemCode)</span>
+<span class="pc" id="L116">                .orElseThrow(() -&gt; new BusinessAccessException(Reason.SYSTEM_NOT_FOUND));</span>
+<span class="pc bpc" id="L117" title="3 of 4 branches missed.">        if (!scope.global() &amp;&amp; !scope.policyIds().contains(system.getOwnerOrganizationId())) {</span>
+<span class="nc" id="L118">            throw denied();</span>
+        }
+<span class="fc" id="L120">        List&lt;Permission&gt; effective = authorization.effectivePermissions(employeeId, system);</span>
+<span class="fc" id="L121">        long offset = page.getOffset();</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        if (offset &gt;= effective.size()) {</span>
+<span class="nc" id="L123">            return new PageImpl&lt;&gt;(List.of(), page, effective.size());</span>
+        }
+<span class="fc" id="L125">        int end = (int) Math.min(offset + page.getPageSize(), effective.size());</span>
+<span class="fc" id="L126">        return new PageImpl&lt;&gt;(effective.subList((int) offset, end), page, effective.size());</span>
+    }
+
+    /** 确认角色可见，再分页返回该角色关联的可见权限。 */
+    public Page&lt;Permission&gt; rolePermissions(Long operator, Long roleId, Pageable page) {
+<span class="fc" id="L131">        Scope scope = scope(operator);</span>
+<span class="fc" id="L132">        requireRoleVisible(roleId, scope);</span>
+<span class="fc" id="L133">        return permissions.findAssigned(roleId, scope.global(), scope.ids(), scope.policyIds(), page);</span>
+    }
+
+    /** 查询继承来源的配置权限，当前角色的直接分配另行返回。 */
+    public Page&lt;Permission&gt; inheritedRolePermissions(Long operator, Long roleId, Pageable page) {
+<span class="fc" id="L138">        Scope scope = scope(operator);</span>
+<span class="fc" id="L139">        requireRoleVisible(roleId, scope);</span>
+<span class="fc" id="L140">        Set&lt;Long&gt; sources = new HashSet&lt;&gt;(hierarchy.snapshot().inheritedRoles(Set.of(roleId)));</span>
+<span class="fc" id="L141">        sources.remove(roleId);</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">        if (sources.isEmpty()) {</span>
+<span class="fc" id="L143">            return Page.empty(page);</span>
+        }
+<span class="fc" id="L145">        return permissions.findInherited(sources, scope.global(), scope.ids(), scope.policyIds(), page);</span>
+    }
+
+    /** 关联和详情入口共用员工可见范围。 */
+    private Employee requireEmployeeVisible(Long id, Scope scope) {
+<span class="fc" id="L150">        Employee employee = employees.findById(id).orElseThrow(ManagementQueryService::missing);</span>
+<span class="fc" id="L151">        Long owner = employee.getOrganizationId();</span>
+<span class="pc bpc" id="L152" title="1 of 6 branches missed.">        if (!scope.global() &amp;&amp; (owner == null || !scope.ids().contains(owner))) {</span>
+<span class="fc" id="L153">            throw denied();</span>
+        }
+<span class="fc" id="L155">        return employee;</span>
+    }
+
+    /** 关联和详情入口共用角色可见范围。 */
+    private RbacRole requireRoleVisible(Long id, Scope scope) {
+<span class="fc" id="L160">        RbacRole role = roles.findById(id).orElseThrow(ManagementQueryService::missing);</span>
+<span class="fc" id="L161">        Long owner = role.getOwnerOrganizationId();</span>
+<span class="pc bpc" id="L162" title="1 of 6 branches missed.">        if (!scope.global() &amp;&amp; owner != null &amp;&amp; !scope.ids().contains(owner)) {</span>
+<span class="fc" id="L163">            throw denied();</span>
+        }
+<span class="fc" id="L165">        return role;</span>
+    }
+
+    /** 读取当前管理员配置，公司范围含其直接下属部门。 */
+    private Scope scope(Long operator) {
+<span class="fc" id="L170">        AdministratorScope admin = requireAdministrator(operator);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (&quot;GLOBAL&quot;.equals(admin.getScopeType())) {</span>
+<span class="fc" id="L172">            return new Scope(true, Set.of(), Set.of());</span>
+        }
+<span class="fc" id="L174">        Organization owner = organizations.findById(admin.getOrganizationId()).orElseThrow();</span>
+<span class="fc" id="L175">        Set&lt;Long&gt; visible = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L176">        visible.add(owner.getId());</span>
+<span class="fc bfc" id="L177" title="All 2 branches covered.">        if (&quot;COMPANY&quot;.equals(owner.getOrganizationType())) {</span>
+<span class="fc" id="L178">            organizations.findByParentId(owner.getId()).forEach(child -&gt; visible.add(child.getId()));</span>
+        }
+<span class="fc" id="L180">        Set&lt;Long&gt; policyIds = new HashSet&lt;&gt;(visible);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        if (owner.getParentId() != null) {</span>
+<span class="fc" id="L182">            policyIds.add(owner.getParentId());</span>
+        }
+<span class="fc" id="L184">        return new Scope(false, Set.copyOf(visible), Set.copyOf(policyIds));</span>
+    }
+
+    /** 管理员资格以本次请求查询的数据库数据为准。 */
+    private AdministratorScope requireAdministrator(Long operator) {
+<span class="fc" id="L189">        return authorization.assignmentScope(operator, AuthorizationService.MANAGEMENT_READ)</span>
+<span class="fc" id="L190">                .orElseThrow(ManagementQueryService::denied);</span>
+    }
+
+    /** 返回管理查询权限拒绝。 */
+    private static BusinessAccessException denied() {
+<span class="fc" id="L195">        return new BusinessAccessException(Reason.PERMISSION_DENIED, &quot;无权查看该管理数据&quot;);</span>
+    }
+
+    /** 返回管理查询的资源缺失。 */
+    private static BusinessAccessException missing() {
+<span class="fc" id="L200">        return new BusinessAccessException(Reason.RESOURCE_NOT_FOUND);</span>
+    }
+
+    /** 查询所用的组织 ID，分支范围同时用于数据库筛选和总数。 */
+<span class="fc" id="L204">    private record Scope(boolean global, Set&lt;Long&gt; ids, Set&lt;Long&gt; policyIds) {</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

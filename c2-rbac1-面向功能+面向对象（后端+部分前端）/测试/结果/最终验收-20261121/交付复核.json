@@ -1,0 +1,91 @@
+{
+  "scope": "C2 seven-step local delivery; course Swarm explicitly deferred to teammates",
+  "status": "passed",
+  "backend": {
+    "func": {
+      "tests": {
+        "tests": 88,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "sourceSha256": "6d3fc05d458628c529115a3b57de254c7f934b9cbac6307f31f944aa83ebeb28",
+      "coverage": {
+        "LINE": {
+          "missed": 76,
+          "covered": 1456,
+          "ratio": 0.9503916449086162
+        },
+        "BRANCH": {
+          "missed": 90,
+          "covered": 485,
+          "ratio": 0.8434782608695652
+        }
+      }
+    },
+    "oo": {
+      "tests": {
+        "tests": 92,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "sourceSha256": "70c8ce86448b8488416f95be0ed8960e0550f7d3ef1c9b57c51b93c79fd16e35",
+      "coverage": {
+        "LINE": {
+          "missed": 75,
+          "covered": 1483,
+          "ratio": 0.9518613607188704
+        },
+        "BRANCH": {
+          "missed": 91,
+          "covered": 488,
+          "ratio": 0.842832469775475
+        }
+      }
+    }
+  },
+  "browser": {
+    "tests": 35,
+    "projects": {
+      "oo": 17,
+      "func": 17,
+      "dual": 1
+    },
+    "groups": {
+      "existingNonExcel": 21,
+      "realExcel": 2,
+      "newIdentity": 12
+    },
+    "frontendAndTestSha256": "e65cf8e15c097e4f7b9e77703f3d583a2d6f34e3d5ac7b92354679d50fe577eb",
+    "jars": {
+      "func": "c8c667e65c66589bfcc03c5567fd5ca956d81c713ec8f3f9185d690c91c1433a",
+      "oo": "8e5cacba2537e0e8638d1449b10ebfb4b778fa457a3c728e20d86d17bca03f4a"
+    },
+    "temporaryBackendsStopped": true
+  },
+  "apifox": {
+    "status": "synchronized-and-read-back",
+    "projectId": 9046536,
+    "moduleId": 8918000,
+    "interfaceCount": 48,
+    "sourceSha256": "0a919975951f8d2f6664ec3676a1d3c1a097178038e78a02d29e8ba8c40c5be4",
+    "unmatchedResources": "preserved"
+  },
+  "documents": {
+    "checked": 15,
+    "localLinks": 597
+  },
+  "deferred": [
+    "course Swarm deployment and cluster acceptance",
+    "switching existing old development processes",
+    "JWT and cross-project integration",
+    "git commit/push and image publication"
+  ],
+  "diagrams": {
+    "count": 47,
+    "nativeSourceSha256": "8b099b78a957edd01baac0b871382b1f59b9a53df765cd7066620ff8e320064c",
+    "generatorTests": 9
+  },
+  "sourceGitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474"
+}

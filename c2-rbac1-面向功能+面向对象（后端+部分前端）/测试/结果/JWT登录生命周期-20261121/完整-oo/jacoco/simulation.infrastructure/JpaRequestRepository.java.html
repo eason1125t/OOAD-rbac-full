@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JpaRequestRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">simulation.infrastructure</a> &gt; <span class="el_source">JpaRequestRepository.java</span></div><h1>JpaRequestRepository.java</h1><pre class="source lang-java linenums">// 文件职责：将申请领域对象与 JPA 持久化模型相互转换。
+// 协作关系：实现 RequestRepository，并委托 SimulatedRequestRepository 查询及行锁。
+package simulation.infrastructure;
+
+import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Repository;
+import simulation.SimulatedRequest;
+import simulation.SimulatedRequestRepository;
+import simulation.domain.BusinessRequest;
+import simulation.port.RequestRepository;
+
+/** 查询和锁定时将 JPA 实体还原为独立领域对象。 */
+@Repository
+@RequiredArgsConstructor
+public class JpaRequestRepository implements RequestRepository {
+    private final SimulatedRequestRepository requests;
+
+    /** 统一系统与删除过滤进行分页，超大偏移量返回空页和真实总数。 */
+    @Override
+    public Slice list(Long systemId, int page, int pageSize) {
+<span class="fc" id="L26">        PageRequest pagination = PageRequest.of(page - 1, pageSize);</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">        if (pagination.getOffset() &gt; Integer.MAX_VALUE) {</span>
+<span class="nc" id="L28">            return new Slice(java.util.List.of(), requests.countBySystemIdAndDeletedAtIsNull(systemId));</span>
+        }
+<span class="fc" id="L30">        Page&lt;SimulatedRequest&gt; result = requests.findBySystemIdAndDeletedAtIsNullOrderByIdAsc(systemId, pagination);</span>
+<span class="fc" id="L31">        return new Slice(result.stream().map(JpaRequestRepository::domain).toList(), result.getTotalElements());</span>
+    }
+
+    /** 读取未删除记录并还原领域对象，不引入写锁。 */
+    @Override
+    public Optional&lt;BusinessRequest&gt; find(Long id) {
+<span class="fc" id="L37">        return requests.findByIdAndDeletedAtIsNull(id).map(JpaRequestRepository::domain);</span>
+    }
+
+    /** 在调用方事务中锁定未删除申请行，再还原领域对象。 */
+    @Override
+    public Optional&lt;BusinessRequest&gt; lock(Long id) {
+<span class="fc" id="L43">        return requests.findLockedByIdAndDeletedAtIsNull(id).map(JpaRequestRepository::domain);</span>
+    }
+
+    /** 更新仍使用锁定后的托管实体，领域校验通过后才复制变更字段。 */
+    @Override
+    public BusinessRequest save(BusinessRequest request) {
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        SimulatedRequest row = request.getId() == null</span>
+<span class="fc" id="L50">                ? new SimulatedRequest(request.getSystemId(), request.getApplicantId(), request.getTitle())</span>
+<span class="fc" id="L51">                : requests.findById(request.getId())</span>
+<span class="pc" id="L52">                    .orElseThrow(() -&gt; new BusinessAccessException(Reason.REQUEST_NOT_FOUND));</span>
+<span class="fc" id="L53">        row.apply(request);</span>
+<span class="fc" id="L54">        return domain(requests.save(row));</span>
+    }
+
+    /** 从持久化字段还原领域状态，保留历史申请人的空值。 */
+    private static BusinessRequest domain(SimulatedRequest row) {
+<span class="fc" id="L59">        return new BusinessRequest(row.getId(), row.getSystemId(), row.getApplicantId(),</span>
+<span class="fc" id="L60">                row.getTitle(), row.getStatus(), row.getDeletedAt());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

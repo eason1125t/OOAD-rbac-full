@@ -1,0 +1,45 @@
+{
+  "status": "review_required",
+  "candidateFiles": 10304,
+  "candidateMiB": 313.28,
+  "secretFindings": [
+    {
+      "path": "c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/结果/JWT登录生命周期-20261121/HTTP首轮/surefire/TEST-contract.AuthHttpTest.xml",
+      "member": "file",
+      "kind": "accessJwt"
+    },
+    {
+      "path": "c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/结果/JWT登录生命周期-20261121/HTTP首轮/命令行输出.txt",
+      "member": "file",
+      "kind": "accessJwt"
+    }
+  ],
+  "tooLarge": [],
+  "excludedPathFindings": [
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/resources/db/migration/V9__api_operation_permissions.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-oo/src/main/resources/db/migration/V9__api_operation_permissions.sql",
+    "c1-框架-rbac0-结构化+面向功能/backend/src/main/resources/db/migration/V1__create_rbac0_schema.sql",
+    "c1-框架-rbac0-结构化+面向功能/backend/src/main/resources/db/migration/V2__preserve_organization_source_parent.sql",
+    "c1-框架-rbac0-结构化+面向功能/backend/src/main/resources/db/migration/V3__add_login_accounts_and_default_systems.sql",
+    "c1-框架-rbac0-结构化+面向功能/backend/src/main/resources/db/migration/V4__create_simulated_request.sql",
+    "c1-框架-rbac0-结构化+面向功能/backend/src/main/resources/db/migration/V5__add_scoped_permission_regrants.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/resources/db/migration/V1__create_rbac0_schema.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/resources/db/migration/V2__preserve_organization_source_parent.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/resources/db/migration/V3__add_login_accounts_and_default_systems.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/resources/db/migration/V4__create_simulated_request.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/resources/db/migration/V5__add_scoped_permission_regrants.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/resources/db/migration/V6__create_role_inheritance.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/resources/db/migration/V7__extend_simulated_request_lifecycle.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/resources/db/migration/V8__add_request_read_permission.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-oo/src/main/resources/db/migration/V1__create_rbac0_schema.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-oo/src/main/resources/db/migration/V2__preserve_organization_source_parent.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-oo/src/main/resources/db/migration/V3__add_login_accounts_and_default_systems.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-oo/src/main/resources/db/migration/V4__create_simulated_request.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-oo/src/main/resources/db/migration/V5__add_scoped_permission_regrants.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-oo/src/main/resources/db/migration/V6__create_role_inheritance.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-oo/src/main/resources/db/migration/V7__extend_simulated_request_lifecycle.sql",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-oo/src/main/resources/db/migration/V8__add_request_read_permission.sql"
+  ],
+  "knownPrivateValuesCompared": 5,
+  "note": "No credential values are included; scan candidates, not original Excel or private runtime directories."
+}

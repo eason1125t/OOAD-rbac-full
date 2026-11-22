@@ -1,0 +1,23 @@
+[
+  {
+    "kind": "func",
+    "oldPid": 29824,
+    "port": 18181,
+    "createdUtc": "2026-11-19T13:27:57.9491380Z",
+    "entryPoint": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\rbac1-func-0.1.0-SNAPSHOT.jar"
+  },
+  {
+    "kind": "oo",
+    "oldPid": 25544,
+    "port": 18182,
+    "createdUtc": "2026-11-19T13:27:58.1883510Z",
+    "entryPoint": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\rbac1-oo-0.1.0-SNAPSHOT.jar"
+  },
+  {
+    "kind": "frontend",
+    "oldPid": 53688,
+    "port": 5173,
+    "createdUtc": "2026-11-19T14:14:19.8531020Z",
+    "entryPoint": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\frontend\\node_modules\\vite\\bin\\vite.js"
+  }
+]

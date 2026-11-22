@@ -1,0 +1,5 @@
+工作目录：C2
+入口：python 测试/脚本/run_frontend_identity.py --output-dir 测试\结果\JWT前端与整体验收-20261121\浏览器完整 --suite full --backend-build-dir target\jwt-final --excel-dir <私密原表目录>
+前端：npm run build；Playwright使用Edge、15173，产物预览模式。
+后端：指定构建目录JAR，28181/28182；隔离测试库、外部临时测试密钥及独立JWT登录命名空间。
+凭据仅传入子进程环境。原开发进程不停止，不清空数据库或批量删除文件。

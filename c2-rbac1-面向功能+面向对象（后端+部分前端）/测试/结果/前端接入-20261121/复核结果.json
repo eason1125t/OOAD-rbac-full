@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "scope": "Step6 frontend, browser and artifact verification; Step5 backend regression evidence remains separate",
+  "frontendAndTestSha256": "e65cf8e15c097e4f7b9e77703f3d583a2d6f34e3d5ac7b92354679d50fe577eb",
+  "projects": {
+    "oo": 16,
+    "func": 16,
+    "dual": 1
+  },
+  "scenarios": {
+    "existingNonExcel": 21,
+    "newIdentity": 12
+  },
+  "localLinks": 79,
+  "archiveGuardExit": 2,
+  "backendJarsMatch": true,
+  "temporaryBackendsStopped": true,
+  "realExcelRetested": false,
+  "deploymentUpdated": false,
+  "jwt": "deferred"
+}

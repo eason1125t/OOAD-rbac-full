@@ -1,0 +1,34 @@
+{
+  "startedUtc": "2026-11-21T15:56:21.780575+00:00",
+  "suite": "identity",
+  "grep": "刷新网络故障",
+  "databases": {
+    "func": "ooad_rbac1_func_ui_test",
+    "oo": "ooad_rbac1_oo_ui_test"
+  },
+  "ports": [
+    28181,
+    28182,
+    15173
+  ],
+  "jars": {
+    "func": "a4981a332367673239017cfbce38355f6393db9f7c376eb6247e7e26840b6980",
+    "oo": "67a4567692801a514c046e683ddfba0524b00dde263177a34e8c510990b28044"
+  },
+  "authNamespaces": {
+    "func": "rbac1:func:ui-jwt-test:20261121155628_cd44361f",
+    "oo": "rbac1:oo:ui-jwt-test:20261121155628_7a12b16f"
+  },
+  "exitCode": 0,
+  "stats": {
+    "startTime": "2026-11-21T15:56:58.934Z",
+    "duration": 11034.966,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "frontendAndTestSha256": "6968691fad4911469930abd3c8217d7497750b4bb41040d61db8519dc083002a",
+  "temporaryBackendsStopped": true,
+  "completedUtc": "2026-11-21T15:57:10.098115+00:00"
+}

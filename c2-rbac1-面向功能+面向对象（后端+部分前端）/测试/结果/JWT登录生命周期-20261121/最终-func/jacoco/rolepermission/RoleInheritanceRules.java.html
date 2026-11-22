@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RoleInheritanceRules.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">rolepermission</a> &gt; <span class="el_source">RoleInheritanceRules.java</span></div><h1>RoleInheritanceRules.java</h1><pre class="source lang-java linenums">// 文件职责：对显式邻接表执行无副作用的继承图计算。
+// 协作关系：被 RoleInheritanceGraph 委托以展开角色、查环和计算逆向影响。
+package rolepermission;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+/** 对显式邻接表执行无副作用的继承图计算，被 RoleInheritanceGraph 委托以展开角色、查环和计算逆向影响。 */
+final class RoleInheritanceRules {
+    /** 禁止实例化仅提供静态规则或嵌套模型的工具容器。 */
+    private RoleInheritanceRules() {
+    }
+
+    /** 从低级角色查找高级角色；已有返回路径时新增边会闭环。 */
+    static boolean wouldFormCycle(Map&lt;Long, Set&lt;Long&gt;&gt; parents, long seniorRoleId, long juniorRoleId) {
+<span class="fc" id="L20">        return reachable(parents, Set.of(juniorRoleId)).contains(seniorRoleId);</span>
+    }
+
+    /** 遍历包含入口角色，访问集合使多路径只计一次。 */
+    static Set&lt;Long&gt; reachable(Map&lt;Long, Set&lt;Long&gt;&gt; edges, Set&lt;Long&gt; roots) {
+<span class="fc" id="L25">        Deque&lt;Long&gt; pending = new ArrayDeque&lt;&gt;(roots);</span>
+<span class="fc" id="L26">        Set&lt;Long&gt; visited = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        while (!pending.isEmpty()) {</span>
+<span class="fc" id="L28">            Long roleId = pending.removeFirst();</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">            if (visited.add(roleId)) {</span>
+<span class="fc" id="L30">                pending.addAll(edges.getOrDefault(roleId, Set.of()));</span>
+            }
+<span class="fc" id="L32">        }</span>
+<span class="fc" id="L33">        return visited;</span>
+    }
+
+    /** 将高级到低级的边反向，用于查找被权限变更影响的高级角色。 */
+    static Map&lt;Long, Set&lt;Long&gt;&gt; reverse(Map&lt;Long, Set&lt;Long&gt;&gt; parents) {
+<span class="fc" id="L38">        Map&lt;Long, Set&lt;Long&gt;&gt; reversed = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L39">        parents.forEach((senior, juniors) -&gt; juniors.forEach(junior -&gt;</span>
+<span class="fc" id="L40">                reversed.computeIfAbsent(junior, unused -&gt; new HashSet&lt;&gt;()).add(senior)));</span>
+<span class="fc" id="L41">        return reversed;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

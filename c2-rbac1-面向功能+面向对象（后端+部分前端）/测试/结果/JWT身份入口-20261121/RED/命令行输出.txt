@@ -1,0 +1,120 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< cn.edu.ooad:rbac1-func >-----------------------
+[INFO] Building rbac1-func 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-oauth2-resource-server/3.5.16/spring-boot-starter-oauth2-resource-server-3.5.16.pom
+Progress (1): 975 BProgress (1): 1.0 kBProgress (1): 3.0 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-oauth2-resource-server/3.5.16/spring-boot-starter-oauth2-resource-server-3.5.16.pom (3.0 kB at 2.6 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-resource-server/6.5.11/spring-security-oauth2-resource-server-6.5.11.pom
+Progress (1): 987 BProgress (1): 1.1 kBProgress (1): 2.7 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-resource-server/6.5.11/spring-security-oauth2-resource-server-6.5.11.pom (2.7 kB at 7.4 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-core/6.5.11/spring-security-oauth2-core-6.5.11.pom
+Progress (1): 1.0 kBProgress (1): 1.1 kBProgress (1): 2.5 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-core/6.5.11/spring-security-oauth2-core-6.5.11.pom (2.5 kB at 6.0 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-jose/6.5.11/spring-security-oauth2-jose-6.5.11.pom
+Progress (1): 1.0 kBProgress (1): 1.1 kBProgress (1): 2.7 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-jose/6.5.11/spring-security-oauth2-jose-6.5.11.pom (2.7 kB at 4.5 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/nimbusds/nimbus-jose-jwt/9.37.4/nimbus-jose-jwt-9.37.4.pom
+Progress (1): 906 BProgress (1): 970 BProgress (1): 3.3 kBProgress (1): 6.4 kBProgress (1): 8.5 kBProgress (1): 12 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/com/nimbusds/nimbus-jose-jwt/9.37.4/nimbus-jose-jwt-9.37.4.pom (12 kB at 30 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.pom
+Progress (1): 795 BProgress (1): 861 BProgress (1): 2.6 kBProgress (1): 5.4 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.pom (5.4 kB at 18 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-oauth2-resource-server/3.5.16/spring-boot-starter-oauth2-resource-server-3.5.16.jar
+Progress (1): 0.5/4.8 kBProgress (1): 1.9/4.8 kBProgress (1): 3.3/4.8 kBProgress (1): 4.7/4.8 kBProgress (1): 4.8 kB                        Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-oauth2-resource-server/3.5.16/spring-boot-starter-oauth2-resource-server-3.5.16.jar (4.8 kB at 16 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-resource-server/6.5.11/spring-security-oauth2-resource-server-6.5.11.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-core/6.5.11/spring-security-oauth2-core-6.5.11.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-jose/6.5.11/spring-security-oauth2-jose-6.5.11.jar
+Downloading from central: https://repo.maven.apache.org/maven2/com/nimbusds/nimbus-jose-jwt/9.37.4/nimbus-jose-jwt-9.37.4.jar
+Downloading from central: https://repo.maven.apache.org/maven2/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.jar
+Progress (1): 0.9/788 kBProgress (1): 2.3/788 kBProgress (1): 3.6/788 kBProgress (1): 5.0/788 kBProgress (1): 6.4/788 kBProgress (1): 7.7/788 kBProgress (1): 9.1/788 kBProgress (1): 10/788 kB Progress (1): 12/788 kBProgress (1): 13/788 kBProgress (1): 15/788 kBProgress (1): 16/788 kBProgress (1): 17/788 kBProgress (1): 19/788 kBProgress (1): 20/788 kBProgress (1): 21/788 kBProgress (1): 23/788 kBProgress (1): 27/788 kBProgress (1): 31/788 kBProgress (1): 32/788 kBProgress (1): 36/788 kBProgress (1): 40/788 kBProgress (1): 45/788 kBProgress (1): 49/788 kBProgress (1): 53/788 kBProgress (1): 57/788 kBProgress (1): 61/788 kBProgress (1): 65/788 kBProgress (1): 69/788 kBProgress (1): 73/788 kBProgress (1): 77/788 kBProgress (2): 77/788 kB | 0.9/4.7 kBProgress (2): 77/788 kB | 2.3/4.7 kBProgress (2): 82/788 kB | 2.3/4.7 kBProgress (2): 82/788 kB | 3.6/4.7 kBProgress (2): 82/788 kB | 4.7 kB    Progress (2): 86/788 kB | 4.7 kB                                Downloaded from central: https://repo.maven.apache.org/maven2/com/github/stephenc/jcip/jcip-annotations/1.0-1/jcip-annotations-1.0-1.jar (4.7 kB at 6.4 kB/s)
+Progress (1): 90/788 kBProgress (1): 94/788 kBProgress (2): 94/788 kB | 0.9/125 kBProgress (2): 94/788 kB | 2.3/125 kBProgress (2): 94/788 kB | 3.6/125 kBProgress (2): 94/788 kB | 5.0/125 kBProgress (2): 94/788 kB | 6.4/125 kBProgress (2): 94/788 kB | 7.7/125 kBProgress (2): 94/788 kB | 9.1/125 kBProgress (2): 94/788 kB | 10/125 kB Progress (2): 94/788 kB | 12/125 kBProgress (2): 98/788 kB | 12/125 kBProgress (2): 98/788 kB | 13/125 kBProgress (2): 98/788 kB | 15/125 kBProgress (2): 98/788 kB | 16/125 kBProgress (2): 103/788 kB | 16/125 kBProgress (2): 103/788 kB | 17/125 kBProgress (2): 103/788 kB | 19/125 kBProgress (2): 103/788 kB | 20/125 kBProgress (2): 103/788 kB | 21/125 kBProgress (2): 107/788 kB | 21/125 kBProgress (2): 107/788 kB | 23/125 kBProgress (2): 107/788 kB | 24/125 kBProgress (2): 111/788 kB | 24/125 kBProgress (2): 111/788 kB | 25/125 kBProgress (2): 111/788 kB | 27/125 kBProgress (2): 115/788 kB | 27/125 kBProgress (2): 115/788 kB | 28/125 kBProgress (2): 115/788 kB | 30/125 kBProgress (2): 115/788 kB | 31/125 kBProgress (2): 120/788 kB | 31/125 kBProgress (2): 120/788 kB | 32/125 kBProgress (2): 120/788 kB | 34/125 kBProgress (2): 120/788 kB | 35/125 kBProgress (2): 120/788 kB | 36/125 kBProgress (2): 120/788 kB | 38/125 kBProgress (2): 120/788 kB | 39/125 kBProgress (2): 120/788 kB | 41/125 kBProgress (2): 120/788 kB | 42/125 kBProgress (2): 120/788 kB | 43/125 kBProgress (2): 120/788 kB | 45/125 kBProgress (2): 120/788 kB | 46/125 kBProgress (2): 120/788 kB | 47/125 kBProgress (2): 120/788 kB | 49/125 kBProgress (2): 120/788 kB | 50/125 kBProgress (2): 120/788 kB | 51/125 kBProgress (2): 120/788 kB | 53/125 kBProgress (2): 120/788 kB | 54/125 kBProgress (2): 120/788 kB | 56/125 kBProgress (2): 120/788 kB | 57/125 kBProgress (2): 120/788 kB | 61/125 kBProgress (2): 124/788 kB | 61/125 kBProgress (2): 128/788 kB | 61/125 kBProgress (2): 130/788 kB | 61/125 kBProgress (2): 134/788 kB | 61/125 kBProgress (2): 139/788 kB | 61/125 kBProgress (2): 143/788 kB | 61/125 kBProgress (2): 147/788 kB | 61/125 kBProgress (2): 151/788 kB | 61/125 kBProgress (2): 151/788 kB | 65/125 kBProgress (2): 156/788 kB | 65/125 kBProgress (3): 156/788 kB | 65/125 kB | 0.9/127 kBProgress (3): 156/788 kB | 65/125 kB | 2.3/127 kBProgress (3): 156/788 kB | 65/125 kB | 3.6/127 kBProgress (3): 156/788 kB | 65/125 kB | 5.0/127 kBProgress (3): 156/788 kB | 65/125 kB | 6.4/127 kBProgress (3): 156/788 kB | 65/125 kB | 7.7/127 kBProgress (3): 156/788 kB | 70/125 kB | 7.7/127 kBProgress (3): 156/788 kB | 70/125 kB | 9.1/127 kBProgress (3): 156/788 kB | 70/125 kB | 10/127 kB Progress (3): 160/788 kB | 70/125 kB | 10/127 kBProgress (3): 160/788 kB | 74/125 kB | 10/127 kBProgress (3): 160/788 kB | 74/125 kB | 12/127 kBProgress (3): 160/788 kB | 74/125 kB | 13/127 kBProgress (3): 164/788 kB | 74/125 kB | 13/127 kBProgress (3): 164/788 kB | 78/125 kB | 13/127 kBProgress (3): 164/788 kB | 78/125 kB | 15/127 kBProgress (3): 164/788 kB | 78/125 kB | 16/127 kBProgress (3): 164/788 kB | 78/125 kB | 17/127 kBProgress (3): 164/788 kB | 78/125 kB | 19/127 kBProgress (3): 168/788 kB | 78/125 kB | 19/127 kBProgress (3): 168/788 kB | 78/125 kB | 20/127 kBProgress (3): 168/788 kB | 82/125 kB | 20/127 kBProgress (3): 168/788 kB | 82/125 kB | 21/127 kBProgress (3): 172/788 kB | 82/125 kB | 21/127 kBProgress (3): 172/788 kB | 82/125 kB | 23/127 kBProgress (3): 172/788 kB | 82/125 kB | 24/127 kBProgress (3): 172/788 kB | 86/125 kB | 24/127 kBProgress (3): 172/788 kB | 86/125 kB | 25/127 kBProgress (3): 172/788 kB | 86/125 kB | 27/127 kBProgress (3): 177/788 kB | 86/125 kB | 27/127 kBProgress (3): 177/788 kB | 86/125 kB | 28/127 kBProgress (3): 177/788 kB | 86/125 kB | 30/127 kBProgress (3): 177/788 kB | 91/125 kB | 30/127 kBProgress (3): 181/788 kB | 91/125 kB | 30/127 kBProgress (3): 181/788 kB | 91/125 kB | 31/127 kBProgress (3): 181/788 kB | 91/125 kB | 32/127 kBProgress (3): 181/788 kB | 95/125 kB | 32/127 kBProgress (3): 181/788 kB | 95/125 kB | 34/127 kBProgress (3): 181/788 kB | 95/125 kB | 35/127 kBProgress (3): 185/788 kB | 95/125 kB | 35/127 kBProgress (3): 185/788 kB | 95/125 kB | 36/127 kBProgress (3): 185/788 kB | 95/125 kB | 38/127 kBProgress (3): 185/788 kB | 95/125 kB | 39/127 kBProgress (3): 185/788 kB | 99/125 kB | 39/127 kBProgress (3): 185/788 kB | 99/125 kB | 41/127 kBProgress (3): 185/788 kB | 99/125 kB | 42/127 kBProgress (3): 185/788 kB | 103/125 kB | 42/127 kBProgress (3): 185/788 kB | 103/125 kB | 43/127 kBProgress (3): 185/788 kB | 103/125 kB | 45/127 kBProgress (3): 185/788 kB | 103/125 kB | 46/127 kBProgress (3): 185/788 kB | 103/125 kB | 47/127 kBProgress (3): 185/788 kB | 103/125 kB | 49/127 kBProgress (3): 185/788 kB | 103/125 kB | 50/127 kBProgress (3): 185/788 kB | 108/125 kB | 50/127 kBProgress (3): 185/788 kB | 108/125 kB | 51/127 kBProgress (3): 202/788 kB | 108/125 kB | 51/127 kBProgress (3): 202/788 kB | 108/125 kB | 53/127 kBProgress (3): 202/788 kB | 112/125 kB | 53/127 kBProgress (3): 202/788 kB | 112/125 kB | 54/127 kBProgress (3): 202/788 kB | 112/125 kB | 56/127 kBProgress (3): 202/788 kB | 112/125 kB | 57/127 kBProgress (3): 202/788 kB | 112/125 kB | 61/127 kBProgress (3): 202/788 kB | 116/125 kB | 61/127 kBProgress (3): 202/788 kB | 120/125 kB | 61/127 kBProgress (3): 218/788 kB | 120/125 kB | 61/127 kBProgress (3): 218/788 kB | 125/125 kB | 61/127 kBProgress (3): 218/788 kB | 125 kB | 61/127 kB                                                 Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-resource-server/6.5.11/spring-security-oauth2-resource-server-6.5.11.jar (125 kB at 118 kB/s)
+Progress (2): 234/788 kB | 61/127 kBProgress (2): 234/788 kB | 65/127 kBProgress (2): 234/788 kB | 70/127 kBProgress (2): 234/788 kB | 74/127 kBProgress (2): 234/788 kB | 78/127 kBProgress (2): 234/788 kB | 82/127 kBProgress (2): 234/788 kB | 86/127 kBProgress (2): 234/788 kB | 91/127 kBProgress (2): 234/788 kB | 95/127 kBProgress (2): 234/788 kB | 99/127 kBProgress (2): 234/788 kB | 103/127 kBProgress (2): 234/788 kB | 108/127 kBProgress (2): 234/788 kB | 112/127 kBProgress (2): 234/788 kB | 116/127 kBProgress (2): 234/788 kB | 120/127 kBProgress (2): 234/788 kB | 125/127 kBProgress (2): 234/788 kB | 127 kB                                     Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-jose/6.5.11/spring-security-oauth2-jose-6.5.11.jar (127 kB at 101 kB/s)
+Progress (1): 251/788 kBProgress (1): 261/788 kBProgress (1): 278/788 kBProgress (1): 294/788 kBProgress (1): 310/788 kBProgress (1): 327/788 kBProgress (1): 343/788 kBProgress (1): 360/788 kBProgress (1): 376/788 kBProgress (1): 392/788 kBProgress (1): 409/788 kBProgress (1): 425/788 kBProgress (1): 441/788 kBProgress (1): 458/788 kBProgress (1): 474/788 kBProgress (1): 491/788 kBProgress (2): 491/788 kB | 0.9/112 kBProgress (2): 491/788 kB | 2.3/112 kBProgress (2): 491/788 kB | 3.6/112 kBProgress (2): 491/788 kB | 5.0/112 kBProgress (2): 491/788 kB | 6.4/112 kBProgress (2): 491/788 kB | 7.7/112 kBProgress (2): 491/788 kB | 9.1/112 kBProgress (2): 491/788 kB | 10/112 kB Progress (2): 491/788 kB | 12/112 kBProgress (2): 491/788 kB | 13/112 kBProgress (2): 491/788 kB | 15/112 kBProgress (2): 491/788 kB | 16/112 kBProgress (2): 491/788 kB | 17/112 kBProgress (2): 491/788 kB | 19/112 kBProgress (2): 491/788 kB | 20/112 kBProgress (2): 491/788 kB | 21/112 kBProgress (2): 491/788 kB | 23/112 kBProgress (2): 491/788 kB | 24/112 kBProgress (2): 507/788 kB | 24/112 kBProgress (2): 523/788 kB | 24/112 kBProgress (2): 540/788 kB | 24/112 kBProgress (2): 556/788 kB | 24/112 kBProgress (2): 573/788 kB | 24/112 kBProgress (2): 589/788 kB | 24/112 kBProgress (2): 605/788 kB | 24/112 kBProgress (2): 622/788 kB | 24/112 kBProgress (2): 638/788 kB | 24/112 kBProgress (2): 654/788 kB | 24/112 kBProgress (2): 671/788 kB | 24/112 kBProgress (2): 687/788 kB | 24/112 kBProgress (2): 704/788 kB | 24/112 kBProgress (2): 720/788 kB | 24/112 kBProgress (2): 736/788 kB | 24/112 kBProgress (2): 737/788 kB | 24/112 kBProgress (2): 754/788 kB | 24/112 kBProgress (2): 770/788 kB | 24/112 kBProgress (2): 770/788 kB | 25/112 kBProgress (2): 770/788 kB | 27/112 kBProgress (2): 770/788 kB | 28/112 kBProgress (2): 770/788 kB | 30/112 kBProgress (2): 770/788 kB | 31/112 kBProgress (2): 770/788 kB | 32/112 kBProgress (2): 770/788 kB | 34/112 kBProgress (2): 770/788 kB | 35/112 kBProgress (2): 770/788 kB | 36/112 kBProgress (2): 770/788 kB | 38/112 kBProgress (2): 770/788 kB | 39/112 kBProgress (2): 770/788 kB | 41/112 kBProgress (2): 770/788 kB | 42/112 kBProgress (2): 770/788 kB | 43/112 kBProgress (2): 770/788 kB | 45/112 kBProgress (2): 770/788 kB | 46/112 kBProgress (2): 770/788 kB | 47/112 kBProgress (2): 770/788 kB | 49/112 kBProgress (2): 770/788 kB | 50/112 kBProgress (2): 786/788 kB | 50/112 kBProgress (2): 788 kB | 50/112 kB                                    Downloaded from central: https://repo.maven.apache.org/maven2/com/nimbusds/nimbus-jose-jwt/9.37.4/nimbus-jose-jwt-9.37.4.jar (788 kB at 359 kB/s)
+Progress (1): 51/112 kBProgress (1): 53/112 kBProgress (1): 54/112 kBProgress (1): 56/112 kBProgress (1): 57/112 kBProgress (1): 61/112 kBProgress (1): 65/112 kBProgress (1): 70/112 kBProgress (1): 74/112 kBProgress (1): 78/112 kBProgress (1): 82/112 kBProgress (1): 86/112 kBProgress (1): 91/112 kBProgress (1): 95/112 kBProgress (1): 99/112 kBProgress (1): 103/112 kBProgress (1): 108/112 kBProgress (1): 112 kB                        Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/security/spring-security-oauth2-core/6.5.11/spring-security-oauth2-core-6.5.11.jar (112 kB at 47 kB/s)
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rbac1-func ---
+[INFO] Copying 1 resource from src\main\resources to target\jwt-identity\classes
+[INFO] Copying 9 resources from src\main\resources to target\jwt-identity\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ rbac1-func ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 88 source files with javac [debug parameters release 21] to target\jwt-identity\classes
+[INFO] CopyFromProcessor start
+[INFO] Processing: RequestDetailVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestDetail.class}
+[INFO] Source fields: [id, status, title, applicantId]simulation.BusinessRequestService.RequestDetail
+[INFO] Target element: simulation.vo.RequestDetailVO
+[INFO] Processing: OrganizationVO
+[INFO] Entry: value, value: {organization.Organization.class}
+[INFO] Source fields: [code, parentId, sourceParentName, id, managerName, name, organizationType]organization.Organization
+[INFO] Target element: organization.vo.OrganizationVO
+[INFO] Processing: RequestSummaryVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestSummary.class}
+[INFO] Source fields: [id, status, title]simulation.BusinessRequestService.RequestSummary
+[INFO] Target element: simulation.vo.RequestSummaryVO
+[INFO] Processing: CatalogVO
+[INFO] Entry: value, value: {rolepermission.CatalogEntry.class}
+[INFO] Source fields: [moduleName, administratorCell, featureName, departmentManagerCell, employeeCell, executiveCell, projectManagerCell, id, description, systemName]rolepermission.CatalogEntry
+[INFO] Target element: organization.vo.CatalogVO
+[INFO] Processing: RequestDetail
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [applicantId, status, deletedAt, systemId, title, id]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestDetail
+[INFO] Processing: RequestSummary
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [applicantId, status, deletedAt, systemId, title, id]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestSummary
+[INFO] CopyToProcessor start
+[INFO] CopyNotNullToProcessor start
+[INFO] 
+[INFO] --- build-helper:3.6.1:add-test-source (shared-contract-tests) @ rbac1-func ---
+[INFO] Test Source directory: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\..\测试\后端\common\java added.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rbac1-func ---
+[INFO] skip non existing resourceDirectory D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ rbac1-func ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 11 source files with javac [debug parameters release 21] to target\jwt-identity\test-classes
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/AccountAuthenticationTest.java:[69,13] 找不到符号
+  符号:   类 AccountAuthentication
+  位置: 类 authentication.AccountAuthenticationTest
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/JwtAccessTokensTest.java:[5,25] 找不到符号
+  符号:   类 AccessTokenVO
+  位置: 程序包 authentication.vo
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/JwtAccessTokensTest.java:[30,19] 找不到符号
+  符号:   类 JwtAccessTokens
+  位置: 类 authentication.JwtAccessTokensTest
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/JwtFixtures.java:[46,12] 找不到符号
+  符号:   类 JwtAccessTokens
+  位置: 类 authentication.JwtFixtures
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/JwtEmployeeAuthenticationTest.java:[30,44] 程序包JwtEmployeeAuthentication不存在
+[INFO] 5 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.074 s
+[INFO] Finished at: 2026-11-21T19:49:20+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:testCompile (default-testCompile) on project rbac1-func: Compilation failure: Compilation failure: 
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/AccountAuthenticationTest.java:[69,13] 找不到符号
+[ERROR]   符号:   类 AccountAuthentication
+[ERROR]   位置: 类 authentication.AccountAuthenticationTest
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/JwtAccessTokensTest.java:[5,25] 找不到符号
+[ERROR]   符号:   类 AccessTokenVO
+[ERROR]   位置: 程序包 authentication.vo
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/JwtAccessTokensTest.java:[30,19] 找不到符号
+[ERROR]   符号:   类 JwtAccessTokens
+[ERROR]   位置: 类 authentication.JwtAccessTokensTest
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/JwtFixtures.java:[46,12] 找不到符号
+[ERROR]   符号:   类 JwtAccessTokens
+[ERROR]   位置: 类 authentication.JwtFixtures
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/JwtEmployeeAuthenticationTest.java:[30,44] 程序包JwtEmployeeAuthentication不存在
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

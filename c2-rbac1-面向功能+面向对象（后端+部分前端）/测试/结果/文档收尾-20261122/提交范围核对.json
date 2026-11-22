@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "stagedChanges": 9421,
+  "byStatus": {
+    "M": 146,
+    "A": 9253,
+    "D": 22
+  },
+  "scope": "C2; repository README/requirements; three shared planning/reference documents",
+  "commitMessage": "C2收尾（已对接api契约）",
+  "ignoredFilesForced": false,
+  "generatedWhitespace": "Raw generated test logs preserved; excluded from whitespace lint"
+}

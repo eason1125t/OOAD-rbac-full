@@ -62,6 +62,33 @@ def source(version, qualified):
     return path
 
 
+def strip_java_annotations(value):
+    """跳过注解及其嵌套/带引号参数，避免Pattern正则的括号污染Java类型。"""
+    result, index = [], 0
+    while index < len(value):
+        if value[index] != "@":
+            result.append(value[index]); index += 1; continue
+        match = re.match(r"@[\w.]+\s*", value[index:])
+        if not match:
+            raise ValueError("无效Java注解")
+        index += match.end()
+        if index < len(value) and value[index] == "(":
+            depth, quote, escaped = 1, None, False
+            index += 1
+            while index < len(value) and depth:
+                char = value[index]
+                if quote:
+                    if escaped: escaped = False
+                    elif char == "\\": escaped = True
+                    elif char == quote: quote = None
+                elif char in {'"', "'"}: quote = char
+                elif char == "(": depth += 1
+                elif char == ")": depth -= 1
+                index += 1
+            if depth: raise ValueError("Java注解括号未闭合")
+    return "".join(result)
+
+
 def model_class(parent, version, qualified, fields=(), operations=(), interface=False):
     path = source(version, qualified)
     text = path.read_text(encoding="utf-8")
@@ -94,7 +121,7 @@ def model_class(parent, version, qualified, fields=(), operations=(), interface=
             depth -= text[end] == ")"
             end += 1
         for arg in split_java_parameters(text[position:end-1]):
-            cleaned = re.sub(r"@\w+(?:\([^)]*\))?", "", arg)
+            cleaned = strip_java_annotations(arg)
             cleaned = re.sub(r"\bfinal\s+", "", cleaned)
             actual_type, actual_name = " ".join(cleaned.split()).rsplit(" ", 1)
             operation["parameters"].append(item("UMLParameter", operation, name=actual_name,
@@ -279,12 +306,12 @@ def effective_class(package, version, number):
     d.add("auth", "authorization.AuthorizationService", "C", [("hierarchy", "RoleInheritanceStore"),
           ("employeeRoles", "EmployeeRoleRepository"), ("rolePermissions", "RolePermissionRepository"),
           ("organizationPermissions", "OrganizationPermissionRepository"), ("permissions", "PermissionRepository"),
-          ("workspaces", "WorkspaceService")], [("effectivePermissions", "employeeId:Long, system:BusinessSystem", "List<Permission>"),
+          ("currentEmployees", "CurrentEmployeeService")], [("effectivePermissions", "employeeId:Long, system:BusinessSystem", "List<Permission>"),
           ("requireBusinessPermission", "employeeId:Long, system:BusinessSystem, code:String", "void")])
     d.add("query", "organization.ManagementQueryService", "L", [("authorization", "AuthorizationService")],
           [("effectivePermissions", "operator:Long, employeeId:Long, systemCode:String, page:Pageable", "Page<Permission>")])
     d.add("hierarchy", "rolepermission.RoleInheritanceStore", "R", ops=[("snapshot", "", graph)], interface=version == "oo")
-    d.add("workspaces", "authentication.WorkspaceService", "T", ops=[("findActiveEmployee", "employeeId:Long", "Optional<Employee>"), ("context", "employee:Employee", "Context")])
+    d.add("current", "authentication.CurrentEmployeeService", "T", ops=[("requireActive", "employeeId:Long", "Employee")])
     d.add("org", "assignment.OrganizationPermissionRepository", "B", interface=True,
           ops=[("findByPermissionIdAndOrganizationIdIn", "permissionId:Long, organizations:Set<Long>", "List<OrganizationPermission>")])
     d.add("employee", "assignment.EmployeeRoleRepository", "TL", interface=True, ops=[("findDirectRoleIds", "employeeId:Long", "Set<Long>")])
@@ -296,7 +323,7 @@ def effective_class(package, version, number):
     d.add("graph", f"rolepermission.{'domain.' if version == 'oo' else ''}{graph}", "TR",
           ops=[("inheritedRoles", "roots:Set<Long>", "Set<Long>")])
     d.link("query", "auth", "authorization")
-    for key, role in [("hierarchy", "hierarchy"), ("workspaces", "workspaces"), ("org", "organizationPermissions"),
+    for key, role in [("hierarchy", "hierarchy"), ("current", "currentEmployees"), ("org", "organizationPermissions"),
                       ("employee", "employeeRoles"), ("permission", "permissions"), ("roleperm", "rolePermissions")]:
         d.link("auth", key, role)
     d.link("auth", "graph")
@@ -524,6 +551,7 @@ def effective_sequence(package, version, number):
     for key, obj, cls in [("obj", "obj", None), ("query", "management", "organization.ManagementQueryService"),
                           ("auth", "authorization", "authorization.AuthorizationService"),
                           ("work", "workspaces", "authentication.WorkspaceService"),
+                          ("current", "currentEmployees", "authentication.CurrentEmployeeService"),
                           ("emp", "employeeRoles", "assignment.EmployeeRoleRepository"),
                           ("store", "hierarchy", "rolepermission.RoleInheritanceStore"),
                           ("graph", "graph", f"rolepermission.{'domain.' if version == 'oo' else ''}{graph}"),
@@ -541,9 +569,9 @@ def effective_sequence(package, version, number):
     s.call("query", "systems", "system = findByCode(systemCode)")
     s.local("query", "局部判断：系统不存在 → SYSTEM_NOT_FOUND；\n非全局管理员且 policyIds 不含系统归属 → PERMISSION_DENIED。")
     auth = s.call("query", "auth", "effective = effectivePermissions(employeeId, system)", duration=1350)
-    s.call("auth", "work", "employee = findActiveEmployee(employeeId)")
+    s.call("auth", "current", "employee = requireActive(employeeId)")
     s.call("auth", "work", "context = context(employee)")
-    s.local("auth", "以上调用位于 systemContext 内；context.canEnter(system) 不满足则拒绝准入。")
+    s.local("auth", "可信员工先经 requireActive，之后 systemContext(employee, system) 内执行准入；context.canEnter(system) 不满足则拒绝准入。")
     s.y += 35
     start = s.y-35
     s.y += 50
@@ -639,7 +667,7 @@ def approval_sequence(package, version, number):
 def revocation_sequence(package, version, number):
     oo = version == "oo"
     s = Sequence(package, version, f"{number:02d}-{version}-同会话实时撤权-时序图", "removeRoleParent / approveRequest",
-                 "三次独立 HTTP 请求；先成功，再提交删边，再用原会话操作另一待审批申请被拒绝。")
+                 "三次独立Bearer请求；先成功，再提交删边，再用原登录JWT操作另一待审批申请被拒绝。")
     for key, obj, cls in [("obj", "obj", None), ("request", "requests", "simulation.BusinessRequestService"),
                           ("audit", "", "simulation.BusinessRequestAudit"),
                           ("auth", "authorization", "authorization.AuthorizationService"),
@@ -649,7 +677,7 @@ def revocation_sequence(package, version, number):
     s.begin("执行三次独立请求（员工与管理员各自已登录）")
     start = s.y-30
     s.y += 55
-    first = s.call("obj", "request", "approve(employeeId, pendingA)  // 员工原 Cookie", duration=245)
+    first = s.call("obj", "request", "approve(employeeId, pendingA)  // 员工原 Bearer JWT", duration=245)
     s.call("request", "auth", 'requireBusinessPermission(employeeId, system, "request:approve")', duration=115)
     s.call("auth", "store", "graph = snapshot()")
     s.call("request", "obj", "200；A=APPROVED；事务已提交", reply=True)
@@ -658,7 +686,7 @@ def revocation_sequence(package, version, number):
     s.y += 50
     start = s.y-30
     s.y += 55
-    second = s.call("obj", "inherit", "change(admin, seniorId, juniorId, false)  // 管理员 Cookie", duration=245)
+    second = s.call("obj", "inherit", "change(admin, seniorId, juniorId, false)  // 管理员 Bearer JWT", duration=245)
     s.call("inherit", "store", "lockWrites()")
     s.call("inherit", "store", "remove(key)")
     s.call("inherit", "obj", "204；删边事务已提交", reply=True)
@@ -667,14 +695,14 @@ def revocation_sequence(package, version, number):
     s.y += 50
     start = s.y-30
     s.y += 55
-    third = s.call("obj", "request", "approve(employeeId, pendingB)  // 继续使用原 Cookie", duration=480)
+    third = s.call("obj", "request", "approve(employeeId, pendingB)  // 继续使用原 Bearer JWT", duration=480)
     audit = s.call("request", "audit", "record(APPROVE, employeeId, pendingB, operation)", duration=365)
     s.call("request", "auth", 'requireBusinessPermission(employeeId, system, "request:approve")', duration=165)
     s.call("auth", "store", "graph = snapshot()  // 从 MySQL 读取删边后数据")
     s.call("auth", "audit", "PERMISSION_DENIED  // record 捕获并记录 REJECTED", reply=True)
     s.call("audit", "obj", "重新抛出；异常映射为 HTTP 403", reply=True)
     s.frame(start, s.y-18, "请求 3：read 仍保留，approve 已失去；申请 B 保持 PENDING", operator="seq")
-    s.note("图中事务提交以 HTTP 响应明确标记；Redis 只保存登录会话，不缓存业务权限。func/oo 使用独立 Cookie、会话命名空间和 MySQL 库。\n为聚焦跨请求变化，省略 Controller、请求行锁与 OO RequestAccess 适配跳转；完整单次审批链见前图。\n另一路继承仍存在时，来源 Set 仍包含授权角色，下一次操作应继续成功；对应自动化测试覆盖多路径。")
+    s.note("图中事务提交以 HTTP 响应明确标记；Redis 保存独立sid登录记录，不缓存业务权限；每次Bearer请求在线核对sid和最新员工资格。func/oo使用独立issuer/audience、密钥、刷新Cookie、登录命名空间和MySQL库。\n为聚焦跨请求变化，省略 Controller、请求行锁与 OO RequestAccess 适配跳转；完整单次审批链见前图。\n另一路继承仍存在时，来源 Set 仍包含授权角色，下一次操作应继续成功；对应自动化测试覆盖多路径。")
     # 延长外层调用至各分支结束，保持异常/回复两端均在执行条上。
     for edge, end in [(third, s.y-25), (audit, s.y-25)]:
         top = edge["subViews"][0]["top"]
@@ -801,7 +829,7 @@ def write_index():
         for path in entry["sources"]:
             if not (C2/path).exists():
                 raise ValueError(f"索引源码不存在: {path}")
-        contract = "测试/后端/common/java/contract/AuthSessionTest.java"
+        contract = entry.get("testSource", "测试/后端/common/java/contract/AuthHttpTest.java")
         if "新增角色继承" in name:
             requirements = "C2-01、03、05、07"
             methods = ["inheritanceRevocationAppliesToExistingSession", "serializesInheritanceWritesWithDisjointEndpoints"]

@@ -1,0 +1,4 @@
+命令：python 测试/契约/check_identity_contract.py
+{"status": "passed", "operations": 8, "examples": 12, "negativeAndEmptyCases": 14, "localLinks": 121, "scope": "static contract validation only; no HTTP, database or browser"}
+
+退出码：0

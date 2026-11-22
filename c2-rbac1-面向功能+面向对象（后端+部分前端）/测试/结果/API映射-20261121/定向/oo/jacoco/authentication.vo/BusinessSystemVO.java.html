@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BusinessSystemVO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">authentication.vo</a> &gt; <span class="el_source">BusinessSystemVO.java</span></div><h1>BusinessSystemVO.java</h1><pre class="source lang-java linenums">// 文件职责：返回可访问业务系统的标识和展示名称。
+// 协作关系：由登录工作区响应使用，不暴露系统持久化实体。
+package authentication.vo;
+
+import authentication.WorkspaceService.SystemInfo;
+
+/** 供业务前端使用的系统目录条目。 */
+<span class="nc" id="L8">public record BusinessSystemVO(Long id, String code, String name, Long ownerOrganizationId, String ownerOrganizationName) {</span>
+    /** 将系统查询结果映射为公开响应。 */
+    public static BusinessSystemVO from(SystemInfo system) {
+<span class="nc" id="L11">        return new BusinessSystemVO(system.id(), system.code(), system.name(), system.ownerOrganizationId(),</span>
+<span class="nc" id="L12">                system.ownerOrganizationName());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

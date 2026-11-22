@@ -1,0 +1,7 @@
+来源：同目录Apifox登录响应回读.png，真实Apifox文档200响应页；该帧UIA未展开文本树，以下为截图目视记录。
+POST /api/auth/login
+200：身份/工作区及15分钟内访问JWT；刷新凭证仅通过Cookie交付。
+JSON保留employee、workspaces、defaultWorkspaceKey，新增accessToken、tokenType=Bearer、expiresIn=900。
+示例accessToken为<signed-access-jwt>占位，不是真实凭证；响应体无refreshToken。
+响应Set-Cookie及Cache-Control有定义；400、401、403、415、503错误页保留。
+入口使用本版CSRF Cookie，不使用Bearer。未发送真实登录/业务请求。

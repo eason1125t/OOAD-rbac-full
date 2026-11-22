@@ -1,0 +1,43 @@
+{
+  "capturedUtc": "2026-11-21T17:16:21.270919+00:00",
+  "services": {
+    "func": {
+      "oldPid": 29824,
+      "port": 18181,
+      "database": "ooad_rbac1_func_review",
+      "environmentKeys": [
+        "RBAC_DB_PASSWORD",
+        "RBAC_DB_URL",
+        "RBAC_DB_USER",
+        "RBAC_DEMO_ACCOUNTS_ENABLED",
+        "RBAC_REDIS_HOST",
+        "RBAC_REDIS_PORT",
+        "SERVER_PORT"
+      ],
+      "oldJarSha256": "ef305db8ee22c38911ba7092c1bbad85162e035487785eaca891cee24dd40184",
+      "jwtJarSha256": "a4981a332367673239017cfbce38355f6393db9f7c376eb6247e7e26840b6980",
+      "oldJar": "backend-func\\target\\rbac1-func-0.1.0-SNAPSHOT.jar",
+      "jwtJar": "backend-func\\target\\jwt-final\\rbac1-func-0.1.0-SNAPSHOT.jar"
+    },
+    "oo": {
+      "oldPid": 25544,
+      "port": 18182,
+      "database": "ooad_rbac1_oo_review",
+      "environmentKeys": [
+        "RBAC_DB_PASSWORD",
+        "RBAC_DB_URL",
+        "RBAC_DB_USER",
+        "RBAC_DEMO_ACCOUNTS_ENABLED",
+        "RBAC_REDIS_HOST",
+        "RBAC_REDIS_PORT",
+        "SERVER_PORT"
+      ],
+      "oldJarSha256": "86b872f0b96f58727368d736badd0a88314021596599601d9ca84d8b1efce237",
+      "jwtJarSha256": "67a4567692801a514c046e683ddfba0524b00dde263177a34e8c510990b28044",
+      "oldJar": "backend-oo\\target\\rbac1-oo-0.1.0-SNAPSHOT.jar",
+      "jwtJar": "backend-oo\\target\\jwt-final\\rbac1-oo-0.1.0-SNAPSHOT.jar"
+    }
+  },
+  "privateConfigLocation": "C:\\Users\\kaoyu\\AppData\\Local\\OOAD-RBAC\\c2-jwt",
+  "note": "Credentials kept only in private user profile, never printed or archived"
+}

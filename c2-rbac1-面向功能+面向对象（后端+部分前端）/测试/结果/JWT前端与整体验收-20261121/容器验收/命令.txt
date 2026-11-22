@@ -1,0 +1,4 @@
+python 测试/脚本/run_jwt_deployment.py --output-dir 测试\结果\JWT前端与整体验收-20261121\容器验收
+正式Dockerfile构建3镜像；临时工作区外密钥；独立bridge、两库和数据卷。
+Compose up --wait；两版--init-demo；smoke.py --exercise；3项外部浏览器；Compose stop。
+不push、不启用Swarm、不删除容器/卷、不修改旧服务。

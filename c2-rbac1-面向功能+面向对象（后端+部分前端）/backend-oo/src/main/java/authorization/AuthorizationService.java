@@ -1,15 +1,17 @@
 // 文件职责：统一计算目标系统中的实时直接与继承授权。
-// 协作关系：协作 WorkspaceService、继承快照、权限和组织策略仓储。
+// 协作关系：协作 CurrentEmployeeService、WorkspaceService、继承快照、权限和组织策略仓储。
 package authorization;
 
 import assignment.EmployeeRoleRepository;
 import assignment.OrganizationPermission;
 import assignment.OrganizationPermissionRepository;
 import assignment.RolePermissionRepository;
+import authentication.CurrentEmployeeService;
 import authentication.WorkspaceService;
 import contract.BusinessAccessException.Reason;
 import contract.BusinessAccessException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -34,6 +36,7 @@ public class AuthorizationService {
     public static final String MANAGEMENT_WRITE = "management:write";
     public static final String ORGANIZATION_PERMISSION_WRITE = "organization-permission:write";
 
+    private final CurrentEmployeeService currentEmployees;
     private final WorkspaceService workspaces;
     private final AdministratorScopeRepository administratorScopes;
     private final OrganizationRepository organizations;
@@ -67,8 +70,59 @@ public class AuthorizationService {
 
     /** 逐动作使用与业务入口相同的判定，结果按权限 ID 升序。 */
     public List<Permission> effectivePermissions(Long employeeId, BusinessSystem system) {
-        WorkspaceService.Context context = systemContext(employeeId, system);
-        PermissionContext target = permissionContext(employeeId, system, context);
+        return effectivePermissions(currentEmployees.requireActive(employeeId), system);
+    }
+
+    /** 自身查询接收可信身份，复用系统准入、继承及组织策略计算，不读取客户端身份。 */
+    public List<Permission> effectivePermissions(Employee employee, BusinessSystem system) {
+        WorkspaceService.Context context = systemContext(employee, system);
+        PermissionContext target = permissionContext(employee.getId(), system, context);
+        return effectivePermissions(system, target);
+    }
+
+    /** 自身单项检查与实际操作共用isAllowed；未知权限单独返回404而不改变旧业务403。 */
+    public boolean hasBusinessPermission(Employee employee, BusinessSystem system, String code) {
+        WorkspaceService.Context context = systemContext(employee, system);
+        Permission permission = permissions.findBySystemIdAndCode(system.getId(), code)
+                .orElseThrow(() -> new BusinessAccessException(Reason.PERMISSION_NOT_FOUND));
+        return isAllowed(permission.getId(), permissionContext(employee.getId(), system, context));
+    }
+
+    /** 一次图快照用于来源、配置相关性及有效权限，不跨请求缓存。 */
+    public SystemAuthorization describe(Employee employee, BusinessSystem system) {
+        WorkspaceService.Context context = systemContext(employee, system);
+        Set<Long> roots = employeeRoles.findDirectRoleIds(employee.getId());
+        if (roots.isEmpty()) {
+            return new SystemAuthorization(context.global(), List.of(),
+                    effectivePermissions(system, permissionContext(system, context, Set.of())));
+        }
+        var graph = hierarchy.snapshot();
+        Map<Long, Set<Long>> closures = roots.stream().collect(Collectors.toMap(
+                root -> root, root -> graph.inheritedRoles(Set.of(root))));
+        Set<Long> sources = closures.values().stream().flatMap(Set::stream).collect(Collectors.toSet());
+        Set<Long> applicable = new HashSet<>();
+        for (Long owner : rolePermissions.findSystemPermissionSourceRoleIds(system.getId(), sources)) {
+            applicable.addAll(graph.dependingRoles(owner));
+        }
+        List<RoleSource> roleSources = sources.stream().sorted().map(roleId -> {
+            List<Long> inheritedFrom = roots.stream().filter(root -> !root.equals(roleId))
+                    .filter(root -> closures.get(root).contains(roleId)).sorted().toList();
+            return new RoleSource(roleId, roots.contains(roleId), inheritedFrom, applicable.contains(roleId));
+        }).toList();
+        return new SystemAuthorization(context.global(), roleSources,
+                effectivePermissions(system, permissionContext(system, context, sources)));
+    }
+
+    /** 角色来源描述不包含名称和持久化对象，由查询用例补齐公开字段。 */
+    public record RoleSource(Long roleId, boolean direct, List<Long> inheritedFromRoleIds, boolean appliesToSystem) {
+    }
+
+    /** 当前系统的授权计算结果，HTTP层使用明确白名单映射。 */
+    public record SystemAuthorization(boolean globalAdministrator, List<RoleSource> roles,
+                                      List<Permission> effectivePermissions) {
+    }
+
+    private List<Permission> effectivePermissions(BusinessSystem system, PermissionContext target) {
         return permissions.findBySystemIdOrderByIdAsc(system.getId()).stream()
                 .filter(permission -> isAllowed(permission.getId(), target)).toList();
     }
@@ -76,16 +130,21 @@ public class AuthorizationService {
     /** 汇总系统及员工适用组织，并从直接角色根展开本次授权来源。 */
     private PermissionContext permissionContext(Long employeeId, BusinessSystem system,
                                                 WorkspaceService.Context context) {
+        Set<Long> roots = context.global() ? Set.of() : employeeRoles.findDirectRoleIds(employeeId);
+        Set<Long> sources = roots.isEmpty() ? Set.of() : hierarchy.snapshot().inheritedRoles(roots);
+        return permissionContext(system, context, sources);
+    }
+
+    /** 全局身份只受系统组织链策略约束，保持既有停用和重授语义。 */
+    private PermissionContext permissionContext(BusinessSystem system, WorkspaceService.Context context,
+                                                Set<Long> sources) {
         Organization owner = organizations.findById(system.getOwnerOrganizationId()).orElseThrow();
         Set<Long> affected = new HashSet<>();
         includeScope(affected, owner);
-        if (context.global()) {
-            return new PermissionContext(true, affected, Set.of());
+        if (!context.global()) {
+            includeScope(affected, context.organization());
         }
-        includeScope(affected, context.organization());
-        Set<Long> roots = employeeRoles.findDirectRoleIds(employeeId);
-        Set<Long> sources = roots.isEmpty() ? Set.of() : hierarchy.snapshot().inheritedRoles(roots);
-        return new PermissionContext(false, affected, sources);
+        return new PermissionContext(context.global(), affected, sources);
     }
 
     /** 先拒绝停用，再判断全局身份或满足全部重开范围的同一权限来源。 */
@@ -116,8 +175,11 @@ public class AuthorizationService {
 
     /** 系统准入基于服务端身份及组织范围，与登录导航一致。 */
     private WorkspaceService.Context systemContext(Long employeeId, BusinessSystem system) {
-        Employee employee = workspaces.findActiveEmployee(employeeId)
-                .orElseThrow(() -> new BusinessAccessException(Reason.AUTHENTICATION_REQUIRED));
+        return systemContext(currentEmployees.requireActive(employeeId), system);
+    }
+
+    /** 接收上层已读取的可信员工，不重复读取请求身份或员工记录。 */
+    private WorkspaceService.Context systemContext(Employee employee, BusinessSystem system) {
         WorkspaceService.Context context = workspaces.context(employee);
         if (!context.canEnter(system)) {
             throw new BusinessAccessException(Reason.SYSTEM_ACCESS_DENIED);

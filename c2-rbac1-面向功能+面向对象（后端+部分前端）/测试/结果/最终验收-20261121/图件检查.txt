@@ -1,0 +1,1 @@
+PASS: 47 diagrams; 3339 unique elements; 7338 resolved references; 86 rendered class boxes; PNG/SVG present

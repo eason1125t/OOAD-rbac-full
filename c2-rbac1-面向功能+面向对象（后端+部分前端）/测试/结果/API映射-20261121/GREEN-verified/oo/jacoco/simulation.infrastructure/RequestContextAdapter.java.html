@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RequestContextAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">simulation.infrastructure</a> &gt; <span class="el_source">RequestContextAdapter.java</span></div><h1>RequestContextAdapter.java</h1><pre class="source lang-java linenums">// 文件职责：适配申请系统查询与实时授权两个端口。
+// 协作关系：委托 BusinessSystemRepository 和 AuthorizationService，隔离应用服务的基础设施依赖。
+package simulation.infrastructure;
+
+import authorization.AuthorizationService;
+import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+import rolepermission.Permission;
+import simulation.BusinessRequestService;
+import simulation.BusinessSystem;
+import simulation.BusinessSystemRepository;
+import simulation.domain.RequestSystem;
+import simulation.port.RequestAccess;
+import simulation.port.RequestSystems;
+
+/** 在基础设施边界转换系统实体并复用实时授权。 */
+@Component
+@RequiredArgsConstructor
+public class RequestContextAdapter implements RequestAccess, RequestSystems {
+    private final BusinessSystemRepository systems;
+    private final AuthorizationService authorization;
+
+    /** 按业务代码解析申请系统，缺失时抛出系统不存在错误。 */
+    @Override
+    public RequestSystem byCode(String code) {
+<span class="fc" id="L29">        BusinessSystem system = systems.findByCode(code)</span>
+<span class="fc" id="L30">                .orElseThrow(() -&gt; new BusinessAccessException(Reason.SYSTEM_NOT_FOUND));</span>
+<span class="fc" id="L31">        return new RequestSystem(system.getId());</span>
+    }
+
+    /** 按持久化系统 ID 解析申请归属，不接受客户端覆盖所属系统。 */
+    @Override
+    public RequestSystem byId(Long id) {
+<span class="fc" id="L37">        BusinessSystem system = system(id);</span>
+<span class="fc" id="L38">        return new RequestSystem(system.getId());</span>
+    }
+
+    /** 按系统及动作实时授权，无法确认授权时拒绝执行业务。 */
+    @Override
+    public void require(Long actor, RequestSystem system, String permission) {
+<span class="fc" id="L44">        authorization.requireBusinessPermission(actor, system(system.id()), permission);</span>
+<span class="fc" id="L45">    }</span>
+
+    /** 返回当前系统中实时获准的申请写动作，查看权另行校验。 */
+    @Override
+    public List&lt;String&gt; allowedActions(Long actor, RequestSystem system) {
+<span class="fc" id="L50">        return authorization.effectivePermissions(actor, system(system.id())).stream().map(Permission::getCode)</span>
+<span class="fc" id="L51">                .filter(BusinessRequestService.REQUEST_ACTIONS::containsKey).toList();</span>
+    }
+
+    /** 按 ID 读取授权所需的 JPA 系统实体，缺失时转换为系统错误。 */
+    private BusinessSystem system(Long id) {
+<span class="pc" id="L56">        return systems.findById(id).orElseThrow(() -&gt; new BusinessAccessException(Reason.SYSTEM_NOT_FOUND));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

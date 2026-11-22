@@ -1,4 +1,4 @@
-# 本版后端的连接、日志与会话配置；由 RbacApplication 装配，凭据从环境变量读取。
+# 本版后端的连接、日志与JWT登录配置；由 RbacApplication 装配，凭据从环境变量读取。
 # Flyway 管理表结构，Hibernate 在启动时核对 JPA 映射。
 logging:
   level:
@@ -6,15 +6,6 @@ logging:
     rbac0.api: ${RBAC_LOG_API:DEBUG}
     rbac0.service: ${RBAC_LOG_SERVICE:DEBUG}
     rbac0.infrastructure: ${RBAC_LOG_INFRASTRUCTURE:DEBUG}
-server:
-  servlet:
-    session:
-      cookie:
-        name: ${RBAC_SESSION_COOKIE_NAME:RBAC1_FUNC_SESSION}
-        path: ${RBAC_SESSION_COOKIE_PATH:/func/}
-        http-only: true
-        same-site: lax
-        secure: ${RBAC_SESSION_SECURE:false}
 spring:
   application:
     name: rbac1-func
@@ -35,7 +26,16 @@ spring:
       password: ${RBAC_REDIS_PASSWORD:}
       repositories:
         enabled: false
-  session:
-    timeout: ${RBAC_SESSION_TIMEOUT:30m}
-    redis:
-      namespace: ${RBAC_SESSION_NAMESPACE:rbac1:func:session}
+rbac:
+  auth:
+    issuer: ${RBAC_JWT_ISSUER:urn:ooad-rbac:c2:func}
+    audience: ${RBAC_JWT_AUDIENCE:rbac1-func}
+    private-key-location: ${RBAC_JWT_PRIVATE_KEY_LOCATION:}
+    public-key-location: ${RBAC_JWT_PUBLIC_KEY_LOCATION:}
+    access-ttl: ${RBAC_JWT_ACCESS_TTL:15m}
+    login-ttl: ${RBAC_LOGIN_TTL:8h}
+    namespace: ${RBAC_AUTH_NAMESPACE:rbac1:func:auth}
+    refresh-cookie-name: ${RBAC_REFRESH_COOKIE_NAME:RBAC1_FUNC_REFRESH}
+    csrf-cookie-name: ${RBAC_CSRF_COOKIE_NAME:RBAC1_FUNC_CSRF}
+    cookie-path: ${RBAC_AUTH_COOKIE_PATH:/func/api/auth/}
+    cookie-secure: ${RBAC_AUTH_COOKIE_SECURE:false}

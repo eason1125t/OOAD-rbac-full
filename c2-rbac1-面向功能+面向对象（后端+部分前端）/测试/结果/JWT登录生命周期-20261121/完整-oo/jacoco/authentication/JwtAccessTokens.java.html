@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JwtAccessTokens.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">JwtAccessTokens.java</span></div><h1>JwtAccessTokens.java</h1><pre class="source lang-java linenums">// 文件职责：使用 Spring/Nimbus 签发及验证短期 RS256 访问 JWT，落实身份字段和时间契约。
+// 协作关系：向 JwtAuthenticationProvider 提供 JwtDecoder；Redis 登录撤销与员工资格另由身份转换执行。
+package authentication;
+
+import authentication.vo.AccessTokenVO;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jwt.SignedJWT;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.text.ParseException;
+import java.time.Clock;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.UUID;
+import org.springframework.core.io.Resource;
+import org.springframework.security.converter.RsaKeyConverters;
+import org.springframework.security.oauth2.core.OAuth2Error;
+import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
+import org.springframework.security.oauth2.jose.jws.SignatureAlgorithm;
+import org.springframework.security.oauth2.jwt.BadJwtException;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.jwt.JwsHeader;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.util.Assert;
+
+/** 仅负责访问凭证，不提供无 Redis 登录检查的认证捷径；不自动生成生产密钥。 */
+public final class JwtAccessTokens implements JwtDecoder {
+<span class="fc" id="L39">    private static final Duration MAX_ACCESS_TTL = Duration.ofMinutes(15);</span>
+<span class="fc" id="L40">    private static final Duration MAX_LOGIN_TTL = Duration.ofHours(8);</span>
+<span class="fc" id="L41">    private static final Duration CLOCK_SKEW = Duration.ofSeconds(30);</span>
+<span class="fc" id="L42">    private static final OAuth2Error INVALID = new OAuth2Error(&quot;invalid_token&quot;, &quot;访问凭证无效&quot;, null);</span>
+<span class="fc" id="L43">    private static final OAuth2Error EXPIRED = new OAuth2Error(&quot;ACCESS_TOKEN_EXPIRED&quot;, &quot;访问凭证已过期&quot;, null);</span>
+    private final String issuer;
+    private final String audience;
+    private final Clock clock;
+    private final Duration accessTtl;
+    private final JwtEncoder encoder;
+    private final NimbusJwtDecoder decoder;
+
+    public JwtAccessTokens(String issuer, String audience, RSAPublicKey publicKey, RSAPrivateKey privateKey,
+<span class="fc" id="L52">                           Clock clock, Duration accessTtl) {</span>
+<span class="fc" id="L53">        Assert.hasText(issuer, &quot;JWT issuer is required&quot;);</span>
+<span class="fc" id="L54">        Assert.hasText(audience, &quot;JWT audience is required&quot;);</span>
+<span class="fc" id="L55">        Assert.notNull(publicKey, &quot;JWT public key is required&quot;);</span>
+<span class="fc" id="L56">        Assert.notNull(privateKey, &quot;JWT private key is required&quot;);</span>
+<span class="fc" id="L57">        Assert.notNull(clock, &quot;JWT clock is required&quot;);</span>
+<span class="fc" id="L58">        Assert.notNull(accessTtl, &quot;JWT access TTL is required&quot;);</span>
+<span class="pc bpc" id="L59" title="1 of 4 branches missed.">        Assert.isTrue(!accessTtl.isNegative() &amp;&amp; accessTtl.getSeconds() &gt; 0</span>
+<span class="pc bpc" id="L60" title="1 of 4 branches missed.">                        &amp;&amp; accessTtl.getNano() == 0 &amp;&amp; accessTtl.compareTo(MAX_ACCESS_TTL) &lt;= 0,</span>
+                &quot;JWT access TTL must be whole seconds within 15 minutes&quot;);
+<span class="fc bfc" id="L62" title="All 2 branches covered.">        Assert.isTrue(publicKey.getModulus().bitLength() &gt;= 2048</span>
+<span class="fc bfc" id="L63" title="All 2 branches covered.">                        &amp;&amp; publicKey.getModulus().equals(privateKey.getModulus()),</span>
+                &quot;JWT requires a matching RSA key pair of at least 2048 bits&quot;);
+<span class="fc" id="L65">        this.issuer = issuer;</span>
+<span class="fc" id="L66">        this.audience = audience;</span>
+<span class="fc" id="L67">        this.clock = clock;</span>
+<span class="fc" id="L68">        this.accessTtl = accessTtl;</span>
+<span class="fc" id="L69">        RSAKey key = new RSAKey.Builder(publicKey).privateKey(privateKey).build();</span>
+<span class="fc" id="L70">        this.encoder = new NimbusJwtEncoder(new ImmutableJWKSet&lt;&gt;(new JWKSet(key)));</span>
+<span class="fc" id="L71">        this.decoder = NimbusJwtDecoder.withPublicKey(publicKey).signatureAlgorithm(SignatureAlgorithm.RS256).build();</span>
+        // Nimbus 先验证签名与结构；此验证器统一必填字段、issuer/audience 和可区分的过期结果。
+<span class="fc" id="L73">        this.decoder.setJwtValidator(this::validate);</span>
+<span class="fc" id="L74">    }</span>
+
+    /** 从外部 PKCS#8 私钥、X.509 公钥读取；不记录密钥内容，也不回退到随机或默认密钥。 */
+    public static JwtAccessTokens fromPem(String issuer, String audience, Resource privatePem, Resource publicPem,
+                                          Clock clock, Duration accessTtl) {
+<span class="fc" id="L79">        Assert.notNull(privatePem, &quot;JWT private key resource is required&quot;);</span>
+<span class="fc" id="L80">        Assert.notNull(publicPem, &quot;JWT public key resource is required&quot;);</span>
+<span class="fc" id="L81">        try (InputStream privateInput = privatePem.getInputStream(); InputStream publicInput = publicPem.getInputStream()) {</span>
+<span class="fc" id="L82">            return new JwtAccessTokens(issuer, audience, RsaKeyConverters.x509().convert(publicInput),</span>
+<span class="fc" id="L83">                    RsaKeyConverters.pkcs8().convert(privateInput), clock, accessTtl);</span>
+<span class="fc" id="L84">        } catch (IOException | IllegalArgumentException failure) {</span>
+            // 错误只描述配置无效；不把 PEM 或底层解析异常中的输入材料拼进消息。
+<span class="fc" id="L86">            throw new IllegalArgumentException(&quot;JWT 密钥配置无效&quot;);</span>
+        }
+    }
+
+    /** 调用方必须先建立登录记录；访问 exp 不得超过该次登录绝对上限。 */
+    public AccessTokenVO issue(Long employeeId, String sid, Instant loginExpiresAt) {
+<span class="fc" id="L92">        Instant clockNow = clock.instant();</span>
+<span class="fc" id="L93">        Instant now = clockNow.truncatedTo(ChronoUnit.SECONDS);</span>
+<span class="pc bpc" id="L94" title="1 of 4 branches missed.">        Assert.isTrue(employeeId != null &amp;&amp; employeeId &gt; 0, &quot;A positive employee ID is required&quot;);</span>
+<span class="fc" id="L95">        Assert.isTrue(isRandomId(sid), &quot;A random login ID is required&quot;);</span>
+<span class="pc bpc" id="L96" title="1 of 4 branches missed.">        Assert.isTrue(loginExpiresAt != null &amp;&amp; loginExpiresAt.isAfter(now)</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">                        &amp;&amp; !loginExpiresAt.isAfter(clockNow.plus(MAX_LOGIN_TTL)),</span>
+                &quot;Login deadline must be within eight hours&quot;);
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        Instant expiresAt = now.plus(accessTtl).isBefore(loginExpiresAt) ? now.plus(accessTtl) : loginExpiresAt;</span>
+<span class="fc" id="L100">        expiresAt = expiresAt.truncatedTo(ChronoUnit.SECONDS);</span>
+<span class="fc" id="L101">        Assert.isTrue(expiresAt.isAfter(now), &quot;Login deadline must leave at least one second&quot;);</span>
+<span class="fc" id="L102">        JwtClaimsSet claims = JwtClaimsSet.builder().issuer(issuer).audience(List.of(audience))</span>
+<span class="fc" id="L103">                .subject(employeeId.toString()).id(UUID.randomUUID().toString()).claim(&quot;sid&quot;, sid)</span>
+<span class="fc" id="L104">                .issuedAt(now).expiresAt(expiresAt).build();</span>
+<span class="fc" id="L105">        String value = encoder.encode(JwtEncoderParameters.from(</span>
+<span class="fc" id="L106">                JwsHeader.with(SignatureAlgorithm.RS256).type(&quot;JWT&quot;).build(), claims)).getTokenValue();</span>
+<span class="fc" id="L107">        return new AccessTokenVO(value, &quot;Bearer&quot;, Duration.between(now, expiresAt).getSeconds());</span>
+    }
+
+    /** 委托 Spring/Nimbus 完成签名、算法、JWT 结构与下述契约验证。 */
+    @Override
+    public Jwt decode(String token) {
+        // 解码库会把数字 sub 规范化成字符串，预检原始 JSON 类型；此处只拒绝，绝不据此建立身份。
+        // 仍由下方 NimbusJwtDecoder 完成全部验签及契约校验，不手写 JWT 分割或密码算法。
+        try {
+<span class="fc" id="L116">            var claims = SignedJWT.parse(token).getPayload().toJSONObject();</span>
+<span class="pc bpc" id="L117" title="1 of 4 branches missed.">            if (claims == null || !(claims.get(&quot;sub&quot;) instanceof String)) {</span>
+<span class="fc" id="L118">                throw new BadJwtException(&quot;访问凭证无效&quot;);</span>
+            }
+<span class="fc" id="L120">        } catch (ParseException | IllegalArgumentException failure) {</span>
+<span class="fc" id="L121">            throw new BadJwtException(&quot;访问凭证无效&quot;);</span>
+<span class="fc" id="L122">        }</span>
+<span class="fc" id="L123">        return decoder.decode(token);</span>
+    }
+
+    /** 先验证非过期问题，避免错误签发方/身份被当作可自动刷新的单纯过期。 */
+    private OAuth2TokenValidatorResult validate(Jwt jwt) {
+<span class="fc" id="L128">        Instant now = clock.instant();</span>
+        try {
+<span class="fc" id="L130">            Instant issuedAt = jwt.getIssuedAt();</span>
+<span class="fc" id="L131">            Instant expiresAt = jwt.getExpiresAt();</span>
+<span class="fc" id="L132">            Instant notBefore = jwt.getNotBefore();</span>
+<span class="fc bfc" id="L133" title="All 4 branches covered.">            if (!issuer.equals(jwt.getClaimAsString(&quot;iss&quot;)) || jwt.getAudience() == null</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">                    || !jwt.getAudience().contains(audience)</span>
+<span class="fc bfc" id="L135" title="All 4 branches covered.">                    || employeeId(jwt.getSubject()) == null || !isRandomId(jwt.getClaimAsString(&quot;sid&quot;))</span>
+<span class="pc bpc" id="L136" title="1 of 6 branches missed.">                    || !isRandomId(jwt.getId()) || issuedAt == null || expiresAt == null</span>
+<span class="pc bpc" id="L137" title="1 of 4 branches missed.">                    || !expiresAt.isAfter(issuedAt) || Duration.between(issuedAt, expiresAt).compareTo(accessTtl) &gt; 0</span>
+<span class="fc bfc" id="L138" title="All 4 branches covered.">                    || issuedAt.isAfter(now.plus(CLOCK_SKEW))</span>
+<span class="pc bpc" id="L139" title="3 of 4 branches missed.">                    || (notBefore != null &amp;&amp; (notBefore.isAfter(now.plus(CLOCK_SKEW)) || !expiresAt.isAfter(notBefore)))) {</span>
+<span class="fc" id="L140">                return OAuth2TokenValidatorResult.failure(INVALID);</span>
+            }
+<span class="fc bfc" id="L142" title="All 2 branches covered.">            if (!expiresAt.isAfter(now.minus(CLOCK_SKEW))) {</span>
+<span class="fc" id="L143">                return OAuth2TokenValidatorResult.failure(EXPIRED);</span>
+            }
+<span class="fc" id="L145">            return OAuth2TokenValidatorResult.success();</span>
+<span class="nc" id="L146">        } catch (IllegalArgumentException | ClassCastException failure) {</span>
+<span class="nc" id="L147">            return OAuth2TokenValidatorResult.failure(INVALID);</span>
+        }
+    }
+
+    /** 只接受正 Long 的十进制身份，不把用户名、浮点数或溢出值用作员工 ID。 */
+    static Long employeeId(String subject) {
+<span class="pc bpc" id="L153" title="1 of 4 branches missed.">        if (subject == null || !subject.matches(&quot;[1-9][0-9]{0,18}&quot;)) return null;</span>
+        try {
+<span class="fc" id="L155">            return Long.valueOf(subject);</span>
+<span class="fc" id="L156">        } catch (NumberFormatException failure) {</span>
+<span class="fc" id="L157">            return null;</span>
+        }
+    }
+
+    /** 使用标准随机 UUID 文本，拒绝缩写、零值或用户号；不使用任何递增版本。 */
+    static boolean isRandomId(String value) {
+<span class="fc bfc" id="L163" title="All 2 branches covered.">        if (value == null) return false;</span>
+        try {
+<span class="fc" id="L165">            UUID id = UUID.fromString(value);</span>
+<span class="pc bpc" id="L166" title="2 of 6 branches missed.">            return id.version() == 4 &amp;&amp; id.variant() == 2 &amp;&amp; id.toString().equals(value);</span>
+<span class="fc" id="L167">        } catch (IllegalArgumentException failure) {</span>
+<span class="fc" id="L168">            return false;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

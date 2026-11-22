@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BusinessSystem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">simulation</a> &gt; <span class="el_source">BusinessSystem.java</span></div><h1>BusinessSystem.java</h1><pre class="source lang-java linenums">// 文件职责：映射业务系统目录、组织归属及默认入口标志。
+// 协作关系：供工作区导航、授权上下文和申请归属查询。
+package simulation;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/** business_system 表的 JPA 映射，供初始化和后续业务查询使用。 */
+@Entity
+@Table(name = &quot;business_system&quot;)
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class BusinessSystem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String code;
+    private String name;
+    private Long ownerOrganizationId;
+    private boolean defaultWorkspace;
+
+    /** 构建待保存记录，由数据库维护审计时间。 */
+    public BusinessSystem(String code, String name, Long ownerOrganizationId) {
+<span class="nc" id="L31">        this(code, name, ownerOrganizationId, false);</span>
+<span class="nc" id="L32">    }</span>
+
+    /** 构建业务系统，可将其配置为所属组织的默认工作区。 */
+<span class="fc" id="L35">    public BusinessSystem(String code, String name, Long ownerOrganizationId, boolean defaultWorkspace) {</span>
+<span class="fc" id="L36">        this.code = code;</span>
+<span class="fc" id="L37">        this.name = name;</span>
+<span class="fc" id="L38">        this.ownerOrganizationId = ownerOrganizationId;</span>
+<span class="fc" id="L39">        this.defaultWorkspace = defaultWorkspace;</span>
+<span class="fc" id="L40">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import organization.Employee;
-import organization.EmployeeRepository;
 import organization.Organization;
 import organization.OrganizationRepository;
 import simulation.BusinessSystem;
@@ -24,7 +23,6 @@ import simulation.BusinessSystemRepository;
 @Service
 @RequiredArgsConstructor
 public class WorkspaceService {
-    private final EmployeeRepository employees;
     private final AdministratorScopeRepository scopes;
     private final OrganizationRepository organizations;
     private final BusinessSystemRepository systems;
@@ -44,17 +42,6 @@ public class WorkspaceService {
 
     /** 可进入业务系统的信息。 */
     public record SystemInfo(Long id, String code, String name, Long ownerOrganizationId, String ownerOrganizationName) {
-    }
-
-    /** 通过当前员工记录检查会话是否仍有效。 */
-    @Transactional(readOnly = true)
-    public Optional<Employee> findActiveEmployee(Long employeeId) {
-        return employees.findById(employeeId).filter(WorkspaceService::canSignIn);
-    }
-
-    /** 已停用或尚无组织归属的员工不可登录。 */
-    public static boolean canSignIn(Employee employee) {
-        return employee.isEnabled() && employee.getOrganizationId() != null;
     }
 
     /** 生成登录或刷新身份时的导航。 */

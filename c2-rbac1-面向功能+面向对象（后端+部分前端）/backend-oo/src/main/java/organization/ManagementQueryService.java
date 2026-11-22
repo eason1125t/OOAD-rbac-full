@@ -2,7 +2,6 @@
 // 协作关系：协作 WorkspaceService、AuthorizationService、继承快照及 JPA 仓储。
 package organization;
 
-import authorization.AdministratorScope;
 import authorization.AuthorizationService;
 import contract.BusinessAccessException.Reason;
 import contract.BusinessAccessException;
@@ -15,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import organization.DirectoryVisibilityService.Scope;
 import rolepermission.CatalogEntry;
 import rolepermission.CatalogEntryRepository;
 import rolepermission.Permission;
@@ -31,6 +31,7 @@ import simulation.BusinessSystemRepository;
 @Transactional(readOnly = true)
 public class ManagementQueryService {
     private final AuthorizationService authorization;
+    private final DirectoryVisibilityService visibility;
     private final EmployeeRepository employees;
     private final OrganizationRepository organizations;
     private final RbacRoleRepository roles;
@@ -38,12 +39,6 @@ public class ManagementQueryService {
     private final RoleInheritanceStore hierarchy;
     private final CatalogEntryRepository catalog;
     private final BusinessSystemRepository systems;
-
-    /** 超级管理员可核对待匹配员工，局部管理员只看有明确归属的范围内员工。 */
-    public Page<Employee> employees(Long operator, Pageable page) {
-        Scope scope = scope(operator);
-        return scope.global() ? employees.findAll(page) : employees.findByOrganizationIdIn(scope.ids(), page);
-    }
 
     /** 查询可见员工的单条资料。 */
     public Employee employee(Long operator, Long id) {
@@ -65,15 +60,11 @@ public class ManagementQueryService {
                 .orElseThrow(ManagementQueryService::denied);
     }
 
-    /** 根据查询的固定组织类型和管理员范围返回目录。 */
-    public Page<Organization> organizations(Long operator, String type, Pageable page) {
+    /** 保留管理员公司目录；部门原表/树和员工列表由统一目录用例处理。 */
+    public Page<Organization> companies(Long operator, Pageable page) {
         Scope scope = scope(operator);
-        if ("DEPARTMENT".equals(type)) {
-            return scope.global() ? organizations.findDepartmentDirectory(page)
-                    : organizations.findDepartmentDirectoryIn(scope.ids(), page);
-        }
-        return scope.global() ? organizations.findByOrganizationType(type, page)
-                : organizations.findByOrganizationTypeAndIdIn(type, scope.ids(), page);
+        return scope.global() ? organizations.findByOrganizationType("COMPANY", page)
+                : organizations.findByOrganizationTypeAndIdIn("COMPANY", scope.ids(), page);
     }
 
     /** 分页返回可见的运行时角色。 */
@@ -91,7 +82,7 @@ public class ManagementQueryService {
 
     /** 原表功能目录供所有管理员对照，不包含员工信息或实际授权关系。 */
     public Page<CatalogEntry> catalog(Long operator, Pageable page) {
-        requireAdministrator(operator);
+        scope(operator);
         return catalog.findAll(page);
     }
 
@@ -165,29 +156,9 @@ public class ManagementQueryService {
         return role;
     }
 
-    /** 读取当前管理员配置，公司范围含其直接下属部门。 */
+    /** 与目录查询共用管理读取范围；普通员工仍不能使用管理详情/授权查询。 */
     private Scope scope(Long operator) {
-        AdministratorScope admin = requireAdministrator(operator);
-        if ("GLOBAL".equals(admin.getScopeType())) {
-            return new Scope(true, Set.of(), Set.of());
-        }
-        Organization owner = organizations.findById(admin.getOrganizationId()).orElseThrow();
-        Set<Long> visible = new HashSet<>();
-        visible.add(owner.getId());
-        if ("COMPANY".equals(owner.getOrganizationType())) {
-            organizations.findByParentId(owner.getId()).forEach(child -> visible.add(child.getId()));
-        }
-        Set<Long> policyIds = new HashSet<>(visible);
-        if (owner.getParentId() != null) {
-            policyIds.add(owner.getParentId());
-        }
-        return new Scope(false, Set.copyOf(visible), Set.copyOf(policyIds));
-    }
-
-    /** 管理员资格以本次请求查询的数据库数据为准。 */
-    private AdministratorScope requireAdministrator(Long operator) {
-        return authorization.assignmentScope(operator, AuthorizationService.MANAGEMENT_READ)
-                .orElseThrow(ManagementQueryService::denied);
+        return visibility.forAdministrator(operator);
     }
 
     /** 返回管理查询权限拒绝。 */
@@ -200,7 +171,4 @@ public class ManagementQueryService {
         return new BusinessAccessException(Reason.RESOURCE_NOT_FOUND);
     }
 
-    /** 查询所用的组织 ID，分支范围同时用于数据库筛选和总数。 */
-    private record Scope(boolean global, Set<Long> ids, Set<Long> policyIds) {
-    }
 }

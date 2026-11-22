@@ -1,0 +1,10 @@
+{
+  "api\\openapi.yaml": "332a571beeade8f6466715000dfbf9cc28ecf43adcc146fbabfe4b2a48a8d92b",
+  "docs\\design\\C2-RBAC1.mdj": "3216a3cbf3348fc64596cae046b4d9b6a51891868f35400317e7cfdc7187b543",
+  "docs\\design\\diagram-index.json": "ba2cc9c5c34276a30721d56447782fd66dff27c623056cde4815ecea71c116b0",
+  "docs\\design\\build_staruml.py": "6f58ac99bca3d076316dced5f0b32ece95ccad274a1e8cdec79bd62edaa2c824",
+  "docs\\design\\build_supplementary.py": "040beb7868fa6e7e80d45d343c5d99faaf20b3419fe4db8bb15675397c03e7c9",
+  "docs\\design\\build_identity.py": "547ad65e0b3bc761dbcd698d56a171216aebe920e6934e8a41efb06acde3e094",
+  "docs\\design\\build_jwt.py": "21b0a90b519a31a29014a3ebdae19a80d5a8bafd3065badfb9b25c49b777eaf5",
+  "测试\\JWT迁移最终交付.md": "a7747e0b6ecc1a7d048af896fb7cd3fdb96f16e51d689d135d9f38ddf5a0e22e"
+}

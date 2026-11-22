@@ -1,0 +1,31 @@
+{
+  "status": "synchronized-and-read-back",
+  "projectId": 9046536,
+  "projectName": "OOAD RBAC",
+  "moduleId": 8918000,
+  "moduleName": "C2-RBAC1",
+  "source": "api/openapi.yaml",
+  "sourceVersion": "2.4.0",
+  "sourceSha256": "0a919975951f8d2f6664ec3676a1d3c1a097178038e78a02d29e8ba8c40c5be4",
+  "interfaceCount": 48,
+  "schemaCount": 42,
+  "importUiSummary": {
+    "interfacesAdded": 2,
+    "interfacesModified": 3,
+    "schemasAdded": 13,
+    "schemasModified": 4,
+    "schemasUnchangedNotImported": 25
+  },
+  "match": "method-and-path inside selected C2 module",
+  "unmatchedResources": "not deleted",
+  "existingDirectories": "preserved",
+  "environments": "preserved, import Servers disabled",
+  "testCases": "preserved, automatic generation disabled",
+  "readback": [
+    "C2 module count48",
+    "C1 module still separately visible",
+    "me optional systemCode and authorization semantics",
+    "api-check required systemCode/operationId; response systemCode/operationId/allowed; 200/400/401/403/404/503"
+  ],
+  "actualRemoteSwarmRequests": "not executed"
+}

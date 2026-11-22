@@ -1,0 +1,1 @@
+Scope: hand-maintained C2 files and root entry documents; original generated test reports/logs excluded.

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AssignmentController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">assignment</a> &gt; <span class="el_source">AssignmentController.java</span></div><h1>AssignmentController.java</h1><pre class="source lang-java linenums">// 文件职责：提供员工授角与角色授权的关系写入 API。
+// 协作关系：委托 AssignmentService，可信操作者来自 Spring Security。
+package assignment;
+
+import jakarta.validation.constraints.Positive;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/** 发布管理端的关系接口，校验路径参数后将写入交给授权配置 Service。 */
+@RestController
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@RequiredArgsConstructor
+public class AssignmentController {
+    private static final String EMPLOYEE_ROLE = &quot;/api/employees/{employeeId}/roles/{roleId}&quot;;
+    private static final String ROLE_PERMISSION = &quot;/api/roles/{roleId}/permissions/{permissionId}&quot;;
+
+    private final AssignmentService assignments;
+
+    /** 事务提交后确认员工已分配角色。 */
+    @PutMapping(EMPLOYEE_ROLE)
+    public ResponseEntity&lt;Void&gt; grantRole(@AuthenticationPrincipal Long operator,
+            @PathVariable @Positive Long employeeId, @PathVariable @Positive Long roleId) {
+<span class="nc" id="L29">        assignments.changeEmployeeRole(operator, employeeId, roleId, true);</span>
+<span class="nc" id="L30">        return ResponseEntity.noContent().build();</span>
+    }
+
+    /** 事务提交后确认员工角色关系已移除。 */
+    @DeleteMapping(EMPLOYEE_ROLE)
+    public ResponseEntity&lt;Void&gt; revokeRole(@AuthenticationPrincipal Long operator,
+            @PathVariable @Positive Long employeeId, @PathVariable @Positive Long roleId) {
+<span class="nc" id="L37">        assignments.changeEmployeeRole(operator, employeeId, roleId, false);</span>
+<span class="nc" id="L38">        return ResponseEntity.noContent().build();</span>
+    }
+
+    /** 事务提交后确认角色拥有目标权限。 */
+    @PutMapping(ROLE_PERMISSION)
+    public ResponseEntity&lt;Void&gt; grantPermission(@AuthenticationPrincipal Long operator,
+            @PathVariable @Positive Long roleId, @PathVariable @Positive Long permissionId) {
+<span class="nc" id="L45">        assignments.changeRolePermission(operator, roleId, permissionId, true);</span>
+<span class="nc" id="L46">        return ResponseEntity.noContent().build();</span>
+    }
+
+    /** 事务提交后确认角色权限关系已移除。 */
+    @DeleteMapping(ROLE_PERMISSION)
+    public ResponseEntity&lt;Void&gt; revokePermission(@AuthenticationPrincipal Long operator,
+            @PathVariable @Positive Long roleId, @PathVariable @Positive Long permissionId) {
+<span class="nc" id="L53">        assignments.changeRolePermission(operator, roleId, permissionId, false);</span>
+<span class="nc" id="L54">        return ResponseEntity.noContent().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

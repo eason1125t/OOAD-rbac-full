@@ -1,0 +1,46 @@
+{
+  "edition": "func",
+  "startedUtc": "2026-11-21T11:58:32.529642+00:00",
+  "completedUtc": "2026-11-21T12:00:40.739016+00:00",
+  "exitCode": 0,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "36abde904ea9954bc1c224e12e3a36d35ddd209e43aa5e0158a268680ebc47e7",
+  "tests": {
+    "tests": 151,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {
+    "INSTRUCTION": {
+      "missed": 438,
+      "covered": 9424,
+      "ratio": 0.9555871020077064
+    },
+    "BRANCH": {
+      "missed": 105,
+      "covered": 546,
+      "ratio": 0.8387096774193549
+    },
+    "LINE": {
+      "missed": 79,
+      "covered": 1547,
+      "ratio": 0.9514145141451414
+    },
+    "COMPLEXITY": {
+      "missed": 106,
+      "covered": 665,
+      "ratio": 0.8625162127107653
+    },
+    "METHOD": {
+      "missed": 18,
+      "covered": 424,
+      "ratio": 0.9592760180995475
+    },
+    "CLASS": {
+      "missed": 1,
+      "covered": 119,
+      "ratio": 0.9916666666666667
+    }
+  }
+}

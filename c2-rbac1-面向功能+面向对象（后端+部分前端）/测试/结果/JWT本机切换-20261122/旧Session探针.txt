@@ -1,0 +1,1 @@
+两版旧服务在5173网关均使用Session成功登录，并凭旧Session查询me得到200。原始Cookie仅保存于用户私有目录，待切换后验证合法旧Session也不能认证JWT业务；未使用旧Cookie清除他人登录。

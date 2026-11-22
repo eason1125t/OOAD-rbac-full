@@ -1,9 +1,12 @@
 <script setup lang="ts">
-// 登录及两个工作区共用服务端会话，切换只更改当前页面路径。
-import { computed, onMounted, ref } from 'vue'
-import { ApiError, edition, editionHome, editionName, errorMessage, session, workspacePath, write, type Session } from './api'
+// 文件职责：组织登录、身份恢复与工作区页面；账户变化时先卸载旧数据。
+// 协作关系：auth.ts协调同版标签页认证，api.ts保持真实后端授权。
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { ApiError, edition, editionHome, editionName, errorMessage, session, workspacePath, type Session } from './api'
+import { login, logout, onAuthChange } from './auth'
 import AdminConsole from './AdminConsole.vue'
 import BusinessPage from './BusinessPage.vue'
+import DepartmentEmployees from './DepartmentEmployees.vue'
 
 const identity = ref<Session>()
 const loading = ref(true)
@@ -11,6 +14,8 @@ const busy = ref(false)
 const error = ref('')
 const username = ref('')
 const password = ref('')
+const directoryOpen = ref(false)
+let loadOwner = {}
 const active = computed(() => identity.value?.workspaces.find(workspace => workspacePath(workspace.path) === location.pathname))
 
 function enter(current: Session) {
@@ -24,15 +29,18 @@ function enter(current: Session) {
 }
 
 async function loadSession() {
+  const owner = loadOwner = {}
   error.value = ''
   loading.value = true
   try {
-    enter(await session())
+    const current = await session()
+    if (owner === loadOwner) enter(current)
   } catch (failure) {
+    if (owner !== loadOwner) return
     if (!(failure instanceof ApiError && failure.status === 401)) error.value = errorMessage(failure)
     else if (location.pathname !== editionHome) history.replaceState(null, '', editionHome)
   } finally {
-    loading.value = false
+    if (owner === loadOwner) loading.value = false
   }
 }
 
@@ -40,7 +48,7 @@ async function signIn() {
   busy.value = true
   error.value = ''
   try {
-    enter(await write<Session>('POST', '/api/auth/login', { username: username.value.trim(), password: password.value }))
+    enter(await login(username.value.trim(), password.value))
     password.value = ''
   } catch (failure) {
     error.value = errorMessage(failure)
@@ -53,8 +61,8 @@ async function signOut() {
   busy.value = true
   error.value = ''
   try {
-    await write<void>('POST', '/api/auth/logout')
-    location.replace(editionHome)
+    await logout()
+    // 退出事件已清空身份并把URL归位；再次整页导航会打断紧接着的新登录。
   } catch (failure) {
     if (failure instanceof ApiError && failure.status === 401) location.replace(editionHome)
     else error.value = errorMessage(failure)
@@ -70,6 +78,18 @@ function switchWorkspace(event: Event) {
   }
 }
 
+const stopAuthListener = onAuthChange(change => {
+  loadOwner = {}
+  identity.value = undefined
+  directoryOpen.value = false
+  if (change.kind === 'login') void loadSession()
+  else {
+    loading.value = false
+    error.value = change.kind === 'invalid' ? '登录已失效，请重新登录。' : ''
+    if (location.pathname !== editionHome) history.replaceState(null, '', editionHome)
+  }
+})
+onUnmounted(stopAuthListener)
 onMounted(() => { if (edition) void loadSession() })
 </script>
 
@@ -112,6 +132,7 @@ onMounted(() => { if (edition) void loadSession() })
           </select>
         </label>
         <span class="identity">{{ identity.employee.username }}</span>
+        <button class="quiet" @click="directoryOpen = true">部门与员工</button>
         <button class="quiet" :disabled="busy" @click="signOut">退出登录</button>
       </div>
     </header>
@@ -123,5 +144,7 @@ onMounted(() => { if (edition) void loadSession() })
         <p>{{ identity.workspaces.length ? '请在顶部选择要进入的系统。' : '当前账号暂无可进入的系统。' }}</p>
       </section>
     </main>
+    <DepartmentEmployees v-if="directoryOpen" :administrator="identity.workspaces.some(item => item.type === 'ADMIN')"
+      @close="directoryOpen = false" />
   </template>
 </template>

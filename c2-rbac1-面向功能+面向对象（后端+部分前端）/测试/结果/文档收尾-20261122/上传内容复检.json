@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "candidateFiles": 10315,
+  "candidateMiB": 313.28,
+  "secretFindings": [],
+  "tooLarge": [],
+  "excludedPathFindings": [],
+  "knownPrivateValuesCompared": 5,
+  "note": "No credential contents recorded. Flyway migration SQL is source; database dumps are excluded. Expired test credentials are also redacted."
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RequestOperation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">simulation</a> &gt; <span class="el_source">RequestOperation.java</span></div><h1>RequestOperation.java</h1><pre class="source lang-java linenums">// 文件职责：集中定义八个申请 operationId 及固定 ALL 权限要求。
+// 协作关系：实际申请用例和 API 映射校验共同使用；不依赖数据库或 HTTP。
+package simulation;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
+/** 系统级权限要求；申请存在性、所有权和状态仍由业务用例检查。 */
+<span class="fc" id="L10">public enum RequestOperation {</span>
+<span class="fc" id="L11">    LIST(&quot;listSystemRequests&quot;, &quot;request:read&quot;),</span>
+<span class="fc" id="L12">    DETAIL(&quot;getRequest&quot;, &quot;request:read&quot;),</span>
+<span class="fc" id="L13">    CREATE(&quot;createRequest&quot;, &quot;request:create&quot;),</span>
+<span class="fc" id="L14">    UPDATE(&quot;updateRequest&quot;, &quot;request:read&quot;, &quot;request:update&quot;),</span>
+<span class="fc" id="L15">    WITHDRAW(&quot;withdrawRequest&quot;, &quot;request:read&quot;, &quot;request:withdraw&quot;),</span>
+<span class="fc" id="L16">    APPROVE(&quot;approveRequest&quot;, &quot;request:read&quot;, &quot;request:approve&quot;),</span>
+<span class="fc" id="L17">    REJECT(&quot;rejectRequest&quot;, &quot;request:read&quot;, &quot;request:reject&quot;),</span>
+<span class="fc" id="L18">    DELETE(&quot;deleteRejectedRequest&quot;, &quot;request:read&quot;, &quot;request:delete&quot;);</span>
+
+<span class="fc" id="L20">    public static final List&lt;String&gt; DEMO_SYSTEMS = List.of(</span>
+            &quot;demo-company-app&quot;, &quot;demo-engineering-app&quot;, &quot;demo-finance-app&quot;, &quot;demo-company-b-app&quot;);
+    private final String operationId;
+    private final List&lt;String&gt; requiredPermissions;
+
+<span class="fc" id="L25">    RequestOperation(String operationId, String... requiredPermissions) {</span>
+<span class="fc" id="L26">        this.operationId = operationId;</span>
+<span class="fc" id="L27">        this.requiredPermissions = List.of(requiredPermissions);</span>
+<span class="fc" id="L28">    }</span>
+
+    public String operationId() {
+<span class="fc" id="L31">        return operationId;</span>
+    }
+
+    public List&lt;String&gt; requiredPermissions() {
+<span class="fc" id="L35">        return requiredPermissions;</span>
+    }
+
+    public static Optional&lt;RequestOperation&gt; find(String operationId) {
+<span class="fc" id="L39">        return Arrays.stream(values()).filter(operation -&gt; operation.operationId.equals(operationId)).findFirst();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

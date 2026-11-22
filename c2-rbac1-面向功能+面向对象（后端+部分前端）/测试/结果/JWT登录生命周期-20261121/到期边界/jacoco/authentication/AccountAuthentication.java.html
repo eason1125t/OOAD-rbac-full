@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountAuthentication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">AccountAuthentication.java</span></div><h1>AccountAuthentication.java</h1><pre class="source lang-java linenums">// 文件职责：独立核验账号密码及最新员工登录资格，不建立任何 Session 或 JWT。
+// 协作关系：由 AuthController 调用；复用现有账号仓储、密码编码器和 CurrentEmployeeService 资格规则。
+package authentication;
+
+import java.util.UUID;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import organization.Employee;
+import organization.EmployeeRepository;
+
+/** 凭据核验与登录凭证生命周期分离，未知账号仍执行一次密码计算。 */
+@Service
+public class AccountAuthentication {
+    private final EmployeeRepository employees;
+    private final LoginAccountRepository accounts;
+    private final PasswordEncoder passwords;
+    private final String fallbackHash;
+
+    public AccountAuthentication(EmployeeRepository employees, LoginAccountRepository accounts,
+<span class="fc" id="L21">                                 PasswordEncoder passwords) {</span>
+<span class="fc" id="L22">        this.employees = employees;</span>
+<span class="fc" id="L23">        this.accounts = accounts;</span>
+<span class="fc" id="L24">        this.passwords = passwords;</span>
+<span class="fc" id="L25">        this.fallbackHash = passwords.encode(UUID.randomUUID().toString());</span>
+<span class="fc" id="L26">    }</span>
+
+    /** 统一拒绝未知账号、错误密码及不可登录员工，不暴露账号状态差异。 */
+    public Employee verify(String username, String password) {
+<span class="fc" id="L30">        Employee employee = employees.findByUsername(username).orElse(null);</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        LoginAccount account = employee == null ? null : accounts.findById(employee.getId()).orElse(null);</span>
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">        boolean matched = passwords.matches(password, account == null ? fallbackHash : account.getPasswordHash());</span>
+<span class="pc bpc" id="L33" title="3 of 6 branches missed.">        if (!matched || account == null || !CurrentEmployeeService.canSignIn(employee)) {</span>
+<span class="nc" id="L34">            throw new BadCredentialsException(&quot;用户名或密码无效，或账号不可登录&quot;);</span>
+        }
+<span class="fc" id="L36">        return employee;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

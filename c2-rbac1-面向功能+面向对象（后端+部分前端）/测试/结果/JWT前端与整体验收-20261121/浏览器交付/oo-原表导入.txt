@@ -1,0 +1,49 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-21T23:47:14.153+08:00  INFO 60668 --- [rbac1-oo] [           main] app.RbacApplication                      : Starting RbacApplication v0.1.0-SNAPSHOT using Java 21.0.9 with PID 60668 (D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-oo\target\jwt-final\rbac1-oo-0.1.0-SNAPSHOT.jar started by kaoyu in D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\结果\JWT前端与整体验收-20261121\浏览器交付\runtime-oo)
+2026-11-21T23:47:14.170+08:00  INFO 60668 --- [rbac1-oo] [           main] app.RbacApplication                      : No active profile set, falling back to 1 default profile: "default"
+2026-11-21T23:47:15.449+08:00  INFO 60668 --- [rbac1-oo] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-21T23:47:15.449+08:00  INFO 60668 --- [rbac1-oo] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-21T23:47:15.738+08:00  INFO 60668 --- [rbac1-oo] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 278 ms. Found 14 JPA repository interfaces.
+2026-11-21T23:47:17.224+08:00  INFO 60668 --- [rbac1-oo] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-21T23:47:17.893+08:00  INFO 60668 --- [rbac1-oo] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@58c42c8c
+2026-11-21T23:47:17.896+08:00  INFO 60668 --- [rbac1-oo] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-21T23:47:18.005+08:00  INFO 60668 --- [rbac1-oo] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:33327/ooad_rbac1_oo_final_test_20261121154639 (MySQL 8.4)
+2026-11-21T23:47:18.050+08:00  WARN 60668 --- [rbac1-oo] [           main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: MySQL 8.4 is newer than this version of Flyway and support has not been tested. The latest supported version of MySQL is 8.1.
+2026-11-21T23:47:18.147+08:00  INFO 60668 --- [rbac1-oo] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.076s)
+2026-11-21T23:47:18.197+08:00  INFO 60668 --- [rbac1-oo] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `ooad_rbac1_oo_final_test_20261121154639`: 9
+2026-11-21T23:47:18.202+08:00  INFO 60668 --- [rbac1-oo] [           main] o.f.core.internal.command.DbMigrate      : Schema `ooad_rbac1_oo_final_test_20261121154639` is up to date. No migration necessary.
+2026-11-21T23:47:18.456+08:00  INFO 60668 --- [rbac1-oo] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-21T23:47:18.541+08:00  INFO 60668 --- [rbac1-oo] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-11-21T23:47:18.608+08:00  INFO 60668 --- [rbac1-oo] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-21T23:47:18.928+08:00  INFO 60668 --- [rbac1-oo] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-21T23:47:19.018+08:00  INFO 60668 --- [rbac1-oo] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.4.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-21T23:47:20.154+08:00  INFO 60668 --- [rbac1-oo] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-21T23:47:20.220+08:00  INFO 60668 --- [rbac1-oo] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-21T23:47:20.893+08:00  INFO 60668 --- [rbac1-oo] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-21T23:47:26.932+08:00  INFO 60668 --- [rbac1-oo] [           main] app.RbacApplication                      : Started RbacApplication in 13.435 seconds (process running for 14.398)
+2026-11-21T23:47:26.959+08:00 DEBUG 60668 --- [rbac1-oo] [           main] r.i.i.InitializationCommand              : run 开始
+2026-11-21T23:47:27.000+08:00 DEBUG 60668 --- [rbac1-oo] [           main] r.s.i.InitializationService              : importWorkbooks 开始
+2026-11-21T23:47:47.135+08:00 DEBUG 60668 --- [rbac1-oo] [           main] r.s.i.InitializationService              : importWorkbooks 完成，耗时 20134 ms
+������ɣ�Ա�� 10000����֯ 111���嵥 359��Ա����֯��ƥ�� 54
+2026-11-21T23:47:47.188+08:00 DEBUG 60668 --- [rbac1-oo] [           main] r.i.i.InitializationCommand              : run 完成，耗时 20228 ms
+2026-11-21T23:47:47.192+08:00 DEBUG 60668 --- [rbac1-oo] [           main] r.i.authentication.DemoLoginAccounts     : run 开始
+2026-11-21T23:47:47.193+08:00 DEBUG 60668 --- [rbac1-oo] [           main] r.i.authentication.DemoLoginAccounts     : run 完成，耗时 0 ms
+2026-11-21T23:47:47.209+08:00  INFO 60668 --- [rbac1-oo] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-21T23:47:47.212+08:00  INFO 60668 --- [rbac1-oo] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-21T23:47:47.217+08:00  INFO 60668 --- [rbac1-oo] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

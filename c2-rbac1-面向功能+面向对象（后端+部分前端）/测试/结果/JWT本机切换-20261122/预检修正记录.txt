@@ -1,0 +1,4 @@
+备用预检首轮已运行至退出204，因断言将Cache-Control限定为精确no-store而失败；框架204包含no-cache,no-store等组合，已改为检查含no-store。随后预检通过。
+启动脚本首轮Status对JSON自动解析的DateTime与字符串直接比较导致身份保护误拒绝；已改为UTC时间Ticks比较，实际入口/PID/创建时间保护保留，Status验证通过。
+备用端口旧Session字段未检查，后续复核用null明确标识；正式网关将使用切换前实际有效的旧Session作为拒绝探针。
+首次正式启动的两个后端成功，前端因Get-Command返回多个Node路径而启动失败，网关首轮连接拒绝；已取明确的首个应用路径，Start幂等保留后端并启动前端，随后网关和浏览器3项均通过。

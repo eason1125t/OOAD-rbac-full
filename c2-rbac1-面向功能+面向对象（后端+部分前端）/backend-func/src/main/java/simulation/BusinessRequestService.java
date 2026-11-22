@@ -72,7 +72,7 @@ public class BusinessRequestService {
         return BusinessRequestAudit.record(Action.LIST, employeeId, null, target -> {
             BusinessSystem system = systemByCode(systemCode);
             target.identifySystem(system.getId());
-            authorization.requireBusinessPermission(employeeId, system, READ_PERMISSION);
+            requireOperation(employeeId, system, RequestOperation.LIST);
             List<String> allowed = authorization.effectivePermissions(employeeId, system).stream()
                     .map(Permission::getCode).filter(REQUEST_ACTIONS::containsKey).toList();
             PageRequest pagination = PageRequest.of(page - 1, pageSize);
@@ -93,7 +93,7 @@ public class BusinessRequestService {
         return BusinessRequestAudit.record(Action.CREATE, employeeId, null, target -> {
             BusinessSystem system = systemByCode(systemCode);
             target.identifySystem(system.getId());
-            authorization.requireBusinessPermission(employeeId, system, CREATE_PERMISSION);
+            requireOperation(employeeId, system, RequestOperation.CREATE);
             SimulatedRequest row = requests.save(new SimulatedRequest(system.getId(), employeeId, title));
             target.identifyRequest(row.getId());
             return detailOf(row);
@@ -107,7 +107,7 @@ public class BusinessRequestService {
             SimulatedRequest row = requests.findByIdAndDeletedAtIsNull(requestId)
                     .orElseThrow(() -> new BusinessAccessException(Reason.REQUEST_NOT_FOUND));
             target.identifySystem(row.getSystemId());
-            authorization.requireBusinessPermission(employeeId, systemFor(row), READ_PERMISSION);
+            requireOperation(employeeId, systemFor(row), RequestOperation.DETAIL);
             return detailOf(row);
         });
     }
@@ -115,43 +115,50 @@ public class BusinessRequestService {
     /** 在查看权和修改权通过后，修改本人待审批申请的标题。 */
     @Transactional
     public RequestDetail update(Long employeeId, Long requestId, String title) {
-        return change(Action.UPDATE, employeeId, requestId, UPDATE_PERMISSION, title);
+        return change(Action.UPDATE, employeeId, requestId, RequestOperation.UPDATE, title);
     }
 
     /** 在实时授权后撤回本人待审批申请，原单保留且不可重提。 */
     @Transactional
     public RequestDetail withdraw(Long employeeId, Long requestId) {
-        return change(Action.WITHDRAW, employeeId, requestId, WITHDRAW_PERMISSION, null);
+        return change(Action.WITHDRAW, employeeId, requestId, RequestOperation.WITHDRAW, null);
     }
 
     /** 执行实时查看与审批授权，重复审批保留兼容错误码。 */
     @Transactional
     public void approve(Long employeeId, Long requestId) {
-        change(Action.APPROVE, employeeId, requestId, APPROVE_PERMISSION, null);
+        change(Action.APPROVE, employeeId, requestId, RequestOperation.APPROVE, null);
     }
 
     /** 在查看权和驳回权通过后将待审批申请置为已驳回。 */
     @Transactional
     public RequestDetail reject(Long employeeId, Long requestId) {
-        return change(Action.REJECT, employeeId, requestId, REJECT_PERMISSION, null);
+        return change(Action.REJECT, employeeId, requestId, RequestOperation.REJECT, null);
     }
 
     /** 仅逻辑删除本人已驳回申请，后续列表与详情隐藏记录。 */
     @Transactional
     public void delete(Long employeeId, Long requestId) {
-        change(Action.DELETE, employeeId, requestId, DELETE_PERMISSION, null);
+        change(Action.DELETE, employeeId, requestId, RequestOperation.DELETE, null);
     }
 
     /** 先锁定当前申请并检查查看权及动作权，再由过程式规则修改托管字段。 */
-    private RequestDetail change(Action action, Long employeeId, Long requestId, String permission,
+    private void requireOperation(Long employeeId, BusinessSystem system, RequestOperation operation) {
+        // 有序ALL保留先查看、再动作的既有行为；目标操作始终重新读取实时权限。
+        for (String code : operation.requiredPermissions()) {
+            authorization.requireBusinessPermission(employeeId, system, code);
+        }
+    }
+
+    /** 锁定申请后复核系统级权限，再执行本版的对象和状态规则。 */
+    private RequestDetail change(Action action, Long employeeId, Long requestId, RequestOperation operation,
                                  String title) {
         return BusinessRequestAudit.record(action, employeeId, requestId, target -> {
             SimulatedRequest row = requests.findLockedByIdAndDeletedAtIsNull(requestId)
                     .orElseThrow(() -> new BusinessAccessException(Reason.REQUEST_NOT_FOUND));
             target.identifySystem(row.getSystemId());
             BusinessSystem system = systemFor(row);
-            authorization.requireBusinessPermission(employeeId, system, READ_PERMISSION);
-            authorization.requireBusinessPermission(employeeId, system, permission);
+            requireOperation(employeeId, system, operation);
             applyChange(action, employeeId, row, title);
             return detailOf(row);
         });

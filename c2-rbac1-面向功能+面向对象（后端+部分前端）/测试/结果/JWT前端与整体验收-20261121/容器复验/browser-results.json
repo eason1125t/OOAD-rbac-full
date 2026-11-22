@@ -1,0 +1,303 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config=playwright.remote.config.ts"
+    ],
+    "configFile": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\playwright.remote.config.ts",
+    "rootDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/前端/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/结果/JWT前端与整体验收-20261121/容器复验/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "func",
+        "name": "func",
+        "testDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/前端/tests",
+        "testIgnore": [
+          "**/isolation.spec.ts"
+        ],
+        "testMatch": [
+          "**/oo-entry.spec.ts",
+          "**/isolation.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/结果/JWT前端与整体验收-20261121/容器复验/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "oo",
+        "name": "oo",
+        "testDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/前端/tests",
+        "testIgnore": [
+          "**/isolation.spec.ts"
+        ],
+        "testMatch": [
+          "**/oo-entry.spec.ts",
+          "**/isolation.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/结果/JWT前端与整体验收-20261121/容器复验/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dual",
+        "name": "dual",
+        "testDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/前端/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/isolation.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\结果\\JWT前端与整体验收-20261121\\容器复验\\browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "func",
+        "testDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\tests",
+        "snapshotDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\tests",
+        "testIgnore": "**/isolation.spec.ts",
+        "testMatch": [
+          "**/oo-entry.spec.ts",
+          "**/isolation.spec.ts"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:18081",
+          "channel": "msedge",
+          "trace": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "func"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\结果\\JWT前端与整体验收-20261121\\容器复验\\browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "oo",
+        "testDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\tests",
+        "snapshotDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\tests",
+        "testIgnore": "**/isolation.spec.ts",
+        "testMatch": [
+          "**/oo-entry.spec.ts",
+          "**/isolation.spec.ts"
+        ],
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:18081",
+          "channel": "msedge",
+          "trace": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "oo"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\结果\\JWT前端与整体验收-20261121\\容器复验\\browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "dual",
+        "testDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\tests",
+        "snapshotDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\tests",
+        "testIgnore": [],
+        "testMatch": "**/isolation.spec.ts",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:18081",
+          "channel": "msedge",
+          "trace": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "dual"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\结果\\JWT前端与整体验收-20261121\\容器复验\\browser-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "oo-entry.spec.ts",
+      "file": "oo-entry.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C2-08 首页进入指定版本",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "func",
+              "projectName": "func",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 807,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T15:47:20.972Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "oo",
+              "projectName": "oo",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 886,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T15:47:23.385Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "adf08f01af25c67b1cbd-72841b0a4cdb7f87c1a5",
+          "file": "oo-entry.spec.ts",
+          "line": 4,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "isolation.spec.ts",
+      "file": "isolation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "C2-10 同一浏览器两标签页各自登录、写入和退出",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dual",
+              "projectName": "dual",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11518,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-21T15:47:26.003Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8603831629f4016ade15-f7ca319e2e07e7248265",
+          "file": "isolation.spec.ts",
+          "line": 14,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-21T15:47:20.316Z",
+    "duration": 18397.516,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

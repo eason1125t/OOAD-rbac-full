@@ -1,0 +1,79 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< cn.edu.ooad:rbac1-func >-----------------------
+[INFO] Building rbac1-func 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rbac1-func ---
+[INFO] Copying 1 resource from src\main\resources to target\identity-step5\classes
+[INFO] Copying 9 resources from src\main\resources to target\identity-step5\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ rbac1-func ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 88 source files with javac [debug parameters release 21] to target\identity-step5\classes
+[INFO] CopyFromProcessor start
+[INFO] Processing: RequestDetail
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [status, deletedAt, id, title, systemId, applicantId]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestDetail
+[INFO] Processing: RequestSummaryVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestSummary.class}
+[INFO] Source fields: [id, status, title]simulation.BusinessRequestService.RequestSummary
+[INFO] Target element: simulation.vo.RequestSummaryVO
+[INFO] Processing: RequestSummary
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [status, deletedAt, id, title, systemId, applicantId]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestSummary
+[INFO] Processing: OrganizationVO
+[INFO] Entry: value, value: {organization.Organization.class}
+[INFO] Source fields: [code, organizationType, sourceParentName, id, managerName, parentId, name]organization.Organization
+[INFO] Target element: organization.vo.OrganizationVO
+[INFO] Processing: CatalogVO
+[INFO] Entry: value, value: {rolepermission.CatalogEntry.class}
+[INFO] Source fields: [departmentManagerCell, systemName, moduleName, description, executiveCell, projectManagerCell, employeeCell, id, administratorCell, featureName]rolepermission.CatalogEntry
+[INFO] Target element: organization.vo.CatalogVO
+[INFO] Processing: RequestDetailVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestDetail.class}
+[INFO] Source fields: [title, status, id, applicantId]simulation.BusinessRequestService.RequestDetail
+[INFO] Target element: simulation.vo.RequestDetailVO
+[INFO] CopyToProcessor start
+[INFO] CopyNotNullToProcessor start
+[INFO] 
+[INFO] --- build-helper:3.6.1:add-test-source (shared-contract-tests) @ rbac1-func ---
+[INFO] Test Source directory: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\..\测试\后端\common\java added.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rbac1-func ---
+[INFO] skip non existing resourceDirectory D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ rbac1-func ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 6 source files with javac [debug parameters release 21] to target\identity-step5\test-classes
+[INFO] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/CurrentEmployeeServiceTest.java: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\..\测试\后端\common\java\authentication\CurrentEmployeeServiceTest.java使用了未经检查或不安全的操作。
+[INFO] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/CurrentEmployeeServiceTest.java: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthSessionTest.java:[2123,12] 找不到符号
+  符号:   方法 setApplicantId(java.lang.Long)
+  位置: 类型为simulation.SimulatedRequest的变量 row
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.749 s
+[INFO] Finished at: 2026-11-21T16:59:58+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:testCompile (default-testCompile) on project rbac1-func: Compilation failure
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthSessionTest.java:[2123,12] 找不到符号
+[ERROR]   符号:   方法 setApplicantId(java.lang.Long)
+[ERROR]   位置: 类型为simulation.SimulatedRequest的变量 row
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

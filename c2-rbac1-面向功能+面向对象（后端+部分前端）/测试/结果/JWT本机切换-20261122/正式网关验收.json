@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "executedUtc": "2026-11-22T00:58:28.989840+00:00",
+  "mode": "current-gateway",
+  "checks": [
+    {
+      "edition": "func",
+      "identityAndEightCapabilities": "PASS",
+      "cookieCannotAuthenticateBusiness": true,
+      "refreshRotatedWithoutChangingSid": true,
+      "legacySessionRejected": true
+    },
+    {
+      "edition": "oo",
+      "identityAndEightCapabilities": "PASS",
+      "cookieCannotAuthenticateBusiness": true,
+      "refreshRotatedWithoutChangingSid": true,
+      "legacySessionRejected": true
+    },
+    {
+      "crossEditionJwtRejected": true,
+      "funcLogoutPreservesOo": true,
+      "logoutRevokesAccessImmediately": true
+    }
+  ],
+  "businessWrites": 0,
+  "note": "Real existing local databases; login lifecycle modifies only Redis records"
+}

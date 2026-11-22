@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InitializationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">initialization</a> &gt; <span class="el_source">InitializationService.java</span></div><h1>InitializationService.java</h1><pre class="source lang-java linenums">// 文件职责：事务化导入课程原表并准备幂等演示数据。
+// 协作关系：协作 WorkbookReader 与各 JPA 仓储，为登录和业务演示准备基础记录。
+package initialization;
+
+import assignment.EmployeeRole;
+import assignment.EmployeeRoleRepository;
+import assignment.OrganizationPermission;
+import assignment.OrganizationPermissionRepository;
+import assignment.RolePermission;
+import assignment.RolePermissionRepository;
+import authorization.AdministratorScope;
+import authorization.AdministratorScopeRepository;
+import initialization.WorkbookReader.SourceRow;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import organization.Employee;
+import organization.EmployeeRepository;
+import organization.Organization;
+import organization.OrganizationRepository;
+import rolepermission.CatalogEntry;
+import rolepermission.CatalogEntryRepository;
+import rolepermission.Permission;
+import rolepermission.PermissionRepository;
+import rolepermission.RbacRole;
+import rolepermission.RbacRoleRepository;
+import rolepermission.RoleInheritanceKey;
+import rolepermission.RoleInheritanceStore;
+import simulation.BusinessRequestService;
+import simulation.BusinessSystem;
+import simulation.BusinessSystemRepository;
+import simulation.SimulatedRequest;
+import simulation.SimulatedRequestRepository;
+
+/** C2 初始化用例，原子导入课程工作簿，幂等补齐演示场景并保留人工授权变更。 */
+@Service
+@RequiredArgsConstructor
+public class InitializationService {
+    private final WorkbookReader reader;
+    private final OrganizationRepository organizations;
+    private final EmployeeRepository employees;
+    private final CatalogEntryRepository catalog;
+    private final RbacRoleRepository roles;
+    private final RoleInheritanceStore inheritance;
+    private final BusinessSystemRepository systems;
+    private final PermissionRepository permissions;
+    private final EmployeeRoleRepository employeeRoles;
+    private final RolePermissionRepository rolePermissions;
+    private final AdministratorScopeRepository scopes;
+    private final OrganizationPermissionRepository organizationPermissions;
+    private final SimulatedRequestRepository simulatedRequests;
+
+    /** 导入统计，只包含数量。 */
+<span class="fc" id="L66">    public record ImportResult(int employees, int organizations, int catalogEntries, long pending) {</span>
+    }
+
+    /** 导入三份原表。相同记录可重跑，内容不一致时回滚整批写入。 */
+    @Transactional(rollbackFor = IOException.class)
+    public ImportResult importWorkbooks(Path directory) throws IOException {
+<span class="fc" id="L72">        List&lt;SourceRow&gt; staff = reader.read(directory.resolve(&quot;市政公司员工信息表.xlsx&quot;), &quot;员工信息&quot;, 0,</span>
+<span class="fc" id="L73">                List.of(&quot;姓名&quot;, &quot;用户名&quot;, &quot;分公司&quot;, &quot;部门&quot;, &quot;岗位&quot;, &quot;电话号码&quot;), false);</span>
+<span class="fc" id="L74">        List&lt;SourceRow&gt; units = reader.read(directory.resolve(&quot;市政公司部门信息表.xlsx&quot;), &quot;部门信息&quot;, 0,</span>
+<span class="fc" id="L75">                List.of(&quot;部门名称&quot;, &quot;部门经理&quot;, &quot;上级部门&quot;), false);</span>
+<span class="fc" id="L76">        List&lt;SourceRow&gt; entries = reader.read(directory.resolve(&quot;市政公司应用软件功能权限清单(1).xlsx&quot;),</span>
+                &quot;市政公司应用软件功能权限清单&quot;, 1,
+<span class="fc" id="L78">                List.of(&quot;软件系统&quot;, &quot;功能模块&quot;, &quot;功能点&quot;, &quot;功能说明&quot;, &quot;系统管理员&quot;, &quot;公司领导&quot;, &quot;部门经理&quot;, &quot;项目经理&quot;, &quot;普通员工&quot;),</span>
+                true);
+
+<span class="fc" id="L81">        Map&lt;String, Organization&gt; byName = importOrganizations(units, staff);</span>
+<span class="fc" id="L82">        Map&lt;String, Employee&gt; byUsername = employees.findAll().stream()</span>
+<span class="fc" id="L83">                .collect(Collectors.toMap(Employee::getUsername, Function.identity()));</span>
+<span class="fc" id="L84">        List&lt;Employee&gt; newEmployees = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L85">        long pending = 0;</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (SourceRow row : staff) {</span>
+<span class="fc" id="L87">            Long organizationId = resolveEmployeeOrganization(byName, row.value(2), row.value(3));</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">            if (organizationId == null) {</span>
+<span class="fc" id="L89">                pending++;</span>
+            }
+<span class="fc" id="L91">            Employee candidate = new Employee(row.required(1), row.required(0), organizationId,</span>
+<span class="fc" id="L92">                    row.value(2), row.value(3), row.value(4), row.value(5));</span>
+<span class="fc" id="L93">            Employee previous = byUsername.putIfAbsent(candidate.getUsername(), candidate);</span>
+<span class="fc bfc" id="L94" title="All 2 branches covered.">            if (previous == null) {</span>
+<span class="fc" id="L95">                newEmployees.add(candidate);</span>
+            } else {
+<span class="fc" id="L97">                requireSame(employeeValues(previous), employeeValues(candidate), &quot;员工信息&quot;, row.number());</span>
+            }
+<span class="fc" id="L99">        }</span>
+<span class="fc" id="L100">        employees.saveAll(newEmployees);</span>
+<span class="fc" id="L101">        importCatalog(entries);</span>
+<span class="fc" id="L102">        return new ImportResult(staff.size(), units.size(), entries.size(), pending);</span>
+    }
+
+    /** 先导入公司，再按原表上级查找部门，避免依赖源表顺序。 */
+    private Map&lt;String, Organization&gt; importOrganizations(List&lt;SourceRow&gt; rows, List&lt;SourceRow&gt; staff) {
+<span class="fc" id="L107">        java.util.Set&lt;String&gt; branches = staff.stream().map(row -&gt; row.value(2))</span>
+<span class="fc" id="L108">                .filter(Objects::nonNull).collect(Collectors.toSet());</span>
+<span class="fc" id="L109">        Map&lt;String, SourceRow&gt; index = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        for (SourceRow row : rows) {</span>
+<span class="pc bpc" id="L111" title="1 of 2 branches missed.">            if (index.putIfAbsent(row.required(0), row) != null) {</span>
+<span class="nc" id="L112">                throw new IllegalArgumentException(&quot;部门信息第 &quot; + row.number() + &quot; 行名称重复&quot;);</span>
+            }
+<span class="fc" id="L114">        }</span>
+<span class="fc" id="L115">        Map&lt;String, Organization&gt; byName = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L116" title="All 2 branches covered.">        for (SourceRow row : rows) {</span>
+<span class="fc" id="L117">            String parent = row.value(2);</span>
+<span class="pc bpc" id="L118" title="1 of 4 branches missed.">            if (parent != null &amp;&amp; !index.containsKey(parent)) {</span>
+<span class="nc" id="L119">                throw new IllegalArgumentException(&quot;部门信息第 &quot; + row.number() + &quot; 行上级不存在&quot;);</span>
+            }
+            // 原表分公司挂在总公司下，授权模型把各分公司作为各自范围的根。
+<span class="pc bpc" id="L122" title="1 of 4 branches missed.">            if (parent == null || branches.contains(row.required(0))) {</span>
+<span class="fc" id="L123">                saveSourceOrganization(row, &quot;COMPANY&quot;, null, byName);</span>
+            }
+<span class="fc" id="L125">        }</span>
+<span class="fc bfc" id="L126" title="All 2 branches covered.">        for (SourceRow row : rows) {</span>
+<span class="fc bfc" id="L127" title="All 2 branches covered.">            if (!byName.containsKey(row.required(0))) {</span>
+<span class="fc" id="L128">                Organization parent = byName.get(row.value(2));</span>
+<span class="pc bpc" id="L129" title="2 of 4 branches missed.">                if (parent == null || !&quot;COMPANY&quot;.equals(parent.getOrganizationType())) {</span>
+<span class="nc" id="L130">                    throw new IllegalArgumentException(&quot;部门信息第 &quot; + row.number() + &quot; 行上级不是公司&quot;);</span>
+                }
+<span class="fc" id="L132">                saveSourceOrganization(row, &quot;DEPARTMENT&quot;, parent.getId(), byName);</span>
+            }
+<span class="fc" id="L134">        }</span>
+<span class="fc" id="L135">        return byName;</span>
+    }
+
+    /** 以稳定的来源键保存目录，原上级名称与授权上级分别保留。 */
+    private void saveSourceOrganization(SourceRow row, String type, Long parentId, Map&lt;String, Organization&gt; index) {
+<span class="fc" id="L140">        String name = row.required(0);</span>
+<span class="fc" id="L141">        String code = &quot;xlsx-&quot; + UUID.nameUUIDFromBytes(name.getBytes(StandardCharsets.UTF_8));</span>
+<span class="fc" id="L142">        Organization candidate = new Organization(code, name, type, parentId, row.value(1), row.value(2));</span>
+<span class="fc" id="L143">        Organization saved = organizations.findByCode(code).orElseGet(() -&gt; organizations.save(candidate));</span>
+<span class="fc" id="L144">        requireSame(organizationValues(saved), organizationValues(candidate), &quot;部门信息&quot;, row.number());</span>
+<span class="fc" id="L145">        index.put(name, saved);</span>
+<span class="fc" id="L146">    }</span>
+
+    /** 仅在公司和部门能唯一匹配时建立正式归属。 */
+    private Long resolveEmployeeOrganization(Map&lt;String, Organization&gt; index, String branch, String department) {
+<span class="fc" id="L150">        Organization company = index.get(branch);</span>
+<span class="pc bpc" id="L151" title="2 of 4 branches missed.">        if (company == null || !&quot;COMPANY&quot;.equals(company.getOrganizationType())) {</span>
+<span class="nc" id="L152">            return null;</span>
+        }
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        if (department == null) {</span>
+<span class="fc" id="L155">            return company.getId();</span>
+        }
+<span class="fc" id="L157">        List&lt;Organization&gt; matches = Arrays.asList(index.get(department), index.get(branch + &quot;-&quot; + department))</span>
+<span class="fc" id="L158">                .stream().filter(Objects::nonNull).filter(unit -&gt; Objects.equals(unit.getParentId(), company.getId()))</span>
+<span class="fc" id="L159">                .distinct().toList();</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        return matches.size() == 1 ? matches.getFirst().getId() : null;</span>
+    }
+
+    /** 用系统、模块、功能点作为清单的来源键，保留全部动作原文。 */
+    private void importCatalog(List&lt;SourceRow&gt; rows) {
+        /** 以工作簿的系统、模块和功能三列识别重复条目。 */
+<span class="fc" id="L166">        record FeatureKey(String system, String module, String feature) {</span>
+        }
+<span class="fc" id="L168">        Map&lt;FeatureKey, CatalogEntry&gt; index = catalog.findAll().stream()</span>
+<span class="fc" id="L169">                .collect(Collectors.toMap(entry -&gt; new FeatureKey(entry.getSystemName(), entry.getModuleName(),</span>
+<span class="fc" id="L170">                        entry.getFeatureName()), Function.identity()));</span>
+<span class="fc" id="L171">        List&lt;CatalogEntry&gt; additions = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L172" title="All 2 branches covered.">        for (SourceRow row : rows) {</span>
+<span class="fc" id="L173">            CatalogEntry candidate = new CatalogEntry(row.required(0), row.required(1), row.required(2), row.required(3),</span>
+<span class="fc" id="L174">                    row.value(4), row.value(5), row.value(6), row.value(7), row.value(8));</span>
+<span class="fc" id="L175">            FeatureKey key = new FeatureKey(candidate.getSystemName(), candidate.getModuleName(), candidate.getFeatureName());</span>
+<span class="fc" id="L176">            CatalogEntry previous = index.putIfAbsent(key, candidate);</span>
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">            if (previous == null) {</span>
+<span class="nc" id="L178">                additions.add(candidate);</span>
+            } else {
+<span class="fc" id="L180">                requireSame(catalogValues(previous), catalogValues(candidate), &quot;功能权限清单&quot;, row.number());</span>
+            }
+<span class="fc" id="L182">        }</span>
+<span class="fc" id="L183">        catalog.saveAll(additions);</span>
+<span class="fc" id="L184">    }</span>
+
+    /** 对比源字段，不把员工信息或原权限文本写入异常。 */
+    private void requireSame(List&lt;?&gt; existing, List&lt;?&gt; incoming, String source, int row) {
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        if (!existing.equals(incoming)) {</span>
+<span class="fc" id="L189">            throw new IllegalArgumentException(source + &quot;第 &quot; + row + &quot; 行与已有数据冲突&quot;);</span>
+        }
+<span class="fc" id="L191">    }</span>
+
+    /** 按原表字段构造员工对比快照，幂等重导入时不比较生成 ID。 */
+    private List&lt;?&gt; employeeValues(Employee item) {
+<span class="fc" id="L195">        return Arrays.asList(item.getName(), item.getOrganizationId(), item.getSourceBranchName(),</span>
+<span class="fc" id="L196">                item.getSourceDepartmentName(), item.getJobTitle(), item.getPhone());</span>
+    }
+
+    /** 按来源层级构造组织对比快照，用于识别冲突导入。 */
+    private List&lt;?&gt; organizationValues(Organization item) {
+<span class="fc" id="L201">        return Arrays.asList(item.getName(), item.getOrganizationType(), item.getParentId(),</span>
+<span class="fc" id="L202">                item.getManagerName(), item.getSourceParentName());</span>
+    }
+
+    /** 按原表列构造清单对比快照，保留空值及动作文本。 */
+    private List&lt;?&gt; catalogValues(CatalogEntry item) {
+<span class="fc" id="L207">        return Arrays.asList(item.getDescription(), item.getAdministratorCell(), item.getExecutiveCell(),</span>
+<span class="fc" id="L208">                item.getDepartmentManagerCell(), item.getProjectManagerCell(), item.getEmployeeCell());</span>
+    }
+
+    /** 建立跨公司、跨部门和系统隔离的合成数据。已存在的演示标记保留现场授权变更。 */
+    @Transactional
+    public void initializeDemo() {
+<span class="fc" id="L214">        inheritance.lockWrites();</span>
+<span class="fc bfc" id="L215" title="All 2 branches covered.">        if (organizations.findByCode(&quot;demo-company-a&quot;).isEmpty()) {</span>
+<span class="fc" id="L216">            initializeDemoBaseline();</span>
+        }
+<span class="fc" id="L218">        initializeDemoRequests();</span>
+<span class="fc" id="L219">        initializeDemoRequestRoles();</span>
+<span class="fc" id="L220">        initializeDemoRoleScenarios();</span>
+<span class="fc" id="L221">        createDemoReadRole(&quot;demo-company-app&quot;, List.of(&quot;company-a-admin&quot;));</span>
+<span class="fc" id="L222">        createDemoReadRole(&quot;demo-engineering-app&quot;, List.of(&quot;company-a-admin&quot;, &quot;engineering-admin&quot;, &quot;engineering-employee&quot;,</span>
+                &quot;engineering-requester&quot;, &quot;engineering-inherited-approver&quot;));
+<span class="fc" id="L224">        createDemoReadRole(&quot;demo-finance-app&quot;, List.of(&quot;company-a-admin&quot;, &quot;finance-employee&quot;));</span>
+<span class="fc" id="L225">        createDemoReadRole(&quot;demo-company-b-app&quot;, List.of(&quot;company-b-employee&quot;));</span>
+<span class="fc" id="L226">    }</span>
+
+    /** 补齐演示组织、员工、系统和初始授权；已有用户策略不在此重置。 */
+    private void initializeDemoBaseline() {
+<span class="fc" id="L230">        Organization company = organizations.save(new Organization(&quot;demo-company-a&quot;, &quot;示例甲公司&quot;, &quot;COMPANY&quot;, null, null, null));</span>
+<span class="fc" id="L231">        Organization other = organizations.save(new Organization(&quot;demo-company-b&quot;, &quot;示例乙公司&quot;, &quot;COMPANY&quot;, null, null, null));</span>
+<span class="fc" id="L232">        Organization engineering = organizations.save(new Organization(&quot;demo-engineering&quot;, &quot;示例工程部&quot;, &quot;DEPARTMENT&quot;,</span>
+<span class="fc" id="L233">                company.getId(), null, null));</span>
+<span class="fc" id="L234">        Organization finance = organizations.save(new Organization(&quot;demo-finance&quot;, &quot;示例财务部&quot;, &quot;DEPARTMENT&quot;,</span>
+<span class="fc" id="L235">                company.getId(), null, null));</span>
+<span class="fc" id="L236">        Employee root = employees.save(new Employee(&quot;super-admin&quot;, &quot;示例超级管理员&quot;, company.getId(), null, null, null, null));</span>
+<span class="fc" id="L237">        Employee companyAdmin = employees.save(new Employee(&quot;company-a-admin&quot;, &quot;示例公司管理员&quot;, company.getId(),</span>
+                null, null, null, null));
+<span class="fc" id="L239">        Employee departmentAdmin = employees.save(new Employee(&quot;engineering-admin&quot;, &quot;示例部门管理员&quot;, engineering.getId(),</span>
+                null, null, null, null));
+<span class="fc" id="L241">        Employee employee = employees.save(new Employee(&quot;engineering-employee&quot;, &quot;示例工程员工&quot;, engineering.getId(),</span>
+                null, null, null, null));
+<span class="fc" id="L243">        scopes.saveAll(List.of(new AdministratorScope(root.getId(), &quot;GLOBAL&quot;, null),</span>
+<span class="fc" id="L244">                new AdministratorScope(companyAdmin.getId(), &quot;ORGANIZATION&quot;, company.getId()),</span>
+<span class="fc" id="L245">                new AdministratorScope(departmentAdmin.getId(), &quot;ORGANIZATION&quot;, engineering.getId())));</span>
+<span class="fc" id="L246">        BusinessSystem companySystem = systems.save(new BusinessSystem(&quot;demo-company-app&quot;, &quot;示例公司申请系统&quot;, company.getId(), true));</span>
+<span class="fc" id="L247">        BusinessSystem departmentSystem = systems.save(new BusinessSystem(&quot;demo-engineering-app&quot;, &quot;示例工程申请系统&quot;,</span>
+<span class="fc" id="L248">                engineering.getId(), true));</span>
+<span class="fc" id="L249">        systems.saveAll(List.of(new BusinessSystem(&quot;demo-finance-app&quot;, &quot;示例财务申请系统&quot;, finance.getId(), true),</span>
+<span class="fc" id="L250">                new BusinessSystem(&quot;demo-company-b-app&quot;, &quot;示例乙公司申请系统&quot;, other.getId(), true)));</span>
+<span class="fc" id="L251">        Permission companyApproval = permissions.save(new Permission(BusinessRequestService.APPROVE_PERMISSION, &quot;公司申请审批&quot;,</span>
+<span class="fc" id="L252">                companySystem.getId(), null));</span>
+<span class="fc" id="L253">        Permission departmentApproval = permissions.save(new Permission(BusinessRequestService.APPROVE_PERMISSION, &quot;工程申请审批&quot;,</span>
+<span class="fc" id="L254">                departmentSystem.getId(), null));</span>
+<span class="fc" id="L255">        RbacRole approver = roles.save(new RbacRole(&quot;示例工程审批员&quot;, engineering.getId()));</span>
+<span class="fc" id="L256">        employeeRoles.save(new EmployeeRole(employee.getId(), approver.getId()));</span>
+<span class="fc" id="L257">        rolePermissions.save(new RolePermission(approver.getId(), departmentApproval.getId()));</span>
+<span class="fc" id="L258">        organizationPermissions.saveAll(List.of(</span>
+<span class="fc" id="L259">                new OrganizationPermission(engineering.getId(), departmentApproval.getId(), &quot;OPEN&quot;),</span>
+<span class="fc" id="L260">                new OrganizationPermission(finance.getId(), companyApproval.getId(), &quot;DISABLED&quot;)));</span>
+<span class="fc" id="L261">    }</span>
+
+    /** 新增合成账号时建立最小授权，重复初始化保留角色和继承边的测试改动。 */
+    private void initializeDemoRoleScenarios() {
+<span class="fc" id="L265">        BusinessSystem engineering = systems.findByCode(&quot;demo-engineering-app&quot;).orElseThrow();</span>
+<span class="fc" id="L266">        Long engineeringId = engineering.getOwnerOrganizationId();</span>
+<span class="fc bfc" id="L267" title="All 2 branches covered.">        if (employees.findByUsername(&quot;engineering-requester&quot;).isEmpty()) {</span>
+<span class="fc" id="L268">            Employee applicant = employees.save(new Employee(&quot;engineering-requester&quot;, &quot;示例工程申请人&quot;,</span>
+                    engineeringId, null, null, null, null));
+<span class="fc" id="L270">            RbacRole role = roles.save(new RbacRole(&quot;示例工程申请人&quot;, engineeringId));</span>
+<span class="fc" id="L271">            employeeRoles.save(new EmployeeRole(applicant.getId(), role.getId()));</span>
+<span class="fc bfc" id="L272" title="All 2 branches covered.">            for (String code : List.of(&quot;request:create&quot;, &quot;request:update&quot;, &quot;request:withdraw&quot;, &quot;request:delete&quot;)) {</span>
+<span class="fc" id="L273">                Permission permission = permissions.findBySystemIdAndCode(engineering.getId(), code).orElseThrow();</span>
+<span class="fc" id="L274">                rolePermissions.save(new RolePermission(role.getId(), permission.getId()));</span>
+<span class="fc" id="L275">            }</span>
+        }
+<span class="fc bfc" id="L277" title="All 2 branches covered.">        if (employees.findByUsername(&quot;engineering-inherited-approver&quot;).isEmpty()) {</span>
+<span class="fc" id="L278">            Employee approver = employees.save(new Employee(&quot;engineering-inherited-approver&quot;, &quot;示例工程继承审批人&quot;,</span>
+                    engineeringId, null, null, null, null));
+<span class="fc" id="L280">            RbacRole senior = roles.save(new RbacRole(&quot;示例继承审批主管&quot;, engineeringId));</span>
+<span class="fc" id="L281">            RbacRole source = roles.save(new RbacRole(&quot;示例继承审批来源&quot;, engineeringId));</span>
+<span class="fc" id="L282">            Permission approval = permissions.findBySystemIdAndCode(engineering.getId(), BusinessRequestService.APPROVE_PERMISSION)</span>
+<span class="fc" id="L283">                    .orElseThrow();</span>
+<span class="fc" id="L284">            employeeRoles.save(new EmployeeRole(approver.getId(), senior.getId()));</span>
+<span class="fc" id="L285">            rolePermissions.save(new RolePermission(source.getId(), approval.getId()));</span>
+<span class="fc" id="L286">            inheritance.add(new RoleInheritanceKey(senior.getId(), source.getId()));</span>
+        }
+<span class="fc" id="L288">        seedInheritedTestRole(engineeringId);</span>
+<span class="fc bfc" id="L289" title="All 2 branches covered.">        if (employees.findByUsername(&quot;company-b-employee&quot;).isEmpty()) {</span>
+<span class="fc" id="L290">            Long otherCompanyId = organizations.findByCode(&quot;demo-company-b&quot;).orElseThrow().getId();</span>
+<span class="fc" id="L291">            employees.save(new Employee(&quot;company-b-employee&quot;, &quot;示例乙公司员工&quot;, otherCompanyId, null, null, null, null));</span>
+        }
+<span class="fc" id="L293">    }</span>
+
+    /** 为权限管理页准备一个无直接授权的角色，重跑初始化保留之后的边变更。 */
+    private void seedInheritedTestRole(Long engineeringId) {
+<span class="fc" id="L297">        String name = &quot;测试工程主管&quot;;</span>
+<span class="fc bfc" id="L298" title="All 2 branches covered.">        if (roles.findByNameAndOwnerOrganizationId(name, engineeringId).isPresent()) {</span>
+<span class="fc" id="L299">            return;</span>
+        }
+<span class="fc" id="L301">        roles.findByNameAndOwnerOrganizationId(&quot;示例继承审批来源&quot;, engineeringId).ifPresent(source -&gt; {</span>
+<span class="fc" id="L302">            RbacRole testRole = roles.save(new RbacRole(name, engineeringId));</span>
+<span class="fc" id="L303">            inheritance.add(new RoleInheritanceKey(testRole.getId(), source.getId()));</span>
+<span class="fc" id="L304">        });</span>
+<span class="fc" id="L305">    }</span>
+
+    /** 演示账号使用独立角色，重复初始化保留已经调整过的授撤权。 */
+    private void initializeDemoRequestRoles() {
+<span class="fc" id="L309">        BusinessSystem finance = systems.findByCode(&quot;demo-finance-app&quot;).orElseThrow();</span>
+<span class="fc bfc" id="L310" title="All 2 branches covered.">        if (employees.findByUsername(&quot;finance-employee&quot;).isEmpty()) {</span>
+<span class="fc" id="L311">            employees.save(new Employee(&quot;finance-employee&quot;, &quot;示例财务员工&quot;, finance.getOwnerOrganizationId(),</span>
+                    null, null, null, null));
+        }
+<span class="fc" id="L314">        createDemoRequestRole(&quot;demo-company-app&quot;, &quot;company-a-admin&quot;);</span>
+<span class="fc" id="L315">        createDemoRequestRole(&quot;demo-engineering-app&quot;, &quot;engineering-employee&quot;);</span>
+<span class="fc" id="L316">        createDemoRequestRole(&quot;demo-finance-app&quot;, &quot;finance-employee&quot;);</span>
+<span class="fc" id="L317">    }</span>
+
+    /** 为指定演示系统和员工补齐申请写动作及直接角色关系。 */
+    private void createDemoRequestRole(String systemCode, String username) {
+<span class="fc" id="L321">        BusinessSystem system = systems.findByCode(systemCode).orElseThrow();</span>
+<span class="fc" id="L322">        Long organizationId = system.getOwnerOrganizationId();</span>
+<span class="fc" id="L323">        String roleName = &quot;示例申请经办员&quot;;</span>
+<span class="fc bfc" id="L324" title="All 2 branches covered.">        if (roles.findByNameAndOwnerOrganizationId(roleName, organizationId).isPresent()) {</span>
+<span class="fc" id="L325">            return;</span>
+        }
+<span class="fc" id="L327">        Employee employee = employees.findByUsername(username).orElseThrow();</span>
+<span class="fc" id="L328">        RbacRole role = roles.save(new RbacRole(roleName, organizationId));</span>
+<span class="fc" id="L329">        employeeRoles.save(new EmployeeRole(employee.getId(), role.getId()));</span>
+<span class="fc bfc" id="L330" title="All 2 branches covered.">        for (String code : BusinessRequestService.REQUEST_ACTIONS.keySet()) {</span>
+<span class="fc" id="L331">            Permission definition = permissions.findBySystemIdAndCode(system.getId(), code).orElseThrow();</span>
+<span class="fc" id="L332">            rolePermissions.save(new RolePermission(role.getId(), definition.getId()));</span>
+<span class="fc" id="L333">        }</span>
+<span class="fc" id="L334">    }</span>
+
+    /** 独立查看角色只在首次创建时授权，重跑保留人工撤权。 */
+    private void createDemoReadRole(String systemCode, List&lt;String&gt; usernames) {
+<span class="fc" id="L338">        BusinessSystem system = systems.findByCode(systemCode).orElseThrow();</span>
+<span class="fc bfc" id="L339" title="All 2 branches covered.">        if (roles.findByNameAndOwnerOrganizationId(&quot;示例申请查看员&quot;, system.getOwnerOrganizationId()).isPresent()) {</span>
+<span class="fc" id="L340">            return;</span>
+        }
+<span class="fc" id="L342">        RbacRole viewer = roles.save(new RbacRole(&quot;示例申请查看员&quot;, system.getOwnerOrganizationId()));</span>
+<span class="fc" id="L343">        Permission read = permissions.findBySystemIdAndCode(system.getId(), BusinessRequestService.READ_PERMISSION).orElseThrow();</span>
+<span class="fc" id="L344">        rolePermissions.save(new RolePermission(viewer.getId(), read.getId()));</span>
+<span class="fc bfc" id="L345" title="All 2 branches covered.">        for (String username : usernames) {</span>
+<span class="fc" id="L346">            Employee employee = employees.findByUsername(username).orElseThrow();</span>
+<span class="fc" id="L347">            employeeRoles.save(new EmployeeRole(employee.getId(), viewer.getId()));</span>
+<span class="fc" id="L348">        }</span>
+<span class="fc" id="L349">    }</span>
+
+    /** 为既有或新建的演示系统准备申请，重复运行保留申请及审批结果。 */
+    private void initializeDemoRequests() {
+<span class="fc bfc" id="L353" title="All 2 branches covered.">        for (String systemCode : List.of(&quot;demo-company-app&quot;, &quot;demo-engineering-app&quot;, &quot;demo-finance-app&quot;, &quot;demo-company-b-app&quot;)) {</span>
+<span class="fc" id="L354">            systems.findByCode(systemCode).ifPresent(system -&gt; {</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">                if (permissions.findBySystemIdAndCode(system.getId(), BusinessRequestService.READ_PERMISSION).isEmpty()) {</span>
+<span class="fc" id="L356">                    permissions.save(new Permission(BusinessRequestService.READ_PERMISSION, &quot;查看申请&quot;, system.getId(), null));</span>
+                }
+<span class="fc" id="L358">                BusinessRequestService.REQUEST_ACTIONS.forEach((code, name) -&gt; {</span>
+<span class="fc bfc" id="L359" title="All 2 branches covered.">                    if (permissions.findBySystemIdAndCode(system.getId(), code).isEmpty()) {</span>
+<span class="fc" id="L360">                        permissions.save(new Permission(code, name, system.getId(), null));</span>
+                    }
+<span class="fc" id="L362">                });</span>
+<span class="fc bfc" id="L363" title="All 2 branches covered.">                if (!simulatedRequests.existsBySystemId(system.getId())) {</span>
+<span class="fc" id="L364">                    List&lt;SimulatedRequest&gt; fixtures = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L365" title="All 2 branches covered.">                    for (int number = 1; number &lt;= 6; number++) {</span>
+<span class="fc" id="L366">                        fixtures.add(new SimulatedRequest(system.getId(), &quot;示例申请 &quot; + number));</span>
+                    }
+<span class="fc" id="L368">                    simulatedRequests.saveAll(fixtures);</span>
+                }
+<span class="fc" id="L370">            });</span>
+<span class="fc" id="L371">        }</span>
+<span class="fc" id="L372">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

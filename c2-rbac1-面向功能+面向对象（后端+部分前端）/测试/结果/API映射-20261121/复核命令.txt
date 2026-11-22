@@ -1,0 +1,19 @@
+工作目录：C2根目录
+日期：2026-11-21（Asia/Shanghai）
+
+1. 静态契约（PYTHONPATH指向此前安装的测试专用PyYAML/OpenAPI验证依赖）
+$env:PYTHONPATH = Join-Path $env:TEMP 'c2-contract-validation-20261121'
+python 测试/契约/check_identity_contract.py
+
+2. 当前源码、完整Surefire、可运行JAR、JaCoCo及文档链接
+python 测试/脚本/check_api_evidence.py
+
+3. 本轮维护范围的差异格式检查（允许Windows CRLF）
+git -c core.autocrlf=false -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --check -- api/openapi.yaml backend-func/src/main/java backend-func/src/main/resources backend-oo/src/main/java backend-oo/src/main/resources 测试/后端 测试/契约 docs/开发方向细节.md README.md
+最终退出码：0
+
+4. 实际JaCoCo页面截图
+node 测试/前端/report-images.mjs 测试/结果/API映射-20261121/GREEN-verified
+最终退出码：0；已人工查看两张实际报告截图。
+
+完整后端命令及环境说明另见GREEN-verified/func、oo中的命令.txt，未保存数据库密码。

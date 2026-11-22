@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-������+������󣨺��+����ǰ�ˣ�\����\��Լ\check_identity_contract.py", line 139, in <module>
+    main()
+    ~~~~^^
+  File "D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-������+������󣨺��+����ǰ�ˣ�\����\��Լ\check_identity_contract.py", line 130, in main
+    check((file.parent / link.split("#")[0]).exists(), f"Broken local link in {file.name}: {link}")
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-������+������󣨺��+����ǰ�ˣ�\����\��Լ\check_identity_contract.py", line 51, in check
+    raise ValueError(message)
+ValueError: Broken local link in ��һ����֤��¼.md: ../���/�ӿ���Լ-20261121/diff-check.txt
+PROCESS_EXIT_CODE=1

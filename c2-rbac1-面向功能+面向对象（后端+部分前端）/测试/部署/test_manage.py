@@ -46,10 +46,28 @@ class DeploymentSettingsTest(unittest.TestCase):
         """重复键、非法项目名和端口拒绝，避免误用另一组服务或宿主机端口。"""
         path = self.folder / "settings"
         for content in ("RBAC_STACK_NAME=c2\nRBAC_STACK_NAME=other", "RBAC_STACK_NAME=bad/name",
-                        "RBAC_HTTP_PORT=0", "RBAC_HTTP_PORT=65536", "RBAC_SESSION_SECURE=maybe"):
+                        "RBAC_HTTP_PORT=0", "RBAC_HTTP_PORT=65536", "RBAC_AUTH_COOKIE_SECURE=maybe",
+                        "RBAC_SESSION_COOKIE_SECURE=true"):
             path.write_text(content, encoding="utf-8")
             with self.subTest(content=content), self.assertRaises(ValueError):
                 DEPLOY.read_settings(path)
+
+    def test_jwt_keys_are_independent_and_preserved(self):
+        DEPLOY.generate_jwt_keys(self.folder)
+        before = {name: (self.folder / name).read_bytes() for name in DEPLOY.JWT_KEYS}
+        self.assertNotEqual(before["func_jwt_public"], before["oo_jwt_public"])
+        DEPLOY.generate_jwt_keys(self.folder)
+        self.assertEqual(before, {name: (self.folder / name).read_bytes() for name in DEPLOY.JWT_KEYS})
+
+    def test_mismatched_jwt_key_is_not_overwritten(self):
+        DEPLOY.generate_jwt_keys(self.folder)
+        public = self.folder / "func_jwt_public"
+        public.chmod(0o600)
+        public.write_bytes((self.folder / "oo_jwt_public").read_bytes())
+        before = public.read_bytes()
+        with self.assertRaises(ValueError):
+            DEPLOY.generate_jwt_keys(self.folder)
+        self.assertEqual(before, public.read_bytes())
 
     def test_does_not_execute_or_expand_values(self):
         """环境值只是配置数据，不触发 shell 展开。"""

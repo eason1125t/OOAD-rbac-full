@@ -17,6 +17,14 @@ public interface RolePermissionRepository extends JpaRepository<RolePermission, 
     /** 直接权限来源可来自当前角色，也可来自其低级角色。 */
     boolean existsByPermissionIdAndRoleIdIn(Long permissionId, Set<Long> roleIds);
 
+    /** 批量读取目标系统的配置权限来源，不将配置相关性等同于当前有效授权。 */
+    @Query("""
+            select distinct link.roleId from RolePermission link, Permission permission
+            where link.permissionId = permission.id and permission.systemId = :systemId
+              and link.roleId in :roleIds
+            """)
+    Set<Long> findSystemPermissionSourceRoleIds(Long systemId, Set<Long> roleIds);
+
     /** 必须有一个直接持有权限的角色覆盖全部适用重授。 */
     @Query("""
             select case when count(link) > 0 then true else false end from RolePermission link

@@ -1,0 +1,60 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-21T23:41:32.032+08:00  INFO 62588 --- [rbac1-func] [           main] app.RbacApplication                      : Starting RbacApplication v0.1.0-SNAPSHOT using Java 21.0.9 with PID 62588 (D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\target\jwt-final\rbac1-func-0.1.0-SNAPSHOT.jar started by kaoyu in D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\结果\JWT前端与整体验收-20261121\浏览器完整\runtime-func)
+2026-11-21T23:41:32.036+08:00  INFO 62588 --- [rbac1-func] [           main] app.RbacApplication                      : No active profile set, falling back to 1 default profile: "default"
+2026-11-21T23:41:33.166+08:00  INFO 62588 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-21T23:41:33.166+08:00  INFO 62588 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-21T23:41:33.345+08:00  INFO 62588 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 168 ms. Found 14 JPA repository interfaces.
+2026-11-21T23:41:34.896+08:00  INFO 62588 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-21T23:41:35.627+08:00  INFO 62588 --- [rbac1-func] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5d9d2119
+2026-11-21T23:41:35.631+08:00  INFO 62588 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-21T23:41:35.743+08:00  INFO 62588 --- [rbac1-func] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:33327/ooad_rbac1_func_final_test_20261121154123 (MySQL 8.4)
+2026-11-21T23:41:35.798+08:00  WARN 62588 --- [rbac1-func] [           main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: MySQL 8.4 is newer than this version of Flyway and support has not been tested. The latest supported version of MySQL is 8.1.
+2026-11-21T23:41:35.874+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `ooad_rbac1_func_final_test_20261121154123`.`flyway_schema_history` does not exist yet
+2026-11-21T23:41:35.883+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.058s)
+2026-11-21T23:41:35.950+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `ooad_rbac1_func_final_test_20261121154123`.`flyway_schema_history` ...
+2026-11-21T23:41:36.158+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `ooad_rbac1_func_final_test_20261121154123`: << Empty Schema >>
+2026-11-21T23:41:36.188+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func_final_test_20261121154123` to version "1 - create rbac0 schema"
+2026-11-21T23:41:37.658+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func_final_test_20261121154123` to version "2 - preserve organization source parent"
+2026-11-21T23:41:37.920+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func_final_test_20261121154123` to version "3 - add login accounts and default systems"
+2026-11-21T23:41:38.587+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func_final_test_20261121154123` to version "4 - create simulated request"
+2026-11-21T23:41:38.763+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func_final_test_20261121154123` to version "5 - add scoped permission regrants"
+2026-11-21T23:41:39.237+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func_final_test_20261121154123` to version "6 - create role inheritance"
+2026-11-21T23:41:39.525+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func_final_test_20261121154123` to version "7 - extend simulated request lifecycle"
+2026-11-21T23:41:39.823+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func_final_test_20261121154123` to version "8 - add request read permission"
+2026-11-21T23:41:39.881+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func_final_test_20261121154123` to version "9 - api operation permissions"
+2026-11-21T23:41:40.104+08:00  INFO 62588 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 9 migrations to schema `ooad_rbac1_func_final_test_20261121154123`, now at version v9 (execution time 00:03.460s)
+2026-11-21T23:41:40.244+08:00  INFO 62588 --- [rbac1-func] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-21T23:41:40.316+08:00  INFO 62588 --- [rbac1-func] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-11-21T23:41:40.350+08:00  INFO 62588 --- [rbac1-func] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-21T23:41:40.629+08:00  INFO 62588 --- [rbac1-func] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-21T23:41:40.701+08:00  INFO 62588 --- [rbac1-func] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.4.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-21T23:41:41.628+08:00  INFO 62588 --- [rbac1-func] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-21T23:41:41.672+08:00  INFO 62588 --- [rbac1-func] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-21T23:41:42.275+08:00  INFO 62588 --- [rbac1-func] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-21T23:41:46.116+08:00  INFO 62588 --- [rbac1-func] [           main] app.RbacApplication                      : Started RbacApplication in 14.601 seconds (process running for 15.326)
+2026-11-21T23:41:46.152+08:00 DEBUG 62588 --- [rbac1-func] [           main] r.i.i.InitializationCommand              : run 开始
+2026-11-21T23:41:46.180+08:00 DEBUG 62588 --- [rbac1-func] [           main] r.s.i.InitializationService              : initializeDemo 开始
+2026-11-21T23:41:47.740+08:00 DEBUG 62588 --- [rbac1-func] [           main] r.s.i.InitializationService              : initializeDemo 完成，耗时 1560 ms
+��ʾ�����Ѿ���
+2026-11-21T23:41:47.767+08:00 DEBUG 62588 --- [rbac1-func] [           main] r.i.i.InitializationCommand              : run 完成，耗时 1613 ms
+2026-11-21T23:41:47.770+08:00 DEBUG 62588 --- [rbac1-func] [           main] r.i.authentication.DemoLoginAccounts     : run 开始
+2026-11-21T23:41:48.413+08:00 DEBUG 62588 --- [rbac1-func] [           main] r.i.authentication.DemoLoginAccounts     : run 完成，耗时 642 ms
+2026-11-21T23:41:48.457+08:00  INFO 62588 --- [rbac1-func] [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-11-21T23:41:48.459+08:00  INFO 62588 --- [rbac1-func] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-11-21T23:41:48.470+08:00  INFO 62588 --- [rbac1-func] [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

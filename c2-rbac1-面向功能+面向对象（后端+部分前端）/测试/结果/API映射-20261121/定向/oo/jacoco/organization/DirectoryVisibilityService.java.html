@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DirectoryVisibilityService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">organization</a> &gt; <span class="el_source">DirectoryVisibilityService.java</span></div><h1>DirectoryVisibilityService.java</h1><pre class="source lang-java linenums">// 文件职责：统一普通员工和管理员的目录读取范围。
+// 协作关系：复用可信员工与管理员资格，供目录查询和原管理查询使用；不改变业务系统准入或写入规则。
+package organization;
+
+import authentication.CurrentEmployeeService;
+import authorization.AdministratorScope;
+import authorization.AuthorizationService;
+import contract.BusinessAccessException;
+import contract.BusinessAccessException.Reason;
+import java.util.HashSet;
+import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+/** 可见目录与管理员查询共用组织范围，不把可进入业务系统等同于能读取其全部员工。 */
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class DirectoryVisibilityService {
+    private final CurrentEmployeeService currentEmployees;
+    private final AuthorizationService authorization;
+    private final OrganizationRepository organizations;
+
+    /** 当前身份可以读取的最小目录；可信ID由HTTP身份适配层传入。 */
+    public Scope forCurrentEmployee(Long actor) {
+<span class="nc" id="L27">        return scope(actor, false);</span>
+    }
+
+    /** 原管理查询仍要求管理员资格，不因目录向普通员工开放而放宽。 */
+    public Scope forAdministrator(Long actor) {
+<span class="nc" id="L32">        return scope(actor, true);</span>
+    }
+
+    private Scope scope(Long actor, boolean administratorRequired) {
+<span class="nc" id="L36">        Employee employee = currentEmployees.requireActive(actor);</span>
+<span class="nc" id="L37">        AdministratorScope admin = authorization.assignmentScope(actor, AuthorizationService.MANAGEMENT_READ)</span>
+<span class="nc" id="L38">                .orElse(null);</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if (admin == null) {</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">            if (administratorRequired) {</span>
+<span class="nc" id="L41">                throw new BusinessAccessException(Reason.PERMISSION_DENIED, &quot;无权查看该管理数据&quot;);</span>
+            }
+<span class="nc" id="L43">            Set&lt;Long&gt; own = Set.of(employee.getOrganizationId());</span>
+<span class="nc" id="L44">            return new Scope(false, false, own, own);</span>
+        }
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (&quot;GLOBAL&quot;.equals(admin.getScopeType())) {</span>
+<span class="nc" id="L47">            return new Scope(true, true, Set.of(), Set.of());</span>
+        }
+<span class="nc" id="L49">        Organization owner = organizations.findById(admin.getOrganizationId()).orElseThrow();</span>
+<span class="nc" id="L50">        Set&lt;Long&gt; visible = new HashSet&lt;&gt;();</span>
+<span class="nc" id="L51">        visible.add(owner.getId());</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (&quot;COMPANY&quot;.equals(owner.getOrganizationType())) {</span>
+<span class="nc" id="L53">            organizations.findByParentId(owner.getId()).forEach(child -&gt; visible.add(child.getId()));</span>
+        }
+<span class="nc" id="L55">        Set&lt;Long&gt; policyIds = new HashSet&lt;&gt;(visible);</span>
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (owner.getParentId() != null) {</span>
+<span class="nc" id="L57">            policyIds.add(owner.getParentId());</span>
+        }
+<span class="nc" id="L59">        return new Scope(true, false, Set.copyOf(visible), Set.copyOf(policyIds));</span>
+    }
+
+    /** ids筛目录/员工，policyIds只供原管理权限目录使用，两者不能互换。 */
+<span class="nc" id="L63">    public record Scope(boolean administrator, boolean global, Set&lt;Long&gt; ids, Set&lt;Long&gt; policyIds) {</span>
+        public boolean contains(Long id) {
+<span class="nc bnc" id="L65" title="All 4 branches missed.">            return global || ids.contains(id);</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

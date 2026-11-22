@@ -1,4 +1,4 @@
-/* 两个工作区共享排版和控件，审批结果使用独立的左边线定位。 */
+/* 两个工作区共享排版和控件；身份面板及部门员工弹窗复用现有色彩和响应式排版。 */
 :root {
   font-family: 'Instrument Sans', 'Microsoft YaHei UI', 'PingFang SC', system-ui, sans-serif;
   color: #18343b;
@@ -146,7 +146,33 @@ td:nth-child(n+2) { white-space: nowrap; }
 .inherited-permission { flex-shrink: 0; background: #edf3f5; border-radius: 4px; padding: .22rem .45rem; }
 .policy-field { margin-bottom: .8rem; }
 .policy-body { display: grid; gap: .65rem; }
+.access-panel { margin-bottom: 1rem; }
+.access-panel summary { cursor: pointer; font-weight: 700; }
+.access-panel details > * + * { margin-top: .75rem; }
+.role-sources, .permission-chips { padding: 0; list-style: none; }
+.role-sources li { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-bottom: .4rem; }
+.permission-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.permission-chips li { padding: .4rem .6rem; background: #edf5f3; border-radius: 4px; }
+.permission-chips code { display: block; color: var(--muted); }
+.access-checks { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+.access-checks form { display: grid; align-content: start; justify-items: start; gap: .6rem; }
+.access-checks label { width: 100%; }
+.people-dialog { width: min(1050px, calc(100% - 2rem)); max-height: calc(100dvh - 2rem); overflow: auto; }
+.people-layout { display: grid; grid-template-columns: minmax(220px, .85fr) minmax(0, 1.5fr); gap: 1.5rem; }
+.people-layout > section { min-width: 0; }
+.people-dialog .panel-heading > button { flex-shrink: 0; white-space: nowrap; }
+.people-layout h3 { margin: .8rem 0; }
+.directory-search { display: flex; flex-wrap: wrap; gap: .5rem; align-items: end; margin: .8rem 0; }
+.directory-search label { flex: 1 1 140px; }
+.department-nodes { list-style: none; padding: 0; }
+.department-nodes li { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; padding: .5rem 0; border-bottom: 1px solid var(--line); }
+.department-nodes li > :first-child { flex: 1; text-align: left; overflow-wrap: anywhere; }
+.department-nodes button[aria-pressed=true] { background: #e2f2ef; border-color: var(--action); }
+.employee-profile { border-top: 1px solid var(--line); margin-top: 1rem; }
+.employee-profile dl > div { display: flex; gap: 1rem; }
+.employee-profile dd { margin: 0; overflow-wrap: anywhere; }
 @media (max-width: 700px) {
+  .people-layout, .access-checks { grid-template-columns: 1fr; }
   .split, .business-layout, .login { grid-template-columns: 1fr; }
   .login { margin-top: 4vh; }
   .login-brand { justify-content: start; padding: 1.35rem; }

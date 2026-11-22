@@ -1,2 +1,0 @@
-// 浏览器验收配置已集中到 C2/测试；保留既有 npm 命令入口。
-export { default } from '../测试/前端/playwright.config'

@@ -1,0 +1,4 @@
+命令：python docs/design/build_staruml.py --check
+PASS: 49 diagrams; 3534 unique elements; 7683 resolved references; 96 rendered class boxes; PNG/SVG present
+
+退出码：0

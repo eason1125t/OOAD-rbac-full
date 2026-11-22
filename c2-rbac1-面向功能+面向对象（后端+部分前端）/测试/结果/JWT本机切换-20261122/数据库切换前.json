@@ -1,0 +1,72 @@
+{
+  "func": {
+    "database": "ooad_rbac1_func_review",
+    "flywayVersions": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "tableCounts": {
+      "administrator_scope": 3,
+      "business_system": 4,
+      "catalog_entry": 359,
+      "employee": 10008,
+      "employee_role": 15,
+      "flyway_schema_history": 8,
+      "login_account": 8,
+      "organization": 115,
+      "organization_permission": 3,
+      "organization_permission_regrant": 4,
+      "permission": 28,
+      "rbac_role": 12,
+      "role_hierarchy_lock": 1,
+      "role_inheritance": 2,
+      "role_permission": 28,
+      "simulated_request": 119
+    },
+    "backupPath": "C:\\Users\\kaoyu\\AppData\\Local\\OOAD-RBAC\\c2-jwt\\备份\\ooad_rbac1_func_review-before-jwt-20261122.sql",
+    "backupBytes": 1810542,
+    "backupSha256": "3dfb4f31f3efa81ca8942f0e6b5492b414e9aca45dfc79fdaeb83e30f503183b",
+    "publicKeySha256": "fb26000c8c1151d8dcb4339e59ca989df4ddc09d65bdde461bbccf38a4a19b7a"
+  },
+  "oo": {
+    "database": "ooad_rbac1_oo_review",
+    "flywayVersions": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8"
+    ],
+    "tableCounts": {
+      "administrator_scope": 3,
+      "business_system": 4,
+      "catalog_entry": 359,
+      "employee": 10008,
+      "employee_role": 19,
+      "flyway_schema_history": 8,
+      "login_account": 8,
+      "organization": 115,
+      "organization_permission": 2,
+      "organization_permission_regrant": 3,
+      "permission": 28,
+      "rbac_role": 25,
+      "role_hierarchy_lock": 1,
+      "role_inheritance": 7,
+      "role_permission": 32,
+      "simulated_request": 109
+    },
+    "backupPath": "C:\\Users\\kaoyu\\AppData\\Local\\OOAD-RBAC\\c2-jwt\\备份\\ooad_rbac1_oo_review-before-jwt-20261122.sql",
+    "backupBytes": 1810900,
+    "backupSha256": "6893943c33989ecc3cdda9a3ac93f96326fbf2cca9d71ee2e04a85f202259899",
+    "publicKeySha256": "f3c4376674c00bcd3030e081d7f6cfad06c1c53bc89072109f7a355df5d45e8a"
+  }
+}

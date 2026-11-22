@@ -1,0 +1,25 @@
+[WebServer] (node:41380) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:64024) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+(node:5736) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [oo] › tests\identity.spec.ts:32:1 › ID-S6 继承角色、有效权限、单项及API检查接入当前系统 (2.7s)
+  ok  2 [oo] › tests\identity.spec.ts:54:1 › ID-S6 普通员工只见本部门，搜索及详情边界由后端执行 (1.4s)
+  ok  3 [oo] › tests\identity.spec.ts:77:1 › ID-S6 公司管理员逐层展开部门并查看范围内员工资料 (1.4s)
+  ok  4 [oo] › tests\identity.spec.ts:93:1 › ID-S6 员工分页和搜索重置页码，普通用户不接收联系字段 (3.7s)
+  ok  5 [oo] › tests\identity.spec.ts:131:1 › ID-S6 权限与目录请求失败时清除旧数据并允许重试（HTTP故障桩） (1.2s)
+  ok  6 [oo] › tests\identity.spec.ts:155:1 › ID-S6 小屏目录可滚动，切换业务系统不沿用前一系统授权 (1.6s)
+(node:38060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  7 [func] › tests\identity.spec.ts:32:1 › ID-S6 继承角色、有效权限、单项及API检查接入当前系统 (2.7s)
+  ok  8 [func] › tests\identity.spec.ts:54:1 › ID-S6 普通员工只见本部门，搜索及详情边界由后端执行 (1.2s)
+  ok  9 [func] › tests\identity.spec.ts:77:1 › ID-S6 公司管理员逐层展开部门并查看范围内员工资料 (1.4s)
+  ok 10 [func] › tests\identity.spec.ts:93:1 › ID-S6 员工分页和搜索重置页码，普通用户不接收联系字段 (4.0s)
+  ok 11 [func] › tests\identity.spec.ts:131:1 › ID-S6 权限与目录请求失败时清除旧数据并允许重试（HTTP故障桩） (1.3s)
+  ok 12 [func] › tests\identity.spec.ts:155:1 › ID-S6 小屏目录可滚动，切换业务系统不沿用前一系统授权 (1.4s)
+
+  12 passed (28.8s)

@@ -1,0 +1,176 @@
+[
+  {
+    "from": "测试/部门员工查询验证.md",
+    "to": "测试/归档/部门员工查询验证.md",
+    "canonical": "测试/README.md",
+    "sha256": "2FE042B3EA0D50CC7D4FD0B7679A3165A15087C78F65531018B0D783833587BD"
+  },
+  {
+    "from": "测试/可信身份入口验证.md",
+    "to": "测试/归档/可信身份入口验证.md",
+    "canonical": "测试/README.md",
+    "sha256": "C8A94994CB60210553E42440D2C86D6E68B4DAA48EC20401E2EEB18C7102B849"
+  },
+  {
+    "from": "测试/前端身份接入验证.md",
+    "to": "测试/归档/前端身份接入验证.md",
+    "canonical": "测试/README.md",
+    "sha256": "A1A03C8D1B173AAF56C66BB015EB59B5909495516B3176DB560E772C25E35CAC"
+  },
+  {
+    "from": "测试/清理核对与手动删除清单.md",
+    "to": "测试/归档/清理核对与手动删除清单.md",
+    "canonical": "测试/README.md",
+    "sha256": "5A3CF750EC388BBA6AA5DC6A22B7B1F1F371BDAB21F1C63A72094F56007538B1"
+  },
+  {
+    "from": "测试/需求追踪.md",
+    "to": "测试/归档/需求追踪.md",
+    "canonical": "测试/README.md",
+    "sha256": "37F39E2C3634C743FF1E6C2D585B54588E153FAB4D7E541AB7BB1E57CC192A5B"
+  },
+  {
+    "from": "测试/执行报告.md",
+    "to": "测试/归档/执行报告.md",
+    "canonical": "测试/README.md",
+    "sha256": "97EF8864BBAA49A3099751368B8E2736F211377B2E1266DB1FC813D709CBEEC9"
+  },
+  {
+    "from": "测试/自身授权查询验证.md",
+    "to": "测试/归档/自身授权查询验证.md",
+    "canonical": "测试/README.md",
+    "sha256": "C27E21596C9590B8BE1C6D8280EF6FCC5249F4803D8F43A2D6E15AA68F1B831A"
+  },
+  {
+    "from": "测试/最终验收.md",
+    "to": "测试/归档/最终验收.md",
+    "canonical": "测试/README.md",
+    "sha256": "CBD01E63E313E760257C3AF080EBBAE68D3FB17C493EC73F532AA7F4473D58C8"
+  },
+  {
+    "from": "测试/API权限映射验证.md",
+    "to": "测试/归档/API权限映射验证.md",
+    "canonical": "测试/README.md",
+    "sha256": "52A55441BE0507009063D55F2BC56B9819445316E61363230E24AA30153855E7"
+  },
+  {
+    "from": "测试/JWT本机切换记录.md",
+    "to": "测试/归档/JWT本机切换记录.md",
+    "canonical": "测试/README.md",
+    "sha256": "E88C6FCC288FCA618577586E3781CF43A5B7BB5E1AE6F62312EDC252A6603D1E"
+  },
+  {
+    "from": "测试/JWT登录生命周期验证.md",
+    "to": "测试/归档/JWT登录生命周期验证.md",
+    "canonical": "测试/README.md",
+    "sha256": "A3A333278889BDE70CE22803A943AFAD087ACC299BF2656BB2ED5051BAB89400"
+  },
+  {
+    "from": "测试/JWT迁移最终交付.md",
+    "to": "测试/归档/JWT迁移最终交付.md",
+    "canonical": "测试/README.md",
+    "sha256": "2B9020AD03DB948FA7F646EE78002DE5A1B2AAC6573F9E3933C9B86266BC0A6B"
+  },
+  {
+    "from": "测试/JWT前端与整体验收.md",
+    "to": "测试/归档/JWT前端与整体验收.md",
+    "canonical": "测试/README.md",
+    "sha256": "D478197DE9A2BFDF50538B9991075E54FDC710B34DD16F7B5A9C6C718CB08E37"
+  },
+  {
+    "from": "测试/JWT身份入口验证.md",
+    "to": "测试/归档/JWT身份入口验证.md",
+    "canonical": "测试/README.md",
+    "sha256": "28A9E94B0C13EAD39A3951D96F32B000B2069021012F0AA73082E9C284F0D9CB"
+  },
+  {
+    "from": "测试/契约/第一步验证记录.md",
+    "to": "测试/归档/契约/第一步验证记录.md",
+    "canonical": "测试/README.md",
+    "sha256": "4A9EAC4E0E3D7F9F42F5FF076AC669E613D7625769CEDE2E70CE6148B90CB60D"
+  },
+  {
+    "from": "测试/契约/JWT第一步验证记录.md",
+    "to": "测试/归档/契约/JWT第一步验证记录.md",
+    "canonical": "测试/README.md",
+    "sha256": "7979D46ED056D09E263F784F444A8D03F49F75EA38B599AD017B21D0C547B5A2"
+  },
+  {
+    "from": "docs/阶段需求与验收.md",
+    "to": "docs/归档/阶段需求与验收.md",
+    "canonical": "docs/项目总结.md",
+    "sha256": "F2745F5B8764F8CB9EE1635FC72F250C2594F93242365300DC8A2522B6E6FF76"
+  },
+  {
+    "from": "docs/开发方向细节.md",
+    "to": "docs/归档/开发方向细节.md",
+    "canonical": "docs/项目总结.md",
+    "sha256": "700F08A85114CFCC8C7569206249E0548152E8B43C0C2A4E47D3EDDA5D6CEB2A"
+  },
+  {
+    "from": "docs/C2现状审查与局部重构方案.md",
+    "to": "docs/归档/C2现状审查与局部重构方案.md",
+    "canonical": "docs/项目总结.md",
+    "sha256": "66C0836DC9D2E83F90F54C5B3ED8B62A6836CD3C01CB91A846D7E53CFA8AF5FC"
+  },
+  {
+    "from": "docs/grasp与项目.md",
+    "to": "docs/归档/grasp与项目.md",
+    "canonical": "docs/项目总结.md",
+    "sha256": "AA6ADFFB5CB786AB6E55AC3F1F07127B3773117F587640C2C4B9625C430A66A0"
+  },
+  {
+    "from": "docs/JWT认证迁移方案.md",
+    "to": "docs/归档/JWT认证迁移方案.md",
+    "canonical": "docs/项目总结.md",
+    "sha256": "256764557E4EBE776C28B46D6996837A1603DDE72C9F7450685C1E44358B836E"
+  },
+  {
+    "from": "测试/部署/README.md",
+    "to": "测试/归档/部署验证记录.md",
+    "canonical": "测试/README.md",
+    "sha256": "C0418225948FA753FBA95B234F4600479155DA6D52F62205A2A3F14991E89465"
+  },
+  {
+    "from": "测试/模型比较/README.md",
+    "to": "测试/归档/模型比较验证.md",
+    "canonical": "测试/README.md",
+    "sha256": "E73344BA7831F70329A862E583B42E897A48920D8149DE8E0488DA7D34A83DBB"
+  },
+  {
+    "from": "部署/部署交接文档.md",
+    "to": "部署/归档/部署交接文档.md",
+    "canonical": "部署/README.md",
+    "sha256": "CFE5DE7E4DB914DD8CD08E3671C931DE68D35088C08708D95E3FEE8BCF97E53B"
+  },
+  {
+    "from": "部署/README.md",
+    "to": "部署/归档/部署说明-整理前.md",
+    "canonical": "部署/README.md",
+    "sha256": "7A8B28B246519E3D6109936D5433F6C646DFE039167C5444078154CD6EB28AB0"
+  },
+  {
+    "from": "测试/README.md",
+    "to": "测试/归档/测试说明-整理前.md",
+    "canonical": "测试/README.md",
+    "sha256": "725FB6D67C95BD25EF02A2C11D63BF0082043B138B56DE06CB86D4D9FABD1D01"
+  },
+  {
+    "from": "docs/项目总结.md",
+    "to": "docs/归档/项目总结-整理前.md",
+    "canonical": "docs/项目总结.md",
+    "sha256": "895DFE33E5129B3A175AC4C7FC406B28B0E9F0A9302224C95015201027318587"
+  },
+  {
+    "from": "frontend/README.md",
+    "to": "docs/归档/前端说明-整理前.md",
+    "canonical": "frontend/README.md",
+    "sha256": "97BF6F17701D815FE30B1B7810D2D51F6311C4E67E1B1DF29C6CDF94DDAF5CF0"
+  },
+  {
+    "from": "README.md",
+    "to": "docs/归档/入口说明-整理前.md",
+    "canonical": "README.md",
+    "sha256": "638349AEEA9BBA53F0AD2A038210EFBF7E2B970A7261E781D95A16C9E782984E"
+  }
+]

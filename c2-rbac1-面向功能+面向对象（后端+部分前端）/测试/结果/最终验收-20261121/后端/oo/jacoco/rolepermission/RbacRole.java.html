@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RbacRole.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">rolepermission</a> &gt; <span class="el_source">RbacRole.java</span></div><h1>RbacRole.java</h1><pre class="source lang-java linenums">// 文件职责：映射角色名称及所属组织。
+// 协作关系：由管理维护创建重命名，被分配、继承和实时授权共同引用。
+package rolepermission;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/** rbac_role 表的 JPA 映射，供初始化和后续业务查询使用。 */
+@Entity
+@Table(name = &quot;rbac_role&quot;)
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class RbacRole {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private Long ownerOrganizationId;
+
+    /** 构建待保存记录，由数据库维护审计时间。 */
+<span class="fc" id="L28">    public RbacRole(String name, Long ownerOrganizationId) {</span>
+<span class="fc" id="L29">        this.name = name;</span>
+<span class="fc" id="L30">        this.ownerOrganizationId = ownerOrganizationId;</span>
+<span class="fc" id="L31">    }</span>
+
+    /** 更新角色展示名称，保留角色归属和关联。 */
+    public void rename(String name) {
+<span class="nc" id="L35">        this.name = name;</span>
+<span class="nc" id="L36">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

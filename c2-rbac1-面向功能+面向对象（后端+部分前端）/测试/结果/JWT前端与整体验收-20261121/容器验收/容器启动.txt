@@ -1,0 +1,38 @@
+ Volume c2-jwt-check-20261121154321_mysql-data Creating 
+ Volume c2-jwt-check-20261121154321_redis-data Creating 
+ Network c2-jwt-check-20261121154321_app Creating 
+ Volume c2-jwt-check-20261121154321_mysql-data Creating 
+ Volume c2-jwt-check-20261121154321_redis-data Creating 
+ Network c2-jwt-check-20261121154321_app Creating 
+ Volume c2-jwt-check-20261121154321_mysql-data Created 
+ Volume c2-jwt-check-20261121154321_mysql-data Created 
+ Volume c2-jwt-check-20261121154321_redis-data Created 
+ Volume c2-jwt-check-20261121154321_redis-data Created 
+ Network c2-jwt-check-20261121154321_app Created 
+ Network c2-jwt-check-20261121154321_app Created 
+ Container c2-jwt-check-20261121154321-mysql-1 Creating 
+ Container c2-jwt-check-20261121154321-redis-1 Creating 
+ Container c2-jwt-check-20261121154321-redis-1 Created 
+ Container c2-jwt-check-20261121154321-mysql-1 Created 
+ Container c2-jwt-check-20261121154321-backend-oo-1 Creating 
+ Container c2-jwt-check-20261121154321-backend-func-1 Creating 
+ Container c2-jwt-check-20261121154321-backend-oo-1 Created 
+ Container c2-jwt-check-20261121154321-backend-func-1 Created 
+ Container c2-jwt-check-20261121154321-frontend-1 Creating 
+ Container c2-jwt-check-20261121154321-frontend-1 Created 
+ Container c2-jwt-check-20261121154321-mysql-1 Starting 
+ Container c2-jwt-check-20261121154321-redis-1 Starting 
+ Container c2-jwt-check-20261121154321-mysql-1 Started 
+ Container c2-jwt-check-20261121154321-mysql-1 Waiting 
+ Container c2-jwt-check-20261121154321-redis-1 Started 
+ Container c2-jwt-check-20261121154321-redis-1 Waiting 
+ Container c2-jwt-check-20261121154321-redis-1 Healthy 
+ Container c2-jwt-check-20261121154321-mysql-1 Healthy 
+ Container c2-jwt-check-20261121154321-backend-func-1 Starting 
+ Container c2-jwt-check-20261121154321-backend-oo-1 Starting 
+ Container c2-jwt-check-20261121154321-backend-func-1 Started 
+ Container c2-jwt-check-20261121154321-backend-func-1 Waiting 
+ Container c2-jwt-check-20261121154321-backend-func-1 Error dependency backend-func failed to start
+ Container c2-jwt-check-20261121154321-frontend-1 not started: condition "service_healthy" of service "backend-func" not met 
+ Container c2-jwt-check-20261121154321-backend-oo-1 interrupted by the unmet condition "service_healthy" of service "backend-func" 
+dependency failed to start: container c2-jwt-check-20261121154321-backend-func-1 is unhealthy

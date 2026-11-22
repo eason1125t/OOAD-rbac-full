@@ -7,7 +7,7 @@
 | 文件 / 函数 | 实现重点 |
 | --- | --- |
 | [BusinessAccessException](BusinessAccessException.java) / `Reason` | 将拒绝原因定义为稳定业务码及中文默认消息，允许同码补充场景消息 |
-| [ApiExceptionHandler.businessFailure](ApiExceptionHandler.java) | 将业务原因映射到 401、403、404、409 |
+| [ApiExceptionHandler.businessFailure](ApiExceptionHandler.java) | 将业务原因映射到 400、401、403、404、409 |
 | `invalidInput` | 将 Bean Validation、类型转换、方法约束、非法 JSON、缺参转换为 400，不回传底层原始错误文本 |
 | `unavailable` | 从数据访问或事务创建异常中识别 Redis 会话原因，否则归类数据库授权不可用 |
 | `error` | 统一构造 `ApiErrorVO(code,message)` 及 `Cache-Control: no-store` |
@@ -16,17 +16,17 @@
 
 ## 错误如何跨模块传播
 
-`Controller → Service / 领域规则 → BusinessAccessException → MVC Advice → ApiErrorVO`。Advice 对 AUTHENTICATION_REQUIRED 返回 401，系统/操作越权返回 403，不存在返回 404，申请状态、分配、资源及继承冲突返回 409。
+`Controller → Service / 领域规则 → BusinessAccessException → MVC Advice → ApiErrorVO`。Advice 对目录参数组合/类型的 VALIDATION_FAILED 返回400，对 AUTHENTICATION_REQUIRED 返回 401，系统/操作越权返回 403，不存在返回 404，申请状态、分配、资源及继承冲突返回 409。
 
 请求格式错误由 Controller/DTO 校验，业务状态和授权错误由 Service/领域规则产生。唯一键等数据库错误仍由触发写入的用例按已有边界转换，不把全部表名判断堆入 Advice。
 
 登录凭据错误在 `AuthController` 的局部处理器转换，并复用本模块 `error`。安全过滤器发生在 MVC 之外，由 `SecurityConfiguration` 直接写同一 `ApiErrorVO` 结构；不能声称所有安全错误都经过 Advice。
 
-`unavailable` 使用 `SessionStoreFailure.matches` 沿原因链区分 `503 SESSION_UNAVAILABLE` 和 `503 AUTHORIZATION_UNAVAILABLE`，不把所有连接超时统一说成 Redis 故障。无法授权时不会继续执行申请写入。
+`unavailable` 使用 `AuthenticationStoreFailure.matches` 沿原因链区分 `503 AUTHENTICATION_UNAVAILABLE` 和 `503 AUTHORIZATION_UNAVAILABLE`，不把所有连接超时统一说成 Redis 故障。无法授权时不会继续执行申请写入。
 
 ## AOP 日志的真实覆盖范围
 
-`trace` 的切点覆盖 `@RestController/@Service` 的公开方法，以及 `SessionAuthentication.verify/start/end` 和 initialization/authentication 中 `ApplicationRunner.run`。它没有普遍匹配所有 `@Repository` 或 `simulation.infrastructure` 的适配器；通过这些类调用的 Service 仍会形成对应入口日志。
+`trace` 的切点覆盖 `@RestController/@Service` 的公开方法（含独立的 `AccountAuthentication.verify`），以及 `LoginAuthentication.start/refresh/end` 和 initialization/authentication 中 `ApplicationRunner.run`。它没有普遍匹配所有 `@Repository` 或 `simulation.infrastructure` 的适配器；通过这些类调用的 Service 仍会形成对应入口日志。JWT认证已装配，日志不得输出访问凭证、刷新凭证或密钥。
 
 `loggerName` 按职责输出 `rbac0.api`、`rbac0.service`、`rbac0.infrastructure` 加实际类名。前缀是当前沿用的配置，不能在说明中虚写为已改成 rbac1。`System.nanoTime` 用于单调计时，DEBUG 仅记录方法名、耗时、异常类型，不输出参数、返回体或异常堆栈。
 
@@ -40,8 +40,8 @@ Lombok 和课程 CloneFactory 同列于 Maven `annotationProcessorPaths`。生�
 
 ## 测试、接口平台与后续工作
 
-现有 [AuthSessionTest](../../../../../测试/后端/common/java/contract/AuthSessionTest.java) 验证会话、权限、状态、并发与日志。Surefire 挂 JaCoCo agent 生成 `target/jacoco.exec`，`mvn verify` 才执行 report 更新 HTML/XML；`mvn test` 不等于报告已刷新。当前没有配置覆盖率门槛 `check`，不臆造达标百分比。
+现有 [AuthHttpTest](../../../../../测试/后端/common/java/contract/AuthHttpTest.java) 验证会话、权限、状态、并发与日志。Surefire 挂 JaCoCo agent 生成 `target/jacoco.exec`，`mvn verify` 才执行 report 更新 HTML/XML；`mvn test` 不等于报告已刷新。当前没有配置覆盖率门槛 `check`，不臆造达标百分比。
 
-本地契约含 46 个操作、29 个模型；2026-11-19 历史同步记录为 `OOAD RBAC / C2-RBAC1`，查看权说明已回读。同步历史不是本次远端复验，只有用户明确要求才再次写 Apifox。
+本地JWT契约为OpenAPI2.5.0，49操作/44模型；此前已完成的Apifox同步为2.4.0，不能宣称JWT已远端同步。按已授权的第6部分，在最终验证后更新Apifox并归档实际回读证据。
 
-运行条件和历史结果见 [阶段 README](../../../../../README.md)、[双版本测试记录](../../../../../测试/历史/双版本测试记录.md)。已在 `测试/` 完成测试整理及真实回归，归档测试代码、说明、JaCoCo 图及原始报告、命令和输出 TXT；Swarm 日志复验另随部署交付。
+运行条件和历史结果见 [阶段 README](../../../../../README.md)、[双版本测试记录](../../../../../测试/README.md)。已在 `测试/` 完成测试整理及真实回归，归档测试代码、说明、JaCoCo 图及原始报告、命令和输出 TXT；Swarm 日志复验另随部署交付。

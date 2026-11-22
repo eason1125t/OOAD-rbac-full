@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BusinessAccessException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">contract</a> &gt; <span class="el_source">BusinessAccessException.java</span></div><h1>BusinessAccessException.java</h1><pre class="source lang-java linenums">// 文件职责：统一声明业务拒绝原因及中文错误消息。
+// 协作关系：由各 Service 和领域规则抛出，由安全边界或 ApiExceptionHandler 映射。
+package contract;
+
+import lombok.Getter;
+
+/** 用例和授权守卫使用的失败原因，由 API 转换为 HTTP 响应。 */
+@Getter
+public class BusinessAccessException extends RuntimeException {
+    /** 对应首批 OpenAPI 的稳定错误码。 */
+<span class="fc" id="L11">    public enum Reason {</span>
+<span class="fc" id="L12">        AUTHENTICATION_REQUIRED(&quot;请登录后重试&quot;),</span>
+<span class="fc" id="L13">        VALIDATION_FAILED(&quot;请求参数无效&quot;),</span>
+<span class="fc" id="L14">        SYSTEM_ACCESS_DENIED(&quot;无权进入该业务系统&quot;),</span>
+<span class="fc" id="L15">        PERMISSION_DENIED(&quot;缺少审批权限或操作已停用&quot;),</span>
+<span class="fc" id="L16">        SYSTEM_NOT_FOUND(&quot;业务系统不存在&quot;),</span>
+<span class="fc" id="L17">        PERMISSION_NOT_FOUND(&quot;目标系统的权限不存在&quot;),</span>
+<span class="fc" id="L18">        API_NOT_FOUND(&quot;目标系统的API映射不存在&quot;),</span>
+<span class="fc" id="L19">        REQUEST_NOT_FOUND(&quot;申请不存在&quot;),</span>
+<span class="fc" id="L20">        REQUEST_ALREADY_APPROVED(&quot;申请已审批&quot;),</span>
+<span class="fc" id="L21">        REQUEST_STATE_CONFLICT(&quot;当前申请状态不允许该操作&quot;),</span>
+<span class="fc" id="L22">        RESOURCE_NOT_FOUND(&quot;员工、角色或权限不存在&quot;),</span>
+<span class="fc" id="L23">        ASSIGNMENT_CONFLICT(&quot;当前状态不允许建立分配&quot;),</span>
+<span class="fc" id="L24">        RESOURCE_CONFLICT(&quot;资源重复或仍被引用&quot;),</span>
+<span class="fc" id="L25">        SELF_ROLE_INHERITANCE(&quot;角色不能继承自身&quot;),</span>
+<span class="fc" id="L26">        ROLE_INHERITANCE_CYCLE(&quot;角色继承关系不能形成环路&quot;),</span>
+<span class="fc" id="L27">        ROLE_INHERITANCE_SCOPE_MISMATCH(&quot;角色归属必须相同&quot;);</span>
+
+        private final String message;
+
+        /** 为失败原因关联可直接展示的中文消息。 */
+<span class="fc" id="L32">        Reason(String message) {</span>
+<span class="fc" id="L33">            this.message = message;</span>
+<span class="fc" id="L34">        }</span>
+    }
+
+    private final Reason reason;
+
+    /** 以明确的业务失败原因中断用例。 */
+    public BusinessAccessException(Reason reason) {
+<span class="fc" id="L41">        this(reason, reason.message);</span>
+<span class="fc" id="L42">    }</span>
+
+    /** 相同错误码可保留对应场景的说明。 */
+    public BusinessAccessException(Reason reason, String message) {
+<span class="fc" id="L46">        super(message);</span>
+<span class="fc" id="L47">        this.reason = reason;</span>
+<span class="fc" id="L48">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

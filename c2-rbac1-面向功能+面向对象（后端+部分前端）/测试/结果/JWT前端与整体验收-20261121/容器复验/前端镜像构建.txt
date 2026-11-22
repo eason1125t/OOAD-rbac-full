@@ -1,0 +1,61 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.frontend
+#1 transferring dockerfile: 668B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for public.ecr.aws/docker/library/node:24-alpine
+#2 DONE 0.1s
+
+#3 [internal] load metadata for public.ecr.aws/docker/library/nginx:1.28-alpine
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 353B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 730.67kB 0.1s done
+#5 DONE 0.1s
+
+#6 [build 1/6] FROM public.ecr.aws/docker/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
+#6 resolve public.ecr.aws/docker/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5 0.1s done
+#6 DONE 0.1s
+
+#7 [stage-1 1/3] FROM public.ecr.aws/docker/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+#7 resolve public.ecr.aws/docker/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236 0.1s done
+#7 DONE 0.1s
+
+#8 [build 2/6] WORKDIR /workspace
+#8 CACHED
+
+#9 [build 3/6] COPY frontend/package.json frontend/package-lock.json ./
+#9 CACHED
+
+#10 [build 4/6] RUN --mount=type=cache,target=/root/.npm npm ci
+#10 CACHED
+
+#11 [build 5/6] COPY frontend/ ./
+#11 CACHED
+
+#12 [build 6/6] RUN npm run build
+#12 CACHED
+
+#13 [stage-1 2/3] COPY --from=build /workspace/dist/ /usr/share/nginx/html/
+#13 CACHED
+
+#14 [stage-1 3/3] COPY 部署/nginx.conf /etc/nginx/conf.d/default.conf
+#14 CACHED
+
+#15 exporting to image
+#15 exporting layers done
+#15 exporting manifest sha256:a916d3ed2760dd00219a7cbb1b9c969925c41c9f466c769272f814f00cb7bd03 done
+#15 exporting config sha256:cd306a2c9b99bb9ba51f6afe79ec1042a3b1bdbeb7c4b20cf55303a501995daa done
+#15 exporting attestation manifest sha256:a2cf1db24b20efe423fbbcba03b98adfa42b7a81bab397d35725a400ae8d4ab8
+#15 exporting attestation manifest sha256:a2cf1db24b20efe423fbbcba03b98adfa42b7a81bab397d35725a400ae8d4ab8 0.0s done
+#15 exporting manifest list sha256:3f2fbfc4303d2f4577d305bf944ba90b1d22c182b02c898a7a942a15fb2b52ea 0.0s done
+#15 naming to docker.io/rbac-c2/frontend:jwt-20261121154541 done
+#15 unpacking to docker.io/rbac-c2/frontend:jwt-20261121154541 0.0s done
+#15 DONE 0.2s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/mgjagum1svm75mqdpd1xry6j2

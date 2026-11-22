@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurrentAuthorizationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">CurrentAuthorizationService.java</span></div><h1>CurrentAuthorizationService.java</h1><pre class="source lang-java linenums">// 文件职责：组织指定系统的自身角色权限查询和单项前端权限检查。
+// 协作关系：接收可信员工，复用 AuthorizationService 判权并从角色仓储补齐名称；不读取请求身份。
+package authentication;
+
+import authentication.vo.CurrentAuthorizationVO;
+import authentication.vo.CurrentPermissionCheckVO;
+import authentication.vo.CurrentApiCheckVO;
+import authorization.ApiOperationRegistry;
+import java.util.Set;
+import authorization.AuthorizationService;
+import contract.BusinessAccessException;
+import contract.BusinessAccessException.Reason;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import organization.Employee;
+import rolepermission.RbacRole;
+import rolepermission.RbacRoleRepository;
+import simulation.BusinessSystem;
+import simulation.BusinessSystemRepository;
+
+/** 自身查询不借用管理员接口；调用者负责先取得可信有效员工。 */
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class CurrentAuthorizationService {
+    private final BusinessSystemRepository systems;
+    private final AuthorizationService authorization;
+    private final RbacRoleRepository roles;
+    private final ApiOperationRegistry apiOperations;
+
+    /** 以同一次继承图快照计算来源和权限，公开响应不暴露持久化对象。 */
+    public CurrentAuthorizationVO describe(Employee employee, String systemCode) {
+<span class="nc" id="L38">        BusinessSystem system = system(systemCode);</span>
+<span class="nc" id="L39">        AuthorizationService.SystemAuthorization result = authorization.describe(employee, system);</span>
+<span class="nc" id="L40">        Map&lt;Long, AuthorizationService.RoleSource&gt; sources = result.roles().stream()</span>
+<span class="nc" id="L41">                .collect(Collectors.toMap(AuthorizationService.RoleSource::roleId, Function.identity()));</span>
+<span class="nc" id="L42">        var visibleRoles = roles.findAllById(sources.keySet()).stream()</span>
+<span class="nc" id="L43">                .sorted(Comparator.comparing(RbacRole::getId))</span>
+<span class="nc" id="L44">                .map(role -&gt; {</span>
+<span class="nc" id="L45">                    AuthorizationService.RoleSource source = sources.get(role.getId());</span>
+<span class="nc" id="L46">                    return new CurrentAuthorizationVO.Role(role.getId(), role.getName(), source.direct(),</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">                            !source.inheritedFromRoleIds().isEmpty(), source.inheritedFromRoleIds(),</span>
+<span class="nc" id="L48">                            source.appliesToSystem());</span>
+<span class="nc" id="L49">                }).toList();</span>
+<span class="nc" id="L50">        var effective = result.effectivePermissions().stream()</span>
+<span class="nc" id="L51">                .map(permission -&gt; new CurrentAuthorizationVO.Permission(permission.getId(), permission.getCode(),</span>
+<span class="nc" id="L52">                        permission.getName())).toList();</span>
+<span class="nc" id="L53">        return new CurrentAuthorizationVO(system.getCode(), visibleRoles, effective, result.globalAdministrator());</span>
+    }
+
+    /** 未知系统/权限和系统越界由授权入口区分，正常拒绝不依靠捕获异常实现。 */
+    public CurrentPermissionCheckVO check(Employee employee, String systemCode, String permissionCode) {
+<span class="nc" id="L58">        BusinessSystem system = system(systemCode);</span>
+<span class="nc" id="L59">        boolean allowed = authorization.hasBusinessPermission(employee, system, permissionCode);</span>
+<span class="nc" id="L60">        return new CurrentPermissionCheckVO(system.getCode(), permissionCode, allowed);</span>
+    }
+
+    /** 先验证系统准入，读取实时有效权限后检查映射完整性，最后执行固定ALL判断。 */
+    public CurrentApiCheckVO checkApi(Employee employee, String systemCode, String operationId) {
+<span class="nc" id="L65">        BusinessSystem system = system(systemCode);</span>
+<span class="nc" id="L66">        Set&lt;String&gt; effective = authorization.effectivePermissions(employee, system).stream()</span>
+<span class="nc" id="L67">                .map(rolepermission.Permission::getCode).collect(Collectors.toSet());</span>
+<span class="nc" id="L68">        Set&lt;String&gt; required = apiOperations.requiredPermissions(system.getId(), operationId);</span>
+<span class="nc" id="L69">        return new CurrentApiCheckVO(system.getCode(), operationId, effective.containsAll(required));</span>
+    }
+
+    private BusinessSystem system(String systemCode) {
+<span class="nc" id="L73">        return systems.findByCode(systemCode)</span>
+<span class="nc" id="L74">                .orElseThrow(() -&gt; new BusinessAccessException(Reason.SYSTEM_NOT_FOUND));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

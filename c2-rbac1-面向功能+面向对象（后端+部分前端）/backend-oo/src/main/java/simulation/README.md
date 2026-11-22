@@ -72,4 +72,10 @@
 
 `WorkspaceService`、`AuthorizationService`、分配和组织策略服务使用系统目录；初始化复用申请仓储、动作常量和样例，不能把系统目录移动成只属于某个 Controller 的私有数据。
 
-现有 `AuthSessionTest` 验证 HTTP 授权、本人边界、状态竞争、历史数据和提交日志。对象版另有 `BusinessRequestTest` 纯领域测试和 `RequestArchitectureTest` 检查应用服务只依赖三端口。 现有浏览器用例包括 request-read、角色权限及双版本隔离。历史结果见 [测试记录](../../../../../测试/历史/双版本测试记录.md)，第 2 项测试重组与 JaCoCo 归档已完成，最新证据见测试目录的执行报告。
+现有 `AuthSessionTest` 验证 HTTP 授权、本人边界、状态竞争、历史数据和提交日志。对象版另有 `BusinessRequestTest` 纯领域测试和 `RequestArchitectureTest` 检查应用服务只依赖三端口。 现有浏览器用例包括 request-read、角色权限及双版本隔离。历史结果见 [测试记录](../../../../../测试/README.md)，第 2 项测试重组与 JaCoCo 归档已完成，最新证据见测试目录的执行报告。
+
+## 第5步：操作定义与预查询保持一致
+
+RequestOperation集中八个现有operationId及有序ALL权限要求。实际列表、详情、创建和变更入口均引用该定义；create仍只需request:create，五个变更操作仍先read再动作。func保留过程式规则，OO保留三个端口及领域对象。
+
+ApiOperationRegistry校验持久化映射与同一规范定义一致。实际接口不依赖映射表或预查询结果，还会重新检查当前权限、申请存在性、申请人和状态；预查询通过不保证某张申请可操作。[HTTP与迁移验证](../../../../../测试/README.md)。

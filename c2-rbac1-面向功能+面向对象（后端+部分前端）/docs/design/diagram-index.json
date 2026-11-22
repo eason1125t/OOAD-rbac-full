@@ -33,8 +33,8 @@
     "requirements": "C2-01、03、05、07",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
     "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
@@ -58,8 +58,8 @@
     "requirements": "C2-01、03、05、07",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
     "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
@@ -74,7 +74,7 @@
       "backend-func/src/main/java/authorization/AuthorizationService.java",
       "backend-func/src/main/java/organization/ManagementQueryService.java",
       "backend-func/src/main/java/rolepermission/RoleInheritanceStore.java",
-      "backend-func/src/main/java/authentication/WorkspaceService.java",
+      "backend-func/src/main/java/authentication/CurrentEmployeeService.java",
       "backend-func/src/main/java/assignment/OrganizationPermissionRepository.java",
       "backend-func/src/main/java/assignment/EmployeeRoleRepository.java",
       "backend-func/src/main/java/rolepermission/PermissionRepository.java",
@@ -84,8 +84,8 @@
     "requirements": "C2-01、02、05、06",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
     "browserTest": "测试/前端/tests/role-permissions.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
@@ -100,6 +100,7 @@
       "backend-func/src/main/java/organization/ManagementQueryService.java",
       "backend-func/src/main/java/authorization/AuthorizationService.java",
       "backend-func/src/main/java/authentication/WorkspaceService.java",
+      "backend-func/src/main/java/authentication/CurrentEmployeeService.java",
       "backend-func/src/main/java/assignment/EmployeeRoleRepository.java",
       "backend-func/src/main/java/rolepermission/RoleInheritanceStore.java",
       "backend-func/src/main/java/rolepermission/RoleInheritanceGraph.java",
@@ -112,8 +113,8 @@
     "requirements": "C2-01、02、05、06",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
     "browserTest": "测试/前端/tests/role-permissions.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
@@ -136,10 +137,10 @@
     "requirements": "C2-11、12、13、14、15、16",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
-      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
-      "测试/后端/common/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
-      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthHttpTest.java#approvesOnlyInGrantedSystem",
+      "测试/后端/common/java/contract/AuthHttpTest.java#approvesOnlyOnceConcurrently",
+      "测试/后端/common/java/contract/AuthHttpTest.java#recordsRequestActionOutcomes",
+      "测试/后端/common/java/contract/AuthHttpTest.java#requiresReadPermissionForRequests"
     ],
     "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
@@ -162,10 +163,10 @@
     "requirements": "C2-11、12、13、14、15、16",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
-      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
-      "测试/后端/common/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
-      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthHttpTest.java#approvesOnlyInGrantedSystem",
+      "测试/后端/common/java/contract/AuthHttpTest.java#approvesOnlyOnceConcurrently",
+      "测试/后端/common/java/contract/AuthHttpTest.java#recordsRequestActionOutcomes",
+      "测试/后端/common/java/contract/AuthHttpTest.java#requiresReadPermissionForRequests"
     ],
     "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
@@ -175,7 +176,7 @@
     "version": "func",
     "kind": "sequence",
     "operationId": "removeRoleParent / approveRequest",
-    "summary": "三次独立 HTTP 请求；先成功，再提交删边，再用原会话操作另一待审批申请被拒绝。",
+    "summary": "三次独立Bearer请求；先成功，再提交删边，再用原登录JWT操作另一待审批申请被拒绝。",
     "sources": [
       "backend-func/src/main/java/simulation/BusinessRequestService.java",
       "backend-func/src/main/java/simulation/BusinessRequestAudit.java",
@@ -186,8 +187,8 @@
     "requirements": "C2-04、10、15",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#requiresReadPermissionForRequests"
     ],
     "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
@@ -226,8 +227,8 @@
     "requirements": "C2-01、03、05、07",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
     "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
@@ -250,8 +251,8 @@
     "requirements": "C2-01、03、05、07",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
     "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
@@ -266,7 +267,7 @@
       "backend-oo/src/main/java/authorization/AuthorizationService.java",
       "backend-oo/src/main/java/organization/ManagementQueryService.java",
       "backend-oo/src/main/java/rolepermission/RoleInheritanceStore.java",
-      "backend-oo/src/main/java/authentication/WorkspaceService.java",
+      "backend-oo/src/main/java/authentication/CurrentEmployeeService.java",
       "backend-oo/src/main/java/assignment/OrganizationPermissionRepository.java",
       "backend-oo/src/main/java/assignment/EmployeeRoleRepository.java",
       "backend-oo/src/main/java/rolepermission/PermissionRepository.java",
@@ -276,8 +277,8 @@
     "requirements": "C2-01、02、05、06",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
     "browserTest": "测试/前端/tests/role-permissions.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
@@ -292,6 +293,7 @@
       "backend-oo/src/main/java/organization/ManagementQueryService.java",
       "backend-oo/src/main/java/authorization/AuthorizationService.java",
       "backend-oo/src/main/java/authentication/WorkspaceService.java",
+      "backend-oo/src/main/java/authentication/CurrentEmployeeService.java",
       "backend-oo/src/main/java/assignment/EmployeeRoleRepository.java",
       "backend-oo/src/main/java/rolepermission/RoleInheritanceStore.java",
       "backend-oo/src/main/java/rolepermission/domain/RoleHierarchy.java",
@@ -303,8 +305,8 @@
     "requirements": "C2-01、02、05、06",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
     "browserTest": "测试/前端/tests/role-permissions.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
@@ -329,10 +331,10 @@
     "requirements": "C2-11、12、13、14、15、16",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
-      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
-      "测试/后端/common/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
-      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthHttpTest.java#approvesOnlyInGrantedSystem",
+      "测试/后端/common/java/contract/AuthHttpTest.java#approvesOnlyOnceConcurrently",
+      "测试/后端/common/java/contract/AuthHttpTest.java#recordsRequestActionOutcomes",
+      "测试/后端/common/java/contract/AuthHttpTest.java#requiresReadPermissionForRequests"
     ],
     "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
@@ -355,10 +357,10 @@
     "requirements": "C2-11、12、13、14、15、16",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyInGrantedSystem",
-      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently",
-      "测试/后端/common/java/contract/AuthSessionTest.java#recordsRequestActionOutcomes",
-      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthHttpTest.java#approvesOnlyInGrantedSystem",
+      "测试/后端/common/java/contract/AuthHttpTest.java#approvesOnlyOnceConcurrently",
+      "测试/后端/common/java/contract/AuthHttpTest.java#recordsRequestActionOutcomes",
+      "测试/后端/common/java/contract/AuthHttpTest.java#requiresReadPermissionForRequests"
     ],
     "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
@@ -368,7 +370,7 @@
     "version": "oo",
     "kind": "sequence",
     "operationId": "removeRoleParent / approveRequest",
-    "summary": "三次独立 HTTP 请求；先成功，再提交删边，再用原会话操作另一待审批申请被拒绝。",
+    "summary": "三次独立Bearer请求；先成功，再提交删边，再用原登录JWT操作另一待审批申请被拒绝。",
     "sources": [
       "backend-oo/src/main/java/simulation/BusinessRequestService.java",
       "backend-oo/src/main/java/simulation/BusinessRequestAudit.java",
@@ -379,8 +381,8 @@
     "requirements": "C2-04、10、15",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession",
-      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession",
+      "测试/后端/common/java/contract/AuthHttpTest.java#requiresReadPermissionForRequests"
     ],
     "browserTest": "测试/前端/tests/authorization.spec.ts",
     "frontend": "/oo/admin/；/oo/business/demo-engineering-app/"
@@ -482,7 +484,7 @@
     "browserTest": "测试/前端/tests/authorization.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#serializesInheritanceWritesWithDisjointEndpoints"
+      "测试/后端/common/java/contract/AuthHttpTest.java#serializesInheritanceWritesWithDisjointEndpoints"
     ],
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
@@ -502,7 +504,7 @@
     "browserTest": "测试/前端/tests/authorization.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
+      "测试/后端/common/java/contract/AuthHttpTest.java#matchesReopenedScopesToOneInheritedPermissionSource"
     ],
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
@@ -524,8 +526,8 @@
     "browserTest": "测试/前端/tests/oo-entry.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#updatesAndWithdrawsPendingRequest",
-      "测试/后端/common/java/contract/AuthSessionTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
+      "测试/后端/common/java/contract/AuthHttpTest.java#updatesAndWithdrawsPendingRequest",
+      "测试/后端/common/java/contract/AuthHttpTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
     ],
     "frontend": "/func/admin/；/func/business/demo-engineering-app/"
   },
@@ -546,7 +548,7 @@
     "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
+      "测试/后端/common/java/contract/AuthHttpTest.java#rejectsAndDeletesOnlyOwnRejectedRequest"
     ],
     "frontend": "/func/ 与 /oo/"
   },
@@ -714,20 +716,29 @@
     "name": "34-shared-双标签页登录退出-时序图",
     "version": "shared",
     "kind": "sequence",
-    "operationId": "getCsrf / login / getCurrentSession / logout",
-    "summary": "共用前端按 URL 固定版本；独立 Cookie 与 Redis 命名空间。",
+    "operationId": "getCsrf / login / refreshLogin / getCurrentSession / logout",
+    "summary": "同一浏览器func/oo独立SharedWorker、密钥、Cookie与sid；同版标签页共享一次登录。",
     "sources": [
       "frontend/src/App.vue",
       "frontend/src/api.ts",
-      "frontend/vite.config.ts",
-      "backend-oo/src/main/java/authentication/SessionAuthentication.java",
-      "backend-oo/src/main/resources/application.yaml",
-      "backend-func/src/main/resources/application.yaml"
+      "frontend/src/auth.ts",
+      "frontend/src/auth.worker.ts",
+      "backend-oo/src/main/java/authentication/AuthController.java",
+      "backend-oo/src/main/java/authentication/LoginAuthentication.java",
+      "backend-oo/src/main/java/authorization/SecurityConfiguration.java"
     ],
+    "testSource": "测试/后端/common/java/authentication/JwtLoginHttpTest.java",
+    "testMethods": [
+      "loginIssuesBearerAndCookieCannotAuthenticateBusiness",
+      "logoutIsImmediateAndIndependentOfOtherBrowsers"
+    ],
+    "browserTest": "测试/前端/tests/jwt.spec.ts",
     "requirements": "课程结构与职责检查",
     "model": "C2-RBAC1.mdj",
-    "tests": [],
-    "browserTest": "测试/前端/tests/isolation.spec.ts",
+    "tests": [
+      "测试/后端/common/java/authentication/JwtLoginHttpTest.java#loginIssuesBearerAndCookieCannotAuthenticateBusiness",
+      "测试/后端/common/java/authentication/JwtLoginHttpTest.java#logoutIsImmediateAndIndependentOfOtherBrowsers"
+    ],
     "frontend": "/func/ 与 /oo/"
   },
   {
@@ -764,7 +775,7 @@
     "browserTest": "测试/前端/tests/request-read.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#requiresReadPermissionForRequests"
+      "测试/后端/common/java/contract/AuthHttpTest.java#requiresReadPermissionForRequests"
     ],
     "frontend": "/func/ 与 /oo/"
   },
@@ -824,12 +835,13 @@
     "version": "shared",
     "kind": "class",
     "operationId": "login / getCurrentSession / logout / listBusinessSystems",
-    "summary": "两版复用已验证 C1 登录及工作区，差异位于 Cookie/Redis/数据库配置。",
+    "summary": "工作区选择保留；账号校验、登录生命周期与可信身份分开，Cookie只用于认证入口。",
     "sources": [
       "backend-oo/src/main/java/authentication/WorkspaceService.java",
       "backend-oo/src/main/java/authentication/AuthController.java",
-      "backend-oo/src/main/java/authentication/SessionAuthentication.java",
-      "backend-oo/src/main/java/organization/EmployeeRepository.java",
+      "backend-oo/src/main/java/authentication/LoginAuthentication.java",
+      "backend-oo/src/main/java/authentication/AccountAuthentication.java",
+      "backend-oo/src/main/java/authentication/CurrentEmployeeService.java",
       "backend-oo/src/main/java/authorization/AdministratorScopeRepository.java",
       "backend-oo/src/main/java/organization/OrganizationRepository.java",
       "backend-oo/src/main/java/simulation/BusinessSystemRepository.java"
@@ -859,8 +871,8 @@
     "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#serializesCompetingRequestTransitions",
-      "测试/后端/common/java/contract/AuthSessionTest.java#approvesOnlyOnceConcurrently"
+      "测试/后端/common/java/contract/AuthHttpTest.java#serializesCompetingRequestTransitions",
+      "测试/后端/common/java/contract/AuthHttpTest.java#approvesOnlyOnceConcurrently"
     ],
     "frontend": "/func/ 与 /oo/"
   },
@@ -883,8 +895,178 @@
     "browserTest": "测试/前端/tests/isolation.spec.ts",
     "model": "C2-RBAC1.mdj",
     "tests": [
-      "测试/后端/common/java/contract/AuthSessionTest.java#matchesReopenedScopesToOneInheritedPermissionSource",
-      "测试/后端/common/java/contract/AuthSessionTest.java#inheritanceRevocationAppliesToExistingSession"
+      "测试/后端/common/java/contract/AuthHttpTest.java#matchesReopenedScopesToOneInheritedPermissionSource",
+      "测试/后端/common/java/contract/AuthHttpTest.java#inheritanceRevocationAppliesToExistingSession"
+    ],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "43-shared-可信身份与自身授权-类图",
+    "version": "shared",
+    "kind": "class",
+    "operationId": "getCurrentSession / checkCurrentPermission / checkCurrentApiPermission",
+    "summary": "Controller取得可信员工；查询服务组织自身授权，授权规则与身份适配分开。",
+    "sources": [
+      "backend-oo/src/main/java/authentication/CurrentAuthorizationService.java",
+      "backend-oo/src/main/java/authentication/AuthController.java",
+      "backend-oo/src/main/java/authentication/CurrentEmployeeService.java",
+      "backend-oo/src/main/java/authorization/AuthorizationService.java",
+      "backend-oo/src/main/java/authorization/ApiOperationRegistry.java",
+      "backend-oo/src/main/java/simulation/BusinessSystemRepository.java",
+      "backend-oo/src/main/java/rolepermission/RbacRoleRepository.java"
+    ],
+    "requirements": "ID-03、04、06",
+    "testMethods": [
+      "apiTrustedActorOnly",
+      "apiAllAndLiveRevocation"
+    ],
+    "browserTest": "测试/前端/tests/identity.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "测试/后端/common/java/contract/AuthHttpTest.java#apiTrustedActorOnly",
+      "测试/后端/common/java/contract/AuthHttpTest.java#apiAllAndLiveRevocation"
+    ],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "44-shared-部门员工范围查询-类图",
+    "version": "shared",
+    "kind": "class",
+    "operationId": "listManagementDepartments / listManagementEmployees / getManagementEmployee",
+    "summary": "目录范围与管理员维护分开；过滤、分页及count在同一数据库范围执行。",
+    "sources": [
+      "backend-oo/src/main/java/organization/DirectoryQueryService.java",
+      "backend-oo/src/main/java/organization/ManagementQueryController.java",
+      "backend-oo/src/main/java/organization/DirectoryVisibilityService.java",
+      "backend-oo/src/main/java/organization/OrganizationRepository.java",
+      "backend-oo/src/main/java/organization/EmployeeRepository.java",
+      "backend-oo/src/main/java/organization/ManagementQueryService.java"
+    ],
+    "requirements": "ID-05、07、08",
+    "browserTest": "测试/前端/tests/identity.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "45-shared-API映射-逻辑ER图",
+    "kind": "logical-er",
+    "version": "shared",
+    "operationId": "checkCurrentApiPermission",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-oo/src/main/resources/db/migration/"
+    ],
+    "requirements": "ID-06",
+    "testMethods": [
+      "apiCorruptMappingsFailClosed"
+    ],
+    "browserTest": "测试/前端/tests/identity.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "测试/后端/common/java/contract/AuthHttpTest.java#apiCorruptMappingsFailClosed"
+    ],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "46-shared-API预查询与实际授权-活动图",
+    "kind": "activity",
+    "version": "shared",
+    "operationId": "checkCurrentApiPermission",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "backend-oo/src/main/java/authentication/CurrentAuthorizationService.java",
+      "backend-oo/src/main/java/authorization/ApiOperationRegistry.java",
+      "backend-oo/src/main/java/simulation/RequestOperation.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [
+      "apiAllAndLiveRevocation",
+      "apiActualObjectAndStateAuthorization"
+    ],
+    "browserTest": "测试/前端/tests/identity.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "测试/后端/common/java/contract/AuthHttpTest.java#apiAllAndLiveRevocation",
+      "测试/后端/common/java/contract/AuthHttpTest.java#apiActualObjectAndStateAuthorization"
+    ],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "47-shared-部门员工前端与数据隔离-活动图",
+    "kind": "activity",
+    "version": "shared",
+    "operationId": "listManagementDepartments / listManagementEmployees / getManagementEmployee",
+    "summary": "基于当前实现的补充图；具体边界和省略项见图内说明。",
+    "sources": [
+      "frontend/src/DepartmentEmployees.vue",
+      "backend-oo/src/main/java/organization/DirectoryQueryService.java",
+      "backend-oo/src/main/java/organization/DirectoryVisibilityService.java"
+    ],
+    "requirements": "课程结构与职责检查",
+    "testMethods": [],
+    "browserTest": "测试/前端/tests/identity.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "48-shared-JWT登录生命周期-类图",
+    "version": "shared",
+    "kind": "class",
+    "operationId": "login / refreshLogin / logout / getCurrentSession",
+    "summary": "LoginAuthentication组织生命周期；签名、在线sid、员工与HTTP Cookie分工。JwtEmployeeAuthentication通过其LoginVerifier接口核对RedisLoginStore，不从JWT角色声明建立业务权限。",
+    "sources": [
+      "backend-oo/src/main/java/authentication/LoginAuthentication.java",
+      "backend-oo/src/main/java/authentication/AuthController.java",
+      "backend-oo/src/main/java/authentication/RedisLoginStore.java",
+      "backend-oo/src/main/java/authentication/JwtAccessTokens.java",
+      "backend-oo/src/main/java/authentication/CurrentEmployeeService.java",
+      "backend-oo/src/main/java/authentication/AuthenticationProperties.java",
+      "backend-oo/src/main/java/authentication/AuthCookies.java",
+      "backend-oo/src/main/java/authentication/AccountAuthentication.java",
+      "backend-oo/src/main/java/authentication/JwtEmployeeAuthentication.java"
+    ],
+    "requirements": "JWT身份、生命周期、即时撤销",
+    "testSource": "测试/后端/common/java/authentication/JwtLoginHttpTest.java",
+    "testMethods": [
+      "loginIssuesBearerAndCookieCannotAuthenticateBusiness",
+      "expiredAccessCanRefreshAndLogoutButCannotAccessBusiness"
+    ],
+    "browserTest": "测试/前端/tests/jwt.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "测试/后端/common/java/authentication/JwtLoginHttpTest.java#loginIssuesBearerAndCookieCannotAuthenticateBusiness",
+      "测试/后端/common/java/authentication/JwtLoginHttpTest.java#expiredAccessCanRefreshAndLogoutButCannotAccessBusiness"
+    ],
+    "frontend": "/func/ 与 /oo/"
+  },
+  {
+    "name": "49-shared-JWT刷新与重用撤销-时序图",
+    "version": "shared",
+    "kind": "sequence",
+    "operationId": "refreshLogin",
+    "summary": "先核验、读最新员工、准备签名，再Lua原子轮换；使用过的旧摘要重用撤销整次登录。",
+    "sources": [
+      "backend-oo/src/main/java/authentication/AuthController.java",
+      "backend-oo/src/main/java/authentication/LoginAuthentication.java",
+      "backend-oo/src/main/java/authentication/RedisLoginStore.java",
+      "backend-oo/src/main/resources/authentication/login-state.lua",
+      "frontend/src/auth.worker.ts"
+    ],
+    "requirements": "JWT严格轮换、重用撤销、故障边界",
+    "testSource": "测试/后端/common/java/authentication/JwtLoginHttpTest.java",
+    "testMethods": [
+      "refreshRotatesAndConfirmedReuseRevokesAllAccessForThatLogin",
+      "concurrentRefreshHasOneSuccessAndOneReuseRejection",
+      "redisFailureDuringRefreshDoesNotClearCookieOrPretendLogoutSucceeded"
+    ],
+    "browserTest": "测试/前端/tests/jwt.spec.ts",
+    "model": "C2-RBAC1.mdj",
+    "tests": [
+      "测试/后端/common/java/authentication/JwtLoginHttpTest.java#refreshRotatesAndConfirmedReuseRevokesAllAccessForThatLogin",
+      "测试/后端/common/java/authentication/JwtLoginHttpTest.java#concurrentRefreshHasOneSuccessAndOneReuseRejection",
+      "测试/后端/common/java/authentication/JwtLoginHttpTest.java#redisFailureDuringRefreshDoesNotClearCookieOrPretendLogoutSucceeded"
     ],
     "frontend": "/func/ 与 /oo/"
   }

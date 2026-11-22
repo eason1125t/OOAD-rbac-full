@@ -1,0 +1,14 @@
+{
+  "startedUtc": "2026-11-21T15:45:41.263639+00:00",
+  "project": "c2-jwt-check-20261121154541",
+  "port": 18081,
+  "scope": "isolated local Compose; not Swarm",
+  "exitCode": 0,
+  "images": {
+    "RBAC_FRONTEND_IMAGE": "rbac-c2/frontend:jwt-20261121154541",
+    "RBAC_FUNC_IMAGE": "rbac-c2/backend-func:jwt-20261121154541",
+    "RBAC_OO_IMAGE": "rbac-c2/backend-oo:jwt-20261121154541"
+  },
+  "temporaryContainersStopped": true,
+  "completedUtc": "2026-11-21T15:47:43.061095+00:00"
+}

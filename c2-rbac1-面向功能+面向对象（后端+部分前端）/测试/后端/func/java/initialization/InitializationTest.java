@@ -32,6 +32,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @SpringBootTest(classes = RbacApplication.class)
 @EnabledIfEnvironmentVariable(named = "RBAC_DB_URL", matches = ".*[/]ooad_rbac1_func_test(?:[?].*)?")
 class InitializationTest {
+    @Autowired private org.springframework.jdbc.core.JdbcTemplate jdbc;
     @Autowired private InitializationService initialization;
     @Autowired private EmployeeRepository employees;
     @Autowired private OrganizationRepository organizations;
@@ -80,6 +81,16 @@ class InitializationTest {
         assertThat(rolePermissions.count()).isEqualTo(assignments);
         assertThat(simulatedRequests.count()).isEqualTo(requestsBefore + 24);
         assertThat(inheritance.contains(edge)).isFalse();
+        String demoScope = " JOIN business_system app ON app.id = operation.system_id WHERE app.code IN "
+                + "('demo-company-app', 'demo-engineering-app', 'demo-finance-app', 'demo-company-b-app')";
+        assertThat(jdbc.queryForObject("SELECT COUNT(*) FROM api_operation operation" + demoScope, Long.class)).isEqualTo(32);
+        assertThat(jdbc.queryForObject("SELECT COUNT(*) FROM api_operation_permission operation" + demoScope, Long.class)).isEqualTo(52);
+        jdbc.update("DELETE FROM api_operation_permission WHERE system_id = ? AND operation_id = ?",
+                engineering.getId(), "approveRequest");
+        assertThatThrownBy(initialization::initializeDemo)
+                .isInstanceOf(org.springframework.dao.DataRetrievalFailureException.class);
+        assertThat(jdbc.queryForObject("SELECT COUNT(*) FROM api_operation_permission WHERE system_id = ? AND operation_id = ?",
+                Long.class, engineering.getId(), "approveRequest")).isZero();
         assertThat(authorization.effectivePermissions(approver.getId(), engineering)).extracting(Permission::getCode).containsExactly("request:read");
     }
 

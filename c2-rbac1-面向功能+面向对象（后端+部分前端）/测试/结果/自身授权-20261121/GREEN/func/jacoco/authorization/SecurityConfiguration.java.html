@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authorization</a> &gt; <span class="el_source">SecurityConfiguration.java</span></div><h1>SecurityConfiguration.java</h1><pre class="source lang-java linenums">// 文件职责：配置请求认证、CSRF、路由保护及依赖故障拦截。
+// 协作关系：通过 SessionAuthentication 还原身份并调用 AuthorizationService 保护管理入口。
+package authorization;
+
+import assignment.OrganizationPermissionController;
+import authentication.CurrentEmployeeService;
+import authentication.SessionStoreFailure;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import contract.vo.ApiErrorVO;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.authorization.AuthorizationManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
+import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfException;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.session.web.http.SessionRepositoryFilter;
+import org.springframework.transaction.CannotCreateTransactionException;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+/** 配置已交付的认证路由、CSRF、会话恢复与 JSON 错误。 */
+@Configuration(proxyBeanMethods = false)
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@RequiredArgsConstructor
+public class SecurityConfiguration {
+    private final ObjectMapper json;
+    private final AuthorizationService authorization;
+
+    /** 使用由 Spring Session 接管的 HttpSession 保存安全上下文。 */
+    @Bean
+    SecurityContextRepository securityContexts() {
+<span class="fc" id="L53">        return new HttpSessionSecurityContextRepository();</span>
+    }
+
+    /** 使用同一服务端会话保存 CSRF 令牌。 */
+    @Bean
+    CsrfTokenRepository csrfTokens() {
+<span class="fc" id="L59">        return new HttpSessionCsrfTokenRepository();</span>
+    }
+
+    /** 仅公开登录和取令牌路由，未实现的契约路由默认拒绝。 */
+    @Bean
+    SecurityFilterChain apiSecurity(HttpSecurity http, SecurityContextRepository contexts,
+                                    CsrfTokenRepository tokens,
+                                    CurrentEmployeeService currentEmployees) throws Exception {
+<span class="fc" id="L67">        return http</span>
+<span class="fc" id="L68">                .httpBasic(AbstractHttpConfigurer::disable)</span>
+<span class="fc" id="L69">                .formLogin(AbstractHttpConfigurer::disable)</span>
+<span class="fc" id="L70">                .logout(AbstractHttpConfigurer::disable)</span>
+<span class="fc" id="L71">                .requestCache(AbstractHttpConfigurer::disable)</span>
+<span class="fc" id="L72">                .securityContext(context -&gt; context.securityContextRepository(contexts))</span>
+<span class="fc" id="L73">                .csrf(csrf -&gt; csrf.csrfTokenRepository(tokens))</span>
+<span class="fc" id="L74">                .exceptionHandling(errors -&gt; errors</span>
+<span class="fc" id="L75">                        .authenticationEntryPoint((request, response, exception) -&gt; unauthorized(response))</span>
+<span class="fc" id="L76">                        .accessDeniedHandler((request, response, exception) -&gt; {</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">                            if (exception instanceof CsrfException) {</span>
+<span class="fc" id="L78">                                error(response, 403, &quot;CSRF_INVALID&quot;, &quot;请重新获取安全令牌&quot;);</span>
+                            } else {
+<span class="fc" id="L80">                                error(response, 403, &quot;PERMISSION_DENIED&quot;, &quot;无权执行该操作&quot;);</span>
+                            }
+<span class="fc" id="L82">                        }))</span>
+<span class="fc" id="L83">                .addFilterBefore(activeEmployeeFilter(currentEmployees), AuthorizationFilter.class)</span>
+<span class="fc" id="L84">                .authorizeHttpRequests(rules -&gt; rules</span>
+<span class="fc" id="L85">                        .requestMatchers(HttpMethod.GET, &quot;/api/auth/csrf&quot;).permitAll()</span>
+<span class="fc" id="L86">                        .requestMatchers(HttpMethod.POST, &quot;/api/auth/login&quot;).permitAll()</span>
+<span class="fc" id="L87">                        .requestMatchers(HttpMethod.GET, &quot;/api/auth/me&quot;, &quot;/api/auth/me/permission-check&quot;,</span>
+<span class="fc" id="L88">                                &quot;/api/business-systems&quot;).authenticated()</span>
+<span class="fc" id="L89">                        .requestMatchers(HttpMethod.GET, &quot;/api/business-systems/{systemCode}/requests&quot;,</span>
+<span class="fc" id="L90">                                &quot;/api/requests/{requestId}&quot;).authenticated()</span>
+<span class="fc" id="L91">                        .requestMatchers(HttpMethod.POST, &quot;/api/business-systems/{systemCode}/requests&quot;).authenticated()</span>
+<span class="fc" id="L92">                        .requestMatchers(HttpMethod.GET, &quot;/api/employees&quot;, &quot;/api/companies&quot;, &quot;/api/departments&quot;,</span>
+                                &quot;/api/roles&quot;, &quot;/api/permissions&quot;, &quot;/api/catalog-entries&quot;,
+                                &quot;/api/employees/{employeeId}&quot;, &quot;/api/roles/{roleId}&quot;, &quot;/api/permissions/{permissionId}&quot;,
+                                &quot;/api/employees/{employeeId}/roles&quot;, &quot;/api/roles/{roleId}/permissions&quot;,
+                                &quot;/api/roles/{roleId}/parents&quot;, &quot;/api/roles/{roleId}/inherited-permissions&quot;,
+                                &quot;/api/employees/{employeeId}/effective-permissions&quot;)
+<span class="fc" id="L98">                                .access(managementAction(AuthorizationService.MANAGEMENT_READ))</span>
+<span class="fc" id="L99">                        .requestMatchers(HttpMethod.POST, &quot;/api/requests/{requestId}/approve&quot;,</span>
+<span class="fc" id="L100">                                &quot;/api/requests/{requestId}/reject&quot;, &quot;/api/requests/{requestId}/withdraw&quot;).authenticated()</span>
+<span class="fc" id="L101">                        .requestMatchers(HttpMethod.PATCH, &quot;/api/requests/{requestId}&quot;).authenticated()</span>
+<span class="fc" id="L102">                        .requestMatchers(HttpMethod.DELETE, &quot;/api/requests/{requestId}&quot;).authenticated()</span>
+<span class="fc" id="L103">                        .requestMatchers(HttpMethod.POST, &quot;/api/auth/logout&quot;).authenticated()</span>
+<span class="fc" id="L104">                        .requestMatchers(HttpMethod.POST, &quot;/api/employees&quot;, &quot;/api/roles&quot;, &quot;/api/permissions&quot;)</span>
+<span class="fc" id="L105">                                .access(managementAction(AuthorizationService.MANAGEMENT_WRITE))</span>
+<span class="fc" id="L106">                        .requestMatchers(HttpMethod.PATCH, &quot;/api/employees/{employeeId}&quot;, &quot;/api/roles/{roleId}&quot;,</span>
+                                &quot;/api/permissions/{permissionId}&quot;)
+<span class="fc" id="L108">                                .access(managementAction(AuthorizationService.MANAGEMENT_WRITE))</span>
+<span class="fc" id="L109">                        .requestMatchers(HttpMethod.DELETE, &quot;/api/employees/{employeeId}&quot;, &quot;/api/roles/{roleId}&quot;,</span>
+                                &quot;/api/permissions/{permissionId}&quot;)
+<span class="fc" id="L111">                                .access(managementAction(AuthorizationService.MANAGEMENT_WRITE))</span>
+<span class="fc" id="L112">                        .requestMatchers(HttpMethod.PUT, &quot;/api/employees/{employeeId}/roles/{roleId}&quot;)</span>
+<span class="fc" id="L113">                                .access(managementAction(AuthorizationService.EMPLOYEE_ROLE_WRITE))</span>
+<span class="fc" id="L114">                        .requestMatchers(HttpMethod.DELETE, &quot;/api/employees/{employeeId}/roles/{roleId}&quot;)</span>
+<span class="fc" id="L115">                                .access(managementAction(AuthorizationService.EMPLOYEE_ROLE_WRITE))</span>
+<span class="fc" id="L116">                        .requestMatchers(HttpMethod.PUT, &quot;/api/roles/{roleId}/permissions/{permissionId}&quot;,</span>
+                                &quot;/api/roles/{roleId}/parents/{parentRoleId}&quot;)
+<span class="fc" id="L118">                                .access(managementAction(AuthorizationService.ROLE_PERMISSION_WRITE))</span>
+<span class="fc" id="L119">                        .requestMatchers(HttpMethod.DELETE, &quot;/api/roles/{roleId}/permissions/{permissionId}&quot;,</span>
+                                &quot;/api/roles/{roleId}/parents/{parentRoleId}&quot;)
+<span class="fc" id="L121">                                .access(managementAction(AuthorizationService.ROLE_PERMISSION_WRITE))</span>
+<span class="fc" id="L122">                        .requestMatchers(HttpMethod.PUT, OrganizationPermissionController.DISABLED,</span>
+                                OrganizationPermissionController.REGRANTS)
+<span class="fc" id="L124">                                .access(managementAction(AuthorizationService.ORGANIZATION_PERMISSION_WRITE))</span>
+<span class="fc" id="L125">                        .requestMatchers(HttpMethod.GET, OrganizationPermissionController.POLICY)</span>
+<span class="fc" id="L126">                                .access(managementAction(AuthorizationService.ORGANIZATION_PERMISSION_WRITE))</span>
+<span class="fc" id="L127">                        .requestMatchers(HttpMethod.DELETE, OrganizationPermissionController.DISABLED)</span>
+<span class="fc" id="L128">                                .access(managementAction(AuthorizationService.ORGANIZATION_PERMISSION_WRITE))</span>
+<span class="fc" id="L129">                        .anyRequest().denyAll())</span>
+<span class="fc" id="L130">                .build();</span>
+    }
+
+    /** 将管理路由交给统一授权入口实时校验动作。 */
+    private AuthorizationManager&lt;RequestAuthorizationContext&gt; managementAction(String action) {
+<span class="fc" id="L135">        return (authentication, context) -&gt; {</span>
+<span class="pc bpc" id="L136" title="1 of 2 branches missed.">            if (!(authentication.get().getPrincipal() instanceof Long employeeId)) {</span>
+<span class="nc" id="L137">                return new AuthorizationDecision(false);</span>
+            }
+<span class="fc" id="L139">            return new AuthorizationDecision(authorization.assignmentScope(employeeId, action).isPresent());</span>
+        };
+    }
+
+    /** 在恢复上下文后重新验证员工，停用或待匹配时结束已有会话。 */
+    private OncePerRequestFilter activeEmployeeFilter(CurrentEmployeeService currentEmployees) {
+<span class="fc" id="L145">        return new OncePerRequestFilter() {</span>
+            @Override
+            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                            FilterChain chain) throws ServletException, IOException {
+<span class="fc" id="L149">                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();</span>
+<span class="pc bpc" id="L150" title="1 of 4 branches missed.">                if (authentication != null &amp;&amp; authentication.getPrincipal() instanceof Long employeeId</span>
+<span class="pc bpc" id="L151" title="1 of 2 branches missed.">                        &amp;&amp; !&quot;/api/auth/login&quot;.equals(request.getServletPath())</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">                        &amp;&amp; !&quot;/api/auth/csrf&quot;.equals(request.getServletPath())) {</span>
+                    try {
+<span class="fc bfc" id="L154" title="All 2 branches covered.">                        if (currentEmployees.findActive(employeeId).isEmpty()) {</span>
+<span class="fc" id="L155">                            new SecurityContextLogoutHandler().logout(request, response, authentication);</span>
+<span class="fc" id="L156">                            unauthorized(response);</span>
+<span class="fc" id="L157">                            return;</span>
+                        }
+<span class="nc" id="L159">                    } catch (DataAccessException | CannotCreateTransactionException exception) {</span>
+<span class="nc bnc" id="L160" title="All 2 branches missed.">                        if (SessionStoreFailure.matches(exception)) {</span>
+<span class="nc" id="L161">                            throw exception;</span>
+                        }
+<span class="nc" id="L163">                        error(response, 503, &quot;AUTHORIZATION_UNAVAILABLE&quot;, &quot;授权数据暂不可用&quot;);</span>
+<span class="nc" id="L164">                        return;</span>
+<span class="fc" id="L165">                    }</span>
+                }
+                try {
+<span class="fc" id="L168">                    chain.doFilter(request, response);</span>
+<span class="nc" id="L169">                } catch (DataAccessException | CannotCreateTransactionException exception) {</span>
+<span class="nc bnc" id="L170" title="All 4 branches missed.">                    if (SessionStoreFailure.matches(exception) || response.isCommitted()) {</span>
+<span class="nc" id="L171">                        throw exception;</span>
+                    }
+<span class="nc" id="L173">                    response.resetBuffer();</span>
+<span class="nc" id="L174">                    error(response, 503, &quot;AUTHORIZATION_UNAVAILABLE&quot;, &quot;授权数据暂不可用&quot;);</span>
+<span class="fc" id="L175">                }</span>
+<span class="fc" id="L176">            }</span>
+        };
+    }
+
+    /** 在 Redis 会话过滤器外处理连接和命令故障，已提交响应时交还容器处理。 */
+    @Bean
+    FilterRegistrationBean&lt;OncePerRequestFilter&gt; redisSessionErrors() {
+<span class="fc" id="L183">        OncePerRequestFilter filter = new OncePerRequestFilter() {</span>
+            @Override
+            protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                            FilterChain chain) throws IOException, ServletException {
+                try {
+<span class="fc" id="L188">                    chain.doFilter(request, response);</span>
+<span class="nc" id="L189">                } catch (RuntimeException | ServletException exception) {</span>
+<span class="nc bnc" id="L190" title="All 4 branches missed.">                    if (!SessionStoreFailure.matches(exception) || response.isCommitted()) {</span>
+<span class="nc" id="L191">                        throw exception;</span>
+                    }
+<span class="nc" id="L193">                    response.resetBuffer();</span>
+<span class="nc" id="L194">                    error(response, 503, &quot;SESSION_UNAVAILABLE&quot;, &quot;会话服务暂不可用&quot;);</span>
+<span class="fc" id="L195">                }</span>
+<span class="fc" id="L196">            }</span>
+        };
+<span class="fc" id="L198">        FilterRegistrationBean&lt;OncePerRequestFilter&gt; registration = new FilterRegistrationBean&lt;&gt;(filter);</span>
+<span class="fc" id="L199">        registration.setOrder(SessionRepositoryFilter.DEFAULT_ORDER - 1);</span>
+<span class="fc" id="L200">        return registration;</span>
+    }
+
+    /** 返回未经认证的 API 响应。 */
+    private void unauthorized(HttpServletResponse response) throws IOException {
+<span class="fc" id="L205">        error(response, 401, &quot;AUTHENTICATION_REQUIRED&quot;, &quot;请登录后重试&quot;);</span>
+<span class="fc" id="L206">    }</span>
+
+    /** 在过滤器中写入与 Controller 一致的错误结构。 */
+    private void error(HttpServletResponse response, int status, String code, String message) throws IOException {
+<span class="fc" id="L210">        response.setStatus(status);</span>
+<span class="fc" id="L211">        response.setHeader(&quot;Cache-Control&quot;, &quot;no-store&quot;);</span>
+<span class="fc" id="L212">        response.setContentType(MediaType.APPLICATION_JSON_VALUE);</span>
+<span class="fc" id="L213">        json.writeValue(response.getOutputStream(), new ApiErrorVO(code, message));</span>
+<span class="fc" id="L214">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

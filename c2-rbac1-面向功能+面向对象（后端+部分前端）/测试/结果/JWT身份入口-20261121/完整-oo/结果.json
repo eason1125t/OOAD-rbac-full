@@ -1,0 +1,15 @@
+{
+  "edition": "oo",
+  "startedUtc": "2026-11-21T11:53:31.801791+00:00",
+  "completedUtc": "2026-11-21T11:55:42.731528+00:00",
+  "exitCode": 1,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "2ac69f74692367fc3400c69c6c4b8129009da3f4a8dceaf2a01cae37989305b6",
+  "tests": {
+    "tests": 155,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {}
+}

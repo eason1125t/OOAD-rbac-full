@@ -1,0 +1,253 @@
+version: "3.8"
+services:
+  backend-func:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        failure_action: rollback
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+    environment:
+      RBAC_AUTH_COOKIE_PATH: /func/api/auth/
+      RBAC_AUTH_COOKIE_SECURE: "false"
+      RBAC_AUTH_NAMESPACE: rbac1:func:auth
+      RBAC_CSRF_COOKIE_NAME: RBAC1_FUNC_CSRF
+      RBAC_DB_PASSWORD_FILE: /run/secrets/db_password
+      RBAC_DB_URL: jdbc:mysql://mysql:3306/ooad_rbac1_func
+      RBAC_DB_USER: rbac_func
+      RBAC_JWT_AUDIENCE: rbac1-func
+      RBAC_JWT_ISSUER: urn:ooad-rbac:c2:func
+      RBAC_JWT_PRIVATE_KEY_LOCATION: file:/run/secrets/jwt_private
+      RBAC_JWT_PUBLIC_KEY_LOCATION: file:/run/secrets/jwt_public
+      RBAC_LOG_API: INFO
+      RBAC_LOG_INFRASTRUCTURE: INFO
+      RBAC_LOG_SERVICE: INFO
+      RBAC_REDIS_HOST: redis
+      RBAC_REDIS_PASSWORD_FILE: /run/secrets/redis_password
+      RBAC_REDIS_PORT: "6379"
+      RBAC_REFRESH_COOKIE_NAME: RBAC1_FUNC_REFRESH
+      SERVER_PORT: "8080"
+    image: rbac-c2/backend-func:jwt-20261121154321
+    logging:
+      driver: json-file
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      app: null
+    secrets:
+      - source: func_db_password
+        target: db_password
+      - source: redis_password
+      - source: func_jwt_private
+        target: jwt_private
+      - source: func_jwt_public
+        target: jwt_public
+  backend-oo:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        failure_action: rollback
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+    environment:
+      RBAC_AUTH_COOKIE_PATH: /oo/api/auth/
+      RBAC_AUTH_COOKIE_SECURE: "false"
+      RBAC_AUTH_NAMESPACE: rbac1:oo:auth
+      RBAC_CSRF_COOKIE_NAME: RBAC1_OO_CSRF
+      RBAC_DB_PASSWORD_FILE: /run/secrets/db_password
+      RBAC_DB_URL: jdbc:mysql://mysql:3306/ooad_rbac1_oo
+      RBAC_DB_USER: rbac_oo
+      RBAC_JWT_AUDIENCE: rbac1-oo
+      RBAC_JWT_ISSUER: urn:ooad-rbac:c2:oo
+      RBAC_JWT_PRIVATE_KEY_LOCATION: file:/run/secrets/jwt_private
+      RBAC_JWT_PUBLIC_KEY_LOCATION: file:/run/secrets/jwt_public
+      RBAC_LOG_API: INFO
+      RBAC_LOG_INFRASTRUCTURE: INFO
+      RBAC_LOG_SERVICE: INFO
+      RBAC_REDIS_HOST: redis
+      RBAC_REDIS_PASSWORD_FILE: /run/secrets/redis_password
+      RBAC_REDIS_PORT: "6379"
+      RBAC_REFRESH_COOKIE_NAME: RBAC1_OO_REFRESH
+      SERVER_PORT: "8080"
+    image: rbac-c2/backend-oo:jwt-20261121154321
+    logging:
+      driver: json-file
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      app: null
+    secrets:
+      - source: oo_db_password
+        target: db_password
+      - source: redis_password
+      - source: oo_jwt_private
+        target: jwt_private
+      - source: oo_jwt_public
+        target: jwt_public
+  frontend:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    image: rbac-c2/frontend:jwt-20261121154321
+    logging:
+      driver: json-file
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      app: null
+    ports:
+      - mode: ingress
+        target: 8080
+        published: 18081
+        protocol: tcp
+  mysql:
+    configs:
+      - source: mysql_init
+        target: /docker-entrypoint-initdb.d/10-c2-databases.sh
+        mode: 365
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == local-acceptance
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - MYSQL_PWD="$(cat /run/secrets/mysql_root_password)" mysql --protocol=TCP -h127.0.0.1 -uroot -Nse "SELECT 1"
+      timeout: 5s
+      interval: 10s
+      retries: 20
+      start_period: 40s
+    image: mysql:8.4.7
+    logging:
+      driver: json-file
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      app: null
+    secrets:
+      - source: mysql_root_password
+      - source: func_db_password
+      - source: oo_db_password
+    volumes:
+      - type: volume
+        source: mysql-data
+        target: /var/lib/mysql
+  redis:
+    command:
+      - sh
+      - /run/configs/redis-start.sh
+    configs:
+      - source: redis_start
+        target: /run/configs/redis-start.sh
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.hostname == local-acceptance
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - REDISCLI_AUTH="$(cat /run/secrets/redis_password)" redis-cli ping | grep -q PONG
+      timeout: 3s
+      interval: 10s
+      retries: 12
+    image: redis:7.4.6-alpine
+    logging:
+      driver: json-file
+      options:
+        max-file: "3"
+        max-size: 10m
+    networks:
+      app: null
+    secrets:
+      - source: redis_password
+    user: redis
+    volumes:
+      - type: volume
+        source: redis-data
+        target: /data
+networks:
+  app:
+    driver: overlay
+volumes:
+  mysql-data: {}
+  redis-data: {}
+secrets:
+  func_db_password:
+    name: c2-jwt-check-20261121154321_func_db_password
+    external: true
+  func_jwt_private:
+    name: c2-jwt-check-20261121154321_func_jwt_private
+    external: true
+  func_jwt_public:
+    name: c2-jwt-check-20261121154321_func_jwt_public
+    external: true
+  mysql_root_password:
+    name: c2-jwt-check-20261121154321_mysql_root_password
+    external: true
+  oo_db_password:
+    name: c2-jwt-check-20261121154321_oo_db_password
+    external: true
+  oo_jwt_private:
+    name: c2-jwt-check-20261121154321_oo_jwt_private
+    external: true
+  oo_jwt_public:
+    name: c2-jwt-check-20261121154321_oo_jwt_public
+    external: true
+  redis_password:
+    name: c2-jwt-check-20261121154321_redis_password
+    external: true
+configs:
+  mysql_init:
+    name: c2-jwt-check-20261121154321_mysql_init_v1
+    file: C:\Users\kaoyu\AppData\Local\Temp\c2-jwt-container-ckp9py92\mysql-init.sh
+  redis_start:
+    name: c2-jwt-check-20261121154321_redis_start_v1
+    file: C:\Users\kaoyu\AppData\Local\Temp\c2-jwt-container-ckp9py92\redis-start.sh
+x-backend:
+  deploy:
+    replicas: 1
+    restart_policy:
+      condition: on-failure
+      delay: 10s
+    update_config:
+      failure_action: rollback
+      order: start-first
+      parallelism: 1
+  environment:
+    RBAC_AUTH_COOKIE_SECURE: "false"
+    RBAC_DB_PASSWORD_FILE: /run/secrets/db_password
+    RBAC_JWT_PRIVATE_KEY_LOCATION: file:/run/secrets/jwt_private
+    RBAC_JWT_PUBLIC_KEY_LOCATION: file:/run/secrets/jwt_public
+    RBAC_LOG_API: INFO
+    RBAC_LOG_INFRASTRUCTURE: INFO
+    RBAC_LOG_SERVICE: INFO
+    RBAC_REDIS_HOST: redis
+    RBAC_REDIS_PASSWORD_FILE: /run/secrets/redis_password
+    RBAC_REDIS_PORT: "6379"
+    SERVER_PORT: "8080"
+  logging:
+    driver: json-file
+    options:
+      max-file: "3"
+      max-size: 10m
+  networks:
+    - app

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthCookies.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">AuthCookies.java</span></div><h1>AuthCookies.java</h1><pre class="source lang-java linenums">// 文件职责：读写本版 HttpOnly 刷新 Cookie，不从 Cookie 建立业务身份。
+// 协作关系：AuthController 调用；Cookie 属性来自 AuthenticationProperties，CSRF 由安全链独立处理。
+package authentication;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.time.Clock;
+import java.time.Instant;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
+import org.springframework.stereotype.Component;
+
+@Component
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+public class AuthCookies {
+    private final AuthenticationProperties settings;
+    private final Clock clock;
+
+<span class="fc" id="L21">    public AuthCookies(AuthenticationProperties settings, Clock clock) {</span>
+<span class="fc" id="L22">        this.settings = settings;</span>
+<span class="fc" id="L23">        this.clock = clock;</span>
+<span class="fc" id="L24">    }</span>
+
+    /** 同名重复 Cookie 无法明确选择，按无效处理，不能用第一个值切换身份。 */
+    public String read(HttpServletRequest request) {
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">        if (request.getCookies() == null) return null;</span>
+<span class="fc" id="L29">        String value = null;</span>
+<span class="fc" id="L30">        boolean found = false;</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        for (Cookie cookie : request.getCookies()) {</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">            if (settings.refreshCookieName().equals(cookie.getName())) {</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">                if (found) return null;</span>
+<span class="fc" id="L34">                found = true;</span>
+<span class="fc" id="L35">                value = cookie.getValue();</span>
+            }
+        }
+<span class="fc" id="L38">        return value;</span>
+    }
+
+    public void write(HttpServletResponse response, String raw, Instant expiresAt) {
+<span class="fc" id="L42">        add(response, raw, Math.max(0, expiresAt.getEpochSecond() - clock.instant().getEpochSecond()));</span>
+<span class="fc" id="L43">    }</span>
+
+<span class="fc" id="L45">    public void clear(HttpServletResponse response) { add(response, &quot;&quot;, 0); }</span>
+
+    private void add(HttpServletResponse response, String value, long maxAge) {
+<span class="fc" id="L48">        ResponseCookie cookie = ResponseCookie.from(settings.refreshCookieName(), value).httpOnly(true)</span>
+<span class="fc" id="L49">                .secure(settings.cookieSecure()).sameSite(&quot;Strict&quot;).path(settings.cookiePath()).maxAge(maxAge).build();</span>
+<span class="fc" id="L50">        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());</span>
+<span class="fc" id="L51">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,41 @@
+日期：2026-11-21（Asia/Shanghai）
+范围：JWT 第 1 部分方案和契约；没有 JWT 生产实现、HTTP、数据库或浏览器测试。
+执行环境：仓库根目录 PowerShell，Python 通过内联脚本运行；所有输出按 UTF-8 归档。
+
+1. 只读复核
+Get-Content 两版 authentication/SessionAuthentication.java、AuthController.java、CurrentEmployeeService.java
+Get-Content 两版 authorization/SecurityConfiguration.java、application.yaml、pom.xml
+Get-Content frontend/src/api.ts、frontend/src/App.vue
+Get-Content 部署/nginx.conf、backend-entrypoint.sh；rg 查询 stack.yaml 的 Session/Redis 配置
+Get-Content api/统一身份鉴权接口契约.md、docs/开发方向细节.md、README.md
+Get-Content C:/Users/kaoyu/.codex/skills/grilling/SKILL.md
+结果：确认当前仍为 Session；使用 grilling 集中确认 Q1/Q2/Q3 和不用 tokenVersion/用户版本号。
+
+2. 文件保护摘要
+Python pathlib/hashlib/json：对两版 src/main、POM、frontend/src/依赖、部署、既有后端/浏览器用例和两份 OpenAPI 计算 SHA-256。
+先记录 338 个文件；发现浏览器用例实际目录为 测试/前端，未修改该目录即补入其 14 个文件，共 352 个。
+结果：修改前文件摘要.json；复核阶段重新计算逐文件比较，变化 0。
+
+3. 既有静态契约（以下命令可在 C2 根目录复现）
+$env:PYTHONIOENCODING='utf-8'
+$env:PYTHONPATH="$env:TEMP/c2-contract-validation-20261121"
+python 测试/契约/check_identity_contract.py
+依赖使用已存在的隔离目录；如在其他环境执行，先按 测试/契约/requirements.txt 安装测试依赖。
+结果：exit 0；8 operations、12 examples、11 negativeAndEmptyCases、108 localLinks。
+原始输出：既有契约检查.txt。
+
+4. 本步文档复核
+内联 Python 对 docs/JWT认证迁移方案.md、docs/开发方向细节.md、README.md、测试/契约/JWT第一步验证记录.md 执行：
+- 严格 UTF-8 解码、无替换字符、代码围栏配对、无尾部空白；
+- 解析本地 Markdown 链接并检查目标存在；
+- JSON fenced block 使用 json.loads 解析；
+- 核对 15 分钟/8 小时、随机 sid、不新增 tokenVersion、刷新及认证存储错误、STATELESS 等方案约束；
+- 对 352 个保护文件重新计算 SHA-256；
+- subprocess 调用第 3 项检查器以及 git diff --check，分别保存 stdout/stderr。
+结果：检查结果.json、静态检查.txt；本步只有文档检查，不用其冒充 JWT 行为测试。
+
+5. 差异检查（仓库根目录）
+git diff --check -- "c2-rbac1-面向功能+面向对象（后端+部分前端）"
+结果：exit 0。未跟踪的新文档另由第 4 项检查 UTF-8 和尾部空白；diff 输出见 diff-check.txt。
+
+没有执行：Session/JWT 服务切换、MySQL 迁移、Redis 数据清理、Apifox 同步、提交/推送、Swarm 部署。

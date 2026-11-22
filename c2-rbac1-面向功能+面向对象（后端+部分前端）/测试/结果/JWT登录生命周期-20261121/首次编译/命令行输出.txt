@@ -1,0 +1,63 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< cn.edu.ooad:rbac1-func >-----------------------
+[INFO] Building rbac1-func 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rbac1-func ---
+[INFO] Copying 1 resource from src\main\resources to target\jwt-lifecycle\classes
+[INFO] Copying 10 resources from src\main\resources to target\jwt-lifecycle\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ rbac1-func ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 100 source files with javac [debug parameters release 21] to target\jwt-lifecycle\classes
+[INFO] CopyFromProcessor start
+[INFO] Processing: OrganizationVO
+[INFO] Entry: value, value: {organization.Organization.class}
+[INFO] Source fields: [parentId, name, id, code, organizationType, managerName, sourceParentName]organization.Organization
+[INFO] Target element: organization.vo.OrganizationVO
+[INFO] Processing: RequestSummary
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [systemId, deletedAt, title, id, applicantId, status]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestSummary
+[INFO] Processing: RequestSummaryVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestSummary.class}
+[INFO] Source fields: [id, status, title]simulation.BusinessRequestService.RequestSummary
+[INFO] Target element: simulation.vo.RequestSummaryVO
+[INFO] Processing: RequestDetailVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestDetail.class}
+[INFO] Source fields: [applicantId, title, status, id]simulation.BusinessRequestService.RequestDetail
+[INFO] Target element: simulation.vo.RequestDetailVO
+[INFO] Processing: CatalogVO
+[INFO] Entry: value, value: {rolepermission.CatalogEntry.class}
+[INFO] Source fields: [featureName, employeeCell, executiveCell, departmentManagerCell, projectManagerCell, moduleName, description, systemName, administratorCell, id]rolepermission.CatalogEntry
+[INFO] Target element: organization.vo.CatalogVO
+[INFO] Processing: RequestDetail
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [systemId, deletedAt, title, id, applicantId, status]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestDetail
+[INFO] CopyToProcessor start
+[INFO] CopyNotNullToProcessor start
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/java/authentication/RedisLoginStore.java:[16,60] 无法推断org.springframework.data.redis.core.script.DefaultRedisScript<>的类型参数
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.958 s
+[INFO] Finished at: 2026-11-21T20:24:09+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:compile (default-compile) on project rbac1-func: Compilation failure
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/backend-func/src/main/java/authentication/RedisLoginStore.java:[16,60] 无法推断org.springframework.data.redis.core.script.DefaultRedisScript<>的类型参数
+[ERROR] 
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

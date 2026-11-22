@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "checkedUtc": "2026-11-22T01:03:33.802281+00:00",
+  "backends": {
+    "func": {
+      "pid": 68396,
+      "port": 18181,
+      "jar": "backend-func\\target\\jwt-final\\rbac1-func-0.1.0-SNAPSHOT.jar",
+      "jarSha256": "a4981a332367673239017cfbce38355f6393db9f7c376eb6247e7e26840b6980",
+      "database": "ooad_rbac1_func_review",
+      "originalBusinessTablesUnchangedAfterAcceptance": [
+        "administrator_scope",
+        "business_system",
+        "catalog_entry",
+        "employee",
+        "employee_role",
+        "login_account",
+        "organization",
+        "organization_permission",
+        "organization_permission_regrant",
+        "permission",
+        "rbac_role",
+        "role_hierarchy_lock",
+        "role_inheritance",
+        "role_permission",
+        "simulated_request"
+      ],
+      "stablePublicKeySha256": "fb26000c8c1151d8dcb4339e59ca989df4ddc09d65bdde461bbccf38a4a19b7a",
+      "issuer": "urn:ooad-rbac:c2:func",
+      "audience": "rbac1-func",
+      "cookiePath": "/func/api/auth/",
+      "redisNamespace": "rbac1:func:auth"
+    },
+    "oo": {
+      "pid": 67660,
+      "port": 18182,
+      "jar": "backend-oo\\target\\jwt-final\\rbac1-oo-0.1.0-SNAPSHOT.jar",
+      "jarSha256": "67a4567692801a514c046e683ddfba0524b00dde263177a34e8c510990b28044",
+      "database": "ooad_rbac1_oo_review",
+      "originalBusinessTablesUnchangedAfterAcceptance": [
+        "administrator_scope",
+        "business_system",
+        "catalog_entry",
+        "employee",
+        "employee_role",
+        "login_account",
+        "organization",
+        "organization_permission",
+        "organization_permission_regrant",
+        "permission",
+        "rbac_role",
+        "role_hierarchy_lock",
+        "role_inheritance",
+        "role_permission",
+        "simulated_request"
+      ],
+      "stablePublicKeySha256": "f3c4376674c00bcd3030e081d7f6cfad06c1c53bc89072109f7a355df5d45e8a",
+      "issuer": "urn:ooad-rbac:c2:oo",
+      "audience": "rbac1-oo",
+      "cookiePath": "/oo/api/auth/",
+      "redisNamespace": "rbac1:oo:auth"
+    }
+  },
+  "frontend": {
+    "pid": 46172,
+    "port": 5173,
+    "entryPoint": "frontend/node_modules/vite/bin/vite.js"
+  },
+  "browser": {
+    "startTime": "2026-11-22T00:58:31.171Z",
+    "duration": 12847.243,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "businessWrites": 0,
+  "oldSession": "rejected on both editions; actual previously valid Session probes"
+}

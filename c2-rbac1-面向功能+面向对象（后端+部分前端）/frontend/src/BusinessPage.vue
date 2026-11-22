@@ -1,11 +1,13 @@
 <script setup lang="ts">
 // 管理当前系统的申请列表、详情与操作反馈，权限最终由后端校验。
 import { computed, onMounted, ref } from 'vue'
-import { ApiError, errorMessage, read, write, type RequestAction, type RequestDetail,
+import CurrentAccess from './CurrentAccess.vue'
+import { ApiError, errorMessage, read, session, write, type CurrentAuthorization, type RequestAction, type RequestDetail,
   type RequestItem, type RequestPage, type RequestStatus, type Workspace } from './api'
 
 const props = defineProps<{ workspace: Workspace; employeeId: number }>()
-const collection = `/api/business-systems/${encodeURIComponent(props.workspace.key.slice('business:'.length))}/requests`
+const systemCode = props.workspace.key.slice('business:'.length)
+const collection = `/api/business-systems/${encodeURIComponent(systemCode)}/requests`
 const labels: Record<RequestStatus, string> = {
   PENDING: '待审批', APPROVED: '已审批', WITHDRAWN: '已撤回', REJECTED: '已驳回',
 }
@@ -14,7 +16,7 @@ const successText: Record<RequestAction, string> = {
   approve: '申请已审批。', reject: '申请已驳回。', delete: '申请已删除。',
 }
 const items = ref<RequestItem[]>([])
-const permissions = ref<RequestPage['allowedActions']>([])
+const authorization = ref<CurrentAuthorization>()
 const page = ref(1)
 const total = ref(0)
 const pageSize = 12
@@ -29,12 +31,23 @@ const editorError = ref('')
 const outcome = ref<{ id: number; authorization: string; execution: string; message: string; tone: string }>()
 const editorHeading = computed(() => ({ create: '发起申请', update: '修改申请', delete: '删除已驳回申请' })[editorAction.value])
 const ownsSelection = computed(() => selected.value?.applicantId === props.employeeId)
-const can = (action: RequestAction) => permissions.value.includes(`request:${action}`)
+const hasPermission = (code: string) => authorization.value?.effectivePermissions.some(item => item.code === code) ?? false
+const can = (action: RequestAction) => hasPermission(`request:${action}`)
 
 async function load(target = page.value) {
   loading.value = true
   error.value = ''
+  authorization.value = undefined
   try {
+    const current = await session(systemCode)
+    if (!current.authorization) throw new Error('未能读取当前系统权限，请刷新重试。')
+    authorization.value = current.authorization
+    if (!hasPermission('request:read')) {
+      items.value = []
+      total.value = 0
+      selected.value = undefined
+      return
+    }
     const result = await read<RequestPage>(`${collection}?page=${target}&pageSize=${pageSize}`)
     if (target > 1 && result.items.length === 0) {
       await load(Math.max(1, Math.ceil(result.total / pageSize)))
@@ -43,15 +56,13 @@ async function load(target = page.value) {
     items.value = result.items
     total.value = result.total
     page.value = result.page
-    permissions.value = result.allowedActions ?? []
   } catch (failure) {
     error.value = errorMessage(failure)
-    if (failure instanceof ApiError && (failure.status === 401 || failure.status === 403)) {
-      items.value = []
-      total.value = 0
-      selected.value = undefined
-      permissions.value = []
-    }
+    // 无法确认当前权限时清除旧列表、详情及按钮，避免沿用过期展示。
+    items.value = []
+    total.value = 0
+    selected.value = undefined
+    authorization.value = undefined
   } finally {
     loading.value = false
   }
@@ -68,7 +79,7 @@ async function details(item: RequestItem) {
     if (failure instanceof ApiError && (failure.status === 401 || failure.status === 403)) {
       items.value = []
       total.value = 0
-      permissions.value = []
+      authorization.value = undefined
     }
     if (failure instanceof ApiError && failure.status === 404) await load()
   } finally {
@@ -154,6 +165,7 @@ onMounted(() => load())
   <div class="title">
     <p class="subtitle">{{ workspace.name }}</p><h1>业务申请</h1>
   </div>
+  <CurrentAccess v-if="authorization" :authorization="authorization" />
   <div class="business-layout">
     <section class="panel request-panel">
       <div class="panel-heading">
@@ -164,6 +176,9 @@ onMounted(() => load())
         </div>
       </div>
       <p v-if="error" class="notice danger" role="alert">{{ error }}</p>
+      <p v-if="authorization && !hasPermission('request:read')" class="notice" role="status">
+        当前没有申请查看权限。{{ can('create') ? '你仍可发起申请。' : '可展开“我的角色与权限”查看授权情况。' }}
+      </p>
       <p v-if="loading" role="status">正在加载申请…</p>
       <div v-if="items.length" class="table-scroll">
         <table>
@@ -181,7 +196,7 @@ onMounted(() => load())
           </tr></tbody>
         </table>
       </div>
-      <p v-else-if="!loading && !error" class="muted">当前系统暂无申请。</p>
+      <p v-else-if="!loading && !error && hasPermission('request:read')" class="muted">当前系统暂无申请。</p>
       <div v-if="total > pageSize" class="pager">
         <button :disabled="loading || busy || page <= 1" @click="load(page - 1)">上一页</button>
         <span>第 {{ page }} 页</span>

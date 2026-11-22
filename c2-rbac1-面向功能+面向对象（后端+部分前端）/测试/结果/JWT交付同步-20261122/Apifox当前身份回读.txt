@@ -1,0 +1,439 @@
+Window: "OOAD RBAC", App: Apifox.exe.
+	0 pane (窗格) OOAD RBAC Secondary Actions: Raise
+		1 document (文档) OOAD RBAC Value: file:///D:/codetool/Apifox-windows-latest/resources/app.asar/dist/renderer/index.html#/project/9046536 ID: 13329840
+			2 image (未加标签的图片) 要获取缺失的图片说明，请打开上下文菜单。
+			3 image (图像)
+			4 hyperlink (链接) 接口管理
+				5 image (图像)
+			6 hyperlink (链接) 自动化测试
+				7 image (图像)
+			8 hyperlink (链接) 分享文档
+				9 image (图像)
+			10 hyperlink (链接) 请求历史
+				11 image (图像)
+			12 hyperlink (链接) 项目设置
+				13 image (图像)
+			14 button (按钮) 邀请成员
+				15 image (图像)
+				16 text (文本) 邀请成员
+			17 image (图像)
+			18 text (文本) 接口管理
+			19 image (图像)
+			20 text (文本) main
+			21 image (图像)
+			1196 image (图像)
+			1197 combo box (组合框) (settable, string) ID: rc_select_4
+			1198 button (按钮)
+				1199 image (图像)
+			1200 button (按钮)
+				1201 image (图像)
+			1202 tree (树)
+				1203 text field (编辑) (settable, string) for screen reader
+				1204 image (图像)
+				1205 text (文本) C1-RBAC0
+				1206 image (图像)
+				1207 image (图像)
+				1208 text (文本) 接口
+				1209 image (图像)
+				1210 image (图像)
+				1211 image (图像)
+				1212 text (文本) 登录与会话
+				1213 text (文本) (
+				1214 text (文本) 4
+				1215 text (文本) )
+				1216 image (图像)
+				1217 image (图像)
+				1218 text (文本) 业务模拟
+				1219 text (文本) (
+				1220 text (文本) 3
+				1221 text (文本) )
+				1222 image (图像)
+				1223 image (图像)
+				1224 text (文本) 授权配置
+				1225 text (文本) (
+				1226 text (文本) 4
+				1227 text (文本) )
+				1228 image (图像)
+				1229 text (文本) 数据模型
+				1230 image (图像)
+				1231 image (图像)
+				1232 text (文本) 组件库
+				1233 image (图像)
+				1234 image (图像)
+				1235 text (文本) C2-RBAC1
+				1236 image (图像)
+				1237 image (图像)
+				1238 text (文本) 接口
+				1239 image (图像)
+				1240 image (图像)
+				1241 image (图像)
+				1242 text (文本) 登录与会话
+				1243 text (文本) (
+				1244 text (文本) 6
+				1245 text (文本) )
+				1246 text (文本) GET
+				1247 text (文本) 获取 CSRF 令牌
+				1248 text (文本) POST
+				1249 text (文本) 登录
+				1250 text (文本) POST
+				1251 text (文本) 退出登录
+				1252 text (文本) GET
+				1253 text (文本) 校验当前用户的单项前端权限
+				1254 text (文本) GET
+				1255 text (文本) 查询当前员工、工作区及可选系统角色与权限
+				1256 text (文本) GET
+				1257 text (文本) 判断当前用户调用指定业务API的系统级权限
+				1258 image (图像)
+				1259 image (图像)
+				1260 text (文本) 业务模拟
+				1261 text (文本) (
+				1262 text (文本) 9
+				1263 text (文本) )
+				1264 image (图像)
+				1265 image (图像)
+				1266 text (文本) 授权配置
+				1267 text (文本) (
+				1268 text (文本) 33
+				1269 text (文本) )
+			1270 text (文本) HiFox
+			1271 button (按钮)
+				1272 image (图像)
+			1273 text (文本) Jira、TAPD 已过时，HiFox - 让 Coding Agent 入驻到你的协作平台里
+			1274 button (按钮) 了解详情
+				1275 image (图像)
+			102 custom (disabled) panel
+			1276 tab (选项卡)
+				1277 tab item (选项卡项目) (selectable) GET 查询可进入的业务系统 ID: rc-tabs-0-tab-apiDetail.538471291
+					1278 text (文本) GET
+					1279 text (文本) 查询可进入的业务系统
+					1280 text (文本) 
+				1281 tab item (选项卡项目) (selectable) GET 查询当前员工、工作区及可选系统角色与权限 ID: rc-tabs-0-tab-apiDetail.538471289
+					1282 text (文本) GET
+					1283 text (文本) 查询当前员工、工作区及可选系统角色与权限
+					1284 text (文本) 
+				1285 tab item (选项卡项目) (selectable) C2-RBAC1 ID: rc-tabs-0-tab-module.8918000
+					1286 image (图像)
+					1287 text (文本) C2-RBAC1
+					1288 text (文本) 
+				1289 tab item (选项卡项目) (selectable) GET 判断当前用户调用指定业务API的系统级权限 ID: rc-tabs-0-tab-apiDetail.539815478
+					1290 text (文本) GET
+					1291 text (文本) 判断当前用户调用指定业务API的系统级权限
+					1292 text (文本) 
+				1293 button (按钮) Add tab
+					1294 image (图像)
+				1295 combo box (组合框) (settable, string) ID: rc_select_1
+				1296 text (文本) C2
+				1297 text (文本) C2-RBAC1-功能版
+				1298 button (按钮)
+					1299 image (图像)
+			1389 custom (选项卡面板) GET 查询当前员工、工作区及可选系统角色与权限 ID: rc-tabs-0-panel-apiDetail.538471289
+				1390 tab (选项卡)
+					1391 tab item (选项卡项目) (selectable) 文档 ID: rc-tabs-1-tab-view
+					1392 tab item (选项卡项目) (selectable) 编辑 ID: rc-tabs-1-tab-edit
+					1393 tab item (选项卡项目) (selectable) 调试 ID: rc-tabs-1-tab-run
+					1394 tab item (选项卡项目) (selectable) 测试用例 ID: rc-tabs-1-tab-case
+					1395 tab item (选项卡项目) (selectable) Mock ID: rc-tabs-1-tab-advancedMock
+					1396 button (按钮)
+						1397 image (图像)
+					1398 separator (分隔符)
+					1399 button (按钮)
+						1400 image (图像)
+					1401 button (按钮)
+						1402 image (图像)
+					1403 button (按钮)
+						1404 image (图像)
+					1405 button (按钮)
+						1406 image (图像)
+				1407 custom (选项卡面板) 文档 ID: rc-tabs-1-panel-view
+					1408 text (文本) 查询当前员工、工作区及可选系统角色与权限
+					1409 text (文本) GET
+					1410 text (文本) /api/auth/me
+					1411 combo box (组合框) ID: rc_select_2
+					1412 text (文本) 已发布
+					1413 button (按钮) AI Coding
+						1414 image (图像)
+					1415 button (按钮)
+						1416 image (图像)
+					1417 button (按钮) 生成代码
+						1418 image (图像)
+					1419 button (按钮)
+						1420 image (图像)
+					1421 button (按钮) 调试
+						1422 image (图像)
+					1423 combo box (组合框) ID: rc_select_3
+					1424 image (图像)
+					1425 text (文本) 共享
+					1426 text (文本) 身份与认证
+					1427 text (文本) 创建时间
+					1428 text (文本) 2026年11月19日
+					1429 text (文本) 修改时间
+					1430 text (文本) 几秒前
+					1431 text (文本) 修改者
+					1432 text (文本) 晨鱼
+					1433 text (文本) 创建者
+					1434 text (文本) 晨鱼
+					1435 text (文本) 责任人
+					1436 text (文本) 未设置
+					1437 text (文本) 目录
+					1438 text (文本) 登录与会话
+					1439 text (文本) x-implementation-status
+					1440 text (文本) 
+					1441 text (文本) implemented
+					1442 text (文本) 省略systemCode保留旧响应；提供后增加authorization。角色来源与有效权限分开，直接和继承可同时成立。身份仅来自已验证Bearer JWT和Redis登录记录。
+					1443 button (按钮) right Mock
+						1444 image (图像) right
+						1445 text (文本) Mock
+					1446 text (文本) 请求参数
+					1447 button (按钮) Authorization
+						1448 image (图像)
+						1449 text (文本) Authorization
+					1630 text (文本) JWT Bearer
+					1631 text (文本) 在 Header 添加参数
+					1632 text (文本) Authorization
+					1633 text (文本) 示例
+					1634 text (文本) ：
+					1635 text (文本) Authorization: ********************
+					1450 text (文本) Query 参数
+					1451 button (按钮) 生成代码
+						1452 image (图像)
+					1453 text (文本) systemCode
+					1454 text (文本) string
+					1455 text (文本) 
+					1456 text (文本) 可选
+					1457 text (文本) 显式指定业务系统，不代表版本前缀；系统准入必须验证。
+					1458 text (文本) >= 1 字符
+					1459 text (文本) <= 64 字符
+					1460 text (文本) 匹配模式
+					1461 text (文本) :
+					1462 text (文本) \S
+					1463 text (文本) 返回响应
+					1464 tab (选项卡)
+						1465 tab item (选项卡项目) (selectable) 200 ID: rc-tabs-3-tab-BLANK.108707252
+						1466 tab item (选项卡项目) (selectable) 400 BadRequest ID: rc-tabs-3-tab-COMPONENT.342624143
+							1467 text (文本) 400
+							1468 text (文本) BadRequest
+							1469 image (图像)
+						1470 tab item (选项卡项目) (selectable) 401 NoSession ID: rc-tabs-3-tab-COMPONENT.342624144
+							1471 text (文本) 401
+							1472 text (文本) NoSession
+							1473 image (图像)
+						1474 tab item (选项卡项目) (selectable) 403 CurrentSystemForbidden ID: rc-tabs-3-tab-COMPONENT.342638751
+							1475 text (文本) 403
+							1476 text (文本) CurrentSystemForbidden
+							1477 image (图像)
+						1478 tab item (选项卡项目) (selectable) 404 MissingSystem ID: rc-tabs-3-tab-COMPONENT.342624153
+							1479 text (文本) 404
+							1480 text (文本) MissingSystem
+							1481 image (图像)
+						1482 tab item (选项卡项目) (selectable) 503 Unavailable ID: rc-tabs-3-tab-COMPONENT.342624161
+							1483 text (文本) 503
+							1484 text (文本) Unavailable
+							1485 image (图像)
+					1486 custom (选项卡面板) 200 ID: rc-tabs-3-panel-BLANK.108707252
+						1487 text (文本) HTTP 状态码
+						1488 text (文本) ：
+						1489 text (文本) 200
+						1490 text (文本) application/json
+						1491 text (文本) 当前身份；有systemCode时包含授权信息。
+						1492 text (文本) Headers
+						1493 text (文本) Cache-Control
+						1494 text (文本) string
+						1495 text (文本) 
+						1496 text (文本) 可选
+						1497 text (文本) Body
+						1498 button (按钮) collapse button
+							1499 image (图像)
+						1500 text (文本) (
+						1501 text (文本) CurrentSessionResult
+						1502 text (文本) )
+						1503 text (文本) CurrentSessionResult
+						1504 text (文本) 可选
+						1505 text (文本) 无systemCode时无authorization字段；有systemCode成功时必须包含authorization。
+						1506 text (文本) One of
+						1507 text (文本) :
+						1508 radio button (单选按钮) (selectable) CurrentSession
+						1509 text (文本) CurrentSession
+						1510 radio button (单选按钮) (selectable) AuthorizedCurrentSession
+						1511 text (文本) AuthorizedCurrentSession
+						1512 text (文本) object
+						1513 button (按钮) collapse button
+							1514 image (图像)
+						1515 text (文本) employee
+						1516 text (文本) object
+						1517 text (文本) 
+						1518 text (文本) (
+						1519 text (文本) EmployeeIdentity
+						1520 text (文本) )
+						1521 text (文本) EmployeeIdentity
+						1522 text (文本) 必需
+						1523 button (按钮) collapse button
+							1524 image (图像)
+						1525 text (文本) workspaces
+						1526 text (文本) array
+						1527 text (文本) [object
+						1528 text (文本) 
+						1529 text (文本) (Workspace)
+						1530 text (文本) ]
+						1531 text (文本) 
+						1532 text (文本) 必需
+						1533 text (文本) defaultWorkspaceKey
+						1534 text (文本) string
+						1535 text (文本) 
+						1536 text (文本) 
+						1537 text (文本) |
+						1538 text (文本) 
+						1539 text (文本) null
+						1540 text (文本) 
+						1541 text (文本) 必需
+						1542 text (文本) 管理员选 admin；员工优先部门默认系统，再选公司默认系统；无可用默认项时为 null。非 null 值必须存在于 workspaces。
+						1543 text (文本) 示例
+						1544 text (文本) withoutSystem
+						1545 text (文本) withSystem
+						1546 text (文本) {
+						1547 text (文本) 
+						1548 text (文本) "defaultWorkspaceKey"
+						1549 text (文本) :
+						1550 text (文本) 
+						1551 text (文本) "business:demo-engineering-app"
+						1552 text (文本) ,
+						1553 text (文本) 
+						1554 text (文本) "employee"
+						1555 text (文本) :
+						1556 text (文本) 
+						1557 text (文本) {
+						1558 text (文本) 
+						1559 text (文本) "id"
+						1560 text (文本) :
+						1561 text (文本) 
+						1562 text (文本) 101
+						1563 text (文本) ,
+						1564 text (文本) 
+						1565 text (文本) "username"
+						1566 text (文本) :
+						1567 text (文本) 
+						1568 text (文本) "engineering-employee"
+						1569 text (文本) ,
+						1570 text (文本) 
+						1571 text (文本) "name"
+						1572 text (文本) :
+						1573 text (文本) 
+						1574 text (文本) "示例员工"
+						1575 text (文本) ,
+						1576 text (文本) 
+						1577 text (文本) "organizationId"
+						1578 text (文本) :
+						1579 text (文本) 
+						1580 text (文本) 2
+						1581 text (文本) 
+						1582 text (文本) }
+						1583 text (文本) ,
+						1584 text (文本) 
+						1585 text (文本) "workspaces"
+						1586 text (文本) :
+						1587 text (文本) 
+						1588 text (文本) [
+						1589 text (文本) 
+						1590 text (文本) {
+						1591 text (文本) 
+						1592 text (文本) "key"
+						1593 text (文本) :
+						1594 text (文本) 
+						1595 text (文本) "business:demo-engineering-app"
+						1596 text (文本) ,
+						1597 text (文本) 
+						1598 text (文本) "type"
+						1599 text (文本) :
+						1600 text (文本) 
+						1601 text (文本) "BUSINESS"
+						1602 text (文本) ,
+						1603 text (文本) 
+						1604 text (文本) "name"
+						1605 text (文本) :
+						1606 text (文本) 
+						1607 text (文本) "示例工程申请系统"
+						1608 text (文本) ,
+						1609 text (文本) 
+						1610 text (文本) "path"
+						1611 text (文本) :
+						1612 text (文本) 
+						1613 text (文本) "/business/demo-engineering-app/"
+						1614 text (文本) 
+						1615 text (文本) }
+						1616 text (文本) 
+						1617 text (文本) ]
+						1618 text (文本) 
+						1619 text (文本) }
+					1620 text (文本) 请求示例代码
+					1621 table (表格)
+						1622 list (列表)
+							1623 list item (列表项目) (selectable)
+							1624 list item (列表项目) (selectable)
+							1625 list item (列表项目) (selectable)
+			1371 button (按钮)
+				1372 image (图像)
+			1626 radio button (单选按钮) (selectable) 文档模式
+			1627 text (文本) 文档模式
+			1628 radio button (单选按钮) (selectable) 调试模式
+			1629 text (文本) 调试模式
+			1373 button (按钮) 在线
+				1374 image (图像)
+			1375 button (按钮) 请求代理
+				1376 image (图像)
+				1377 image (图像)
+			1378 button (按钮) Cookie 管理
+				1379 image (图像)
+			1380 button (按钮) 回收站
+				1381 image (图像)
+			1382 button (按钮) 文档 & 交流群
+				1383 image (图像)
+			1384 button (按钮)
+				1385 image (图像)
+		383 document (文档) Shell ID: 13316288
+			384 image (图像)
+			385 image (图像)
+			386 text (文本) 主窗口
+			387 button (按钮) 在独立窗口中打开
+				388 image (图像)
+			389 text (文本) OOAD RBAC
+			390 button (按钮)
+				391 image (图像)
+			392 image (图像) ellipsis
+			393 button (按钮)
+				394 image (图像)
+			395 button (按钮)
+				396 image (图像)
+			397 button (按钮)
+				398 image (图像)
+			399 image (未加标签的图片) avatar. 要获取缺失的图片说明，请打开上下文菜单。
+			400 button (按钮)
+				401 image (图像)
+			402 button (按钮)
+				403 image (图像)
+			404 button (按钮)
+				405 image (图像)
+			406 button (按钮)
+				407 image (图像)
+			408 image (图像)
+			409 text (文本) 主窗口
+			410 button (按钮) 在独立窗口中打开
+				411 image (图像)
+			412 text (文本) OOAD RBAC
+			413 button (按钮)
+				414 image (图像)
+			415 pane (窗格) ID: iframe_realtime_sync
+				416 document (文档) Value: about:blank
+		417 pane (窗格) (disabled)
+		419 pane (窗格)
+			420 pane (窗格)
+				421 pane (窗格)
+					422 pane (窗格)
+						423 pane (窗格)
+							424 pane (窗格)
+								425 custom
+							426 pane (窗格)
+								427 pane (窗格)
+								428 pane (窗格)
+
+Document text: ```
+主窗口   OOAD RBAC                       主窗口   OOAD RBAC
+```

@@ -1,5 +1,5 @@
 // 文件职责：配置本地账号的密码哈希算法。
-// 协作关系：向 SessionAuthentication 和 DemoLoginAccounts 提供 PasswordEncoder。
+// 协作关系：向 AccountAuthentication 和 DemoLoginAccounts 提供 PasswordEncoder。
 package authentication;
 
 import org.springframework.context.annotation.Bean;

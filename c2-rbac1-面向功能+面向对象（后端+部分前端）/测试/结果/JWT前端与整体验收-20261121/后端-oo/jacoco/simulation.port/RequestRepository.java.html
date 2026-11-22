@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RequestRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">simulation.port</a> &gt; <span class="el_source">RequestRepository.java</span></div><h1>RequestRepository.java</h1><pre class="source lang-java linenums">// 文件职责：定义申请分页、读取、加锁和保存的业务端口。
+// 协作关系：供对象版应用 Service 使用，JpaRequestRepository 实现持久化。
+package simulation.port;
+
+import java.util.List;
+import java.util.Optional;
+import simulation.domain.BusinessRequest;
+
+/** 在调用方的业务事务中读取、锁定和保存申请。 */
+public interface RequestRepository {
+    /** 同一系统的记录与总数使用一致的删除过滤。 */
+<span class="fc" id="L12">    record Slice(List&lt;BusinessRequest&gt; items, long total) {</span>
+    }
+
+    /** 读取指定系统的未删除记录和总数，页码从 1 开始。 */
+    Slice list(Long systemId, int page, int pageSize);
+    /** 读取未删除申请，不存在时返回空值。 */
+    Optional&lt;BusinessRequest&gt; find(Long id);
+    /** 在调用方事务中锁定未删除申请，供互斥状态转换使用。 */
+    Optional&lt;BusinessRequest&gt; lock(Long id);
+    /** 持久化领域状态并返回带数据库标识的申请。 */
+    BusinessRequest save(BusinessRequest request);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

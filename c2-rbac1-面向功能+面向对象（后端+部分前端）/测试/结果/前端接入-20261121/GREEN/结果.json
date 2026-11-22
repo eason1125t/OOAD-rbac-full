@@ -1,0 +1,29 @@
+{
+  "startedUtc": "2026-11-21T09:24:49.260280+00:00",
+  "suite": "regression",
+  "databases": {
+    "func": "ooad_rbac1_func_ui_test",
+    "oo": "ooad_rbac1_oo_ui_test"
+  },
+  "ports": [
+    28181,
+    28182,
+    15173
+  ],
+  "jars": {
+    "func": "76cfc9741e9b4bc119a93e2aa479550030dab7e0f895c6534c12c1cc65dce06f",
+    "oo": "caeb76cdcfedd1cf1af2e72fe558966ab15c60ae000466cbd3d5deaee8310bd4"
+  },
+  "exitCode": 0,
+  "stats": {
+    "startTime": "2026-11-21T09:25:23.514Z",
+    "duration": 88436.28899999999,
+    "expected": 33,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "frontendAndTestSha256": "e65cf8e15c097e4f7b9e77703f3d583a2d6f34e3d5ac7b92354679d50fe577eb",
+  "temporaryBackendsStopped": true,
+  "completedUtc": "2026-11-21T09:26:52.125457+00:00"
+}

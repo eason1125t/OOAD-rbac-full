@@ -1,0 +1,163 @@
+{
+  "status": "passed",
+  "date": "2026-11-21",
+  "scope": "JWT step 2 components and existing Session regression; no JWT HTTP/Redis lifecycle/browser acceptance",
+  "baselineFilesChecked": 352,
+  "changedBaselineFiles": [
+    "backend-func/pom.xml",
+    "backend-func/src/main/java/authentication/AuthController.java",
+    "backend-func/src/main/java/authentication/LoginAccount.java",
+    "backend-func/src/main/java/authentication/LoginAccountRepository.java",
+    "backend-func/src/main/java/authentication/PasswordConfiguration.java",
+    "backend-func/src/main/java/authentication/README.md",
+    "backend-func/src/main/java/authentication/SessionAuthentication.java",
+    "backend-func/src/main/java/authentication/dto/LoginDTO.java",
+    "backend-func/src/main/java/contract/LayerLoggingAspect.java",
+    "backend-func/src/main/java/contract/README.md",
+    "backend-oo/pom.xml",
+    "backend-oo/src/main/java/authentication/AuthController.java",
+    "backend-oo/src/main/java/authentication/LoginAccount.java",
+    "backend-oo/src/main/java/authentication/LoginAccountRepository.java",
+    "backend-oo/src/main/java/authentication/PasswordConfiguration.java",
+    "backend-oo/src/main/java/authentication/README.md",
+    "backend-oo/src/main/java/authentication/SessionAuthentication.java",
+    "backend-oo/src/main/java/authentication/dto/LoginDTO.java",
+    "backend-oo/src/main/java/contract/LayerLoggingAspect.java",
+    "backend-oo/src/main/java/contract/README.md",
+    "测试/后端/common/java/contract/AuthSessionTest.java"
+  ],
+  "unexpectedChanges": [],
+  "authenticationEditionEquality": {
+    "authentication/AccountAuthentication.java": true,
+    "authentication/JwtAccessTokens.java": true,
+    "authentication/JwtEmployeeAuthentication.java": true,
+    "authentication/vo/AccessTokenVO.java": true,
+    "authentication/AuthController.java": true,
+    "authentication/SessionAuthentication.java": true,
+    "authentication/LoginAccount.java": true,
+    "authentication/PasswordConfiguration.java": true,
+    "authentication/LoginAccountRepository.java": true,
+    "authentication/dto/LoginDTO.java": true,
+    "contract/LayerLoggingAspect.java": true
+  },
+  "documentsChecked": 13,
+  "localLinksChecked": 420,
+  "mainOpenApiUnchanged": true,
+  "mainOpenApiSha256": "0a919975951f8d2f6664ec3676a1d3c1a097178038e78a02d29e8ba8c40c5be4",
+  "frontendAndDeploymentUnchanged": true,
+  "formalSecurityChainUnchanged": true,
+  "editions": {
+    "func": {
+      "productionJavaFiles": 92,
+      "tests": {
+        "tests": 151,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "coverage": {
+        "INSTRUCTION": {
+          "missed": 438,
+          "covered": 9424,
+          "ratio": 0.9555871020077064
+        },
+        "BRANCH": {
+          "missed": 105,
+          "covered": 546,
+          "ratio": 0.8387096774193549
+        },
+        "LINE": {
+          "missed": 79,
+          "covered": 1547,
+          "ratio": 0.9514145141451414
+        },
+        "COMPLEXITY": {
+          "missed": 106,
+          "covered": 665,
+          "ratio": 0.8625162127107653
+        },
+        "METHOD": {
+          "missed": 18,
+          "covered": 424,
+          "ratio": 0.9592760180995475
+        },
+        "CLASS": {
+          "missed": 1,
+          "covered": 119,
+          "ratio": 0.9916666666666667
+        }
+      },
+      "sourceSha256": "36abde904ea9954bc1c224e12e3a36d35ddd209e43aa5e0158a268680ebc47e7",
+      "jar": "backend-func/target/jwt-identity/rbac1-func-0.1.0-SNAPSHOT.jar",
+      "jarSha256": "b88b32ba8c053336a43fa8df61694df522da5791500f8aebf7a6d5be5af774ff",
+      "jwtDependencies": [
+        "BOOT-INF/lib/spring-security-oauth2-resource-server-6.5.11.jar",
+        "BOOT-INF/lib/spring-security-oauth2-core-6.5.11.jar",
+        "BOOT-INF/lib/spring-security-oauth2-jose-6.5.11.jar",
+        "BOOT-INF/lib/nimbus-jose-jwt-9.37.4.jar"
+      ],
+      "coverageScreenshot": "JaCoCo-func.png"
+    },
+    "oo": {
+      "productionJavaFiles": 99,
+      "tests": {
+        "tests": 155,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "coverage": {
+        "INSTRUCTION": {
+          "missed": 436,
+          "covered": 9613,
+          "ratio": 0.9566125982684844
+        },
+        "BRANCH": {
+          "missed": 106,
+          "covered": 549,
+          "ratio": 0.8381679389312977
+        },
+        "LINE": {
+          "missed": 78,
+          "covered": 1574,
+          "ratio": 0.9527845036319612
+        },
+        "COMPLEXITY": {
+          "missed": 108,
+          "covered": 683,
+          "ratio": 0.8634639696586599
+        },
+        "METHOD": {
+          "missed": 19,
+          "covered": 443,
+          "ratio": 0.9588744588744589
+        },
+        "CLASS": {
+          "missed": 1,
+          "covered": 123,
+          "ratio": 0.9919354838709677
+        }
+      },
+      "sourceSha256": "8a5b1764d11788e6b3c05afe82216e821672c1c9f725e23a22380bdb90975532",
+      "jar": "backend-oo/target/jwt-identity/rbac1-oo-0.1.0-SNAPSHOT.jar",
+      "jarSha256": "244017c0ec0471ca91a159b597c552051359504143e6a5fbcfc87b8ff6d63ab4",
+      "jwtDependencies": [
+        "BOOT-INF/lib/spring-security-oauth2-resource-server-6.5.11.jar",
+        "BOOT-INF/lib/spring-security-oauth2-core-6.5.11.jar",
+        "BOOT-INF/lib/spring-security-oauth2-jose-6.5.11.jar",
+        "BOOT-INF/lib/nimbus-jose-jwt-9.37.4.jar"
+      ],
+      "coverageScreenshot": "JaCoCo-oo.png"
+    }
+  },
+  "existingContract": {
+    "status": "passed",
+    "operations": 8,
+    "examples": 12,
+    "negativeAndEmptyCases": 11,
+    "localLinks": 112,
+    "scope": "static contract validation only; no HTTP, database or browser"
+  },
+  "gitDiffCheckExitCode": 0,
+  "failures": []
+}

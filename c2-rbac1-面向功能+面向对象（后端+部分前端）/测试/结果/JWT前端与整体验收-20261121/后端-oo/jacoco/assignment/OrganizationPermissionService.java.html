@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrganizationPermissionService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">assignment</a> &gt; <span class="el_source">OrganizationPermissionService.java</span></div><h1>OrganizationPermissionService.java</h1><pre class="source lang-java linenums">// 文件职责：管理组织停用、重新开放和来源角色重授事务。
+// 协作关系：协作权限、角色、组织策略与重授仓储。
+package assignment;
+
+import authorization.AuthorizationService;
+import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+import organization.Organization;
+import organization.OrganizationRepository;
+import rolepermission.Permission;
+import rolepermission.PermissionRepository;
+import rolepermission.RbacRole;
+import rolepermission.RbacRoleRepository;
+import simulation.BusinessSystem;
+import simulation.BusinessSystemRepository;
+
+/** 在权限行锁下管理组织停用、重新开放和范围重授。 */
+@Service
+@RequiredArgsConstructor
+public class OrganizationPermissionService {
+    private final AuthorizationService authorization;
+    private final OrganizationRepository organizations;
+    private final BusinessSystemRepository systems;
+    private final PermissionRepository permissions;
+    private final OrganizationPermissionRepository policies;
+    private final PermissionRegrantRepository regrants;
+    private final RbacRoleRepository roles;
+    private final RolePermissionRepository rolePermissions;
+
+    /** 查询选定组织的直接策略与已重授角色，用于权限管理页面。 */
+    @Transactional(readOnly = true)
+    public PolicyState current(Long operator, Long organizationId, String systemCode, String code) {
+<span class="fc" id="L41">        requireGlobal(operator);</span>
+<span class="fc" id="L42">        findOrganization(organizationId);</span>
+<span class="fc" id="L43">        BusinessSystem system = findSystem(systemCode);</span>
+<span class="fc" id="L44">        Long permissionId = permissions.findBySystemIdAndCode(system.getId(), code)</span>
+<span class="fc" id="L45">                .orElseThrow(OrganizationPermissionService::missing).getId();</span>
+<span class="fc" id="L46">        String status = policies.findById(new OrganizationPermission.Key(organizationId, permissionId))</span>
+<span class="fc" id="L47">                .map(OrganizationPermission::getStatus).orElse(OrganizationPermission.OPEN);</span>
+<span class="fc" id="L48">        return new PolicyState(status, regrants.findByOrganizationIdAndPermissionId(organizationId, permissionId)</span>
+<span class="fc" id="L49">                .stream().map(PermissionRegrant::getRoleId).toList());</span>
+    }
+
+    /** 当前组织的直接状态及重授角色。 */
+<span class="fc" id="L53">    public record PolicyState(String status, List&lt;Long&gt; roleIds) {</span>
+    }
+
+    /** 停用会清理本范围的旧重授，重新开放仅切换策略状态。 */
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void changeDisabled(Long operator, Long organizationId, String systemCode, String code, boolean disabled) {
+<span class="fc" id="L59">        requireGlobal(operator);</span>
+<span class="fc" id="L60">        Organization organization = findOrganization(organizationId);</span>
+<span class="fc" id="L61">        BusinessSystem system = findSystem(systemCode);</span>
+<span class="fc" id="L62">        Permission permission = lockPermission(system, code);</span>
+<span class="fc" id="L63">        OrganizationPermission.Key key = new OrganizationPermission.Key(organizationId, permission.getId());</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (disabled) {</span>
+<span class="fc" id="L65">            policies.save(new OrganizationPermission(organizationId, permission.getId(), OrganizationPermission.DISABLED));</span>
+<span class="fc" id="L66">            Set&lt;Long&gt; affected = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L67">            affected.add(organizationId);</span>
+<span class="fc" id="L68">            organizations.findByParentId(organization.getId()).forEach(child -&gt; affected.add(child.getId()));</span>
+<span class="fc" id="L69">            regrants.deleteInScope(permission.getId(), affected);</span>
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        } else if (policies.findById(key).filter(policy -&gt; OrganizationPermission.DISABLED.equals(policy.getStatus())).isPresent()) {</span>
+<span class="fc" id="L71">            policies.save(new OrganizationPermission(organizationId, permission.getId(), OrganizationPermission.REOPENED));</span>
+        }
+<span class="fc" id="L73">    }</span>
+
+    /** 按角色、权限的统一锁顺序重授已有的角色权限。 */
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void regrant(Long operator, Long organizationId, String systemCode, String code, Long roleId) {
+<span class="fc" id="L78">        requireGlobal(operator);</span>
+<span class="fc" id="L79">        Organization organization = findOrganization(organizationId);</span>
+<span class="fc" id="L80">        BusinessSystem system = findSystem(systemCode);</span>
+<span class="fc" id="L81">        RbacRole role = roles.findLockedById(roleId).orElseThrow(OrganizationPermissionService::missing);</span>
+<span class="fc" id="L82">        Permission permission = lockPermission(system, code);</span>
+<span class="fc" id="L83">        Long permissionId = permission.getId();</span>
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (role.getOwnerOrganizationId() != null) {</span>
+<span class="fc" id="L85">            Organization roleOwner = findOrganization(role.getOwnerOrganizationId());</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">            if (!Objects.equals(organizationId, roleOwner.getId())</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">                    &amp;&amp; !Objects.equals(organizationId, roleOwner.getParentId())</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">                    &amp;&amp; !Objects.equals(organization.getParentId(), roleOwner.getId())) {</span>
+<span class="nc" id="L89">                throw new BusinessAccessException(Reason.PERMISSION_DENIED, &quot;角色不在可重授的组织范围内&quot;);</span>
+            }
+        }
+<span class="fc" id="L92">        Organization owner = findOrganization(system.getOwnerOrganizationId());</span>
+<span class="fc" id="L93">        Set&lt;Long&gt; affected = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L94">        includeOrganization(affected, organization);</span>
+<span class="fc" id="L95">        includeOrganization(affected, owner);</span>
+<span class="fc" id="L96">        boolean reopened = policies.findById(new OrganizationPermission.Key(organizationId, permissionId))</span>
+<span class="fc" id="L97">                .filter(policy -&gt; OrganizationPermission.REOPENED.equals(policy.getStatus())).isPresent();</span>
+<span class="pc bpc" id="L98" title="1 of 4 branches missed.">        if (!reopened || !rolePermissions.existsById(new RolePermission.Key(roleId, permissionId))</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">                || policies.existsByPermissionIdAndOrganizationIdInAndStatus(</span>
+                        permissionId, affected, OrganizationPermission.DISABLED)) {
+<span class="fc" id="L101">            throw new BusinessAccessException(Reason.ASSIGNMENT_CONFLICT, &quot;当前组织或角色状态不允许重授&quot;);</span>
+        }
+<span class="fc" id="L103">        PermissionRegrant.Key key = new PermissionRegrant.Key(organizationId, roleId, permissionId);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (!regrants.existsById(key)) {</span>
+<span class="fc" id="L105">            regrants.save(new PermissionRegrant(organizationId, roleId, permissionId));</span>
+        }
+<span class="fc" id="L107">    }</span>
+
+    /** 在事务内重新确认操作人有全局组织权限管理资格。 */
+    private void requireGlobal(Long operator) {
+<span class="fc" id="L111">        authorization.assignmentScope(operator, AuthorizationService.ORGANIZATION_PERMISSION_WRITE)</span>
+<span class="pc" id="L112">                .orElseThrow(() -&gt; new BusinessAccessException(Reason.PERMISSION_DENIED, &quot;仅超级管理员可以管理组织权限&quot;));</span>
+<span class="fc" id="L113">    }</span>
+
+    /** 找到策略作用的组织。 */
+    private Organization findOrganization(Long id) {
+<span class="fc" id="L117">        return organizations.findById(id).orElseThrow(OrganizationPermissionService::missing);</span>
+    }
+
+    /** 用公开编码定位系统。 */
+    private BusinessSystem findSystem(String code) {
+<span class="fc" id="L122">        return systems.findByCode(code).orElseThrow(OrganizationPermissionService::missing);</span>
+    }
+
+    /** 以目标系统下的权限行串行化策略写入。 */
+    private Permission lockPermission(BusinessSystem system, String code) {
+<span class="fc" id="L127">        return permissions.findLockedBySystemIdAndCode(system.getId(), code)</span>
+<span class="fc" id="L128">                .orElseThrow(OrganizationPermissionService::missing);</span>
+    }
+
+    /** 收集组织及其上级公司范围。 */
+    private void includeOrganization(Set&lt;Long&gt; scope, Organization organization) {
+<span class="fc" id="L133">        scope.add(organization.getId());</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (organization.getParentId() != null) {</span>
+<span class="fc" id="L135">            scope.add(organization.getParentId());</span>
+        }
+<span class="fc" id="L137">    }</span>
+
+    /** 使用统一的资源缺失契约。 */
+    private static BusinessAccessException missing() {
+<span class="nc" id="L141">        return new BusinessAccessException(Reason.RESOURCE_NOT_FOUND, &quot;组织、系统、权限或角色不存在&quot;);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

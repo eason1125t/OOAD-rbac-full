@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthenticationProperties.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">AuthenticationProperties.java</span></div><h1>AuthenticationProperties.java</h1><pre class="source lang-java linenums">// 文件职责：校验 JWT、独立登录期限及 Cookie/Redis 配置，不保存用户版本号。
+// 协作关系：由 AuthenticationConfiguration 绑定；供签发器、登录服务、Redis 仓储和 HTTP Cookie 使用。
+package authentication;
+
+import java.time.Duration;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.core.io.Resource;
+import org.springframework.util.Assert;
+
+/** 私钥只绑定外部资源位置；仅启动 Web 认证时读取，初始化命令无需私钥。 */
+@ConfigurationProperties(&quot;rbac.auth&quot;)
+public record AuthenticationProperties(String issuer, String audience, Resource privateKeyLocation,
+        Resource publicKeyLocation, Duration accessTtl, Duration loginTtl, String namespace,
+        String refreshCookieName, String csrfCookieName, String cookiePath, boolean cookieSecure) {
+<span class="fc" id="L15">    public AuthenticationProperties {</span>
+<span class="fc" id="L16">        Assert.hasText(issuer, &quot;JWT issuer is required&quot;);</span>
+<span class="fc" id="L17">        Assert.hasText(audience, &quot;JWT audience is required&quot;);</span>
+<span class="pc bpc" id="L18" title="3 of 6 branches missed.">        Assert.isTrue(accessTtl != null &amp;&amp; accessTtl.getSeconds() &gt; 0 &amp;&amp; accessTtl.getNano() == 0</span>
+<span class="fc bfc" id="L19" title="All 2 branches covered.">                &amp;&amp; accessTtl.compareTo(Duration.ofMinutes(15)) &lt;= 0, &quot;Access TTL must be within 15 minutes&quot;);</span>
+<span class="pc bpc" id="L20" title="2 of 6 branches missed.">        Assert.isTrue(loginTtl != null &amp;&amp; loginTtl.getSeconds() &gt; 0 &amp;&amp; loginTtl.getNano() == 0</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">                &amp;&amp; loginTtl.compareTo(Duration.ofHours(8)) &lt;= 0, &quot;Login TTL must be within eight hours&quot;);</span>
+<span class="pc bpc" id="L22" title="1 of 4 branches missed.">        Assert.isTrue(namespace != null &amp;&amp; namespace.matches(&quot;[A-Za-z0-9:_-]+&quot;), &quot;Invalid auth namespace&quot;);</span>
+<span class="pc bpc" id="L23" title="1 of 4 branches missed.">        Assert.isTrue(refreshCookieName != null &amp;&amp; refreshCookieName.matches(&quot;[A-Za-z0-9_-]{1,64}&quot;),</span>
+                &quot;Invalid refresh cookie name&quot;);
+<span class="pc bpc" id="L25" title="2 of 4 branches missed.">        Assert.isTrue(csrfCookieName != null &amp;&amp; csrfCookieName.matches(&quot;[A-Za-z0-9_-]{1,64}&quot;)</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">                &amp;&amp; !csrfCookieName.equals(refreshCookieName), &quot;Invalid CSRF cookie name&quot;);</span>
+<span class="pc bpc" id="L27" title="1 of 4 branches missed.">        Assert.isTrue(cookiePath != null &amp;&amp; cookiePath.matches(&quot;/[A-Za-z0-9/_-]*&quot;)</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">                &amp;&amp; cookiePath.endsWith(&quot;/&quot;), &quot;Invalid public auth cookie path&quot;);</span>
+<span class="fc" id="L29">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

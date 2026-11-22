@@ -1,0 +1,321 @@
+Window: "OOAD RBAC", App: Apifox.exe.
+	0 pane (窗格) OOAD RBAC Secondary Actions: Raise
+		1 document (文档) OOAD RBAC Value: file:///D:/codetool/Apifox-windows-latest/resources/app.asar/dist/renderer/index.html#/project/9046536 ID: 13329840
+			2 image (未加标签的图片) 要获取缺失的图片说明，请打开上下文菜单。
+			3 image (图像)
+			4 hyperlink (链接) 接口管理
+				5 image (图像)
+			6 hyperlink (链接) 自动化测试
+				7 image (图像)
+			8 hyperlink (链接) 分享文档
+				9 image (图像)
+			10 hyperlink (链接) 请求历史
+				11 image (图像)
+			12 hyperlink (链接) 项目设置
+				13 image (图像)
+			14 button (按钮) 邀请成员
+				15 image (图像)
+				16 text (文本) 邀请成员
+			17 image (图像)
+			18 text (文本) 接口管理
+			19 image (图像)
+			20 text (文本) main
+			21 image (图像)
+			22 image (图像)
+			23 combo box (组合框) (settable, string) Value: /api/auth/refresh ID: rc_select_4
+			24 button (按钮)
+				25 image (图像)
+			26 button (按钮)
+				27 image (图像)
+			28 tree (树)
+				29 text field (编辑) (settable, string) for screen reader
+				60 image (图像)
+				61 text (文本) C2-RBAC1
+				62 image (图像)
+				63 image (图像)
+				64 text (文本) 接口
+				65 image (图像)
+				442 image (图像)
+				443 image (图像)
+				444 text (文本) 身份与认证
+				445 text (文本) (
+				446 text (文本) 1
+				447 text (文本) )
+				448 text (文本) POST
+				449 text (文本) 刷新访问凭证并严格轮换刷新Cookie
+				450 image (图像)
+				451 text (文本) 数据模型
+				452 image (图像)
+				453 image (图像)
+				454 text (文本) 组件库
+				455 image (图像)
+				456 image (图像)
+				457 text (文本) 快捷请求
+				458 image (图像)
+			96 text (文本) HiFox
+			97 button (按钮)
+				98 image (图像)
+			99 text (文本) Jira、TAPD 已过时，HiFox - 让 Coding Agent 入驻到你的协作平台里
+			100 button (按钮) 了解详情
+				101 image (图像)
+			102 custom (disabled) panel
+			103 tab (选项卡)
+				104 tab item (选项卡项目) (selectable) GET 查询可进入的业务系统 ID: rc-tabs-0-tab-apiDetail.538471291
+					105 text (文本) GET
+					106 text (文本) 查询可进入的业务系统
+					107 text (文本) 
+				108 tab item (选项卡项目) (selectable) GET 查询当前员工、工作区及可选系统角色与权限 ID: rc-tabs-0-tab-apiDetail.538471289
+					109 text (文本) GET
+					110 text (文本) 查询当前员工、工作区及可选系统角色与权限
+					111 text (文本) 
+				112 tab item (选项卡项目) (selectable) C2-RBAC1 ID: rc-tabs-0-tab-module.8918000
+					113 image (图像)
+					114 text (文本) C2-RBAC1
+					115 text (文本) 
+				461 tab item (选项卡项目) (selectable) POST 刷新访问凭证并严格轮换刷新Cookie ID: rc-tabs-0-tab-apiDetail.539835919
+					462 text (文本) POST
+					463 text (文本) 刷新访问凭证并严格轮换刷新Cookie
+					464 text (文本) 
+				120 button (按钮) Add tab
+					121 image (图像)
+				122 combo box (组合框) (settable, string) ID: rc_select_1
+				123 text (文本) C2
+				124 text (文本) C2-RBAC1-功能版
+				125 button (按钮)
+					126 image (图像)
+			465 custom (选项卡面板) POST 刷新访问凭证并严格轮换刷新Cookie ID: rc-tabs-0-panel-apiDetail.539835919
+				466 tab (选项卡)
+					467 tab item (选项卡项目) (selectable) 文档 ID: rc-tabs-11-tab-view
+					468 tab item (选项卡项目) (selectable) 编辑 ID: rc-tabs-11-tab-edit
+					469 tab item (选项卡项目) (selectable) 调试 ID: rc-tabs-11-tab-run
+					470 tab item (选项卡项目) (selectable) 测试用例 ID: rc-tabs-11-tab-case
+					471 tab item (选项卡项目) (selectable) Mock ID: rc-tabs-11-tab-advancedMock
+					472 button (按钮)
+						473 image (图像)
+					474 separator (分隔符)
+					475 button (按钮)
+						476 image (图像)
+					477 button (按钮)
+						478 image (图像)
+					479 button (按钮)
+						480 image (图像)
+					481 button (按钮)
+						482 image (图像)
+				483 custom (选项卡面板) 文档 ID: rc-tabs-11-panel-view
+					484 text (文本) 刷新访问凭证并严格轮换刷新Cookie
+					485 text (文本) POST
+					486 text (文本) /api/auth/refresh
+					487 combo box (组合框) ID: rc_select_44
+					488 text (文本) 已发布
+					489 button (按钮) AI Coding
+						490 image (图像)
+					491 button (按钮)
+						492 image (图像)
+					493 button (按钮) 生成代码
+						494 image (图像)
+					495 button (按钮)
+						496 image (图像)
+					497 button (按钮) 调试
+						498 image (图像)
+					499 combo box (组合框) ID: rc_select_45
+					500 image (图像)
+					501 text (文本) 共享
+					502 text (文本) 身份与认证
+					503 text (文本) 创建时间
+					504 text (文本) 2026年11月22日
+					505 text (文本) 修改时间
+					506 text (文本) 9 分钟前
+					507 text (文本) 修改者
+					508 text (文本) 晨鱼
+					509 text (文本) 创建者
+					510 text (文本) 晨鱼
+					511 text (文本) 责任人
+					512 text (文本) 未设置
+					513 text (文本) 目录
+					514 text (文本) 身份与认证
+					515 text (文本) 仅从本版HttpOnly Cookie读取刷新凭证，X-CSRF-TOKEN必需。忽略Authorization；不从body/query读取刷新凭证。绝对登录上限8小时不延长。已消费摘要重用将撤销当前sid。
+					516 button (按钮) right Mock
+						517 image (图像) right
+						518 text (文本) Mock
+					519 text (文本) 请求参数
+					520 button (按钮) Authorization
+						521 image (图像)
+						522 text (文本) Authorization
+					523 text (文本) API Key
+					524 text (文本) 在 cookie 添加参数
+					525 text (文本) RBAC1_FUNC_REFRESH
+					526 text (文本) 示例
+					527 text (文本) ：
+					528 text (文本) RBAC1_FUNC_REFRESH: ********************
+					529 text (文本) API Key
+					530 text (文本) 在 cookie 添加参数
+					531 text (文本) RBAC1_FUNC_CSRF
+					532 text (文本) 示例
+					533 text (文本) ：
+					534 text (文本) RBAC1_FUNC_CSRF: ********************
+					535 text (文本) 或
+					536 text (文本) API Key
+					537 text (文本) 在 cookie 添加参数
+					538 text (文本) RBAC1_OO_REFRESH
+					539 text (文本) 示例
+					540 text (文本) ：
+					541 text (文本) RBAC1_OO_REFRESH: ********************
+					542 text (文本) API Key
+					543 text (文本) 在 cookie 添加参数
+					544 text (文本) RBAC1_OO_CSRF
+					545 text (文本) 示例
+					546 text (文本) ：
+					547 text (文本) RBAC1_OO_CSRF: ********************
+					565 text (文本) Header 参数
+					566 button (按钮) 生成代码
+						567 image (图像)
+					568 text (文本) X-CSRF-TOKEN
+					569 text (文本) string
+					570 text (文本) 
+					571 text (文本) 必需
+					572 text (文本) 仅登录/刷新/退出必需：先GET /api/auth/csrf，携带该Cookie及JSON token作为X-CSRF-TOKEN。Bearer业务写入不要求此头。
+					573 text (文本) >= 1 字符
+					553 text (文本) 返回响应
+					574 tab (选项卡)
+						575 tab item (选项卡项目) (selectable) 200 ID: rc-tabs-13-tab-BLANK.168296360
+						576 tab item (选项卡项目) (selectable) 401 BadRefresh ID: rc-tabs-13-tab-COMPONENT.342639027
+							577 text (文本) 401
+							578 text (文本) BadRefresh
+							579 image (图像)
+						580 tab item (选项卡项目) (selectable) 403 Csrf ID: rc-tabs-13-tab-COMPONENT.342624146
+							581 text (文本) 403
+							582 text (文本) Csrf
+							583 image (图像)
+						584 tab item (选项卡项目) (selectable) 503 Unavailable ID: rc-tabs-13-tab-COMPONENT.342624161
+							585 text (文本) 503
+							586 text (文本) Unavailable
+							587 image (图像)
+					680 custom (选项卡面板) 401 BadRefresh ID: rc-tabs-13-panel-COMPONENT.342639027
+						681 text (文本) HTTP 状态码
+						682 text (文本) ：
+						683 text (文本) 401
+						684 text (文本) application/json
+						685 text (文本) 刷新凭证无效/到期或确认重用；清除本次客户端认证Cookie，重用同时撤销对应登录。
+						686 text (文本) code
+						687 text (文本) string
+						688 text (文本) 
+						689 text (文本) 必需
+						690 text (文本) message
+						691 text (文本) string
+						692 text (文本) 
+						693 text (文本) 必需
+						694 text (文本) 示例
+						695 text (文本) REFRESH_TOKEN_INVALID
+						696 text (文本) REFRESH_TOKEN_REUSED
+						697 text (文本) {
+						698 text (文本) "code"
+						699 text (文本) :
+						700 text (文本) "REFRESH_TOKEN_INVALID"
+						701 text (文本) ,
+						702 text (文本) "message"
+						703 text (文本) :
+						704 text (文本) "刷新凭证无效，请重新登录"
+						705 text (文本) }
+					559 text (文本) 请求示例代码
+					646 tab (选项卡)
+						647 tab item (选项卡项目) (selectable) Shell ID: rc-tabs-14-tab-shell
+						648 tab item (选项卡项目) (selectable) JavaScript ID: rc-tabs-14-tab-javascript
+						649 tab item (选项卡项目) (selectable) Java ID: rc-tabs-14-tab-java
+						650 tab item (选项卡项目) (selectable) Swift ID: rc-tabs-14-tab-swift
+						651 tab item (选项卡项目) (selectable) Go ID: rc-tabs-14-tab-go
+						652 tab item (选项卡项目) (selectable) PHP ID: rc-tabs-14-tab-php
+						653 tab item (选项卡项目) (selectable) Python ID: rc-tabs-14-tab-python
+						654 tab item (选项卡项目) (selectable) HTTP ID: rc-tabs-14-tab-http
+						655 tab item (选项卡项目) (selectable) C ID: rc-tabs-14-tab-c
+						656 tab item (选项卡项目) (selectable) C# ID: rc-tabs-14-tab-csharp
+						657 tab item (选项卡项目) (selectable) Objective-C ID: rc-tabs-14-tab-objective-c
+						658 tab item (选项卡项目) (selectable) Ruby ID: rc-tabs-14-tab-ruby
+						659 tab item (选项卡项目) (selectable) OCaml ID: rc-tabs-14-tab-ocaml
+						660 tab item (选项卡项目) (selectable) Dart ID: rc-tabs-14-tab-dart
+						661 tab item (选项卡项目) (selectable) R ID: rc-tabs-14-tab-r
+					662 custom (选项卡面板) Shell ID: rc-tabs-14-panel-shell
+					663 radio button (单选按钮) (selectable) cURL
+					664 text (文本) cURL
+					665 radio button (单选按钮) (selectable) cURL-Windows
+					666 text (文本) cURL-Windows
+					667 radio button (单选按钮) (selectable) Httpie
+					668 text (文本) Httpie
+					669 radio button (单选按钮) (selectable) wget
+					670 text (文本) wget
+					671 radio button (单选按钮) (selectable) PowerShell
+					672 text (文本) PowerShell
+					673 text field (editor) (settable, string) Editor content;Press Alt+F1 for Accessibility Options. Value: curl --location --request POST 'http://127.0.0.1:5173/func/api/auth/refresh' \ --header 'X-CSRF-TOKEN;' \ --header 'RBAC1_FUNC_REFRESH;' \ --header 'RBAC1_FUNC_CSRF;'
+					674 button (按钮)
+						675 image (图像)
+			376 button (按钮)
+				377 image (图像)
+			378 radio button (单选按钮) (selectable) 文档模式
+			379 text (文本) 文档模式
+			380 radio button (单选按钮) (selectable) 调试模式
+			381 text (文本) 调试模式
+			382 button (按钮) 在线
+				383 image (图像)
+			384 button (按钮) 请求代理
+				385 image (图像)
+				386 image (图像)
+			387 button (按钮) Cookie 管理
+				388 image (图像)
+			389 button (按钮) 回收站
+				390 image (图像)
+			391 button (按钮) 文档 & 交流群
+				392 image (图像)
+			393 button (按钮)
+				394 image (图像)
+			676 custom (警报)
+			677 custom (警报)
+			678 group (补充)
+			679 group (补充)
+		395 document (文档) Shell ID: 13316288
+			396 image (图像)
+			397 image (图像)
+			398 text (文本) 主窗口
+			399 button (按钮) 在独立窗口中打开
+				400 image (图像)
+			401 text (文本) OOAD RBAC
+			402 button (按钮)
+				403 image (图像)
+			404 image (图像) ellipsis
+			405 button (按钮)
+				406 image (图像)
+			407 button (按钮)
+				408 image (图像)
+			409 button (按钮)
+				410 image (图像)
+			411 image (未加标签的图片) avatar. 要获取缺失的图片说明，请打开上下文菜单。
+			412 button (按钮)
+				413 image (图像)
+			414 button (按钮)
+				415 image (图像)
+			416 button (按钮)
+				417 image (图像)
+			418 button (按钮)
+				419 image (图像)
+			420 image (图像)
+			421 text (文本) 主窗口
+			422 button (按钮) 在独立窗口中打开
+				423 image (图像)
+			424 text (文本) OOAD RBAC
+			425 button (按钮)
+				426 image (图像)
+			427 pane (窗格) ID: iframe_realtime_sync
+				428 document (文档) Value: about:blank
+		429 pane (窗格) (disabled)
+		430 pane (窗格)
+			431 pane (窗格)
+				432 pane (窗格)
+					433 pane (窗格)
+						434 pane (窗格)
+							435 pane (窗格)
+								436 custom
+							437 pane (窗格)
+								438 pane (窗格)
+								439 pane (窗格)
+
+Document text: ```
+主窗口   OOAD RBAC                       主窗口   OOAD RBAC
+```

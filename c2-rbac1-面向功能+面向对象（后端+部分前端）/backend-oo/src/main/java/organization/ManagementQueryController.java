@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import organization.dto.ManagementPageDTO;
+import organization.dto.DepartmentDirectoryQueryDTO;
+import organization.dto.EmployeeDirectoryQueryDTO;
 import organization.vo.CatalogVO;
 import organization.vo.ManagementVO;
+import organization.vo.DirectoryVO;
 import organization.vo.OrganizationVO;
 import rolepermission.CatalogEntry;
 import rolepermission.Permission;
@@ -32,29 +35,38 @@ import rolepermission.RbacRole;
 @RequiredArgsConstructor
 public class ManagementQueryController {
     private final ManagementQueryService management;
+    private final DirectoryQueryService directory;
 
     /** 查看范围内员工及原表字段。 */
     @GetMapping("/api/employees")
-    public ResponseEntity<ManagementVO.Page<ManagementVO.Employee>> employees(@AuthenticationPrincipal Long actor,
-            @Valid @ModelAttribute ManagementPageDTO page) {
-        return response(management.employees(actor, page.toPageable()),
-                ManagementQueryController::employee);
+    public ResponseEntity<?> employees(@AuthenticationPrincipal Long actor,
+            @Valid @ModelAttribute EmployeeDirectoryQueryDTO filter, @Valid @ModelAttribute ManagementPageDTO page) {
+        DirectoryQueryService.EmployeePage result = directory.employees(actor, filter, page.toPageable());
+        if (result.administrator()) {
+            return response(result.rows(), ManagementQueryController::employee);
+        }
+        return response(result.rows(), row -> new DirectoryVO.Employee(row.getId(), row.getUsername(), row.getName(),
+                row.getOrganizationId()));
     }
 
     /** 查询公司目录。 */
     @GetMapping("/api/companies")
     public ResponseEntity<ManagementVO.Page<OrganizationVO>> companies(@AuthenticationPrincipal Long actor,
             @Valid @ModelAttribute ManagementPageDTO page) {
-        return response(management.organizations(actor, "COMPANY", page.toPageable()),
+        return response(management.companies(actor, page.toPageable()),
                 ManagementQueryController::organization);
     }
 
     /** 查询部门原表三列及正式组织引用。 */
     @GetMapping("/api/departments")
-    public ResponseEntity<ManagementVO.Page<OrganizationVO>> departments(@AuthenticationPrincipal Long actor,
-            @Valid @ModelAttribute ManagementPageDTO page) {
-        return response(management.organizations(actor, "DEPARTMENT", page.toPageable()),
-                ManagementQueryController::organization);
+    public ResponseEntity<?> departments(@AuthenticationPrincipal Long actor,
+            @Valid @ModelAttribute DepartmentDirectoryQueryDTO filter, @Valid @ModelAttribute ManagementPageDTO page) {
+        DirectoryQueryService.DepartmentPage result = directory.departments(actor, filter, page.toPageable());
+        if (!filter.tree()) {
+            return response(result.rows(), ManagementQueryController::organization);
+        }
+        return response(result.rows(), row -> new DirectoryVO.OrganizationNode(row.getId(), row.getCode(), row.getName(),
+                row.getParentId(), row.getOrganizationType(), result.expandableIds().contains(row.getId())));
     }
 
     /** 查询角色定义。 */

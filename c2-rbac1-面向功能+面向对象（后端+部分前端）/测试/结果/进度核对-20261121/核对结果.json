@@ -1,0 +1,130 @@
+{
+  "date": "2026-11-21 Asia/Shanghai",
+  "editions": {
+    "func": {
+      "sourceMatchesLatestGreen": true,
+      "tests": {
+        "tests": 75,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exitCode": 0,
+      "javaFiles": 85,
+      "artifactsComplete": true,
+      "migrations": [
+        "V1__create_rbac0_schema.sql",
+        "V2__preserve_organization_source_parent.sql",
+        "V3__add_login_accounts_and_default_systems.sql",
+        "V4__create_simulated_request.sql",
+        "V5__add_scoped_permission_regrants.sql",
+        "V6__create_role_inheritance.sql",
+        "V7__extend_simulated_request_lifecycle.sql",
+        "V8__add_request_read_permission.sql"
+      ],
+      "sourceSha256": "fd0c6385d67d8d55f5b3b15976d09fa764721b20aeaa97712c519b9d18be75c9"
+    },
+    "oo": {
+      "sourceMatchesLatestGreen": true,
+      "tests": {
+        "tests": 79,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "exitCode": 0,
+      "javaFiles": 92,
+      "artifactsComplete": true,
+      "migrations": [
+        "V1__create_rbac0_schema.sql",
+        "V2__preserve_organization_source_parent.sql",
+        "V3__add_login_accounts_and_default_systems.sql",
+        "V4__create_simulated_request.sql",
+        "V5__add_scoped_permission_regrants.sql",
+        "V6__create_role_inheritance.sql",
+        "V7__extend_simulated_request_lifecycle.sql",
+        "V8__add_request_read_permission.sql"
+      ],
+      "sourceSha256": "8a199be8c9248ee01c1c6a4e39e730bf96a80805d9c0d78a9eaeb34bbcd0d823"
+    }
+  },
+  "capabilities": [
+    {
+      "path": "/api/auth/login",
+      "method": "post",
+      "operationId": "login",
+      "status": "retained",
+      "inMainOpenApi": true
+    },
+    {
+      "path": "/api/auth/logout",
+      "method": "post",
+      "operationId": "logout",
+      "status": "retained",
+      "inMainOpenApi": true
+    },
+    {
+      "path": "/api/auth/me",
+      "method": "get",
+      "operationId": "getCurrentSession",
+      "status": "implemented",
+      "inMainOpenApi": true
+    },
+    {
+      "path": "/api/departments",
+      "method": "get",
+      "operationId": "listManagementDepartments",
+      "status": "implemented",
+      "inMainOpenApi": true
+    },
+    {
+      "path": "/api/employees",
+      "method": "get",
+      "operationId": "listManagementEmployees",
+      "status": "implemented",
+      "inMainOpenApi": true
+    },
+    {
+      "path": "/api/employees/{employeeId}",
+      "method": "get",
+      "operationId": "getManagementEmployee",
+      "status": "retained",
+      "inMainOpenApi": true
+    },
+    {
+      "path": "/api/auth/me/permission-check",
+      "method": "get",
+      "operationId": "checkCurrentPermission",
+      "status": "implemented",
+      "inMainOpenApi": true
+    },
+    {
+      "path": "/api/auth/me/api-check",
+      "method": "get",
+      "operationId": "checkCurrentApiPermission",
+      "status": "planned-new",
+      "inMainOpenApi": false
+    }
+  ],
+  "mainOpenApiVersion": "2.3.0",
+  "targetVersion": "2.4.0-planned",
+  "runningServices": [
+    {
+      "port": 18182,
+      "pid": 25544,
+      "started": "2026-11-19T21:27:58+08:00",
+      "usesStep4Jar": false,
+      "usesDefaultJar": true
+    },
+    {
+      "port": 18181,
+      "pid": 29824,
+      "started": "2026-11-19T21:27:57+08:00",
+      "usesStep4Jar": false,
+      "usesDefaultJar": true
+    }
+  ],
+  "reexecutedBusinessTests": false,
+  "frontendIntegrated": false,
+  "jwtImplemented": false
+}

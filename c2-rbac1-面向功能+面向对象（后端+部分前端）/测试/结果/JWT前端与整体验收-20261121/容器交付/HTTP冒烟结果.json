@@ -1,0 +1,37 @@
+{
+  "executed_utc": "2026-11-21T15:54:12.588280+00:00",
+  "base_url": "http://127.0.0.1:18081",
+  "exercise": true,
+  "checks": [
+    {
+      "check": "C2-DEPLOY static routes, deep links and JavaScript",
+      "status": "PASS"
+    },
+    {
+      "check": "C2-08 func Bearer login, refresh rotation, Cookie boundary and API routing",
+      "status": "PASS"
+    },
+    {
+      "check": "C2-11/12 func create, update, withdraw and reject terminal transition",
+      "status": "PASS",
+      "requestId": 25
+    },
+    {
+      "check": "C2-08 oo Bearer login, refresh rotation, Cookie boundary and API routing",
+      "status": "PASS"
+    },
+    {
+      "check": "C2-11/12 oo create, update, withdraw and reject terminal transition",
+      "status": "PASS",
+      "requestId": 25
+    },
+    {
+      "check": "C2-08 independent database writes",
+      "status": "PASS"
+    },
+    {
+      "check": "C2-08 foreign JWT rejected; func logout revokes old Bearer and preserves oo login",
+      "status": "PASS"
+    }
+  ]
+}

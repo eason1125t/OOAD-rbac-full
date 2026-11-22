@@ -1,0 +1,49 @@
+{
+  "edition": "oo",
+  "startedUtc": "2026-11-21T15:10:20.629926+00:00",
+  "completedUtc": "2026-11-21T15:12:46.690859+00:00",
+  "exitCode": 0,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "34d8248f5d4b14d3e04c893c9550f98e6f89f9e51bde4fad1a9d07790528c1ed",
+  "tests": {
+    "tests": 198,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {
+    "INSTRUCTION": {
+      "missed": 495,
+      "covered": 10761,
+      "ratio": 0.9560234541577826
+    },
+    "BRANCH": {
+      "missed": 130,
+      "covered": 645,
+      "ratio": 0.832258064516129
+    },
+    "LINE": {
+      "missed": 84,
+      "covered": 1744,
+      "ratio": 0.9540481400437637
+    },
+    "COMPLEXITY": {
+      "missed": 140,
+      "covered": 767,
+      "ratio": 0.8456449834619625
+    },
+    "METHOD": {
+      "missed": 24,
+      "covered": 494,
+      "ratio": 0.9536679536679536
+    },
+    "CLASS": {
+      "missed": 2,
+      "covered": 134,
+      "ratio": 0.9852941176470589
+    }
+  },
+  "jwtTestPublicKeySha256": "acbf88261492ebd5d5eb60c0dd3e544fd68a9599c86ef7ff7352256151f2449d",
+  "authNamespace": "rbac1:oo:jwt-test:dzn888tq",
+  "sourceHashIncludesLua": true
+}

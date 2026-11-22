@@ -46,4 +46,10 @@ V1–V5 为 C1 基础结构与组织重授，V6 增加继承边和图锁表，V7
 
 本模块使用 POI 的格式文本和受限合并展开、稳定名称 UUID、`LinkedHashMap` 来源索引、局部 record 复合键、JPA `saveAll`、覆盖检查异常的事务回滚以及继承图写锁。
 
-命令示例和环境变量见 [阶段 README](../../../../../README.md)；原表约定见 [Excel 说明](../../../../../../excel/README.md)。现有 `InitializationTest`、`WorkbookReaderTest` 和 `InitializationCommandTest` 覆盖解析、冲突、重复导入和演示场景。历史计数为员工 10,000、组织目录 111、清单 359、待匹配员工 54；这些是既有原表基线，不是本次重新导入结果。课程集群原表、只读挂载和一次性初始化的交接要求见 [部署交接](../../../../../部署交接文档.md)，实际输入版本与任务仍待配置验证。
+命令示例和环境变量见 [阶段 README](../../../../../README.md)；原表约定见 [Excel 说明](../../../../../../excel/README.md)。现有 `InitializationTest`、`WorkbookReaderTest` 和 `InitializationCommandTest` 覆盖解析、冲突、重复导入和演示场景。历史计数为员工 10,000、组织目录 111、清单 359、待匹配员工 54；这些是既有原表基线，不是本次重新导入结果。课程集群原表、只读挂载和一次性初始化的交接要求见 [部署交接](../../../../../部署/README.md)，实际输入版本与任务仍待配置验证。
+
+## 第5步：API映射初始化
+
+Flyway V9创建api_operation及api_operation_permission，为已有四个演示申请系统补映射；空库此时没有演示系统，initializeDemo在权限创建完成后调用ApiOperationRegistry补齐32操作/52权限要求。沿用既有图写锁及事务，不重置角色分配、继承撤销和组织策略。已有操作映射损坏时失败回滚，不自动修复。
+
+两版InitializationTest验证重复运行、保留继承撤销及损坏映射拒绝；共同ApiMigrationTest验证空库及V8升级，使用单次独立临时测试库。[运行和证据](../../../../../测试/README.md)。

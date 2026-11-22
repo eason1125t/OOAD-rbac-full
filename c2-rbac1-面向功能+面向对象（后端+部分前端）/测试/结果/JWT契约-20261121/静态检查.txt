@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "date": "2026-11-21",
+  "scope": "JWT step 1 documentation only; no JWT runtime tests",
+  "documentsChecked": 4,
+  "localLinksChecked": 88,
+  "jsonExamplesParsed": 1,
+  "protectedFilesChecked": 352,
+  "protectedFilesChanged": [],
+  "existingContract": {
+    "status": "passed",
+    "operations": 8,
+    "examples": 12,
+    "negativeAndEmptyCases": 11,
+    "localLinks": 108,
+    "scope": "static contract validation only; no HTTP, database or browser"
+  },
+  "mainOpenApiSha256": "0a919975951f8d2f6664ec3676a1d3c1a097178038e78a02d29e8ba8c40c5be4",
+  "gitDiffCheckExitCode": 0,
+  "failures": []
+}

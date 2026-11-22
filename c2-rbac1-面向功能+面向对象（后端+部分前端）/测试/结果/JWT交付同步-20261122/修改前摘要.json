@@ -1,0 +1,8 @@
+{
+  "api\\openapi.yaml": "e6719aeb3a20dbb7f674902e3b03f6c3d72f73092786034259f039a99d11f417",
+  "docs\\design\\C2-RBAC1.mdj": "8b099b78a957edd01baac0b871382b1f59b9a53df765cd7066620ff8e320064c",
+  "docs\\design\\diagram-index.json": "7c8d518abc23ec967267689e73ef179c6a0115e3205c18f29278192848308a02",
+  "docs\\design\\build_staruml.py": "43922b4cee2b358fdcc9ea538452638f37e85a5c23bb843a7c31662cbef7cd3f",
+  "docs\\design\\build_supplementary.py": "631694a3cbc0e63b78cc7b0b8f8833a7fd5109e858b31c184bc907cb24c8b090",
+  "docs\\design\\build_identity.py": "247ec948b2056eccd1e7f8f1f3daedd613026fc3e92895f59a641226e11411c9"
+}

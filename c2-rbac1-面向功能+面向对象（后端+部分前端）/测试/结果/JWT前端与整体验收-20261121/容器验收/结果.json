@@ -1,0 +1,10 @@
+{
+  "startedUtc": "2026-11-21T15:43:21.244571+00:00",
+  "project": "c2-jwt-check-20261121154321",
+  "port": 18081,
+  "scope": "isolated local Compose; not Swarm",
+  "exitCode": 1,
+  "failure": "CalledProcessError: Command '['docker', 'compose', '-p', 'c2-jwt-check-20261121154321', '-f', 'C:\\\\Users\\\\kaoyu\\\\AppData\\\\Local\\\\Temp\\\\c2-jwt-container-ckp9py92\\\\local.json', 'up', '-d', '--wait', '--wait-timeout', '300']' returned non-zero exit status 1.",
+  "temporaryContainersStopped": true,
+  "completedUtc": "2026-11-21T15:44:49.813089+00:00"
+}

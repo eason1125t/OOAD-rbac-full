@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" version="3.0.2" name="authentication.JwtLoginHttpTest" time="18.123" tests="14" errors="0" skipped="0" failures="0" flakes="0">
+  <properties>
+    <property name="java.specification.version" value="21"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+    <property name="sun.jnu.encoding" value="GBK"/>
+    <property name="java.class.path" value="D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\target\jwt-lifecycle\test-classes;D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\target\jwt-lifecycle\classes;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.5.16\spring-boot-starter-web-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter\3.5.16\spring-boot-starter-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot\3.5.16\spring-boot-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.5.16\spring-boot-autoconfigure-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.5.16\spring-boot-starter-logging-3.5.16.jar;C:\Users\kaoyu\.m2\repository\ch\qos\logback\logback-classic\1.5.34\logback-classic-1.5.34.jar;C:\Users\kaoyu\.m2\repository\ch\qos\logback\logback-core\1.5.34\logback-core-1.5.34.jar;C:\Users\kaoyu\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.24.3\log4j-to-slf4j-2.24.3.jar;C:\Users\kaoyu\.m2\repository\org\slf4j\jul-to-slf4j\2.0.18\jul-to-slf4j-2.0.18.jar;C:\Users\kaoyu\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\kaoyu\.m2\repository\org\yaml\snakeyaml\2.4\snakeyaml-2.4.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.5.16\spring-boot-starter-json-3.5.16.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.21.4\jackson-databind-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.21.4\jackson-datatype-jdk8-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.21.4\jackson-module-parameter-names-2.21.4.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.5.16\spring-boot-starter-tomcat-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.55\tomcat-embed-core-10.1.55.jar;C:\Users\kaoyu\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.55\tomcat-embed-websocket-10.1.55.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-web\6.2.19\spring-web-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-beans\6.2.19\spring-beans-6.2.19.jar;C:\Users\kaoyu\.m2\repository\io\micrometer\micrometer-observation\1.15.12\micrometer-observation-1.15.12.jar;C:\Users\kaoyu\.m2\repository\io\micrometer\micrometer-commons\1.15.12\micrometer-commons-1.15.12.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-webmvc\6.2.19\spring-webmvc-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-context\6.2.19\spring-context-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-expression\6.2.19\spring-expression-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.5.16\spring-boot-starter-validation-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.55\tomcat-embed-el-10.1.55.jar;C:\Users\kaoyu\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.3.Final\hibernate-validator-8.0.3.Final.jar;C:\Users\kaoyu\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\kaoyu\.m2\repository\org\jboss\logging\jboss-logging\3.6.3.Final\jboss-logging-3.6.3.Final.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\classmate\1.7.3\classmate-1.7.3.jar;C:\Users\kaoyu\.m2\repository\org\aspectj\aspectjweaver\1.9.25.1\aspectjweaver-1.9.25.1.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.5.16\spring-boot-starter-security-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-aop\6.2.19\spring-aop-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-config\6.5.11\spring-security-config-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-web\6.5.11\spring-security-web-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-oauth2-resource-server\3.5.16\spring-boot-starter-oauth2-resource-server-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-core\6.5.11\spring-security-core-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-crypto\6.5.11\spring-security-crypto-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-oauth2-resource-server\6.5.11\spring-security-oauth2-resource-server-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-oauth2-core\6.5.11\spring-security-oauth2-core-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-oauth2-jose\6.5.11\spring-security-oauth2-jose-6.5.11.jar;C:\Users\kaoyu\.m2\repository\com\nimbusds\nimbus-jose-jwt\9.37.4\nimbus-jose-jwt-9.37.4.jar;C:\Users\kaoyu\.m2\repository\com\github\stephenc\jcip\jcip-annotations\1.0-1\jcip-annotations-1.0-1.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.5.16\spring-boot-starter-data-redis-3.5.16.jar;C:\Users\kaoyu\.m2\repository\io\lettuce\lettuce-core\6.6.0.RELEASE\lettuce-core-6.6.0.RELEASE.jar;C:\Users\kaoyu\.m2\repository\redis\clients\authentication\redis-authx-core\0.1.1-beta2\redis-authx-core-0.1.1-beta2.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-common\4.1.135.Final\netty-common-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-handler\4.1.135.Final\netty-handler-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-resolver\4.1.135.Final\netty-resolver-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-buffer\4.1.135.Final\netty-buffer-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.135.Final\netty-transport-native-unix-common-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-codec\4.1.135.Final\netty-codec-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-transport\4.1.135.Final\netty-transport-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\projectreactor\reactor-core\3.7.19\reactor-core-3.7.19.jar;C:\Users\kaoyu\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\kaoyu\.m2\repository\org\springframework\data\spring-data-redis\3.5.13\spring-data-redis-3.5.13.jar;C:\Users\kaoyu\.m2\repository\org\springframework\data\spring-data-keyvalue\3.5.13\spring-data-keyvalue-3.5.13.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-tx\6.2.19\spring-tx-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-oxm\6.2.19\spring-oxm-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-context-support\6.2.19\spring-context-support-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\slf4j\slf4j-api\2.0.18\slf4j-api-2.0.18.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.5.16\spring-boot-starter-data-jpa-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.5.16\spring-boot-starter-jdbc-3.5.16.jar;C:\Users\kaoyu\.m2\repository\com\zaxxer\HikariCP\6.3.3\HikariCP-6.3.3.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-jdbc\6.2.19\spring-jdbc-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\hibernate\orm\hibernate-core\6.6.53.Final\hibernate-core-6.6.53.Final.jar;C:\Users\kaoyu\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\kaoyu\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\kaoyu\.m2\repository\org\hibernate\common\hibernate-commons-annotations\7.0.3.Final\hibernate-commons-annotations-7.0.3.Final.jar;C:\Users\kaoyu\.m2\repository\io\smallrye\jandex\3.2.0\jandex-3.2.0.jar;C:\Users\kaoyu\.m2\repository\net\bytebuddy\byte-buddy\1.17.8\byte-buddy-1.17.8.jar;C:\Users\kaoyu\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.9\jaxb-runtime-4.0.9.jar;C:\Users\kaoyu\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.9\jaxb-core-4.0.9.jar;C:\Users\kaoyu\.m2\repository\org\eclipse\angus\angus-activation\2.0.3\angus-activation-2.0.3.jar;C:\Users\kaoyu\.m2\repository\org\glassfish\jaxb\txw2\4.0.9\txw2-4.0.9.jar;C:\Users\kaoyu\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\kaoyu\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\kaoyu\.m2\repository\org\antlr\antlr4-runtime\4.13.2\antlr4-runtime-4.13.2.jar;C:\Users\kaoyu\.m2\repository\org\springframework\data\spring-data-jpa\3.5.13\spring-data-jpa-3.5.13.jar;C:\Users\kaoyu\.m2\repository\org\springframework\data\spring-data-commons\3.5.13\spring-data-commons-3.5.13.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-orm\6.2.19\spring-orm-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-aspects\6.2.19\spring-aspects-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\flywaydb\flyway-core\11.7.2\flyway-core-11.7.2.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-toml\2.21.4\jackson-dataformat-toml-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.21.4\jackson-core-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.21.4\jackson-datatype-jsr310-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.21\jackson-annotations-2.21.jar;C:\Users\kaoyu\.m2\repository\org\flywaydb\flyway-mysql\11.7.2\flyway-mysql-11.7.2.jar;C:\Users\kaoyu\.m2\repository\com\mysql\mysql-connector-j\9.7.0\mysql-connector-j-9.7.0.jar;C:\Users\kaoyu\.m2\repository\org\apache\poi\poi-ooxml\5.5.1\poi-ooxml-5.5.1.jar;C:\Users\kaoyu\.m2\repository\org\apache\poi\poi\5.5.1\poi-5.5.1.jar;C:\Users\kaoyu\.m2\repository\commons-codec\commons-codec\1.18.0\commons-codec-1.18.0.jar;C:\Users\kaoyu\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;C:\Users\kaoyu\.m2\repository\com\zaxxer\SparseBitSet\1.3\SparseBitSet-1.3.jar;C:\Users\kaoyu\.m2\repository\org\apache\poi\poi-ooxml-lite\5.5.1\poi-ooxml-lite-5.5.1.jar;C:\Users\kaoyu\.m2\repository\org\apache\xmlbeans\xmlbeans\5.3.0\xmlbeans-5.3.0.jar;C:\Users\kaoyu\.m2\repository\org\apache\commons\commons-compress\1.28.0\commons-compress-1.28.0.jar;C:\Users\kaoyu\.m2\repository\org\apache\commons\commons-lang3\3.17.0\commons-lang3-3.17.0.jar;C:\Users\kaoyu\.m2\repository\commons-io\commons-io\2.21.0\commons-io-2.21.0.jar;C:\Users\kaoyu\.m2\repository\com\github\virtuald\curvesapi\1.08\curvesapi-1.08.jar;C:\Users\kaoyu\.m2\repository\org\apache\logging\log4j\log4j-api\2.24.3\log4j-api-2.24.3.jar;C:\Users\kaoyu\.m2\repository\org\apache\commons\commons-collections4\4.5.0\commons-collections4-4.5.0.jar;C:\Users\kaoyu\.m2\repository\org\projectlombok\lombok\1.18.46\lombok-1.18.46.jar;C:\Users\kaoyu\.m2\repository\cn\edu\xmu\clonefactory\0.0.1-SNAPSHOT\clonefactory-0.0.1-SNAPSHOT.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.5.16\spring-boot-starter-test-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-test\3.5.16\spring-boot-test-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.5.16\spring-boot-test-autoconfigure-3.5.16.jar;C:\Users\kaoyu\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\kaoyu\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.5\jakarta.xml.bind-api-4.0.5.jar;C:\Users\kaoyu\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.4\jakarta.activation-api-2.1.4.jar;C:\Users\kaoyu\.m2\repository\net\minidev\json-smart\2.5.2\json-smart-2.5.2.jar;C:\Users\kaoyu\.m2\repository\net\minidev\accessors-smart\2.5.2\accessors-smart-2.5.2.jar;C:\Users\kaoyu\.m2\repository\org\ow2\asm\asm\9.7.1\asm-9.7.1.jar;C:\Users\kaoyu\.m2\repository\org\assertj\assertj-core\3.27.7\assertj-core-3.27.7.jar;C:\Users\kaoyu\.m2\repository\org\awaitility\awaitility\4.2.2\awaitility-4.2.2.jar;C:\Users\kaoyu\.m2\repository\org\hamcrest\hamcrest\3.0\hamcrest-3.0.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter\5.12.2\junit-jupiter-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.12.2\junit-jupiter-api-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\kaoyu\.m2\repository\org\junit\platform\junit-platform-commons\1.12.2\junit-platform-commons-1.12.2.jar;C:\Users\kaoyu\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.12.2\junit-jupiter-params-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.12.2\junit-jupiter-engine-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\platform\junit-platform-engine\1.12.2\junit-platform-engine-1.12.2.jar;C:\Users\kaoyu\.m2\repository\org\mockito\mockito-core\5.17.0\mockito-core-5.17.0.jar;C:\Users\kaoyu\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar;C:\Users\kaoyu\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\kaoyu\.m2\repository\org\mockito\mockito-junit-jupiter\5.17.0\mockito-junit-jupiter-5.17.0.jar;C:\Users\kaoyu\.m2\repository\org\skyscreamer\jsonassert\1.5.3\jsonassert-1.5.3.jar;C:\Users\kaoyu\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-core\6.2.19\spring-core-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-jcl\6.2.19\spring-jcl-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-test\6.2.19\spring-test-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\xmlunit\xmlunit-core\2.10.4\xmlunit-core-2.10.4.jar;C:\Users\kaoyu\.m2\repository\org\jacoco\org.jacoco.agent\0.8.14\org.jacoco.agent-0.8.14-runtime.jar;"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="user.variant" value=""/>
+    <property name="java.vendor.url" value="https://java.oracle.com/"/>
+    <property name="catalina.useNaming" value="false"/>
+    <property name="user.timezone" value="Asia/Shanghai"/>
+    <property name="org.jboss.logging.provider" value="slf4j"/>
+    <property name="os.name" value="Windows 11"/>
+    <property name="java.vm.specification.version" value="21"/>
+    <property name="APPLICATION_NAME" value="rbac1-func"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="user.country" value="CN"/>
+    <property name="sun.boot.library.path" value="D:\codetool\environment\java-21jdk\bin"/>
+    <property name="sun.java.command" value="C:\Users\kaoyu\AppData\Local\Temp\surefire18393415486954744752\surefirebooter-20261121225621538_3.jar C:\Users\kaoyu\AppData\Local\Temp\surefire18393415486954744752 2026-11-21T22-56-21_320-jvmRun1 surefire-20261121225621538_1tmp surefire_0-20261121225621538_2tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\target\jwt-lifecycle\test-classes;D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\target\jwt-lifecycle\classes;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.5.16\spring-boot-starter-web-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter\3.5.16\spring-boot-starter-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot\3.5.16\spring-boot-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.5.16\spring-boot-autoconfigure-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.5.16\spring-boot-starter-logging-3.5.16.jar;C:\Users\kaoyu\.m2\repository\ch\qos\logback\logback-classic\1.5.34\logback-classic-1.5.34.jar;C:\Users\kaoyu\.m2\repository\ch\qos\logback\logback-core\1.5.34\logback-core-1.5.34.jar;C:\Users\kaoyu\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.24.3\log4j-to-slf4j-2.24.3.jar;C:\Users\kaoyu\.m2\repository\org\slf4j\jul-to-slf4j\2.0.18\jul-to-slf4j-2.0.18.jar;C:\Users\kaoyu\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\kaoyu\.m2\repository\org\yaml\snakeyaml\2.4\snakeyaml-2.4.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.5.16\spring-boot-starter-json-3.5.16.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.21.4\jackson-databind-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.21.4\jackson-datatype-jdk8-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.21.4\jackson-module-parameter-names-2.21.4.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.5.16\spring-boot-starter-tomcat-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.55\tomcat-embed-core-10.1.55.jar;C:\Users\kaoyu\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.55\tomcat-embed-websocket-10.1.55.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-web\6.2.19\spring-web-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-beans\6.2.19\spring-beans-6.2.19.jar;C:\Users\kaoyu\.m2\repository\io\micrometer\micrometer-observation\1.15.12\micrometer-observation-1.15.12.jar;C:\Users\kaoyu\.m2\repository\io\micrometer\micrometer-commons\1.15.12\micrometer-commons-1.15.12.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-webmvc\6.2.19\spring-webmvc-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-context\6.2.19\spring-context-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-expression\6.2.19\spring-expression-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.5.16\spring-boot-starter-validation-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.55\tomcat-embed-el-10.1.55.jar;C:\Users\kaoyu\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.3.Final\hibernate-validator-8.0.3.Final.jar;C:\Users\kaoyu\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\kaoyu\.m2\repository\org\jboss\logging\jboss-logging\3.6.3.Final\jboss-logging-3.6.3.Final.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\classmate\1.7.3\classmate-1.7.3.jar;C:\Users\kaoyu\.m2\repository\org\aspectj\aspectjweaver\1.9.25.1\aspectjweaver-1.9.25.1.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-security\3.5.16\spring-boot-starter-security-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-aop\6.2.19\spring-aop-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-config\6.5.11\spring-security-config-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-web\6.5.11\spring-security-web-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-oauth2-resource-server\3.5.16\spring-boot-starter-oauth2-resource-server-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-core\6.5.11\spring-security-core-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-crypto\6.5.11\spring-security-crypto-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-oauth2-resource-server\6.5.11\spring-security-oauth2-resource-server-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-oauth2-core\6.5.11\spring-security-oauth2-core-6.5.11.jar;C:\Users\kaoyu\.m2\repository\org\springframework\security\spring-security-oauth2-jose\6.5.11\spring-security-oauth2-jose-6.5.11.jar;C:\Users\kaoyu\.m2\repository\com\nimbusds\nimbus-jose-jwt\9.37.4\nimbus-jose-jwt-9.37.4.jar;C:\Users\kaoyu\.m2\repository\com\github\stephenc\jcip\jcip-annotations\1.0-1\jcip-annotations-1.0-1.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-data-redis\3.5.16\spring-boot-starter-data-redis-3.5.16.jar;C:\Users\kaoyu\.m2\repository\io\lettuce\lettuce-core\6.6.0.RELEASE\lettuce-core-6.6.0.RELEASE.jar;C:\Users\kaoyu\.m2\repository\redis\clients\authentication\redis-authx-core\0.1.1-beta2\redis-authx-core-0.1.1-beta2.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-common\4.1.135.Final\netty-common-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-handler\4.1.135.Final\netty-handler-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-resolver\4.1.135.Final\netty-resolver-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-buffer\4.1.135.Final\netty-buffer-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-transport-native-unix-common\4.1.135.Final\netty-transport-native-unix-common-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-codec\4.1.135.Final\netty-codec-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\netty\netty-transport\4.1.135.Final\netty-transport-4.1.135.Final.jar;C:\Users\kaoyu\.m2\repository\io\projectreactor\reactor-core\3.7.19\reactor-core-3.7.19.jar;C:\Users\kaoyu\.m2\repository\org\reactivestreams\reactive-streams\1.0.4\reactive-streams-1.0.4.jar;C:\Users\kaoyu\.m2\repository\org\springframework\data\spring-data-redis\3.5.13\spring-data-redis-3.5.13.jar;C:\Users\kaoyu\.m2\repository\org\springframework\data\spring-data-keyvalue\3.5.13\spring-data-keyvalue-3.5.13.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-tx\6.2.19\spring-tx-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-oxm\6.2.19\spring-oxm-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-context-support\6.2.19\spring-context-support-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\slf4j\slf4j-api\2.0.18\slf4j-api-2.0.18.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-data-jpa\3.5.16\spring-boot-starter-data-jpa-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-jdbc\3.5.16\spring-boot-starter-jdbc-3.5.16.jar;C:\Users\kaoyu\.m2\repository\com\zaxxer\HikariCP\6.3.3\HikariCP-6.3.3.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-jdbc\6.2.19\spring-jdbc-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\hibernate\orm\hibernate-core\6.6.53.Final\hibernate-core-6.6.53.Final.jar;C:\Users\kaoyu\.m2\repository\jakarta\persistence\jakarta.persistence-api\3.1.0\jakarta.persistence-api-3.1.0.jar;C:\Users\kaoyu\.m2\repository\jakarta\transaction\jakarta.transaction-api\2.0.1\jakarta.transaction-api-2.0.1.jar;C:\Users\kaoyu\.m2\repository\org\hibernate\common\hibernate-commons-annotations\7.0.3.Final\hibernate-commons-annotations-7.0.3.Final.jar;C:\Users\kaoyu\.m2\repository\io\smallrye\jandex\3.2.0\jandex-3.2.0.jar;C:\Users\kaoyu\.m2\repository\net\bytebuddy\byte-buddy\1.17.8\byte-buddy-1.17.8.jar;C:\Users\kaoyu\.m2\repository\org\glassfish\jaxb\jaxb-runtime\4.0.9\jaxb-runtime-4.0.9.jar;C:\Users\kaoyu\.m2\repository\org\glassfish\jaxb\jaxb-core\4.0.9\jaxb-core-4.0.9.jar;C:\Users\kaoyu\.m2\repository\org\eclipse\angus\angus-activation\2.0.3\angus-activation-2.0.3.jar;C:\Users\kaoyu\.m2\repository\org\glassfish\jaxb\txw2\4.0.9\txw2-4.0.9.jar;C:\Users\kaoyu\.m2\repository\com\sun\istack\istack-commons-runtime\4.1.2\istack-commons-runtime-4.1.2.jar;C:\Users\kaoyu\.m2\repository\jakarta\inject\jakarta.inject-api\2.0.1\jakarta.inject-api-2.0.1.jar;C:\Users\kaoyu\.m2\repository\org\antlr\antlr4-runtime\4.13.2\antlr4-runtime-4.13.2.jar;C:\Users\kaoyu\.m2\repository\org\springframework\data\spring-data-jpa\3.5.13\spring-data-jpa-3.5.13.jar;C:\Users\kaoyu\.m2\repository\org\springframework\data\spring-data-commons\3.5.13\spring-data-commons-3.5.13.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-orm\6.2.19\spring-orm-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-aspects\6.2.19\spring-aspects-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\flywaydb\flyway-core\11.7.2\flyway-core-11.7.2.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\dataformat\jackson-dataformat-toml\2.21.4\jackson-dataformat-toml-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.21.4\jackson-core-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.21.4\jackson-datatype-jsr310-2.21.4.jar;C:\Users\kaoyu\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.21\jackson-annotations-2.21.jar;C:\Users\kaoyu\.m2\repository\org\flywaydb\flyway-mysql\11.7.2\flyway-mysql-11.7.2.jar;C:\Users\kaoyu\.m2\repository\com\mysql\mysql-connector-j\9.7.0\mysql-connector-j-9.7.0.jar;C:\Users\kaoyu\.m2\repository\org\apache\poi\poi-ooxml\5.5.1\poi-ooxml-5.5.1.jar;C:\Users\kaoyu\.m2\repository\org\apache\poi\poi\5.5.1\poi-5.5.1.jar;C:\Users\kaoyu\.m2\repository\commons-codec\commons-codec\1.18.0\commons-codec-1.18.0.jar;C:\Users\kaoyu\.m2\repository\org\apache\commons\commons-math3\3.6.1\commons-math3-3.6.1.jar;C:\Users\kaoyu\.m2\repository\com\zaxxer\SparseBitSet\1.3\SparseBitSet-1.3.jar;C:\Users\kaoyu\.m2\repository\org\apache\poi\poi-ooxml-lite\5.5.1\poi-ooxml-lite-5.5.1.jar;C:\Users\kaoyu\.m2\repository\org\apache\xmlbeans\xmlbeans\5.3.0\xmlbeans-5.3.0.jar;C:\Users\kaoyu\.m2\repository\org\apache\commons\commons-compress\1.28.0\commons-compress-1.28.0.jar;C:\Users\kaoyu\.m2\repository\org\apache\commons\commons-lang3\3.17.0\commons-lang3-3.17.0.jar;C:\Users\kaoyu\.m2\repository\commons-io\commons-io\2.21.0\commons-io-2.21.0.jar;C:\Users\kaoyu\.m2\repository\com\github\virtuald\curvesapi\1.08\curvesapi-1.08.jar;C:\Users\kaoyu\.m2\repository\org\apache\logging\log4j\log4j-api\2.24.3\log4j-api-2.24.3.jar;C:\Users\kaoyu\.m2\repository\org\apache\commons\commons-collections4\4.5.0\commons-collections4-4.5.0.jar;C:\Users\kaoyu\.m2\repository\org\projectlombok\lombok\1.18.46\lombok-1.18.46.jar;C:\Users\kaoyu\.m2\repository\cn\edu\xmu\clonefactory\0.0.1-SNAPSHOT\clonefactory-0.0.1-SNAPSHOT.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.5.16\spring-boot-starter-test-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-test\3.5.16\spring-boot-test-3.5.16.jar;C:\Users\kaoyu\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.5.16\spring-boot-test-autoconfigure-3.5.16.jar;C:\Users\kaoyu\.m2\repository\com\jayway\jsonpath\json-path\2.9.0\json-path-2.9.0.jar;C:\Users\kaoyu\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.5\jakarta.xml.bind-api-4.0.5.jar;C:\Users\kaoyu\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.4\jakarta.activation-api-2.1.4.jar;C:\Users\kaoyu\.m2\repository\net\minidev\json-smart\2.5.2\json-smart-2.5.2.jar;C:\Users\kaoyu\.m2\repository\net\minidev\accessors-smart\2.5.2\accessors-smart-2.5.2.jar;C:\Users\kaoyu\.m2\repository\org\ow2\asm\asm\9.7.1\asm-9.7.1.jar;C:\Users\kaoyu\.m2\repository\org\assertj\assertj-core\3.27.7\assertj-core-3.27.7.jar;C:\Users\kaoyu\.m2\repository\org\awaitility\awaitility\4.2.2\awaitility-4.2.2.jar;C:\Users\kaoyu\.m2\repository\org\hamcrest\hamcrest\3.0\hamcrest-3.0.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter\5.12.2\junit-jupiter-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.12.2\junit-jupiter-api-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\kaoyu\.m2\repository\org\junit\platform\junit-platform-commons\1.12.2\junit-platform-commons-1.12.2.jar;C:\Users\kaoyu\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.12.2\junit-jupiter-params-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.12.2\junit-jupiter-engine-5.12.2.jar;C:\Users\kaoyu\.m2\repository\org\junit\platform\junit-platform-engine\1.12.2\junit-platform-engine-1.12.2.jar;C:\Users\kaoyu\.m2\repository\org\mockito\mockito-core\5.17.0\mockito-core-5.17.0.jar;C:\Users\kaoyu\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar;C:\Users\kaoyu\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\kaoyu\.m2\repository\org\mockito\mockito-junit-jupiter\5.17.0\mockito-junit-jupiter-5.17.0.jar;C:\Users\kaoyu\.m2\repository\org\skyscreamer\jsonassert\1.5.3\jsonassert-1.5.3.jar;C:\Users\kaoyu\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-core\6.2.19\spring-core-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-jcl\6.2.19\spring-jcl-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\springframework\spring-test\6.2.19\spring-test-6.2.19.jar;C:\Users\kaoyu\.m2\repository\org\xmlunit\xmlunit-core\2.10.4\xmlunit-core-2.10.4.jar;C:\Users\kaoyu\.m2\repository\org\jacoco\org.jacoco.agent\0.8.14\org.jacoco.agent-0.8.14-runtime.jar;"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="C:\Users\kaoyu"/>
+    <property name="user.language" value="zh"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.version.date" value="2025-10-21"/>
+    <property name="java.home" value="D:\codetool\environment\java-21jdk"/>
+    <property name="file.separator" value="\"/>
+    <property name="basedir" value="D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="java.awt.headless" value="true"/>
+    <property name="surefire.real.class.path" value="C:\Users\kaoyu\AppData\Local\Temp\surefire18393415486954744752\surefirebooter-20261121225621538_3.jar"/>
+    <property name="user.script" value=""/>
+    <property name="polyglot.engine.WarnInterpreterOnly" value="false"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="21.0.9+7-LTS-338"/>
+    <property name="user.name" value="kaoyu"/>
+    <property name="stdout.encoding" value="GBK"/>
+    <property name="path.separator" value=";"/>
+    <property name="os.version" value="10.0"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="C:\Users\kaoyu\.m2\repository"/>
+    <property name="java.vendor.url.bug" value="https://bugreport.java.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="C:\Users\kaoyu\AppData\Local\Temp\"/>
+    <property name="catalina.home" value="C:\Users\kaoyu\AppData\Local\Temp\tomcat.0.1087639828876322385"/>
+    <property name="com.zaxxer.hikari.pool_number" value="1"/>
+    <property name="java.version" value="21.0.9"/>
+    <property name="user.dir" value="D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="rbac.test.edition" value="func"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="PID" value="48836"/>
+    <property name="sun.os.patch.level" value=""/>
+    <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
+    <property name="catalina.base" value="C:\Users\kaoyu\AppData\Local\Temp\tomcat.0.1087639828876322385"/>
+    <property name="native.encoding" value="GBK"/>
+    <property name="java.library.path" value="D:\codetool\environment\java-21jdk\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\native\powershell;C:\Users\kaoyu\.codex\tmp\arg0-windows\codex-arg04dERss;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\native\powershell;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\native\libheif\libheif\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\native\jxrlib\jxrlib\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\native\poppler\Library\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\native\tectonic;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\bin\override;D:\codetool\environment\java-21jdk\bin;C:\Python314\Scripts\;C:\Python314\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Windows Kits\10\Windows Performance Toolkit\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;D:\codetool\environment\mingw64\bin;C:\Program Files\nodejs\;C:\ProgramData\chocolatey\bin;D:\codetool\Git\cmd;D:\codetool\environment\mingw64\bin;D:\codetool\environment\java-21jdk\bin;D:\codetool\msys2\ucrt64\bin;D:\codetool\Mysql\bin;D:\codetool\environment\cmake-4.3.0-rc3-windows-x86_64\bin;D:\codetool\environment\opencv460\bin;D:\codetool\environment\opencv460\lib;D:\codetool\environment\opencv460\include;C:\Program Files\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\GitHub CLI\;D:\codetool\CodeArts Agent\bin;C:\Program Files (x86)\Microsoft SQL Server\170\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\180\Tools\Binn\;C:\Program Files\Microsoft SQL Server\170\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\170\DTS\Binn\;C:\Program Files\Microsoft SQL Server\130\DTS\Binn\;C:\Program Files\Microsoft SQL Server\140\DTS\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Microsoft SQL Server\160\DTS\Binn\;D:\pyt\Scripts\;D:\pyt\;C:\Users\kaoyu\AppData\Local\Programs\Python\Launcher\;C:\Users\kaoyu\AppData\Local\Microsoft\WindowsApps;D:\codetool\mingw-w64\mingw64\bin;C:\Users\kaoyu\.dotnet\tools;D:\Download\mingw64\bin;D:\codetool\Microsoft VS Code\bin;C:\Users\kaoyu\AppData\Roaming\npm;D:\codetool\environment\FFmpeg\bin;D:\codetool\Microsoft VS Code\bin\copilot-shim;C:\Users\kaoyu\AppData\Local\Programs\DockerDesktop\resources\bin;C:\Users\kaoyu\.m2\wrapper\dists\apache-maven-3.9.11\03d7e36a140982eea48e22c1dcac01d8862b2550b2939e09a0809bbc5182a5bc\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\bin\fallback;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\node\bin;C:\Program Files\WindowsApps\OpenAI.CodexPrimaryRuntime.v26-1119-907-0_26.1119.907.0_x64__3k8sg7r9htsxt\dependencies\native\git\cmd;C:\Program Files\WindowsApps\OpenAI.Codex_26.1117.3838.0_x64__2p2nqsd0c76g0\app\resources;."/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="stderr.encoding" value="GBK"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="21.0.9+7-LTS-338"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="rbac.build.directory" value="target/jwt-lifecycle"/>
+    <property name="java.class.version" value="65.0"/>
+    <property name="LOGGED_APPLICATION_NAME" value="[rbac1-func] "/>
+  </properties>
+  <testcase name="observedIneligibleEmployeeCannotReviveLoginByReEnabling" classname="authentication.JwtLoginHttpTest" time="1.436">
+    <system-out><![CDATA[
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-21T22:56:31.929+08:00  INFO 48836 --- [rbac1-func] [           main] authentication.JwtLoginHttpTest          : Starting JwtLoginHttpTest using Java 21.0.9 with PID 48836 (started by kaoyu in D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func)
+2026-11-21T22:56:31.933+08:00  INFO 48836 --- [rbac1-func] [           main] authentication.JwtLoginHttpTest          : No active profile set, falling back to 1 default profile: "default"
+2026-11-21T22:56:32.903+08:00  INFO 48836 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-21T22:56:32.903+08:00  INFO 48836 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-21T22:56:33.271+08:00  INFO 48836 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 341 ms. Found 14 JPA repository interfaces.
+2026-11-21T22:56:34.673+08:00  INFO 48836 --- [rbac1-func] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2026-11-21T22:56:34.697+08:00  INFO 48836 --- [rbac1-func] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-21T22:56:34.697+08:00  INFO 48836 --- [rbac1-func] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-21T22:56:34.826+08:00  INFO 48836 --- [rbac1-func] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-21T22:56:34.827+08:00  INFO 48836 --- [rbac1-func] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2873 ms
+2026-11-21T22:56:35.353+08:00  INFO 48836 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-21T22:56:35.768+08:00  INFO 48836 --- [rbac1-func] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@11f4f7ab
+2026-11-21T22:56:35.770+08:00  INFO 48836 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-21T22:56:35.840+08:00  INFO 48836 --- [rbac1-func] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:33327/ooad_rbac1_func_test (MySQL 8.4)
+2026-11-21T22:56:35.868+08:00  WARN 48836 --- [rbac1-func] [           main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: MySQL 8.4 is newer than this version of Flyway and support has not been tested. The latest supported version of MySQL is 8.1.
+2026-11-21T22:56:35.946+08:00  INFO 48836 --- [rbac1-func] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.057s)
+2026-11-21T22:56:35.974+08:00  INFO 48836 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `ooad_rbac1_func_test`: 9
+2026-11-21T22:56:35.977+08:00  INFO 48836 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Schema `ooad_rbac1_func_test` is up to date. No migration necessary.
+2026-11-21T22:56:36.121+08:00  INFO 48836 --- [rbac1-func] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-21T22:56:36.214+08:00  INFO 48836 --- [rbac1-func] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-11-21T22:56:36.269+08:00  INFO 48836 --- [rbac1-func] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-21T22:56:36.457+08:00  INFO 48836 --- [rbac1-func] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-21T22:56:36.599+08:00  INFO 48836 --- [rbac1-func] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.4.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-21T22:56:37.863+08:00  INFO 48836 --- [rbac1-func] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-21T22:56:37.913+08:00  INFO 48836 --- [rbac1-func] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-21T22:56:38.487+08:00  INFO 48836 --- [rbac1-func] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-21T22:56:43.232+08:00  INFO 48836 --- [rbac1-func] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 7993 (http) with context path '/'
+2026-11-21T22:56:43.241+08:00  INFO 48836 --- [rbac1-func] [           main] authentication.JwtLoginHttpTest          : Started JwtLoginHttpTest in 12.018 seconds (process running for 21.215)
+2026-11-21T22:56:43.258+08:00 DEBUG 48836 --- [rbac1-func] [           main] r.i.i.InitializationCommand              : run 开始
+2026-11-21T22:56:43.258+08:00 DEBUG 48836 --- [rbac1-func] [           main] r.i.i.InitializationCommand              : run 完成，耗时 0 ms
+2026-11-21T22:56:43.722+08:00  INFO 48836 --- [rbac1-func] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-21T22:56:43.722+08:00  INFO 48836 --- [rbac1-func] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-21T22:56:43.723+08:00  INFO 48836 --- [rbac1-func] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-21T22:56:43.767+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:43.771+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : csrf 完成，耗时 3 ms
+2026-11-21T22:56:43.893+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:43.894+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:44.067+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.AccountAuthentication              : verify 完成，耗时 171 ms
+2026-11-21T22:56:44.072+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:44.086+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.WorkspaceService      : current 完成，耗时 14 ms
+2026-11-21T22:56:44.093+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:44.096+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:44.103+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 7 ms
+2026-11-21T22:56:44.579+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.LoginAuthentication   : start 完成，耗时 485 ms
+2026-11-21T22:56:44.581+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : login 完成，耗时 686 ms
+2026-11-21T22:56:44.641+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:44.644+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+]]></system-out>
+  </testcase>
+  <testcase name="cookieEntrancesRequireCsrfAndDoNotAcceptBodyRefreshAlias" classname="authentication.JwtLoginHttpTest" time="0.33">
+    <system-out><![CDATA[2026-11-21T22:56:44.824+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:44.824+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:44.831+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:44.831+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:44.897+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.AccountAuthentication              : verify 完成，耗时 66 ms
+2026-11-21T22:56:44.901+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:44.908+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T22:56:44.911+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:44.914+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:44.919+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:44.926+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.LoginAuthentication   : start 完成，耗时 14 ms
+2026-11-21T22:56:44.926+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : login 完成，耗时 95 ms
+2026-11-21T22:56:44.932+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:44.932+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:44.946+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:44.946+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:44.947+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 0 ms，异常 AuthenticationFailure
+2026-11-21T22:56:44.947+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : refresh 失败，耗时 1 ms，异常 AuthenticationFailure
+2026-11-21T22:56:44.960+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:44.965+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 4 ms
+2026-11-21T22:56:44.993+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : me 开始
+2026-11-21T22:56:44.996+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:45.001+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 4 ms
+2026-11-21T22:56:45.009+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:45.021+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 完成，耗时 11 ms
+2026-11-21T22:56:45.023+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : me 完成，耗时 31 ms
+]]></system-out>
+  </testcase>
+  <testcase name="unknownSecretForKnownSidDoesNotRevokeLegitimateLogin" classname="authentication.JwtLoginHttpTest" time="0.348">
+    <system-out><![CDATA[2026-11-21T22:56:45.157+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:45.158+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:45.165+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:45.165+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:45.234+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 完成，耗时 68 ms
+2026-11-21T22:56:45.237+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:45.251+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 13 ms
+2026-11-21T22:56:45.256+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:45.259+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:45.264+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 6 ms
+2026-11-21T22:56:45.279+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 完成，耗时 22 ms
+2026-11-21T22:56:45.279+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 完成，耗时 114 ms
+2026-11-21T22:56:45.286+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:45.286+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:45.295+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:45.295+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:45.302+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 6 ms，异常 AuthenticationFailure
+2026-11-21T22:56:45.303+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : refresh 失败，耗时 7 ms，异常 AuthenticationFailure
+2026-11-21T22:56:45.317+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:45.323+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 5 ms
+2026-11-21T22:56:45.328+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : me 开始
+2026-11-21T22:56:45.332+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:45.337+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 4 ms
+2026-11-21T22:56:45.344+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:45.353+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:45.356+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : me 完成，耗时 27 ms
+2026-11-21T22:56:45.361+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:45.361+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:45.368+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:45.371+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T22:56:45.380+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : refresh 完成，耗时 18 ms
+2026-11-21T22:56:45.380+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : refresh 完成，耗时 19 ms
+]]></system-out>
+  </testcase>
+  <testcase name="logoutIsImmediateAndIndependentOfOtherBrowsers" classname="authentication.JwtLoginHttpTest" time="0.395">
+    <system-out><![CDATA[2026-11-21T22:56:45.497+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:45.497+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:45.503+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:45.503+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:45.568+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 完成，耗时 65 ms
+2026-11-21T22:56:45.574+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:45.580+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T22:56:45.583+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:45.585+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:45.589+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 4 ms
+2026-11-21T22:56:45.596+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 完成，耗时 13 ms
+2026-11-21T22:56:45.597+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 完成，耗时 94 ms
+2026-11-21T22:56:45.601+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:45.602+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:45.607+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:45.608+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:45.678+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 完成，耗时 70 ms
+2026-11-21T22:56:45.683+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:45.691+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T22:56:45.693+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:45.696+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:45.698+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:45.706+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 完成，耗时 12 ms
+2026-11-21T22:56:45.706+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 完成，耗时 99 ms
+2026-11-21T22:56:45.711+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:45.711+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:45.715+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : logout 开始
+2026-11-21T22:56:45.716+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : end 开始
+2026-11-21T22:56:45.719+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : end 完成，耗时 3 ms
+2026-11-21T22:56:45.720+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : logout 完成，耗时 4 ms
+2026-11-21T22:56:45.741+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:45.745+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T22:56:45.749+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 开始
+2026-11-21T22:56:45.751+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:45.755+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:45.759+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:45.766+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T22:56:45.769+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 完成，耗时 19 ms
+2026-11-21T22:56:45.773+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:45.774+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:45.778+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : logout 开始
+2026-11-21T22:56:45.778+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : end 开始
+2026-11-21T22:56:45.778+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : end 完成，耗时 0 ms
+2026-11-21T22:56:45.779+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : logout 完成，耗时 0 ms
+]]></system-out>
+  </testcase>
+  <testcase name="disabledEmployeeCannotRefreshAndRecordIsRevoked" classname="authentication.JwtLoginHttpTest" time="0.281">
+    <system-out><![CDATA[2026-11-21T22:56:45.900+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:45.902+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:45.907+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:45.907+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:45.973+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 完成，耗时 66 ms
+2026-11-21T22:56:45.975+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:45.984+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:45.988+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:45.991+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:45.995+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:46.005+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 完成，耗时 17 ms
+2026-11-21T22:56:46.006+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 完成，耗时 99 ms
+2026-11-21T22:56:46.030+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:46.030+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:46.034+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:46.034+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:46.041+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:46.044+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T22:56:46.049+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 15 ms，异常 AuthenticationFailure
+2026-11-21T22:56:46.050+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : refresh 失败，耗时 15 ms，异常 AuthenticationFailure
+]]></system-out>
+  </testcase>
+  <testcase name="expiredAccessCanRefreshAndLogoutButCannotAccessBusiness" classname="authentication.JwtLoginHttpTest" time="0.274">
+    <system-out><![CDATA[2026-11-21T22:56:46.183+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:46.184+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:46.189+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:46.189+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:46.256+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.AccountAuthentication              : verify 完成，耗时 67 ms
+2026-11-21T22:56:46.259+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:46.266+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T22:56:46.269+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:46.271+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:46.274+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T22:56:46.281+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : start 完成，耗时 12 ms
+2026-11-21T22:56:46.282+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : login 完成，耗时 93 ms
+2026-11-21T22:56:46.295+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:46.295+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:46.299+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:46.299+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:46.305+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:46.308+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T22:56:46.321+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : refresh 完成，耗时 22 ms
+2026-11-21T22:56:46.322+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : refresh 完成，耗时 22 ms
+2026-11-21T22:56:46.325+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:46.326+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:46.330+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : logout 开始
+2026-11-21T22:56:46.330+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : end 开始
+2026-11-21T22:56:46.334+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : end 完成，耗时 3 ms
+2026-11-21T22:56:46.334+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : logout 完成，耗时 4 ms
+]]></system-out>
+  </testcase>
+  <testcase name="otherEditionIssuerAndAudienceAreRejectedEvenWithSameTestKey" classname="authentication.JwtLoginHttpTest" time="0.264">
+    <system-out><![CDATA[2026-11-21T22:56:46.460+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:46.460+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:46.466+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:46.467+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:46.553+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 完成，耗时 86 ms
+2026-11-21T22:56:46.557+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:46.566+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:46.571+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:46.574+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:46.578+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:46.588+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 完成，耗时 16 ms
+2026-11-21T22:56:46.588+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 完成，耗时 122 ms
+]]></system-out>
+  </testcase>
+  <testcase name="loginIssuesBearerAndCookieCannotAuthenticateBusiness" classname="authentication.JwtLoginHttpTest" time="0.302">
+    <system-out><![CDATA[2026-11-21T22:56:46.735+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:46.735+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:46.742+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:46.742+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:46.809+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.AccountAuthentication              : verify 完成，耗时 66 ms
+2026-11-21T22:56:46.813+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:46.822+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:46.826+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:46.829+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:46.834+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 4 ms
+2026-11-21T22:56:46.844+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : start 完成，耗时 17 ms
+2026-11-21T22:56:46.844+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : login 完成，耗时 102 ms
+2026-11-21T22:56:46.860+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:46.864+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 4 ms
+2026-11-21T22:56:46.869+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 开始
+2026-11-21T22:56:46.872+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:46.875+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:46.880+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:46.889+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:46.893+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 完成，耗时 24 ms
+]]></system-out>
+  </testcase>
+  <testcase name="replacingBrowserLoginRevokesOldSidButFailedLoginPreservesCurrent" classname="authentication.JwtLoginHttpTest" time="0.643">
+    <system-out><![CDATA[2026-11-21T22:56:47.031+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:47.031+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:47.036+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:47.036+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:47.104+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 完成，耗时 68 ms
+2026-11-21T22:56:47.109+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:47.119+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 完成，耗时 10 ms
+2026-11-21T22:56:47.123+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:47.125+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:47.129+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:47.138+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 完成，耗时 16 ms
+2026-11-21T22:56:47.139+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 完成，耗时 103 ms
+2026-11-21T22:56:47.143+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:47.144+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:47.151+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:47.151+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:47.223+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 完成，耗时 72 ms
+2026-11-21T22:56:47.226+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:47.236+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:47.240+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:47.242+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:47.245+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T22:56:47.253+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 完成，耗时 13 ms
+2026-11-21T22:56:47.253+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 完成，耗时 102 ms
+2026-11-21T22:56:47.259+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:47.259+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:47.264+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:47.264+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:47.330+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 完成，耗时 65 ms
+2026-11-21T22:56:47.333+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:47.345+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 11 ms
+2026-11-21T22:56:47.349+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:47.352+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:47.356+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 4 ms
+2026-11-21T22:56:47.369+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 完成，耗时 20 ms
+2026-11-21T22:56:47.370+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 完成，耗时 105 ms
+2026-11-21T22:56:47.390+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:47.395+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T22:56:47.400+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 开始
+2026-11-21T22:56:47.404+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:47.408+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 4 ms
+2026-11-21T22:56:47.415+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:47.426+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:47.429+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 完成，耗时 28 ms
+2026-11-21T22:56:47.433+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:47.433+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:47.438+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:47.438+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:47.502+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.AccountAuthentication              : verify 失败，耗时 64 ms，异常 BadCredentialsException
+2026-11-21T22:56:47.502+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : login 失败，耗时 64 ms，异常 BadCredentialsException
+2026-11-21T22:56:47.515+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:47.518+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T22:56:47.522+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : me 开始
+2026-11-21T22:56:47.525+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:47.528+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T22:56:47.533+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:47.543+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:47.546+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : me 完成，耗时 23 ms
+]]></system-out>
+  </testcase>
+  <testcase name="refreshRotatesAndConfirmedReuseRevokesAllAccessForThatLogin" classname="authentication.JwtLoginHttpTest" time="0.34">
+    <system-out><![CDATA[2026-11-21T22:56:47.688+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:47.689+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:47.694+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:47.694+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:47.764+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.a.AccountAuthentication              : verify 完成，耗时 69 ms
+2026-11-21T22:56:47.767+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:47.776+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:47.780+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:47.783+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:47.787+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:47.797+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.LoginAuthentication   : start 完成，耗时 16 ms
+2026-11-21T22:56:47.798+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : login 完成，耗时 103 ms
+2026-11-21T22:56:47.803+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:47.803+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:47.808+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:47.808+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:47.815+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:47.818+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T22:56:47.826+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.LoginAuthentication   : refresh 完成，耗时 17 ms
+2026-11-21T22:56:47.826+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : refresh 完成，耗时 17 ms
+2026-11-21T22:56:47.837+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:47.841+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T22:56:47.845+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : me 开始
+2026-11-21T22:56:47.848+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:47.851+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:47.857+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:47.865+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 8 ms
+2026-11-21T22:56:47.870+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : me 完成，耗时 25 ms
+2026-11-21T22:56:47.875+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:47.875+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:47.879+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 4 ms，异常 AuthenticationFailure
+2026-11-21T22:56:47.879+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : refresh 失败，耗时 4 ms，异常 AuthenticationFailure
+]]></system-out>
+  </testcase>
+  <testcase name="redisFailureDuringRefreshDoesNotClearCookieOrPretendLogoutSucceeded" classname="authentication.JwtLoginHttpTest" time="0.266">
+    <system-out><![CDATA[2026-11-21T22:56:48.012+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:48.012+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:48.019+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:48.019+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:48.090+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.AccountAuthentication              : verify 完成，耗时 70 ms
+2026-11-21T22:56:48.093+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:48.105+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.WorkspaceService      : current 完成，耗时 11 ms
+2026-11-21T22:56:48.109+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:48.112+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:48.117+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 4 ms
+2026-11-21T22:56:48.126+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : start 完成，耗时 17 ms
+2026-11-21T22:56:48.127+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : login 完成，耗时 107 ms
+2026-11-21T22:56:48.133+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:48.133+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:48.137+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:48.139+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:48.139+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 0 ms，异常 RedisConnectionFailureException
+2026-11-21T22:56:48.139+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : refresh 失败，耗时 0 ms，异常 RedisConnectionFailureException
+2026-11-21T22:56:48.148+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:48.149+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:48.154+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : logout 开始
+2026-11-21T22:56:48.154+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : end 开始
+2026-11-21T22:56:48.154+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : end 失败，耗时 0 ms，异常 RedisConnectionFailureException
+2026-11-21T22:56:48.155+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : logout 失败，耗时 1 ms，异常 RedisConnectionFailureException
+]]></system-out>
+  </testcase>
+  <testcase name="concurrentRefreshHasOneSuccessAndOneReuseRejection" classname="authentication.JwtLoginHttpTest" time="0.291">
+    <system-out><![CDATA[2026-11-21T22:56:48.289+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:48.289+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:48.294+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:48.295+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:48.367+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 完成，耗时 72 ms
+2026-11-21T22:56:48.370+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:48.380+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:48.384+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:48.386+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:48.390+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:48.399+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 完成，耗时 15 ms
+2026-11-21T22:56:48.399+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 完成，耗时 105 ms
+2026-11-21T22:56:48.404+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:48.405+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:48.411+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:48.411+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:48.412+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:48.412+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:48.419+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:48.421+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:48.422+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T22:56:48.425+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 4 ms
+2026-11-21T22:56:48.432+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.LoginAuthentication   : refresh 完成，耗时 19 ms
+2026-11-21T22:56:48.432+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : refresh 完成，耗时 20 ms
+2026-11-21T22:56:48.435+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 22 ms，异常 AuthenticationFailure
+2026-11-21T22:56:48.435+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : refresh 失败，耗时 22 ms，异常 AuthenticationFailure
+]]></system-out>
+  </testcase>
+  <testcase name="employeeDatabaseFailureDuringRefreshDoesNotConsumeCredential" classname="authentication.JwtLoginHttpTest" time="0.284">
+    <system-out><![CDATA[2026-11-21T22:56:48.588+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:48.588+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:48.593+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:48.593+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:48.666+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 完成，耗时 73 ms
+2026-11-21T22:56:48.672+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:48.682+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 完成，耗时 9 ms
+2026-11-21T22:56:48.685+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:48.687+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:48.691+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T22:56:48.699+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 完成，耗时 13 ms
+2026-11-21T22:56:48.700+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 完成，耗时 106 ms
+2026-11-21T22:56:48.705+08:00 DEBUG 48836 --- [rbac1-func] [           main] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:48.705+08:00 DEBUG 48836 --- [rbac1-func] [           main] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 0 ms
+2026-11-21T22:56:48.711+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:48.711+08:00 DEBUG 48836 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:48.716+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T22:56:48.716+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T22:56:48.722+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T22:56:48.722+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 失败，耗时 0 ms，异常 DataAccessResourceFailureException
+2026-11-21T22:56:48.727+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 11 ms，异常 DataAccessResourceFailureException
+2026-11-21T22:56:48.728+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : refresh 失败，耗时 12 ms，异常 DataAccessResourceFailureException
+]]></system-out>
+  </testcase>
+  <testcase name="redisFailureIs503AndInvalidJwtIsRejectedBeforeRedis" classname="authentication.JwtLoginHttpTest" time="0.235">
+    <system-out><![CDATA[2026-11-21T22:56:48.864+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T22:56:48.864+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T22:56:48.868+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 开始
+2026-11-21T22:56:48.868+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T22:56:48.933+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 完成，耗时 65 ms
+2026-11-21T22:56:48.935+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T22:56:48.943+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T22:56:48.946+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T22:56:48.949+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T22:56:48.952+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T22:56:48.959+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 完成，耗时 12 ms
+2026-11-21T22:56:48.959+08:00 DEBUG 48836 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 完成，耗时 91 ms
+]]></system-out>
+  </testcase>
+</testsuite>

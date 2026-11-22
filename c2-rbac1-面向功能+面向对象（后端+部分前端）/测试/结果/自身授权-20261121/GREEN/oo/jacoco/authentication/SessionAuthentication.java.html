@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SessionAuthentication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">SessionAuthentication.java</span></div><h1>SessionAuthentication.java</h1><pre class="source lang-java linenums">// 文件职责：核验账号并建立、读取和结束可信登录会话。
+// 协作关系：衔接 Spring Security、Spring Session Redis 和员工启用状态。
+package authentication;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import java.util.UUID;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.stereotype.Component;
+import organization.Employee;
+import organization.EmployeeRepository;
+
+/** 验证账号并管理 Spring Security 上下文在 Redis 会话中的生命周期。 */
+@Component
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+public class SessionAuthentication {
+    private final EmployeeRepository employees;
+    private final LoginAccountRepository accounts;
+    private final PasswordEncoder passwords;
+    private final SecurityContextRepository contexts;
+    private final CsrfTokenRepository tokens;
+    private final String fallbackHash;
+
+    /** 给未知账号准备固定成本的密码校验，统一失败响应。 */
+    public SessionAuthentication(EmployeeRepository employees, LoginAccountRepository accounts,
+                                 PasswordEncoder passwords, SecurityContextRepository contexts,
+<span class="fc" id="L37">                                 CsrfTokenRepository tokens) {</span>
+<span class="fc" id="L38">        this.employees = employees;</span>
+<span class="fc" id="L39">        this.accounts = accounts;</span>
+<span class="fc" id="L40">        this.passwords = passwords;</span>
+<span class="fc" id="L41">        this.contexts = contexts;</span>
+<span class="fc" id="L42">        this.tokens = tokens;</span>
+<span class="fc" id="L43">        this.fallbackHash = passwords.encode(UUID.randomUUID().toString());</span>
+<span class="fc" id="L44">    }</span>
+
+    /** 校验账号密码及当前员工状态。 */
+    public Employee verify(String username, String password) {
+<span class="fc" id="L48">        Employee employee = employees.findByUsername(username).orElse(null);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        LoginAccount account = employee == null ? null : accounts.findById(employee.getId()).orElse(null);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        boolean matched = passwords.matches(password, account == null ? fallbackHash : account.getPasswordHash());</span>
+<span class="pc bpc" id="L51" title="1 of 6 branches missed.">        if (!matched || account == null || !CurrentEmployeeService.canSignIn(employee)) {</span>
+<span class="fc" id="L52">            throw new BadCredentialsException(&quot;用户名或密码无效，或账号不可登录&quot;);</span>
+        }
+<span class="fc" id="L54">        return employee;</span>
+    }
+
+    /** 轮换匿名会话，清除旧令牌，只保存可信员工 ID。 */
+    public void start(Long employeeId, HttpServletRequest request, HttpServletResponse response) {
+<span class="fc" id="L59">        request.getSession();</span>
+<span class="fc" id="L60">        request.changeSessionId();</span>
+<span class="fc" id="L61">        tokens.saveToken(null, request, response);</span>
+
+<span class="fc" id="L63">        Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(employeeId, null, List.of());</span>
+<span class="fc" id="L64">        SecurityContext context = SecurityContextHolder.createEmptyContext();</span>
+<span class="fc" id="L65">        context.setAuthentication(authentication);</span>
+<span class="fc" id="L66">        contexts.saveContext(context, request, response);</span>
+<span class="fc" id="L67">        SecurityContextHolder.setContext(context);</span>
+<span class="fc" id="L68">    }</span>
+
+    /** 失效服务端会话并清除当前身份。 */
+    public void end(HttpServletRequest request, HttpServletResponse response) {
+<span class="fc" id="L72">        new SecurityContextLogoutHandler().logout(request, response,</span>
+<span class="fc" id="L73">                SecurityContextHolder.getContext().getAuthentication());</span>
+<span class="fc" id="L74">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

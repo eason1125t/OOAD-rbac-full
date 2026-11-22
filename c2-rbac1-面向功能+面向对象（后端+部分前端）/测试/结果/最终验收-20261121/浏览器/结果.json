@@ -1,0 +1,29 @@
+{
+  "startedUtc": "2026-11-21T09:43:27.178445+00:00",
+  "suite": "full",
+  "databases": {
+    "func": "ooad_rbac1_func_final_test_20261121094326",
+    "oo": "ooad_rbac1_oo_final_test_20261121094326"
+  },
+  "ports": [
+    28181,
+    28182,
+    15173
+  ],
+  "jars": {
+    "func": "c8c667e65c66589bfcc03c5567fd5ca956d81c713ec8f3f9185d690c91c1433a",
+    "oo": "8e5cacba2537e0e8638d1449b10ebfb4b778fa457a3c728e20d86d17bca03f4a"
+  },
+  "exitCode": 0,
+  "stats": {
+    "startTime": "2026-11-21T09:44:55.983Z",
+    "duration": 116675.58499999999,
+    "expected": 35,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "frontendAndTestSha256": "e65cf8e15c097e4f7b9e77703f3d583a2d6f34e3d5ac7b92354679d50fe577eb",
+  "temporaryBackendsStopped": true,
+  "completedUtc": "2026-11-21T09:46:52.902942+00:00"
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthenticationConfiguration.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">AuthenticationConfiguration.java</span></div><h1>AuthenticationConfiguration.java</h1><pre class="source lang-java linenums">// 文件职责：绑定认证配置与时钟，并仅为 Web 应用读取外部密钥、装配 JWT 和 Cookie CSRF。
+// 协作关系：安全链依赖此处的组件；初始化命令不需要密钥，不生成默认生产密钥。
+package authentication;
+
+import java.time.Clock;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+
+@Configuration(proxyBeanMethods = false)
+@EnableConfigurationProperties(AuthenticationProperties.class)
+<span class="fc" id="L15">public class AuthenticationConfiguration {</span>
+    @Bean
+<span class="fc" id="L17">    Clock authenticationClock() { return Clock.systemUTC(); }</span>
+
+    @Bean
+    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+    JwtAccessTokens jwtAccessTokens(AuthenticationProperties settings, Clock clock) {
+<span class="fc" id="L22">        return JwtAccessTokens.fromPem(settings.issuer(), settings.audience(), settings.privateKeyLocation(),</span>
+<span class="fc" id="L23">                settings.publicKeyLocation(), clock, settings.accessTtl());</span>
+    }
+
+    @Bean
+    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+    JwtEmployeeAuthentication jwtEmployeeAuthentication(CurrentEmployeeService employees, RedisLoginStore logins) {
+<span class="fc" id="L29">        return new JwtEmployeeAuthentication(employees, logins);</span>
+    }
+
+    @Bean
+    @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+    CsrfTokenRepository csrfTokens(AuthenticationProperties settings) {
+<span class="fc" id="L35">        CookieCsrfTokenRepository tokens = new CookieCsrfTokenRepository();</span>
+<span class="fc" id="L36">        tokens.setCookieName(settings.csrfCookieName());</span>
+<span class="fc" id="L37">        tokens.setCookiePath(settings.cookiePath());</span>
+<span class="fc" id="L38">        tokens.setHeaderName(&quot;X-CSRF-TOKEN&quot;);</span>
+<span class="fc" id="L39">        tokens.setCookieCustomizer(cookie -&gt; cookie.httpOnly(true).secure(settings.cookieSecure()).sameSite(&quot;Strict&quot;));</span>
+<span class="fc" id="L40">        return tokens;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

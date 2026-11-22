@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurrentEmployeeService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">CurrentEmployeeService.java</span></div><h1>CurrentEmployeeService.java</h1><pre class="source lang-java linenums">// 文件职责：根据可信员工 ID 读取最新有效身份，统一员工可登录条件。
+// 协作关系：供安全过滤器、身份 Controller 和授权 Service 使用；不读取 Cookie 或计算业务权限。
+package authentication;
+
+import contract.BusinessAccessException;
+import contract.BusinessAccessException.Reason;
+import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import organization.Employee;
+import organization.EmployeeRepository;
+
+/** 身份适配层提供可信 ID，本服务只读取当前员工状态，不建立会话或授予权限。 */
+@Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+public class CurrentEmployeeService {
+    private final EmployeeRepository employees;
+
+    /** 每次读取最新记录；过滤器使用空结果结束已失效的会话，不缓存员工状态。 */
+    public Optional&lt;Employee&gt; findActive(Long employeeId) {
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        return employeeId == null ? Optional.empty()</span>
+<span class="fc" id="L24">                : employees.findById(employeeId).filter(CurrentEmployeeService::canSignIn);</span>
+    }
+
+    /** 用例需要有效身份时统一返回认证错误，存储故障保持原异常传播。 */
+    public Employee requireActive(Long employeeId) {
+<span class="fc" id="L29">        return findActive(employeeId)</span>
+<span class="fc" id="L30">                .orElseThrow(() -&gt; new BusinessAccessException(Reason.AUTHENTICATION_REQUIRED));</span>
+    }
+
+    /** 登录及授角共用资格规则；此谓词不能证明任意传入员工已经通过认证。 */
+    public static boolean canSignIn(Employee employee) {
+<span class="fc bfc" id="L35" title="All 6 branches covered.">        return employee != null &amp;&amp; employee.isEnabled() &amp;&amp; employee.getOrganizationId() != null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

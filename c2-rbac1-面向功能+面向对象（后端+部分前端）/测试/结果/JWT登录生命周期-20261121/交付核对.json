@@ -1,0 +1,177 @@
+{
+  "status": "passed",
+  "date": "2026-11-21",
+  "scope": "JWT stage 3 backend only; frontend/deployment/browser/Apifox pending",
+  "baselineFilesChecked": 269,
+  "changedBaselineFiles": [
+    "api/openapi.identity-planned.yaml",
+    "api/openapi.yaml",
+    "api/统一身份鉴权接口契约.md",
+    "backend-func/pom.xml",
+    "backend-func/src/main/java/authentication/AuthController.java",
+    "backend-func/src/main/java/authentication/JwtAccessTokens.java",
+    "backend-func/src/main/java/authentication/JwtEmployeeAuthentication.java",
+    "backend-func/src/main/java/authentication/README.md",
+    "backend-func/src/main/java/authentication/SessionAuthentication.java",
+    "backend-func/src/main/java/authentication/SessionStoreFailure.java",
+    "backend-func/src/main/java/authorization/README.md",
+    "backend-func/src/main/java/authorization/SecurityConfiguration.java",
+    "backend-func/src/main/java/contract/ApiExceptionHandler.java",
+    "backend-func/src/main/java/contract/LayerLoggingAspect.java",
+    "backend-func/src/main/java/contract/README.md",
+    "backend-func/src/main/resources/application.yaml",
+    "backend-oo/pom.xml",
+    "backend-oo/src/main/java/authentication/AuthController.java",
+    "backend-oo/src/main/java/authentication/JwtAccessTokens.java",
+    "backend-oo/src/main/java/authentication/JwtEmployeeAuthentication.java",
+    "backend-oo/src/main/java/authentication/README.md",
+    "backend-oo/src/main/java/authentication/SessionAuthentication.java",
+    "backend-oo/src/main/java/authentication/SessionStoreFailure.java",
+    "backend-oo/src/main/java/authorization/README.md",
+    "backend-oo/src/main/java/authorization/SecurityConfiguration.java",
+    "backend-oo/src/main/java/contract/ApiExceptionHandler.java",
+    "backend-oo/src/main/java/contract/LayerLoggingAspect.java",
+    "backend-oo/src/main/java/contract/README.md",
+    "backend-oo/src/main/resources/application.yaml",
+    "测试/后端/common/java/authentication/JwtEmployeeAuthenticationTest.java",
+    "测试/后端/common/java/contract/AuthSessionTest.java"
+  ],
+  "renames": {
+    "backend-func/src/main/java/authentication/SessionStoreFailure.java": "backend-func/src/main/java/authentication/AuthenticationStoreFailure.java",
+    "backend-oo/src/main/java/authentication/SessionStoreFailure.java": "backend-oo/src/main/java/authentication/AuthenticationStoreFailure.java",
+    "测试/后端/common/java/contract/AuthSessionTest.java": "测试/后端/common/java/contract/AuthHttpTest.java"
+  },
+  "authEditionEquality": {
+    "authentication/AuthController.java": true,
+    "authentication/AuthenticationConfiguration.java": true,
+    "authentication/AuthenticationProperties.java": true,
+    "authentication/AuthenticationFailure.java": true,
+    "authentication/AuthenticationStoreFailure.java": true,
+    "authentication/LoginAuthentication.java": true,
+    "authentication/RedisLoginStore.java": true,
+    "authentication/RefreshCredential.java": true,
+    "authentication/AuthCookies.java": true,
+    "authentication/JwtAccessTokens.java": true,
+    "authentication/JwtEmployeeAuthentication.java": true,
+    "authentication/vo/LoginResponseVO.java": true,
+    "authorization/SecurityConfiguration.java": true,
+    "contract/ApiExceptionHandler.java": true,
+    "contract/LayerLoggingAspect.java": true
+  },
+  "documentsChecked": 23,
+  "localLinksChecked": 941,
+  "openApi": {
+    "version": "2.5.0",
+    "operations": 49,
+    "schemas": 44,
+    "sha256": "e6719aeb3a20dbb7f674902e3b03f6c3d72f73092786034259f039a99d11f417"
+  },
+  "existingContract": {
+    "status": "passed",
+    "operations": 8,
+    "examples": 12,
+    "negativeAndEmptyCases": 14,
+    "localLinks": 116,
+    "scope": "static contract validation only; no HTTP, database or browser"
+  },
+  "editions": {
+    "func": {
+      "tests": {
+        "tests": 194,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "coverage": {
+        "INSTRUCTION": {
+          "missed": 497,
+          "covered": 10572,
+          "ratio": 0.9550998283494444
+        },
+        "BRANCH": {
+          "missed": 129,
+          "covered": 642,
+          "ratio": 0.8326848249027238
+        },
+        "LINE": {
+          "missed": 85,
+          "covered": 1717,
+          "ratio": 0.9528301886792453
+        },
+        "COMPLEXITY": {
+          "missed": 138,
+          "covered": 749,
+          "ratio": 0.8444193912063134
+        },
+        "METHOD": {
+          "missed": 23,
+          "covered": 475,
+          "ratio": 0.9538152610441767
+        },
+        "CLASS": {
+          "missed": 2,
+          "covered": 130,
+          "ratio": 0.9848484848484849
+        }
+      },
+      "productionJavaFiles": 100,
+      "sourceSha256": "f13c238f6d76b2aed88c8aa0e5463f39badb0edae35a7a404242d4a86dba46a2",
+      "sourceHashIncludesLua": true,
+      "jar": "backend-func/target/jwt-lifecycle/rbac1-func-0.1.0-SNAPSHOT.jar",
+      "jarSha256": "e2a68e343ca25acf12e68b4b0f15c5de5de2f0437a7533895b2beef6d0a57848",
+      "luaSha256": "3028641e0b1a1e03dbe16fe36bc301e788a6e598de35f0363c242ff28d5dc19d",
+      "authNamespace": "rbac1:func:jwt-test:njrfu96q",
+      "jwtTestPublicKeySha256": "f781386d7bd18750443629d40519f686673a50738538ce4d22fbd7cfc80f62be"
+    },
+    "oo": {
+      "tests": {
+        "tests": 198,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "coverage": {
+        "INSTRUCTION": {
+          "missed": 495,
+          "covered": 10761,
+          "ratio": 0.9560234541577826
+        },
+        "BRANCH": {
+          "missed": 130,
+          "covered": 645,
+          "ratio": 0.832258064516129
+        },
+        "LINE": {
+          "missed": 84,
+          "covered": 1744,
+          "ratio": 0.9540481400437637
+        },
+        "COMPLEXITY": {
+          "missed": 140,
+          "covered": 767,
+          "ratio": 0.8456449834619625
+        },
+        "METHOD": {
+          "missed": 24,
+          "covered": 494,
+          "ratio": 0.9536679536679536
+        },
+        "CLASS": {
+          "missed": 2,
+          "covered": 134,
+          "ratio": 0.9852941176470589
+        }
+      },
+      "productionJavaFiles": 107,
+      "sourceSha256": "34d8248f5d4b14d3e04c893c9550f98e6f89f9e51bde4fad1a9d07790528c1ed",
+      "sourceHashIncludesLua": true,
+      "jar": "backend-oo/target/jwt-lifecycle/rbac1-oo-0.1.0-SNAPSHOT.jar",
+      "jarSha256": "cfd178cc2cfffbbd459791ebe75f54092da14443a33cf8400736cd5ed5bdab5b",
+      "luaSha256": "3028641e0b1a1e03dbe16fe36bc301e788a6e598de35f0363c242ff28d5dc19d",
+      "authNamespace": "rbac1:oo:jwt-test:dzn888tq",
+      "jwtTestPublicKeySha256": "acbf88261492ebd5d5eb60c0dd3e544fd68a9599c86ef7ff7352256151f2449d"
+    }
+  },
+  "gitDiffCheckExitCode": 0,
+  "failures": []
+}

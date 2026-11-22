@@ -5,12 +5,15 @@ import os
 from pathlib import Path
 import re
 import secrets
+import shutil
 import subprocess
 import time
 
 HERE = Path(__file__).resolve().parent
 C2 = HERE.parent
-SECRET_KEYS = ("mysql_root_password", "func_db_password", "oo_db_password", "redis_password")
+PASSWORD_KEYS = ("mysql_root_password", "func_db_password", "oo_db_password", "redis_password")
+JWT_KEYS = tuple(edition + "_jwt_" + kind for edition in ("func", "oo") for kind in ("private", "public"))
+SECRET_KEYS = PASSWORD_KEYS + JWT_KEYS
 
 
 def read_settings(path):
@@ -30,8 +33,10 @@ def read_settings(path):
     port = int(values.get("RBAC_HTTP_PORT", "8080"))
     if not 1 <= port <= 65535:
         raise ValueError("Invalid RBAC_HTTP_PORT")
-    if values.get("RBAC_SESSION_SECURE", "false") not in ("true", "false"):
-        raise ValueError("RBAC_SESSION_SECURE must be true or false")
+    if values.get("RBAC_AUTH_COOKIE_SECURE", "false") not in ("true", "false"):
+        raise ValueError("RBAC_AUTH_COOKIE_SECURE must be true or false")
+    if "RBAC_SESSION_COOKIE_SECURE" in values:
+        raise ValueError("Replace retired RBAC_SESSION_COOKIE_SECURE with RBAC_AUTH_COOKIE_SECURE explicitly")
     values["RBAC_STACK_NAME"] = name
     return values
 
@@ -47,7 +52,7 @@ def generate_secrets(directory):
     """生成与初始化 SQL 兼容的随机凭据，已有文件只校验、绝不覆盖。"""
     directory.mkdir(parents=True, exist_ok=True, mode=0o700)
     directory.chmod(0o700)
-    for key in SECRET_KEYS:
+    for key in PASSWORD_KEYS:
         path = directory / key
         if not path.exists():
             with path.open("x", encoding="ascii") as output:
@@ -58,9 +63,41 @@ def generate_secrets(directory):
         path.chmod(0o444)
 
 
+
+def generate_jwt_keys(directory):
+    """生成两版独立RSA密钥；已存在私钥只验证，不覆盖、不自动旋转。"""
+    directory.mkdir(parents=True, exist_ok=True, mode=0o700)
+    directory.chmod(0o700)
+    openssl = shutil.which("openssl")
+    if not openssl:
+        raise ValueError("OpenSSL is required to prepare external JWT keys")
+    for edition in ("func", "oo"):
+        private, public = directory / (edition + "_jwt_private"), directory / (edition + "_jwt_public")
+        if public.exists() and not private.exists():
+            raise ValueError("Incomplete JWT key pair: " + edition + "; existing file was not replaced")
+        if not private.exists():
+            subprocess.run([openssl, "genpkey", "-algorithm", "RSA", "-pkeyopt", "rsa_keygen_bits:2048", "-out", str(private)],
+                           check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        subprocess.run([openssl, "rsa", "-in", str(private), "-check", "-noout"],
+                       check=True, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        derived = subprocess.check_output([openssl, "pkey", "-in", str(private), "-pubout"], stderr=subprocess.PIPE)
+        if public.exists() and public.read_bytes().strip() != derived.strip():
+            raise ValueError("JWT public/private keys do not match: " + edition + "; existing files were not replaced")
+        if not public.exists():
+            with public.open("xb") as output:
+                output.write(derived)
+        details = subprocess.check_output([openssl, "pkey", "-pubin", "-in", str(public), "-text_pub", "-noout"], stderr=subprocess.PIPE)
+        bits = re.search(rb"\((\d+) bit\)", details)
+        if not bits or int(bits.group(1)) < 2048:
+            raise ValueError("JWT RSA key must have at least 2048 bits: " + edition)
+        private.chmod(0o444)
+        public.chmod(0o444)
+
+
 def prepare_secrets(settings, create_in_swarm):
     """本机文件与 Swarm secret 分开创建，已存在的 Swarm secret 不旋转。"""
     generate_secrets(HERE / "secrets")
+    generate_jwt_keys(HERE / "secrets")
     if create_in_swarm:
         swarm = json.loads(run(["docker", "info", "--format", "{{json .Swarm}}"], settings, True))
         if not swarm.get("ControlAvailable"):

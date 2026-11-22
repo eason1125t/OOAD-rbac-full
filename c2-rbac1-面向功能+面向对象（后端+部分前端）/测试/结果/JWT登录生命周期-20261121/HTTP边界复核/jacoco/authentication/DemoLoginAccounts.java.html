@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DemoLoginAccounts.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">DemoLoginAccounts.java</span></div><h1>DemoLoginAccounts.java</h1><pre class="source lang-java linenums">// 文件职责：按显式开关初始化演示账号和密码哈希。
+// 协作关系：与 InitializationService 的合成员工数据协作，不自动开放普通账号。
+package authentication;
+
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import organization.Employee;
+import organization.EmployeeRepository;
+
+/** 显式启用时为已初始化的合成员工创建账号。 */
+@Component
+@Order(20)
+@ConditionalOnProperty(name = &quot;rbac.demo.accounts-enabled&quot;, havingValue = &quot;true&quot;)
+@RequiredArgsConstructor
+public class DemoLoginAccounts implements ApplicationRunner {
+    private static final String DEMO_PASSWORD = &quot;1234&quot;;
+<span class="nc" id="L24">    private static final List&lt;String&gt; USERNAMES = List.of(</span>
+            &quot;super-admin&quot;, &quot;company-a-admin&quot;, &quot;engineering-admin&quot;, &quot;engineering-employee&quot;, &quot;finance-employee&quot;,
+            &quot;engineering-requester&quot;, &quot;engineering-inherited-approver&quot;, &quot;company-b-employee&quot;);
+
+    private final EmployeeRepository employees;
+    private final LoginAccountRepository accounts;
+    private final PasswordEncoder passwords;
+
+    /** 显式运行演示初始化时，创建或重置合成账号。 */
+    @Override
+    @Transactional
+    public void run(ApplicationArguments arguments) {
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        if (!arguments.containsOption(&quot;init-demo&quot;)) {</span>
+<span class="nc" id="L37">            return;</span>
+        }
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        for (String username : USERNAMES) {</span>
+<span class="nc" id="L40">            Employee employee = employees.findByUsername(username).orElseThrow();</span>
+<span class="nc" id="L41">            LoginAccount account = accounts.findById(employee.getId()).orElse(null);</span>
+<span class="nc bnc" id="L42" title="All 4 branches missed.">            if (account == null || !passwords.matches(DEMO_PASSWORD, account.getPasswordHash())) {</span>
+<span class="nc" id="L43">                accounts.save(new LoginAccount(employee.getId(), passwords.encode(DEMO_PASSWORD)));</span>
+            }
+<span class="nc" id="L45">        }</span>
+<span class="nc" id="L46">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

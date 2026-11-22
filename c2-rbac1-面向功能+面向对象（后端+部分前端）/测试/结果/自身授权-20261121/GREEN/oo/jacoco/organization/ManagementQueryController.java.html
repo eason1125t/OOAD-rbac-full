@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManagementQueryController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">organization</a> &gt; <span class="el_source">ManagementQueryController.java</span></div><h1>ManagementQueryController.java</h1><pre class="source lang-java linenums">// 文件职责：提供管理目录、关系及有效权限查询 API。
+// 协作关系：校验分页 DTO 后调用 ManagementQueryService 并输出公开 VO。
+package organization;
+
+import cn.edu.xmu.clonefactory.util.CloneFactory;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import java.util.function.Function;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.data.domain.Page;
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import organization.dto.ManagementPageDTO;
+import organization.vo.CatalogVO;
+import organization.vo.ManagementVO;
+import organization.vo.OrganizationVO;
+import rolepermission.CatalogEntry;
+import rolepermission.Permission;
+import rolepermission.RbacRole;
+
+/** 发布管理目录及关联查询，负责分页和字段映射。 */
+@RestController
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@RequiredArgsConstructor
+public class ManagementQueryController {
+    private final ManagementQueryService management;
+
+    /** 查看范围内员工及原表字段。 */
+    @GetMapping(&quot;/api/employees&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;ManagementVO.Employee&gt;&gt; employees(@AuthenticationPrincipal Long actor,
+            @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L40">        return response(management.employees(actor, page.toPageable()),</span>
+                ManagementQueryController::employee);
+    }
+
+    /** 查询公司目录。 */
+    @GetMapping(&quot;/api/companies&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;OrganizationVO&gt;&gt; companies(@AuthenticationPrincipal Long actor,
+            @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L48">        return response(management.organizations(actor, &quot;COMPANY&quot;, page.toPageable()),</span>
+                ManagementQueryController::organization);
+    }
+
+    /** 查询部门原表三列及正式组织引用。 */
+    @GetMapping(&quot;/api/departments&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;OrganizationVO&gt;&gt; departments(@AuthenticationPrincipal Long actor,
+            @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L56">        return response(management.organizations(actor, &quot;DEPARTMENT&quot;, page.toPageable()),</span>
+                ManagementQueryController::organization);
+    }
+
+    /** 查询角色定义。 */
+    @GetMapping(&quot;/api/roles&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;ManagementVO.Role&gt;&gt; roles(@AuthenticationPrincipal Long actor,
+            @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L64">        return response(management.roles(actor, page.toPageable()),</span>
+                ManagementQueryController::role);
+    }
+
+    /** 查询运行时权限定义。 */
+    @GetMapping(&quot;/api/permissions&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;ManagementVO.Permission&gt;&gt; permissions(@AuthenticationPrincipal Long actor,
+            @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L72">        return response(management.permissions(actor, page.toPageable()),</span>
+                ManagementQueryController::permission);
+    }
+
+    /** 查询 Excel 功能权限清单。 */
+    @GetMapping(&quot;/api/catalog-entries&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;CatalogVO&gt;&gt; catalog(@AuthenticationPrincipal Long actor,
+            @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L80">        return response(management.catalog(actor, page.toPageable()),</span>
+                ManagementQueryController::catalogEntry);
+    }
+
+    /** 查询员工已分配角色。 */
+    @GetMapping(&quot;/api/employees/{employeeId}/roles&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;ManagementVO.Role&gt;&gt; employeeRoles(@AuthenticationPrincipal Long actor,
+            @PathVariable @Positive Long employeeId, @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L88">        return response(management.employeeRoles(actor, employeeId, page.toPageable()),</span>
+                ManagementQueryController::role);
+    }
+
+    /** 查询提供直接继承权限的低级角色。 */
+    @GetMapping(&quot;/api/roles/{roleId}/parents&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;ManagementVO.Role&gt;&gt; roleParents(@AuthenticationPrincipal Long actor,
+            @PathVariable @Positive Long roleId, @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L96">        return response(management.roleParents(actor, roleId, page.toPageable()), ManagementQueryController::role);</span>
+    }
+
+    /** 对目标员工计算指定系统的实时权限。 */
+    @GetMapping(&quot;/api/employees/{employeeId}/effective-permissions&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;ManagementVO.Permission&gt;&gt; effectivePermissions(
+            @AuthenticationPrincipal Long actor, @PathVariable @Positive Long employeeId,
+            @RequestParam @NotBlank String systemCode, @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L104">        return response(management.effectivePermissions(actor, employeeId, systemCode, page.toPageable()),</span>
+                ManagementQueryController::permission);
+    }
+
+    /** 查询角色已分配权限。 */
+    @GetMapping(&quot;/api/roles/{roleId}/permissions&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;ManagementVO.Permission&gt;&gt; rolePermissions(@AuthenticationPrincipal Long actor,
+            @PathVariable @Positive Long roleId, @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L112">        return response(management.rolePermissions(actor, roleId, page.toPageable()),</span>
+                ManagementQueryController::permission);
+    }
+
+    /** 分页读取角色通过直接或传递继承获得的配置权限。 */
+    @GetMapping(&quot;/api/roles/{roleId}/inherited-permissions&quot;)
+    public ResponseEntity&lt;ManagementVO.Page&lt;ManagementVO.Permission&gt;&gt; inheritedRolePermissions(
+            @AuthenticationPrincipal Long actor, @PathVariable @Positive Long roleId,
+            @Valid @ModelAttribute ManagementPageDTO page) {
+<span class="fc" id="L121">        return response(management.inheritedRolePermissions(actor, roleId, page.toPageable()),</span>
+                ManagementQueryController::permission);
+    }
+
+    /** 读取组织范围内的员工资料。 */
+    @GetMapping(&quot;/api/employees/{employeeId}&quot;)
+    public ResponseEntity&lt;ManagementVO.Employee&gt; employee(@AuthenticationPrincipal Long actor,
+            @PathVariable @Positive Long employeeId) {
+<span class="nc" id="L129">        return ResponseEntity.ok().cacheControl(CacheControl.noStore()).body(employee(management.employee(actor, employeeId)));</span>
+    }
+
+    /** 读取可见角色的详情。 */
+    @GetMapping(&quot;/api/roles/{roleId}&quot;)
+    public ResponseEntity&lt;ManagementVO.Role&gt; role(@AuthenticationPrincipal Long actor, @PathVariable @Positive Long roleId) {
+<span class="nc" id="L135">        return ResponseEntity.ok().cacheControl(CacheControl.noStore()).body(role(management.role(actor, roleId)));</span>
+    }
+
+    /** 读取可见的运行时权限定义。 */
+    @GetMapping(&quot;/api/permissions/{permissionId}&quot;)
+    public ResponseEntity&lt;ManagementVO.Permission&gt; permission(@AuthenticationPrincipal Long actor,
+            @PathVariable @Positive Long permissionId) {
+<span class="fc" id="L142">        return ResponseEntity.ok().cacheControl(CacheControl.noStore())</span>
+<span class="fc" id="L143">                .body(permission(management.permission(actor, permissionId)));</span>
+    }
+
+    /** 保留分页元数据和范围内总数，管理数据禁止缓存。 */
+    private static &lt;S, T&gt; ResponseEntity&lt;ManagementVO.Page&lt;T&gt;&gt; response(Page&lt;S&gt; result, Function&lt;S, T&gt; map) {
+<span class="fc" id="L148">        return ResponseEntity.ok().cacheControl(CacheControl.noStore()).body(new ManagementVO.Page&lt;&gt;(</span>
+<span class="fc" id="L149">                result.stream().map(map).toList(), result.getNumber() + 1, result.getSize(), result.getTotalElements()));</span>
+    }
+
+    /** 对电话做保守遮盖，较短号码整段隐藏。 */
+    static ManagementVO.Employee employee(Employee row) {
+<span class="fc" id="L154">        String phone = row.getPhone();</span>
+<span class="pc bpc" id="L155" title="1 of 4 branches missed.">        String masked = phone == null || phone.isBlank() ? null : &quot;****&quot;;</span>
+<span class="pc bpc" id="L156" title="2 of 6 branches missed.">        if (phone != null &amp;&amp; phone.length() &gt;= 9 &amp;&amp; !phone.isBlank()) {</span>
+<span class="fc" id="L157">            masked = phone.substring(0, 3) + &quot;****&quot; + phone.substring(phone.length() - 4);</span>
+        }
+<span class="fc" id="L159">        return new ManagementVO.Employee(row.getId(), row.getUsername(), row.getName(), row.getOrganizationId(),</span>
+<span class="fc" id="L160">                row.getSourceBranchName(), row.getSourceDepartmentName(), row.getJobTitle(), masked, row.isEnabled());</span>
+    }
+
+    /** 同时保留部门原表上级和正式组织 ID。 */
+    private static OrganizationVO organization(Organization row) {
+<span class="fc" id="L165">        return CloneFactory.copy(new OrganizationVO(), row);</span>
+    }
+
+    /** 映射角色标识与归属。 */
+    static ManagementVO.Role role(RbacRole row) {
+<span class="fc" id="L170">        return new ManagementVO.Role(row.getId(), row.getName(), row.getOwnerOrganizationId());</span>
+    }
+
+    /** 保留系统标识以区分同码权限。 */
+    static ManagementVO.Permission permission(Permission row) {
+<span class="fc" id="L175">        return new ManagementVO.Permission(row.getId(), row.getCode(), row.getName(), row.getSystemId(),</span>
+<span class="fc" id="L176">                row.getOwnerOrganizationId());</span>
+    }
+
+    /** 保留 Excel 中的原动作文本和空单元。 */
+    private static CatalogVO catalogEntry(CatalogEntry row) {
+<span class="fc" id="L181">        return CloneFactory.copy(new CatalogVO(), row);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

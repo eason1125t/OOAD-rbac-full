@@ -1,0 +1,394 @@
+{
+  "status": "passed",
+  "operation": "move-only",
+  "pendingRoot": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除",
+  "protectedJars": [
+    {
+      "path": "backend-func/target/jwt-final/rbac1-func-0.1.0-SNAPSHOT.jar",
+      "sha256": "A4981A332367673239017CFBCE38355F6393DB9F7C376EB6247E7E26840B6980"
+    },
+    {
+      "path": "backend-oo/target/jwt-final/rbac1-oo-0.1.0-SNAPSHOT.jar",
+      "sha256": "67A4567692801A514C046E683DDFBA0524B00DDE263177A34E8C510990B28044"
+    }
+  ],
+  "alreadyAbsentBeforeMove": [
+    "backend-func\\target\\classes",
+    "backend-func\\target\\generated-sources",
+    "backend-func\\target\\generated-test-sources",
+    "backend-func\\target\\identity-final",
+    "backend-func\\target\\identity-step2",
+    "backend-func\\target\\identity-step3",
+    "backend-func\\target\\identity-step4",
+    "backend-func\\target\\identity-step5",
+    "backend-func\\target\\jwt-identity",
+    "backend-func\\target\\jwt-lifecycle",
+    "backend-func\\target\\maven-archiver",
+    "backend-func\\target\\maven-status",
+    "backend-func\\target\\site",
+    "backend-func\\target\\surefire-reports",
+    "backend-func\\target\\test-classes",
+    "backend-oo\\target\\classes",
+    "backend-oo\\target\\generated-sources",
+    "backend-oo\\target\\generated-test-sources",
+    "backend-oo\\target\\identity-final",
+    "backend-oo\\target\\identity-step2",
+    "backend-oo\\target\\identity-step3",
+    "backend-oo\\target\\identity-step4",
+    "backend-oo\\target\\identity-step5",
+    "backend-oo\\target\\jwt-identity",
+    "backend-oo\\target\\jwt-lifecycle",
+    "backend-oo\\target\\maven-archiver",
+    "backend-oo\\target\\maven-status",
+    "backend-oo\\target\\site",
+    "backend-oo\\target\\surefire-reports",
+    "backend-oo\\target\\test-classes",
+    "frontend\\test-results",
+    "frontend\\dist",
+    "docs\\design\\__pycache__",
+    "测试\\脚本\\__pycache__",
+    "测试\\部署\\__pycache__",
+    "部署\\__pycache__"
+  ],
+  "entries": [
+    {
+      "relativePath": "backend-func\\target\\c2-read-browser.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-read-browser.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-read-browser.log",
+      "bytes": 2498531,
+      "sha256": "58C02F4E85686D979FA336C09B0F1D4118C3844240F92FF402706232549F5FBD",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-read-demo.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-read-demo.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-read-demo.log",
+      "bytes": 6675,
+      "sha256": "1083AB30806D7BF234C75AF0C419557C201CC98281324A9F388D2AA6A1CD977A",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-read-green.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-read-green.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-read-green.log",
+      "bytes": 1035980,
+      "sha256": "120217A3C8D8A26A44CA4EC1525FB6F5BD9052ABE19D0EDF13042A474798B34B",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-read-package.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-read-package.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-read-package.log",
+      "bytes": 2334,
+      "sha256": "F1A9A13FD3DDED74BB1642812832C2C47595DAB18B858037222B3564313C8275",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-read-ports-green.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-read-ports-green.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-read-ports-green.log",
+      "bytes": 620838,
+      "sha256": "8C1AA177783626D3E354B4F4C131F55C1B421294959AA2C91531B68FA66053E8",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-read-ports-verify.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-read-ports-verify.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-read-ports-verify.log",
+      "bytes": 645758,
+      "sha256": "1F6A2398CB2A37AB77D9C0AEF0CFE6EC3514A5866E618C2C82D65CEE5ADD2757",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-read-red.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-read-red.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-read-red.log",
+      "bytes": 20476,
+      "sha256": "FE3758C775EFCB90CD90DC8C02F0998D340802D4DF71E99FDE805AE4E3314203",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-read-ui-red.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-read-ui-red.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-read-ui-red.log",
+      "bytes": 2121,
+      "sha256": "DED3C68239A0212549446BA5AF83D9A49D1319104E18FC19A5E9FD7E39413F90",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-role-ui-browser.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-role-ui-browser.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-role-ui-browser.log",
+      "bytes": 2232180,
+      "sha256": "D36DDE44B2296586AE2304C9D5118299D9924E87185A04A29B85B362BC836EC7",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-role-ui-demo.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-role-ui-demo.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-role-ui-demo.log",
+      "bytes": 6421,
+      "sha256": "8EA1A64F7A05B502F2774248889FAA50DAFF72F2B85F45734FCB22A69A203BD7",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-role-ui-red.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-role-ui-red.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-role-ui-red.log",
+      "bytes": 24771,
+      "sha256": "7415DC3EEC5D861BE318637FF31A4AD89D259461F44B3427D98F73C905EDB1C6",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-role-ui-verify.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-role-ui-verify.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-role-ui-verify.log",
+      "bytes": 519724,
+      "sha256": "00AC6247759F0A81AFF9AE37C7406B0E7D965E00150AAC1271A06EB8F867E6FC",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\c2-verify.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\c2-verify.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\c2-verify.log",
+      "bytes": 305880,
+      "sha256": "B9492989D51D18F58C7FBFAAB9AE4DC923EE9F949E7927AEDFAA01357AD7383E",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\func-crud-red.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\func-crud-red.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\func-crud-red.log",
+      "bytes": 11237,
+      "sha256": "3A23EEE54A03F5BF8232571CC28BAD6EBDD66BE6E8761D572294C7C74596C946",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\jacoco.exec",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\jacoco.exec",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\jacoco.exec",
+      "bytes": 792389,
+      "sha256": "52E9F5DBCC7E9712421A3F4F2A53C06969AF63B7954970A2DADB29C059762147",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-func\\target\\rbac1-func-0.1.0-SNAPSHOT.jar",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\target\\rbac1-func-0.1.0-SNAPSHOT.jar",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-func\\target\\rbac1-func-0.1.0-SNAPSHOT.jar",
+      "bytes": 181455,
+      "sha256": "EF305DB8EE22C38911BA7092C1BBAD85162E035487785EACA891CEE24DD40184",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-ports-red.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-ports-red.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-ports-red.log",
+      "bytes": 4935,
+      "sha256": "5A7737692F76A7B26E4D8DB3D431ED4A253430C33942D7987995CF4D153DD92B",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-read-browser.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-read-browser.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-read-browser.log",
+      "bytes": 2142126,
+      "sha256": "185F5C1D51B2FF0F4546C1E463E9D0B338F7DD657D65C75ACA51474D76986EAF",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-read-demo.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-read-demo.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-read-demo.log",
+      "bytes": 6597,
+      "sha256": "59FCA8B58B5D5B06D269412A82F374C8739D132579F6524DDB3D119133179A7A",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-read-package.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-read-package.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-read-package.log",
+      "bytes": 2408,
+      "sha256": "FD35BC7CF11AB39CD29A01B68F3EFD43FD27AB3AAE18062DFC0EC4F3A5049CD6",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-read-ports-e2e.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-read-ports-e2e.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-read-ports-e2e.log",
+      "bytes": 3672,
+      "sha256": "2537C3CF560C701F5191307BD5D6E224F519035EA06CC6114D45C618F450B48B",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-read-ports-green.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-read-ports-green.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-read-ports-green.log",
+      "bytes": 503761,
+      "sha256": "62BC1A1036FE167F00BB2D520DB464A8522D097BA64A2EB384EC897A09088770",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-read-ports-verify.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-read-ports-verify.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-read-ports-verify.log",
+      "bytes": 637725,
+      "sha256": "DB325345A060E758CB8FBA805310F8322F692EF404C65E749755EA3DD3039AB2",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-role-ui-browser.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-role-ui-browser.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-role-ui-browser.log",
+      "bytes": 2131483,
+      "sha256": "44F56EBC0F7562B5A56FF2BB0B8F9200B9017746F728CDF95CE70523F2AA7147",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-role-ui-demo.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-role-ui-demo.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-role-ui-demo.log",
+      "bytes": 6347,
+      "sha256": "7AA99843D40918CBE02A678A149836127848C3DF4BFC6F28C48F63BFB838C95A",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-role-ui-e2e.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-role-ui-e2e.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-role-ui-e2e.log",
+      "bytes": 2879,
+      "sha256": "03CCF8389E8469A69B0671B273C1B9B1BDBD0B7FF0845A6FD2D2A7F19A7C140B",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-role-ui-red.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-role-ui-red.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-role-ui-red.log",
+      "bytes": 24503,
+      "sha256": "1E8817265893AC4369D5FC33B8AE907E557EE9F519836F59AE69EE4FA41FE6C9",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-role-ui-verify.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-role-ui-verify.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-role-ui-verify.log",
+      "bytes": 516202,
+      "sha256": "F64DB414C93BC738E99F2E5E5F2A8F65D3C2D91BA40F398EC24D3CE321BD6EC8",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\c2-verify.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\c2-verify.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\c2-verify.log",
+      "bytes": 301956,
+      "sha256": "E9203083B703178B45FF600001469607CD99B8FD14E89C936566E000B6299B34",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\crud-create-green.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\crud-create-green.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\crud-create-green.log",
+      "bytes": 14858,
+      "sha256": "A5BC3797B9EAB1C93133F474A4ACAC4E3EF1F1632710CC4483CC3ED50D711C69",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\crud-create-red.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\crud-create-red.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\crud-create-red.log",
+      "bytes": 11133,
+      "sha256": "BC72F7AF47239DAC49AD22E4EE8D7176CA4C348382A6B795EAE2D72A0B528E86",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\crud-lifecycle-red.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\crud-lifecycle-red.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\crud-lifecycle-red.log",
+      "bytes": 36989,
+      "sha256": "D7B047185B4DB0138C9FD56CE70697D59EDF6E9FC23B04C1CCD0C888FA78095B",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\crud-oo-verify.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\crud-oo-verify.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\crud-oo-verify.log",
+      "bytes": 510008,
+      "sha256": "28FA479EAC368BA9099C7593495A9BE7FCAAEDD90A8591A37C4FB6921B4F0F17",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\jacoco.exec",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\jacoco.exec",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\jacoco.exec",
+      "bytes": 793338,
+      "sha256": "80F1C9604745743E9B840D55E3743AAFA1B33210E21BFD0E82180C6AF429AB54",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\oo-browser-excel.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\oo-browser-excel.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\oo-browser-excel.log",
+      "bytes": 6084,
+      "sha256": "0C458B41021459C2E7459691E325E5F8B10EC0B1E703DEA3842577195380F652",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\oo-browser-server-18182.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\oo-browser-server-18182.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\oo-browser-server-18182.log",
+      "bytes": 833986,
+      "sha256": "ADF6906CC3E9F1A0E1265D639A4CA4DBD48F1FE79531CEE7CF569D8F4E1A8E0B",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\oo-browser-server.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\oo-browser-server.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\oo-browser-server.log",
+      "bytes": 6994,
+      "sha256": "FF7428ED51EF91B52166A85283B44A4D8992114D99E884FE7770A932F8236504",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\oo-priority-smoke.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\oo-priority-smoke.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\oo-priority-smoke.log",
+      "bytes": 107086,
+      "sha256": "BA8C680F64828EF10898758AB31373751A4D3517235556E593117C63C4E96F10",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "backend-oo\\target\\rbac1-oo-0.1.0-SNAPSHOT.jar",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\target\\rbac1-oo-0.1.0-SNAPSHOT.jar",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\backend-oo\\target\\rbac1-oo-0.1.0-SNAPSHOT.jar",
+      "bytes": 188901,
+      "sha256": "86B872F0B96F58727368D736BADD0A88314021596599601D9CA84D8B1EFCE237",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "部署\\init-func.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\部署\\init-func.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\部署\\init-func.log",
+      "bytes": 5705,
+      "sha256": "377E5414CBCE9257655223B5CEFCC977D7C93EB50CC11E74E3020B9218D485F6",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "部署\\init-oo.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\部署\\init-oo.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\部署\\init-oo.log",
+      "bytes": 5645,
+      "sha256": "7D691F24E88FA472DDFFDD0CE1677D3A5543FF1E63C1E79B00D17CAB97367263",
+      "status": "moved-and-sha256-verified"
+    },
+    {
+      "relativePath": "部署\\构建临时输出.log",
+      "source": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\部署\\构建临时输出.log",
+      "destination": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\待删除\\部署\\构建临时输出.log",
+      "bytes": 259151,
+      "sha256": "41B696B54E5447ABF0B2F824D30C4F44E14EFB82D6F636036080803F0546235C",
+      "status": "moved-and-sha256-verified"
+    }
+  ],
+  "filesystemDeletionCount": 0,
+  "movedFiles": 42,
+  "movedBytes": 17971242
+}

@@ -1,0 +1,95 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.frontend
+#1 transferring dockerfile: 668B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for public.ecr.aws/docker/library/nginx:1.28-alpine
+#2 DONE 0.1s
+
+#3 [internal] load metadata for public.ecr.aws/docker/library/node:24-alpine
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 353B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 730.67kB 0.0s done
+#5 DONE 0.1s
+
+#6 [stage-1 1/3] FROM public.ecr.aws/docker/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+#6 resolve public.ecr.aws/docker/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236 0.1s done
+#6 DONE 0.1s
+
+#7 [build 1/6] FROM public.ecr.aws/docker/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5
+#7 resolve public.ecr.aws/docker/library/node:24-alpine@sha256:116b800c3754b440ee0aa3ed2f20f5bf3d99a554bfd9adeea09ea8017f6e85f5 0.1s done
+#7 DONE 0.1s
+
+#8 [build 2/6] WORKDIR /workspace
+#8 CACHED
+
+#9 [build 3/6] COPY frontend/package.json frontend/package-lock.json ./
+#9 DONE 0.2s
+
+#10 [build 4/6] RUN --mount=type=cache,target=/root/.npm npm ci
+#10 2.813 
+#10 2.813 added 51 packages, and audited 52 packages in 2s
+#10 2.813 
+#10 2.813 6 packages are looking for funding
+#10 2.813   run `npm fund` for details
+#10 2.815 
+#10 2.815 found 0 vulnerabilities
+#10 2.816 npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+#10 2.816 npm warn install-scripts   esbuild@0.28.2 (postinstall: node install.js)
+#10 2.816 npm warn install-scripts
+#10 2.816 npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+#10 DONE 3.0s
+
+#11 [build 5/6] COPY frontend/ ./
+#11 DONE 0.1s
+
+#12 [build 6/6] RUN npm run build
+#12 0.658 
+#12 0.658 > rbac1-frontend@0.1.0 build
+#12 0.658 > vue-tsc --noEmit && vite build --emptyOutDir=false
+#12 0.658 
+#12 8.308 vite v7.3.8 building client environment for production...
+#12 8.395 transforming...
+#12 9.738 ✓ 38 modules transformed.
+#12 9.835 rendering chunks...
+#12 9.842 computing gzip size...
+#12 9.849 dist/index.html                        0.46 kB │ gzip:  0.32 kB
+#12 9.849 dist/assets/auth.worker-Bg8yWan-.js    3.18 kB
+#12 9.849 dist/assets/index-ls6D_rEg.css        11.65 kB │ gzip:  3.39 kB
+#12 9.849 dist/assets/index-CdV--k3n.js        128.67 kB │ gzip: 45.69 kB
+#12 9.849 ✓ built in 1.51s
+#12 9.905 npm notice
+#12 9.905 npm notice New major version of npm available! 11.19.1 -> 12.2.3
+#12 9.905 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+#12 9.905 npm notice To update run: npm install -g npm@12.2.3
+#12 9.905 npm notice
+#12 DONE 10.0s
+
+#6 [stage-1 1/3] FROM public.ecr.aws/docker/library/nginx:1.28-alpine@sha256:a8b39bd9cf0f83869a2162827a0caf6137ddf759d50a171451b335cecc87d236
+#6 CACHED
+
+#13 [stage-1 2/3] COPY --from=build /workspace/dist/ /usr/share/nginx/html/
+#13 DONE 0.1s
+
+#14 [stage-1 3/3] COPY 部署/nginx.conf /etc/nginx/conf.d/default.conf
+#14 DONE 0.1s
+
+#15 exporting to image
+#15 exporting layers
+#15 exporting layers 0.3s done
+#15 exporting manifest sha256:a916d3ed2760dd00219a7cbb1b9c969925c41c9f466c769272f814f00cb7bd03 0.0s done
+#15 exporting config sha256:cd306a2c9b99bb9ba51f6afe79ec1042a3b1bdbeb7c4b20cf55303a501995daa 0.0s done
+#15 exporting attestation manifest sha256:604bb8e79502f55e0124b33ae13ed2bbca0a3f39ed3400bd9c4fc326af65efdc
+#15 exporting attestation manifest sha256:604bb8e79502f55e0124b33ae13ed2bbca0a3f39ed3400bd9c4fc326af65efdc 0.0s done
+#15 exporting manifest list sha256:4161fd32d7b59b3855da1be75f43eb0d4437c2ce5c0da92c20099b8426b68fb2 0.0s done
+#15 naming to docker.io/rbac-c2/frontend:jwt-20261121154321 done
+#15 unpacking to docker.io/rbac-c2/frontend:jwt-20261121154321 0.1s done
+#15 DONE 0.7s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/ugrza0br58zh10io5any5ao9v

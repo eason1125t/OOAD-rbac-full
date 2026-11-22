@@ -9,7 +9,9 @@ x-backend: &backend
     RBAC_REDIS_HOST: redis
     RBAC_REDIS_PORT: "6379"
     RBAC_REDIS_PASSWORD_FILE: /run/secrets/redis_password
-    RBAC_SESSION_SECURE: ${RBAC_SESSION_SECURE:-false}
+    RBAC_AUTH_COOKIE_SECURE: ${RBAC_AUTH_COOKIE_SECURE:-false}
+    RBAC_JWT_PRIVATE_KEY_LOCATION: file:/run/secrets/jwt_private
+    RBAC_JWT_PUBLIC_KEY_LOCATION: file:/run/secrets/jwt_public
     RBAC_LOG_API: INFO
     RBAC_LOG_SERVICE: INFO
     RBAC_LOG_INFRASTRUCTURE: INFO
@@ -50,13 +52,20 @@ services:
       <<: *backend-env
       RBAC_DB_URL: jdbc:mysql://mysql:3306/ooad_rbac1_func
       RBAC_DB_USER: rbac_func
-      RBAC_SESSION_COOKIE_NAME: RBAC1_FUNC_SESSION
-      RBAC_SESSION_COOKIE_PATH: /func/
-      RBAC_SESSION_NAMESPACE: rbac1:func:session
+      RBAC_JWT_ISSUER: urn:ooad-rbac:c2:func
+      RBAC_JWT_AUDIENCE: rbac1-func
+      RBAC_REFRESH_COOKIE_NAME: RBAC1_FUNC_REFRESH
+      RBAC_CSRF_COOKIE_NAME: RBAC1_FUNC_CSRF
+      RBAC_AUTH_COOKIE_PATH: /func/api/auth/
+      RBAC_AUTH_NAMESPACE: rbac1:func:auth
     secrets:
       - source: func_db_password
         target: db_password
       - redis_password
+      - source: func_jwt_private
+        target: jwt_private
+      - source: func_jwt_public
+        target: jwt_public
 
   backend-oo:
     <<: *backend
@@ -65,13 +74,20 @@ services:
       <<: *backend-env
       RBAC_DB_URL: jdbc:mysql://mysql:3306/ooad_rbac1_oo
       RBAC_DB_USER: rbac_oo
-      RBAC_SESSION_COOKIE_NAME: RBAC1_OO_SESSION
-      RBAC_SESSION_COOKIE_PATH: /oo/
-      RBAC_SESSION_NAMESPACE: rbac1:oo:session
+      RBAC_JWT_ISSUER: urn:ooad-rbac:c2:oo
+      RBAC_JWT_AUDIENCE: rbac1-oo
+      RBAC_REFRESH_COOKIE_NAME: RBAC1_OO_REFRESH
+      RBAC_CSRF_COOKIE_NAME: RBAC1_OO_CSRF
+      RBAC_AUTH_COOKIE_PATH: /oo/api/auth/
+      RBAC_AUTH_NAMESPACE: rbac1:oo:auth
     secrets:
       - source: oo_db_password
         target: db_password
       - redis_password
+      - source: oo_jwt_private
+        target: jwt_private
+      - source: oo_jwt_public
+        target: jwt_public
 
   mysql:
     image: ${RBAC_MYSQL_IMAGE:-mysql:8.4.7}
@@ -149,3 +165,15 @@ secrets:
   redis_password:
     external: true
     name: ${RBAC_STACK_NAME:-c2}_redis_password
+  func_jwt_private:
+    external: true
+    name: ${RBAC_STACK_NAME:-c2}_func_jwt_private
+  func_jwt_public:
+    external: true
+    name: ${RBAC_STACK_NAME:-c2}_func_jwt_public
+  oo_jwt_private:
+    external: true
+    name: ${RBAC_STACK_NAME:-c2}_oo_jwt_private
+  oo_jwt_public:
+    external: true
+    name: ${RBAC_STACK_NAME:-c2}_oo_jwt_public

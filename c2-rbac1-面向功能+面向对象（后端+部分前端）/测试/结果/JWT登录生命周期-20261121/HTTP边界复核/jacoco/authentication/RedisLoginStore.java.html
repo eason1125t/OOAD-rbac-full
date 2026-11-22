@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RedisLoginStore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">RedisLoginStore.java</span></div><h1>RedisLoginStore.java</h1><pre class="source lang-java linenums">// 文件职责：原子维护独立 sid 登录记录、当前刷新摘要和已消费摘要，不缓存角色或用户版本。
+// 协作关系：由 LoginAuthentication 组织生命周期，并为 JwtEmployeeAuthentication 提供真实 LoginVerifier。
+package authentication;
+
+import java.time.Clock;
+import java.time.Instant;
+import java.util.List;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.stereotype.Component;
+
+/** 所有状态转换共用一项 Lua 脚本；两个 key 使用同一 sid hash tag。 */
+@Component
+public class RedisLoginStore implements JwtEmployeeAuthentication.LoginVerifier {
+<span class="fc" id="L16">    private static final DefaultRedisScript&lt;List&gt; SCRIPT = script();</span>
+    private final StringRedisTemplate redis;
+    private final AuthenticationProperties settings;
+    private final Clock clock;
+
+<span class="fc" id="L21">    public RedisLoginStore(StringRedisTemplate redis, AuthenticationProperties settings, Clock clock) {</span>
+<span class="fc" id="L22">        this.redis = redis;</span>
+<span class="fc" id="L23">        this.settings = settings;</span>
+<span class="fc" id="L24">        this.clock = clock;</span>
+<span class="fc" id="L25">    }</span>
+
+    /** 状态只包含身份归属和绝对期限，不包含原始刷新凭证。 */
+<span class="fc" id="L28">    public record Login(String sid, Long employeeId, Instant createdAt, Instant expiresAt) { }</span>
+
+    public void create(Login login, RefreshCredential credential) {
+<span class="fc" id="L31">        result(&quot;CREATE&quot;, credential.sid(), login.employeeId(), login.createdAt(), login.expiresAt(), credential.digest(), &quot;&quot;);</span>
+<span class="fc" id="L32">    }</span>
+
+    /** 当前凭证可读取元数据；已消费凭证的重用在同一原子操作中撤销登录。 */
+    public Login inspect(RefreshCredential credential) {
+<span class="fc" id="L36">        List&lt;?&gt; values = result(&quot;INSPECT&quot;, credential.sid(), null, null, null, credential.digest(), &quot;&quot;);</span>
+<span class="fc" id="L37">        return login(credential.sid(), values);</span>
+    }
+
+    /** 再次核对当前摘要和归属，原子消费旧值并保存新值；绝不延长原到期时间。 */
+    public void rotate(Login login, RefreshCredential previous, RefreshCredential next) {
+<span class="fc" id="L42">        result(&quot;ROTATE&quot;, previous.sid(), login.employeeId(), null, null, previous.digest(), next.digest());</span>
+<span class="fc" id="L43">    }</span>
+
+    /** 无效或未知凭证幂等返回；只持有 sid 不能撤销他人的登录。 */
+    public void revoke(RefreshCredential credential) {
+<span class="fc" id="L47">        execute(&quot;REVOKE&quot;, credential.sid(), null, null, null, credential.digest(), &quot;&quot;);</span>
+<span class="fc" id="L48">    }</span>
+
+    @Override
+    public void requireActive(String sid, Long employeeId) {
+<span class="pc bpc" id="L52" title="3 of 6 branches missed.">        if (!JwtAccessTokens.isRandomId(sid) || employeeId == null || employeeId &lt;= 0) {</span>
+<span class="nc" id="L53">            throw new AuthenticationFailure(AuthenticationFailure.Reason.AUTHENTICATION_REQUIRED);</span>
+        }
+<span class="fc" id="L55">        List&lt;?&gt; values = execute(&quot;CHECK&quot;, sid, employeeId, null, null, &quot;&quot;, &quot;&quot;);</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (!&quot;OK&quot;.equals(values.getFirst())) {</span>
+<span class="fc" id="L57">            throw new AuthenticationFailure(AuthenticationFailure.Reason.AUTHENTICATION_REQUIRED);</span>
+        }
+<span class="fc" id="L59">    }</span>
+
+    private List&lt;?&gt; result(String action, String sid, Long employeeId, Instant createdAt, Instant expiresAt,
+                           String digest, String nextDigest) {
+<span class="fc" id="L63">        List&lt;?&gt; values = execute(action, sid, employeeId, createdAt, expiresAt, digest, nextDigest);</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (&quot;REUSED&quot;.equals(values.getFirst())) {</span>
+<span class="fc" id="L65">            throw new AuthenticationFailure(AuthenticationFailure.Reason.REFRESH_TOKEN_REUSED);</span>
+        }
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (!&quot;OK&quot;.equals(values.getFirst())) {</span>
+<span class="fc" id="L68">            throw new AuthenticationFailure(AuthenticationFailure.Reason.REFRESH_TOKEN_INVALID);</span>
+        }
+<span class="fc" id="L70">        return values;</span>
+    }
+
+    /** 仅供已验签且已核对归属的身份转换使用；保持原Session观察到失效后不能复活的语义。 */
+    @Override
+    public void rejectEmployee(String sid, Long employeeId) {
+<span class="pc bpc" id="L76" title="3 of 6 branches missed.">        if (!JwtAccessTokens.isRandomId(sid) || employeeId == null || employeeId &lt;= 0) {</span>
+<span class="nc" id="L77">            throw new AuthenticationFailure(AuthenticationFailure.Reason.AUTHENTICATION_REQUIRED);</span>
+        }
+<span class="fc" id="L79">        execute(&quot;REJECT_EMPLOYEE&quot;, sid, employeeId, null, null, &quot;&quot;, &quot;&quot;);</span>
+<span class="fc" id="L80">    }</span>
+
+    /** Redis 异常继续传播；损坏/不确定结果单列为认证存储不可用，不能按无记录放行。 */
+    private List&lt;?&gt; execute(String action, String sid, Long employeeId, Instant createdAt, Instant expiresAt,
+                            String digest, String nextDigest) {
+<span class="fc" id="L85">        List&lt;?&gt; values = redis.execute(SCRIPT, List.of(key(sid), key(sid) + &quot;:used&quot;), action,</span>
+<span class="fc bfc" id="L86" title="All 2 branches covered.">                Long.toString(clock.millis()), employeeId == null ? &quot;&quot; : employeeId.toString(),</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">                createdAt == null ? &quot;&quot; : Long.toString(createdAt.toEpochMilli()),</span>
+<span class="fc bfc" id="L88" title="All 2 branches covered.">                expiresAt == null ? &quot;&quot; : Long.toString(expiresAt.toEpochMilli()), digest, nextDigest);</span>
+<span class="pc bpc" id="L89" title="3 of 6 branches missed.">        if (values == null || values.isEmpty() || !List.of(&quot;OK&quot;, &quot;INVALID&quot;, &quot;REUSED&quot;).contains(values.getFirst())) {</span>
+<span class="nc" id="L90">            throw new AuthenticationStoreFailure.InvalidState();</span>
+        }
+<span class="fc" id="L92">        return values;</span>
+    }
+
+    private Login login(String sid, List&lt;?&gt; values) {
+        try {
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">            if (values.size() != 4) throw new IllegalArgumentException();</span>
+<span class="fc" id="L98">            long employeeId = Long.parseLong(values.get(1).toString());</span>
+<span class="fc" id="L99">            Instant created = Instant.ofEpochMilli(Long.parseLong(values.get(2).toString()));</span>
+<span class="fc" id="L100">            Instant expires = Instant.ofEpochMilli(Long.parseLong(values.get(3).toString()));</span>
+<span class="pc bpc" id="L101" title="2 of 4 branches missed.">            if (employeeId &lt;= 0 || !expires.isAfter(created)) throw new IllegalArgumentException();</span>
+<span class="fc" id="L102">            return new Login(sid, employeeId, created, expires);</span>
+<span class="nc" id="L103">        } catch (RuntimeException failure) {</span>
+<span class="nc" id="L104">            throw new AuthenticationStoreFailure.InvalidState();</span>
+        }
+    }
+
+<span class="fc" id="L108">    String key(String sid) { return settings.namespace() + &quot;:{&quot; + sid + &quot;}&quot;; }</span>
+
+    /** 通过资源位置加载脚本，由Spring处理首次执行/脚本缓存失效后的重载。 */
+    private static DefaultRedisScript&lt;List&gt; script() {
+<span class="fc" id="L112">        DefaultRedisScript&lt;List&gt; script = new DefaultRedisScript&lt;&gt;();</span>
+<span class="fc" id="L113">        script.setLocation(new ClassPathResource(&quot;authentication/login-state.lua&quot;));</span>
+<span class="fc" id="L114">        script.setResultType(List.class);</span>
+<span class="fc" id="L115">        return script;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

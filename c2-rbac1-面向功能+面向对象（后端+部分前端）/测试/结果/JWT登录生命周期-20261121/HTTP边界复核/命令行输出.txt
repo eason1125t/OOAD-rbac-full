@@ -1,0 +1,602 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< cn.edu.ooad:rbac1-func >-----------------------
+[INFO] Building rbac1-func 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rbac1-func ---
+[INFO] Copying 1 resource from src\main\resources to target\jwt-lifecycle\classes
+[INFO] Copying 10 resources from src\main\resources to target\jwt-lifecycle\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ rbac1-func ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 100 source files with javac [debug parameters release 21] to target\jwt-lifecycle\classes
+[INFO] CopyFromProcessor start
+[INFO] Processing: OrganizationVO
+[INFO] Entry: value, value: {organization.Organization.class}
+[INFO] Source fields: [managerName, name, sourceParentName, id, code, organizationType, parentId]organization.Organization
+[INFO] Target element: organization.vo.OrganizationVO
+[INFO] Processing: RequestDetail
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [applicantId, systemId, id, title, status, deletedAt]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestDetail
+[INFO] Processing: RequestDetailVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestDetail.class}
+[INFO] Source fields: [status, applicantId, id, title]simulation.BusinessRequestService.RequestDetail
+[INFO] Target element: simulation.vo.RequestDetailVO
+[INFO] Processing: CatalogVO
+[INFO] Entry: value, value: {rolepermission.CatalogEntry.class}
+[INFO] Source fields: [executiveCell, featureName, systemName, id, projectManagerCell, departmentManagerCell, description, moduleName, administratorCell, employeeCell]rolepermission.CatalogEntry
+[INFO] Target element: organization.vo.CatalogVO
+[INFO] Processing: RequestSummary
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [applicantId, systemId, id, title, status, deletedAt]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestSummary
+[INFO] Processing: RequestSummaryVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestSummary.class}
+[INFO] Source fields: [title, id, status]simulation.BusinessRequestService.RequestSummary
+[INFO] Target element: simulation.vo.RequestSummaryVO
+[INFO] CopyToProcessor start
+[INFO] CopyNotNullToProcessor start
+[INFO] 
+[INFO] --- build-helper:3.6.1:add-test-source (shared-contract-tests) @ rbac1-func ---
+[INFO] Test Source directory: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\..\测试\后端\common\java added.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rbac1-func ---
+[INFO] skip non existing resourceDirectory D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ rbac1-func ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 13 source files with javac [debug parameters release 21] to target\jwt-lifecycle\test-classes
+[INFO] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/CurrentEmployeeServiceTest.java: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\..\测试\后端\common\java\authentication\CurrentEmployeeServiceTest.java使用了未经检查或不安全的操作。
+[INFO] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/CurrentEmployeeServiceTest.java: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ rbac1-func ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running authentication.JwtEmployeeAuthenticationTest
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\kaoyu\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.379 s -- in authentication.JwtEmployeeAuthenticationTest
+[INFO] Running authentication.JwtLoginHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-21T20:34:06.845+08:00  INFO 54928 --- [rbac1-func] [           main] authentication.JwtLoginHttpTest          : Starting JwtLoginHttpTest using Java 21.0.9 with PID 54928 (started by kaoyu in D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func)
+2026-11-21T20:34:06.848+08:00  INFO 54928 --- [rbac1-func] [           main] authentication.JwtLoginHttpTest          : No active profile set, falling back to 1 default profile: "default"
+2026-11-21T20:34:07.734+08:00  INFO 54928 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-21T20:34:07.734+08:00  INFO 54928 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-21T20:34:07.910+08:00  INFO 54928 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 163 ms. Found 14 JPA repository interfaces.
+2026-11-21T20:34:08.998+08:00  INFO 54928 --- [rbac1-func] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2026-11-21T20:34:09.020+08:00  INFO 54928 --- [rbac1-func] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-21T20:34:09.020+08:00  INFO 54928 --- [rbac1-func] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-21T20:34:09.109+08:00  INFO 54928 --- [rbac1-func] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-11-21T20:34:09.110+08:00  INFO 54928 --- [rbac1-func] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2240 ms
+2026-11-21T20:34:09.460+08:00  INFO 54928 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-11-21T20:34:09.804+08:00  INFO 54928 --- [rbac1-func] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3dbb0cb4
+2026-11-21T20:34:09.806+08:00  INFO 54928 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-11-21T20:34:09.881+08:00  INFO 54928 --- [rbac1-func] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:33327/ooad_rbac1_func_test (MySQL 8.4)
+2026-11-21T20:34:09.910+08:00  WARN 54928 --- [rbac1-func] [           main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: MySQL 8.4 is newer than this version of Flyway and support has not been tested. The latest supported version of MySQL is 8.1.
+2026-11-21T20:34:09.991+08:00  INFO 54928 --- [rbac1-func] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.062s)
+2026-11-21T20:34:10.020+08:00  INFO 54928 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `ooad_rbac1_func_test`: 9
+2026-11-21T20:34:10.024+08:00  INFO 54928 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Schema `ooad_rbac1_func_test` is up to date. No migration necessary.
+2026-11-21T20:34:10.164+08:00  INFO 54928 --- [rbac1-func] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-21T20:34:10.233+08:00  INFO 54928 --- [rbac1-func] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+2026-11-21T20:34:10.275+08:00  INFO 54928 --- [rbac1-func] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-21T20:34:10.425+08:00  INFO 54928 --- [rbac1-func] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-21T20:34:10.533+08:00  INFO 54928 --- [rbac1-func] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.4.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-21T20:34:11.534+08:00  INFO 54928 --- [rbac1-func] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-21T20:34:11.583+08:00  INFO 54928 --- [rbac1-func] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-21T20:34:12.030+08:00  INFO 54928 --- [rbac1-func] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-11-21T20:34:16.589+08:00  INFO 54928 --- [rbac1-func] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 2970 (http) with context path '/'
+2026-11-21T20:34:16.600+08:00  INFO 54928 --- [rbac1-func] [           main] authentication.JwtLoginHttpTest          : Started JwtLoginHttpTest in 10.271 seconds (process running for 15.292)
+2026-11-21T20:34:16.618+08:00 DEBUG 54928 --- [rbac1-func] [           main] r.i.i.InitializationCommand              : run 开始
+2026-11-21T20:34:16.620+08:00 DEBUG 54928 --- [rbac1-func] [           main] r.i.i.InitializationCommand              : run 完成，耗时 0 ms
+2026-11-21T20:34:17.141+08:00  INFO 54928 --- [rbac1-func] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-21T20:34:17.141+08:00  INFO 54928 --- [rbac1-func] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-21T20:34:17.142+08:00  INFO 54928 --- [rbac1-func] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-11-21T20:34:17.200+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:17.205+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : csrf 完成，耗时 5 ms
+2026-11-21T20:34:17.329+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:17.330+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:17.508+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.AccountAuthentication              : verify 完成，耗时 178 ms
+2026-11-21T20:34:17.513+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:17.526+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.WorkspaceService      : current 完成，耗时 13 ms
+2026-11-21T20:34:17.532+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:17.535+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:17.544+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 9 ms
+2026-11-21T20:34:17.994+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.LoginAuthentication   : start 完成，耗时 462 ms
+2026-11-21T20:34:18.003+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : login 完成，耗时 673 ms
+2026-11-21T20:34:18.068+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:18.071+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T20:34:18.249+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:18.249+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:18.255+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:18.255+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:18.315+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.AccountAuthentication              : verify 完成，耗时 60 ms
+2026-11-21T20:34:18.319+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:18.326+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:18.328+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:18.330+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:18.333+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T20:34:18.340+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.LoginAuthentication   : start 完成，耗时 12 ms
+2026-11-21T20:34:18.340+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : login 完成，耗时 86 ms
+2026-11-21T20:34:18.345+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:18.345+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:18.361+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:18.362+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:18.362+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 0 ms，异常 AuthenticationFailure
+2026-11-21T20:34:18.362+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : refresh 失败，耗时 1 ms，异常 AuthenticationFailure
+2026-11-21T20:34:18.376+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:18.379+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T20:34:18.406+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:18.410+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:18.414+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T20:34:18.419+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:18.427+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T20:34:18.430+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : me 完成，耗时 24 ms
+2026-11-21T20:34:18.555+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:18.556+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:18.563+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:18.563+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:18.635+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 完成，耗时 71 ms
+2026-11-21T20:34:18.639+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:18.651+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 12 ms
+2026-11-21T20:34:18.654+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:18.657+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:18.661+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 4 ms
+2026-11-21T20:34:18.670+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 完成，耗时 15 ms
+2026-11-21T20:34:18.670+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 完成，耗时 106 ms
+2026-11-21T20:34:18.674+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:18.675+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:18.680+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:18.680+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:18.684+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 3 ms，异常 AuthenticationFailure
+2026-11-21T20:34:18.684+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : refresh 失败，耗时 4 ms，异常 AuthenticationFailure
+2026-11-21T20:34:18.695+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:18.699+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:18.702+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:18.704+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:18.708+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:18.712+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:18.719+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T20:34:18.722+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : me 完成，耗时 19 ms
+2026-11-21T20:34:18.726+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:18.727+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:18.732+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:18.735+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T20:34:18.742+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : refresh 完成，耗时 15 ms
+2026-11-21T20:34:18.743+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : refresh 完成，耗时 16 ms
+2026-11-21T20:34:18.853+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:18.853+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:18.857+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:18.857+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:18.920+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 完成，耗时 62 ms
+2026-11-21T20:34:18.923+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:18.930+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:18.932+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:18.934+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:18.937+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:18.943+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 完成，耗时 11 ms
+2026-11-21T20:34:18.944+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 完成，耗时 85 ms
+2026-11-21T20:34:18.948+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:18.948+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:18.954+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:18.954+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:19.014+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 完成，耗时 59 ms
+2026-11-21T20:34:19.017+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:19.024+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:19.026+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:19.028+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:19.031+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:19.037+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 完成，耗时 11 ms
+2026-11-21T20:34:19.038+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 完成，耗时 83 ms
+2026-11-21T20:34:19.042+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:19.042+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:19.046+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : logout 开始
+2026-11-21T20:34:19.046+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : end 开始
+2026-11-21T20:34:19.049+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : end 完成，耗时 3 ms
+2026-11-21T20:34:19.050+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : logout 完成，耗时 4 ms
+2026-11-21T20:34:19.067+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:19.069+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:19.073+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:19.075+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:19.078+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:19.082+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:19.090+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T20:34:19.094+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 完成，耗时 20 ms
+2026-11-21T20:34:19.099+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:19.099+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:19.103+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : logout 开始
+2026-11-21T20:34:19.103+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : end 开始
+2026-11-21T20:34:19.103+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : end 完成，耗时 0 ms
+2026-11-21T20:34:19.103+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : logout 完成，耗时 0 ms
+2026-11-21T20:34:19.233+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:19.234+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:19.240+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:19.241+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:19.307+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 完成，耗时 65 ms
+2026-11-21T20:34:19.310+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:19.316+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:19.319+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:19.322+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:19.325+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 3 ms
+2026-11-21T20:34:19.332+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 完成，耗时 12 ms
+2026-11-21T20:34:19.332+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 完成，耗时 91 ms
+2026-11-21T20:34:19.356+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:19.356+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:19.359+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:19.360+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:19.365+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:19.368+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 3 ms
+2026-11-21T20:34:19.373+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 13 ms，异常 AuthenticationFailure
+2026-11-21T20:34:19.374+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : refresh 失败，耗时 13 ms，异常 AuthenticationFailure
+2026-11-21T20:34:19.497+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:19.497+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:19.501+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:19.501+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:19.562+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.AccountAuthentication              : verify 完成，耗时 60 ms
+2026-11-21T20:34:19.565+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:19.572+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:19.574+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:19.576+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:19.578+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:19.586+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : start 完成，耗时 12 ms
+2026-11-21T20:34:19.587+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : login 完成，耗时 86 ms
+2026-11-21T20:34:19.600+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:19.601+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:19.604+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:19.604+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:19.610+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:19.612+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:19.619+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : refresh 完成，耗时 14 ms
+2026-11-21T20:34:19.619+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : refresh 完成，耗时 14 ms
+2026-11-21T20:34:19.623+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:19.623+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:19.626+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : logout 开始
+2026-11-21T20:34:19.626+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : end 开始
+2026-11-21T20:34:19.629+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : end 完成，耗时 2 ms
+2026-11-21T20:34:19.630+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : logout 完成，耗时 3 ms
+2026-11-21T20:34:19.757+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:19.757+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:19.761+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:19.762+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:19.822+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 完成，耗时 60 ms
+2026-11-21T20:34:19.825+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:19.831+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:19.834+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:19.836+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:19.838+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:19.844+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 完成，耗时 10 ms
+2026-11-21T20:34:19.845+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 完成，耗时 83 ms
+2026-11-21T20:34:19.964+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:19.964+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:19.968+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:19.969+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:20.028+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.AccountAuthentication              : verify 完成，耗时 59 ms
+2026-11-21T20:34:20.031+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:20.038+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:20.040+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:20.042+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:20.044+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:20.051+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : start 完成，耗时 11 ms
+2026-11-21T20:34:20.052+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : login 完成，耗时 83 ms
+2026-11-21T20:34:20.068+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:20.070+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:20.073+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:20.074+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:20.077+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:20.080+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:20.086+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 完成，耗时 5 ms
+2026-11-21T20:34:20.088+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 完成，耗时 15 ms
+2026-11-21T20:34:20.208+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:20.208+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:20.211+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:20.211+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:20.286+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 完成，耗时 75 ms
+2026-11-21T20:34:20.290+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:20.297+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T20:34:20.299+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:20.301+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:20.303+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:20.310+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 完成，耗时 10 ms
+2026-11-21T20:34:20.310+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 完成，耗时 98 ms
+2026-11-21T20:34:20.314+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:20.314+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:20.318+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:20.318+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:20.377+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.AccountAuthentication              : verify 完成，耗时 59 ms
+2026-11-21T20:34:20.380+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:20.386+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.WorkspaceService      : current 完成，耗时 5 ms
+2026-11-21T20:34:20.388+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:20.390+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:20.393+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:20.399+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : start 完成，耗时 11 ms
+2026-11-21T20:34:20.400+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : login 完成，耗时 81 ms
+2026-11-21T20:34:20.403+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:20.404+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:20.408+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:20.408+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:20.468+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 完成，耗时 60 ms
+2026-11-21T20:34:20.471+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:20.478+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:20.480+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:20.482+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:20.484+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:20.493+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 完成，耗时 12 ms
+2026-11-21T20:34:20.493+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 完成，耗时 85 ms
+2026-11-21T20:34:20.508+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:20.511+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:20.514+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:20.515+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:20.518+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:20.521+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:20.527+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:20.530+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : me 完成，耗时 15 ms
+2026-11-21T20:34:20.533+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:20.533+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:20.537+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:20.537+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:20.598+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.AccountAuthentication              : verify 失败，耗时 61 ms，异常 BadCredentialsException
+2026-11-21T20:34:20.598+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : login 失败，耗时 61 ms，异常 BadCredentialsException
+2026-11-21T20:34:20.608+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:20.610+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:20.613+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:20.615+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:20.618+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:20.622+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:20.628+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.s.authentication.WorkspaceService      : current 完成，耗时 5 ms
+2026-11-21T20:34:20.630+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : me 完成，耗时 16 ms
+2026-11-21T20:34:20.742+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:20.742+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:20.746+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:20.746+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:20.815+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.a.AccountAuthentication              : verify 完成，耗时 69 ms
+2026-11-21T20:34:20.818+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:20.824+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:20.827+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:20.829+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:20.831+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:20.838+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.s.authentication.LoginAuthentication   : start 完成，耗时 11 ms
+2026-11-21T20:34:20.839+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : login 完成，耗时 93 ms
+2026-11-21T20:34:20.843+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:20.843+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:20.846+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:20.846+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:20.852+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:20.855+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:20.862+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.s.authentication.LoginAuthentication   : refresh 完成，耗时 15 ms
+2026-11-21T20:34:20.862+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : refresh 完成，耗时 15 ms
+2026-11-21T20:34:20.872+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:20.874+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:20.877+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:20.878+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:20.881+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 1 ms
+2026-11-21T20:34:20.884+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:20.891+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:20.893+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : me 完成，耗时 16 ms
+2026-11-21T20:34:20.898+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:20.898+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:20.902+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 3 ms，异常 AuthenticationFailure
+2026-11-21T20:34:20.902+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : refresh 失败，耗时 4 ms，异常 AuthenticationFailure
+2026-11-21T20:34:21.027+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:21.027+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:21.031+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:21.031+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:21.090+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.AccountAuthentication              : verify 完成，耗时 58 ms
+2026-11-21T20:34:21.093+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:21.099+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:21.101+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:21.103+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:21.105+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:21.112+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.s.authentication.LoginAuthentication   : start 完成，耗时 10 ms
+2026-11-21T20:34:21.112+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-7] r.api.authentication.AuthController      : login 完成，耗时 81 ms
+2026-11-21T20:34:21.118+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:21.118+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:21.121+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:21.121+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:21.122+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 0 ms，异常 RedisConnectionFailureException
+2026-11-21T20:34:21.122+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : refresh 失败，耗时 0 ms，异常 RedisConnectionFailureException
+2026-11-21T20:34:21.128+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:21.128+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:21.132+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : logout 开始
+2026-11-21T20:34:21.132+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : end 开始
+2026-11-21T20:34:21.132+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : end 失败，耗时 0 ms，异常 RedisConnectionFailureException
+2026-11-21T20:34:21.132+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : logout 失败，耗时 0 ms，异常 RedisConnectionFailureException
+2026-11-21T20:34:21.252+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:21.252+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:21.256+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:21.256+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:21.319+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 完成，耗时 62 ms
+2026-11-21T20:34:21.322+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:21.328+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 5 ms
+2026-11-21T20:34:21.331+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:21.332+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:21.337+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 4 ms
+2026-11-21T20:34:21.345+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 完成，耗时 15 ms
+2026-11-21T20:34:21.346+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 完成，耗时 89 ms
+2026-11-21T20:34:21.349+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:21.350+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-4] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:21.354+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:21.354+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:21.354+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:21.354+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:21.359+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:21.360+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:21.362+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:21.362+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:21.368+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.s.authentication.LoginAuthentication   : refresh 完成，耗时 14 ms
+2026-11-21T20:34:21.369+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-6] r.api.authentication.AuthController      : refresh 完成，耗时 14 ms
+2026-11-21T20:34:21.369+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 14 ms，异常 AuthenticationFailure
+2026-11-21T20:34:21.369+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-5] r.api.authentication.AuthController      : refresh 失败，耗时 15 ms，异常 AuthenticationFailure
+2026-11-21T20:34:21.491+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:21.491+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-8] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:21.496+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:21.496+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:21.556+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.AccountAuthentication              : verify 完成，耗时 59 ms
+2026-11-21T20:34:21.559+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:21.565+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:21.568+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:21.569+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:21.571+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:21.577+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.s.authentication.LoginAuthentication   : start 完成，耗时 9 ms
+2026-11-21T20:34:21.578+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-9] r.api.authentication.AuthController      : login 完成，耗时 81 ms
+2026-11-21T20:34:21.582+08:00 DEBUG 54928 --- [rbac1-func] [           main] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:21.583+08:00 DEBUG 54928 --- [rbac1-func] [           main] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 0 ms
+2026-11-21T20:34:21.588+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:21.588+08:00 DEBUG 54928 --- [rbac1-func] [-auto-1-exec-10] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:21.591+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : refresh 开始
+2026-11-21T20:34:21.591+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : refresh 开始
+2026-11-21T20:34:21.596+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:21.597+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.a.CurrentEmployeeService             : findActive 失败，耗时 0 ms，异常 DataAccessResourceFailureException
+2026-11-21T20:34:21.600+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.s.authentication.LoginAuthentication   : refresh 失败，耗时 9 ms，异常 DataAccessResourceFailureException
+2026-11-21T20:34:21.600+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-1] r.api.authentication.AuthController      : refresh 失败，耗时 9 ms，异常 DataAccessResourceFailureException
+2026-11-21T20:34:21.720+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:21.720+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-2] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:21.724+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:21.724+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:21.783+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.AccountAuthentication              : verify 完成，耗时 59 ms
+2026-11-21T20:34:21.786+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:21.791+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 5 ms
+2026-11-21T20:34:21.794+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:21.795+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:21.798+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:21.804+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.s.authentication.LoginAuthentication   : start 完成，耗时 10 ms
+2026-11-21T20:34:21.805+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-1-exec-3] r.api.authentication.AuthController      : login 完成，耗时 80 ms
+[INFO] Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 15.94 s -- in authentication.JwtLoginHttpTest
+[INFO] Running contract.AuthHttpTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.5.16)
+
+2026-11-21T20:34:21.876+08:00  INFO 54928 --- [rbac1-func] [           main] contract.AuthHttpTest                    : Starting AuthHttpTest using Java 21.0.9 with PID 54928 (started by kaoyu in D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func)
+2026-11-21T20:34:21.876+08:00  INFO 54928 --- [rbac1-func] [           main] contract.AuthHttpTest                    : No active profile set, falling back to 1 default profile: "default"
+2026-11-21T20:34:22.058+08:00  INFO 54928 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-11-21T20:34:22.059+08:00  INFO 54928 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-11-21T20:34:22.083+08:00  INFO 54928 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 14 JPA repository interfaces.
+2026-11-21T20:34:22.255+08:00  INFO 54928 --- [rbac1-func] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2026-11-21T20:34:22.256+08:00  INFO 54928 --- [rbac1-func] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-11-21T20:34:22.257+08:00  INFO 54928 --- [rbac1-func] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+2026-11-21T20:34:22.315+08:00  INFO 54928 --- [rbac1-func] [           main] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring embedded WebApplicationContext
+2026-11-21T20:34:22.316+08:00  INFO 54928 --- [rbac1-func] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 439 ms
+2026-11-21T20:34:22.394+08:00  INFO 54928 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-11-21T20:34:22.413+08:00  INFO 54928 --- [rbac1-func] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@343e0251
+2026-11-21T20:34:22.414+08:00  INFO 54928 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-11-21T20:34:22.435+08:00  INFO 54928 --- [rbac1-func] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://127.0.0.1:33327/ooad_rbac1_func_test (MySQL 8.4)
+2026-11-21T20:34:22.452+08:00  WARN 54928 --- [rbac1-func] [           main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: MySQL 8.4 is newer than this version of Flyway and support has not been tested. The latest supported version of MySQL is 8.1.
+2026-11-21T20:34:22.477+08:00  INFO 54928 --- [rbac1-func] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.021s)
+2026-11-21T20:34:22.502+08:00  INFO 54928 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `ooad_rbac1_func_test`: 9
+2026-11-21T20:34:22.504+08:00  INFO 54928 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Schema `ooad_rbac1_func_test` is up to date. No migration necessary.
+2026-11-21T20:34:22.547+08:00  INFO 54928 --- [rbac1-func] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-11-21T20:34:22.550+08:00  INFO 54928 --- [rbac1-func] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-11-21T20:34:22.558+08:00  INFO 54928 --- [rbac1-func] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-11-21T20:34:22.563+08:00  INFO 54928 --- [rbac1-func] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 8.4.7
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-11-21T20:34:22.712+08:00  INFO 54928 --- [rbac1-func] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-11-21T20:34:22.727+08:00  INFO 54928 --- [rbac1-func] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-11-21T20:34:23.389+08:00  INFO 54928 --- [rbac1-func] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 3004 (http) with context path '/'
+2026-11-21T20:34:23.392+08:00  INFO 54928 --- [rbac1-func] [           main] contract.AuthHttpTest                    : Started AuthHttpTest in 1.553 seconds (process running for 22.084)
+2026-11-21T20:34:23.393+08:00 DEBUG 54928 --- [rbac1-func] [           main] r.i.i.InitializationCommand              : run 开始
+2026-11-21T20:34:23.393+08:00 DEBUG 54928 --- [rbac1-func] [           main] r.i.i.InitializationCommand              : run 完成，耗时 0 ms
+2026-11-21T20:34:23.533+08:00  INFO 54928 --- [rbac1-func] [o-auto-2-exec-1] o.a.c.c.C.[Tomcat-1].[localhost].[/]     : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-11-21T20:34:23.533+08:00  INFO 54928 --- [rbac1-func] [o-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-11-21T20:34:23.533+08:00  INFO 54928 --- [rbac1-func] [o-auto-2-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2026-11-21T20:34:23.535+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-1] r.api.authentication.AuthController      : csrf 开始
+2026-11-21T20:34:23.535+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-1] r.api.authentication.AuthController      : csrf 完成，耗时 0 ms
+2026-11-21T20:34:23.550+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.api.authentication.AuthController      : login 开始
+2026-11-21T20:34:23.550+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.s.a.AccountAuthentication              : verify 开始
+2026-11-21T20:34:23.610+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.s.a.AccountAuthentication              : verify 完成，耗时 60 ms
+2026-11-21T20:34:23.613+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:23.621+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.s.authentication.WorkspaceService      : current 完成，耗时 7 ms
+2026-11-21T20:34:23.625+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.s.authentication.LoginAuthentication   : start 开始
+2026-11-21T20:34:23.627+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:23.629+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:23.657+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.s.authentication.LoginAuthentication   : start 完成，耗时 32 ms
+2026-11-21T20:34:23.658+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-2] r.api.authentication.AuthController      : login 完成，耗时 107 ms
+2026-11-21T20:34:23.674+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-3] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:23.676+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-3] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:23.687+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-3] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:23.690+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-3] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:23.692+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-3] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:23.697+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-3] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:23.704+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-3] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:23.706+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-3] r.api.authentication.AuthController      : me 完成，耗时 18 ms
+2026-11-21T20:34:23.721+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:23.723+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:23.730+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:23.732+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:23.734+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:23.738+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:23.744+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.authentication.WorkspaceService      : current 完成，耗时 5 ms
+2026-11-21T20:34:23.747+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.a.CurrentAuthorizationService        : describe 开始
+2026-11-21T20:34:23.751+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.authorization.AuthorizationService   : describe 开始
+2026-11-21T20:34:23.752+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.authentication.WorkspaceService      : context 开始
+2026-11-21T20:34:23.755+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.authentication.WorkspaceService      : context 完成，耗时 3 ms
+2026-11-21T20:34:23.767+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.authorization.AuthorizationService   : describe 完成，耗时 15 ms
+2026-11-21T20:34:23.768+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.s.a.CurrentAuthorizationService        : describe 完成，耗时 20 ms
+2026-11-21T20:34:23.771+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-4] r.api.authentication.AuthController      : me 完成，耗时 40 ms
+2026-11-21T20:34:23.783+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-5] r.s.a.CurrentEmployeeService             : findActive 开始
+2026-11-21T20:34:23.786+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-5] r.s.a.CurrentEmployeeService             : findActive 完成，耗时 2 ms
+2026-11-21T20:34:23.789+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-5] r.api.authentication.AuthController      : me 开始
+2026-11-21T20:34:23.792+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-5] r.s.a.CurrentEmployeeService             : requireActive 开始
+2026-11-21T20:34:23.794+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-5] r.s.a.CurrentEmployeeService             : requireActive 完成，耗时 2 ms
+2026-11-21T20:34:23.798+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-5] r.s.authentication.WorkspaceService      : current 开始
+2026-11-21T20:34:23.804+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-5] r.s.authentication.WorkspaceService      : current 完成，耗时 6 ms
+2026-11-21T20:34:23.806+08:00 DEBUG 54928 --- [rbac1-func] [o-auto-2-exec-5] r.api.authentication.AuthController      : me 完成，耗时 17 ms
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.984 s -- in contract.AuthHttpTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 24, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.4.2:jar (default-jar) @ rbac1-func ---
+[INFO] Building jar: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\target\jwt-lifecycle\rbac1-func-0.1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:3.5.16:repackage (repackage) @ rbac1-func ---
+[INFO] Replacing main artifact D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\target\jwt-lifecycle\rbac1-func-0.1.0-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\target\jwt-lifecycle\rbac1-func-0.1.0-SNAPSHOT.jar.original
+[INFO] 
+[INFO] --- jacoco:0.8.14:report (report) @ rbac1-func ---
+[INFO] Loading execution data file D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\target\jwt-lifecycle\jacoco.exec
+[INFO] Analyzed bundle 'rbac1-func' with 132 classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  36.380 s
+[INFO] Finished at: 2026-11-21T20:34:26+08:00
+[INFO] ------------------------------------------------------------------------

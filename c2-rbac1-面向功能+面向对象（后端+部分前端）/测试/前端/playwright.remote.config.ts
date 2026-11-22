@@ -1,6 +1,8 @@
 // 文件职责：直接访问部署入口，复用页面入口与双标签页隔离测试，不启动本地 Vite。
 // 协作关系：使用本目录 Playwright 依赖，结果独立归档到测试/结果/部署。
 import { defineConfig } from '@playwright/test'
+import path from 'node:path'
+const results = process.env.RBAC_BROWSER_RESULTS_DIR || path.resolve('../结果/部署')
 
 const address = process.env.RBAC_DEPLOY_BASE_URL
 if (!address) throw new Error('Set RBAC_DEPLOY_BASE_URL to the public site origin')
@@ -12,8 +14,8 @@ if (!['http:', 'https:'].includes(target.protocol) || target.pathname !== '/' ||
 export default defineConfig({
   testDir: './tests',
   testMatch: ['**/oo-entry.spec.ts', '**/isolation.spec.ts'],
-  outputDir: '../结果/部署/browser-artifacts',
-  reporter: [['list'], ['json', { outputFile: '../结果/部署/browser-results.json' }]],
+  outputDir: path.join(results, 'browser-artifacts'),
+  reporter: [['list'], ['json', { outputFile: path.join(results, 'browser-results.json') }]],
   workers: 1,
   timeout: 60_000,
   projects: [

@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "source": "api/openapi.yaml",
+  "sourceSha256": "332a571beeade8f6466715000dfbf9cc28ecf43adcc146fbabfe4b2a48a8d92b",
+  "importSha256": "59b789a76b128fdd7a08adb8ac6e42adfb2961f192c27075964c294f6c834585",
+  "explicitInheritedOperations": 45,
+  "operations": 49,
+  "scope": "Only materialize inherited effective security; no operation behavior or root auth changes"
+}

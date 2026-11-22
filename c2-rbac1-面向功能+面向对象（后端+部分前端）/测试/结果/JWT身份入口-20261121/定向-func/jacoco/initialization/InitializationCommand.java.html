@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InitializationCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">initialization</a> &gt; <span class="el_source">InitializationCommand.java</span></div><h1>InitializationCommand.java</h1><pre class="source lang-java linenums">// 文件职责：解析显式 Excel 导入或演示初始化启动参数。
+// 协作关系：调用 InitializationService 完成显式操作，非 Web 模式不监听端口。
+package initialization;
+
+import initialization.InitializationService.ImportResult;
+import java.nio.file.Path;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+/** 将显式命令行选项转交初始化 Service，不提供上传接口。 */
+@Component
+@Order(10)
+@RequiredArgsConstructor
+public class InitializationCommand implements ApplicationRunner {
+    private final InitializationService initialization;
+
+    /** 执行选定的数据初始化，并仅输出汇总。 */
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
+<span class="nc bnc" id="L24" title="All 4 branches missed.">        if (args.containsOption(&quot;import-excel&quot;) &amp;&amp; args.containsOption(&quot;init-demo&quot;)) {</span>
+<span class="nc" id="L25">            throw new IllegalArgumentException(&quot;请分别执行 Excel 导入和演示初始化&quot;);</span>
+        }
+<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (args.containsOption(&quot;import-excel&quot;)) {</span>
+<span class="nc" id="L28">            List&lt;String&gt; paths = args.getOptionValues(&quot;import-excel&quot;);</span>
+<span class="nc bnc" id="L29" title="All 6 branches missed.">            if (paths == null || paths.size() != 1 || paths.getFirst().isBlank()) {</span>
+<span class="nc" id="L30">                throw new IllegalArgumentException(&quot;请指定 --import-excel=&lt;三份工作簿所在目录&gt;&quot;);</span>
+            }
+<span class="nc" id="L32">            ImportResult result = initialization.importWorkbooks(Path.of(paths.getFirst()));</span>
+<span class="nc" id="L33">            System.out.printf(&quot;导入完成：员工 %d，组织 %d，清单 %d，员工组织待匹配 %d%n&quot;,</span>
+<span class="nc" id="L34">                    result.employees(), result.organizations(), result.catalogEntries(), result.pending());</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        } else if (args.containsOption(&quot;init-demo&quot;)) {</span>
+<span class="nc" id="L36">            initialization.initializeDemo();</span>
+<span class="nc" id="L37">            System.out.println(&quot;演示数据已就绪&quot;);</span>
+        }
+<span class="nc" id="L39">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

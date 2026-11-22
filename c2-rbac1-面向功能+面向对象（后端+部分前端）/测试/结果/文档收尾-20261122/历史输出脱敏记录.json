@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "operation": "redact access JWT strings only; no raw credential copy",
+  "files": [
+    {
+      "path": "测试\\结果\\JWT登录生命周期-20261121\\HTTP首轮\\surefire\\TEST-contract.AuthHttpTest.xml",
+      "replacedTokenCount": 2,
+      "originalSha256": "53a8f0542a9cbe979d89c76a82484cb791a3d755c4bb0df1b8976a292be270bb",
+      "sanitizedSha256": "0d35e750702a7a58b3c09b22e230e231cb7c9784cf47965311c268d8b2cffda8",
+      "assertionAndCountPreserved": true
+    },
+    {
+      "path": "测试\\结果\\JWT登录生命周期-20261121\\HTTP首轮\\命令行输出.txt",
+      "replacedTokenCount": 2,
+      "originalSha256": "c6322d2f8e43969b053991751b768621fc24526fd66f72d906187fa291e5cedc",
+      "sanitizedSha256": "0f797a26308bef2b24be93f87d47a632697d880cec79ea72253c6b78c616b040",
+      "assertionAndCountPreserved": true
+    }
+  ]
+}

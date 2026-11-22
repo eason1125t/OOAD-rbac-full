@@ -1,0 +1,186 @@
+{
+  "status": "passed",
+  "utc": "2026-11-22T01:20:36.494662+00:00",
+  "actions": [
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121155125-frontend-1",
+      "result": "c0549e6c9e04c52099e8def7d8d216e9a5a01945f3fa4d9bf1c78c0ca8835851"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121155125-backend-oo-1",
+      "result": "a058fa98174ec6d3d2d4ea8250217d84a43a30e808f5a2a41554a562d25c9478"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121155125-backend-func-1",
+      "result": "99e6ff96b475477af385688bfbcb2b21e72b90927340dcca19d9e3c7701fc30c"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121155125-redis-1",
+      "result": "b2aaa93d392ed7e2f6db7927720da0326a34216104b4b325c7961221f622c9d8"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121155125-mysql-1",
+      "result": "6775096a05d4a4941f2ba1928a01a2f8c7ebf75ef489388267928ed4dfa4de60"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154541-frontend-1",
+      "result": "a8cb28184ac269180eea3507580d7c5a409d48b40418496f2a8a66ea7a7596b0"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154541-backend-oo-1",
+      "result": "78c6ba1aa02a42004d4e9e2a22e2c463c507c493426230fba40a2234b0de8c24"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154541-backend-func-1",
+      "result": "dfa47faba4ecb292c06aa649897a2510837ec3ec1e93baa9028a1eeaa8bb7ee2"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154541-redis-1",
+      "result": "e2684e7814a3fa2116dd4e8fef2ddd3572590f2700216f19aaea29f40c232e06"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154541-mysql-1",
+      "result": "c945f141134916617d6dd84fce83849d6ab581ad66215e66e4ccbdfb010aff48"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154321-frontend-1",
+      "result": "c9255a820692f67b566c0b54826663b21235d27775bbaa023818af906793e91a"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154321-backend-oo-1",
+      "result": "cfda3c95a2b05914b4e3ab3880490b8e930cecc0a5b66c989aa1a42e77bbe13d"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154321-backend-func-1",
+      "result": "04c1478d9ac54417e165a650cdc10329610f05893745c13f575bd40e704ffa4d"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154321-redis-1",
+      "result": "9e19563b64aab8f7e2f7dad0138cf9df8b91ffe2b98086b27aaca383d493dc0d"
+    },
+    {
+      "kind": "container",
+      "name": "c2-jwt-check-20261121154321-mysql-1",
+      "result": "e5349e465246ac123b5b7ba6399e78760a13e180c6cffc095fcaf3d5e75dcaa1"
+    },
+    {
+      "kind": "container",
+      "name": "c2-delivery-check-frontend-1",
+      "result": "c6942e5f52e001cf28ba1ff69b380feda76cef788c23faddf7604842cc5d0d1a"
+    },
+    {
+      "kind": "container",
+      "name": "c2-delivery-check-backend-oo-1",
+      "result": "ae36f3320cc3a6b9b8d79abc3b02f248f8c3b8acd7070cc6ce1762b6fd172dcc"
+    },
+    {
+      "kind": "container",
+      "name": "c2-delivery-check-backend-func-1",
+      "result": "8bba96d6c7aece8f0c5f243a13e60d9d2cb73b4df6195cf2d7ae8d8857d448b7"
+    },
+    {
+      "kind": "container",
+      "name": "c2-delivery-check-mysql-1",
+      "result": "31668b10cdca39c1c94bc6f8bf1db49781c1b584bf2980dc8e2b3da5eb48d6df"
+    },
+    {
+      "kind": "container",
+      "name": "c2-delivery-check-redis-1",
+      "result": "d765d7b285b0ea4a95ede096261c05fee94f95eba763d12a7c31d2f2bf0931ca"
+    },
+    {
+      "kind": "network",
+      "name": "c2-delivery-check_app",
+      "result": "901bcb507391fab00aedd098421add41519e1d8aa1bb6de0f60d3e8b29aa3e3b"
+    },
+    {
+      "kind": "network",
+      "name": "c2-jwt-check-20261121154321_app",
+      "result": "bd0e857d758a29f09784fdb711fd7694def7d521795ca0e580d1f7975c4af444"
+    },
+    {
+      "kind": "network",
+      "name": "c2-jwt-check-20261121154541_app",
+      "result": "98bcd800ec69f50be0bd6ad4526c3737273095d167fe4610b4de9978cf8ed58a"
+    },
+    {
+      "kind": "network",
+      "name": "c2-jwt-check-20261121155125_app",
+      "result": "2834060a4f2cd00754e53a06cd12a23d8312f4b9ec5ac11dd0362644a1af251f"
+    },
+    {
+      "kind": "image",
+      "name": "rbac-c2/frontend:delivery",
+      "result": "Untagged: rbac-c2/frontend:delivery\nDeleted: sha256:c084cf202d83d6f9faa7ef2192f9ffba238901e95dd3b88c7cfbe6745fa93e00"
+    },
+    {
+      "kind": "image",
+      "name": "rbac-c2/backend-func:delivery",
+      "result": "Untagged: rbac-c2/backend-func:delivery\nDeleted: sha256:8ba390f450d5546bc554f7331607598ca1d1cfd8bb293551986a71a00e9803d6"
+    },
+    {
+      "kind": "image",
+      "name": "rbac-c2/backend-oo:delivery",
+      "result": "Untagged: rbac-c2/backend-oo:delivery\nDeleted: sha256:fdd51c6bd1c539ff812e545747837f1575e16b615edfcfdf903a3afc63aa1d9e"
+    },
+    {
+      "kind": "image",
+      "name": "rbac-c2/frontend:jwt-20261121154321",
+      "result": "Untagged: rbac-c2/frontend:jwt-20261121154321\nDeleted: sha256:4161fd32d7b59b3855da1be75f43eb0d4437c2ce5c0da92c20099b8426b68fb2"
+    },
+    {
+      "kind": "image",
+      "name": "rbac-c2/backend-func:jwt-20261121154321",
+      "result": "Untagged: rbac-c2/backend-func:jwt-20261121154321\nDeleted: sha256:39af5d675df5b2ed082554d40ecd53112219ad8dc687d350ea7d3fdba5d56433"
+    },
+    {
+      "kind": "image",
+      "name": "rbac-c2/backend-oo:jwt-20261121154321",
+      "result": "Untagged: rbac-c2/backend-oo:jwt-20261121154321\nDeleted: sha256:5d9d1d3c8fc6b50cf815267ddc9a7d2fb3284c768fd81c7aa576d50216c2adc8"
+    },
+    {
+      "kind": "image",
+      "name": "rbac-c2/frontend:jwt-20261121154541",
+      "result": "Untagged: rbac-c2/frontend:jwt-20261121154541\nDeleted: sha256:3f2fbfc4303d2f4577d305bf944ba90b1d22c182b02c898a7a942a15fb2b52ea"
+    },
+    {
+      "kind": "image",
+      "name": "rbac-c2/backend-func:jwt-20261121154541",
+      "result": "Untagged: rbac-c2/backend-func:jwt-20261121154541\nDeleted: sha256:d5eb9e86a5a191f7832608e9b33dd73912bca15be0b81a0fa4a3c5afd0261761"
+    },
+    {
+      "kind": "image",
+      "name": "rbac-c2/backend-oo:jwt-20261121154541",
+      "result": "Untagged: rbac-c2/backend-oo:jwt-20261121154541\nDeleted: sha256:3b34bbe43fd18b4fea2caa0cbedbe48227e609090768a4c0e053ad50c58d0009"
+    }
+  ],
+  "removedCounts": {
+    "containers": 20,
+    "networks": 4,
+    "oldImageTags": 9
+  },
+  "allVolumesPreserved": true,
+  "volumeCount": 21,
+  "testVolumeCount": 8,
+  "preservedContainerCount": 15,
+  "retainedCurrentImages": [
+    "rbac-c2/frontend:jwt-20261121155125",
+    "rbac-c2/backend-func:jwt-20261121155125",
+    "rbac-c2/backend-oo:jwt-20261121155125"
+  ],
+  "filesystemDeletionCount": 0
+}

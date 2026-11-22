@@ -1,8 +1,10 @@
+import { apiGet, trackAuth } from './support/auth'
 // 两版使用同一浏览器上下文，从页面、Cookie 和数据变化验证隔离。
 import { expect, test, type Page } from '@playwright/test'
 
 async function login(page: Page, edition: 'func' | 'oo', username: string) {
   await page.goto(`/${edition}/`)
+  trackAuth(page)
   await page.getByLabel('用户名').fill(username)
   await page.getByLabel('密码').fill('1234')
   await page.getByRole('button', { name: '登录', exact: true }).click()
@@ -15,13 +17,13 @@ test('C2-10 同一浏览器两标签页各自登录、写入和退出', async ({
   await login(func, 'func', 'finance-employee')
   await login(oo, 'oo', 'company-a-admin')
   const cookies = await context.cookies()
-  const funcCookie = cookies.find(cookie => cookie.name === 'RBAC1_FUNC_SESSION')
-  const ooCookie = cookies.find(cookie => cookie.name === 'RBAC1_OO_SESSION')
-  expect(funcCookie?.path).toBe('/func/')
-  expect(ooCookie?.path).toBe('/oo/')
+  const funcCookie = cookies.find(cookie => cookie.name === 'RBAC1_FUNC_REFRESH')
+  const ooCookie = cookies.find(cookie => cookie.name === 'RBAC1_OO_REFRESH')
+  expect(funcCookie?.path).toBe('/func/api/auth/')
+  expect(ooCookie?.path).toBe('/oo/api/auth/')
   expect(funcCookie?.value).not.toBe(ooCookie?.value)
   const csrfToken = async (page: Page, edition: string) => {
-    const response = await page.request.get('/' + edition + '/api/auth/csrf')
+    const response = await apiGet(page, '/' + edition + '/api/auth/csrf')
     expect(response.ok()).toBeTruthy()
     const { token } = await response.json()
     expect(token).toBeTruthy()
@@ -31,7 +33,7 @@ test('C2-10 同一浏览器两标签页各自登录、写入和退出', async ({
 
   const path = '/api/business-systems/demo-finance-app/requests?pageSize=1'
   const systemCount = async (page: Page, edition: string) => {
-    const response = await page.request.get('/' + edition + path)
+    const response = await apiGet(page, '/' + edition + path)
     expect(response.status()).toBe(200)
     return (await response.json()).total
   }
@@ -49,9 +51,9 @@ test('C2-10 同一浏览器两标签页各自登录、写入和退出', async ({
 
   await func.getByRole('button', { name: '退出登录' }).click()
   await expect(func.getByRole('heading', { name: '登录工作台' })).toBeVisible()
-  expect((await func.request.get('/func/api/auth/me')).status()).toBe(401)
+  expect((await apiGet(func, '/func/api/auth/me')).status()).toBe(401)
   await oo.reload()
   await expect(oo.getByText('company-a-admin', { exact: true })).toBeVisible()
-  expect((await context.cookies()).find(cookie => cookie.name === 'RBAC1_OO_SESSION')?.value)
-    .toBe(ooCookie?.value)
+  expect((await context.cookies()).find(cookie => cookie.name === 'RBAC1_OO_REFRESH')?.value.split('.')[0])
+    .toBe(ooCookie?.value.split('.')[0])
 })

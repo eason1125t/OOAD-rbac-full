@@ -1,0 +1,158 @@
+[WebServer] (node:51172) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:54856) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 51 tests using 1 worker
+
+(node:62860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  1 [oo] › tests\authorization.spec.ts:45:1 › C2-11 至 C2-14 三个系统完成申请操作并回查状态 (6.4s)
+  x   2 [oo] › tests\authorization.spec.ts:105:1 › C2-04 / C2-11 演示申请人和继承审批人分工，乙公司无法进入工程系统 (1.3s)
+(node:28844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok  3 [oo] › tests\authorization.spec.ts:142:1 › C2-03 环路被拒绝后可继续维护该角色的继承关系 (2.9s)
+  ok  4 [oo] › tests\authorization.spec.ts:186:1 › C2-05 共享边仅全局管理员可维护，部门管理员无法查询外部角色 (2.0s)
+  ok  5 [oo] › tests\authorization.spec.ts:224:1 › C2-01、C2-02、C2-04、C2-06 直接与传递继承、权限去重及逐条撤权 (7.6s)
+  ok  6 [oo] › tests\excel-review.spec.ts:54:1 › C2-09 从管理端全量对照员工、部门和功能权限原表 (2.7s)
+  ok  7 [oo] › tests\identity.spec.ts:34:1 › ID-S6 继承角色、有效权限、单项及API检查接入当前系统 (1.4s)
+  ok  8 [oo] › tests\identity.spec.ts:60:1 › ID-S6 普通员工只见本部门，搜索及详情边界由后端执行 (869ms)
+  ok  9 [oo] › tests\identity.spec.ts:83:1 › ID-S6 公司管理员逐层展开部门并查看范围内员工资料 (1.3s)
+  ok 10 [oo] › tests\identity.spec.ts:103:1 › ID-S6 员工分页和搜索重置页码，普通用户不接收联系字段 (3.0s)
+  ok 11 [oo] › tests\identity.spec.ts:141:1 › ID-S6 权限与目录请求失败时清除旧数据并允许重试（HTTP故障桩） (1.4s)
+  ok 12 [oo] › tests\identity.spec.ts:175:1 › ID-S6 小屏目录可滚动，切换业务系统不沿用前一系统授权 (1.3s)
+  ok 13 [oo] › tests\jwt.spec.ts:31:1 › JWT 刷新页面恢复身份，凭证仅在内存与HttpOnly刷新Cookie (813ms)
+  ok 14 [oo] › tests\jwt.spec.ts:48:1 › JWT 两标签页并发过期只轮换一次，Cookie入口由共享协调器串行执行 (2.2s)
+  ok 15 [oo] › tests\jwt.spec.ts:71:1 › JWT 同版退出同步全部标签页，重新打开不能靠旧身份继续 (914ms)
+  ok 16 [oo] › tests\jwt.spec.ts:83:1 › JWT 切换账号丢弃旧身份在途响应，不在新账号页面展示 (1.4s)
+  ok 17 [oo] › tests\jwt.spec.ts:120:1 › JWT 网络结果未知的写入不自动重放 (1.1s)
+  ok 18 [oo] › tests\jwt.spec.ts:139:1 › JWT 只有确定的过期允许写入重试一次，后端只创建一条 (1.2s)
+  ok 19 [oo] › tests\jwt.spec.ts:162:1 › JWT 普通403不刷新凭证，也不清除已登录身份 (1.1s)
+  x  20 [oo] › tests\jwt.spec.ts:174:1 › JWT 刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录 (5.8s)
+(node:7332) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 21 [oo] › tests\oo-entry.spec.ts:4:1 › C2-08 首页进入指定版本 (673ms)
+  ok 22 [oo] › tests\request-read.spec.ts:5:1 › C2-15 撤销查看权后原页面清空列表和详情，重授后恢复读取 (2.8s)
+  ok 23 [oo] › tests\role-permissions.spec.ts:85:1 › C2-01 角色权限按系统名称选动作并显示演示继承权限 (1.1s)
+  ok 24 [oo] › tests\role-permissions.spec.ts:111:1 › C2-01 撤销同名直接授权保留继承权限 (1.9s)
+  ok 25 [oo] › tests\role-permissions.spec.ts:136:1 › C2-02 / C2-04 两个来源的权限去重，最后一条继承边移除后消失 (2.6s)
+(node:17412) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 26 [func] › tests\authorization.spec.ts:45:1 › C2-11 至 C2-14 三个系统完成申请操作并回查状态 (7.2s)
+  ok 27 [func] › tests\authorization.spec.ts:105:1 › C2-04 / C2-11 演示申请人和继承审批人分工，乙公司无法进入工程系统 (2.4s)
+  ok 28 [func] › tests\authorization.spec.ts:142:1 › C2-03 环路被拒绝后可继续维护该角色的继承关系 (2.2s)
+  ok 29 [func] › tests\authorization.spec.ts:186:1 › C2-05 共享边仅全局管理员可维护，部门管理员无法查询外部角色 (2.3s)
+  ok 30 [func] › tests\authorization.spec.ts:224:1 › C2-01、C2-02、C2-04、C2-06 直接与传递继承、权限去重及逐条撤权 (7.2s)
+  ok 31 [func] › tests\excel-review.spec.ts:54:1 › C2-09 从管理端全量对照员工、部门和功能权限原表 (2.9s)
+  ok 32 [func] › tests\identity.spec.ts:34:1 › ID-S6 继承角色、有效权限、单项及API检查接入当前系统 (1.5s)
+  ok 33 [func] › tests\identity.spec.ts:60:1 › ID-S6 普通员工只见本部门，搜索及详情边界由后端执行 (969ms)
+  ok 34 [func] › tests\identity.spec.ts:83:1 › ID-S6 公司管理员逐层展开部门并查看范围内员工资料 (1.4s)
+  ok 35 [func] › tests\identity.spec.ts:103:1 › ID-S6 员工分页和搜索重置页码，普通用户不接收联系字段 (3.0s)
+  ok 36 [func] › tests\identity.spec.ts:141:1 › ID-S6 权限与目录请求失败时清除旧数据并允许重试（HTTP故障桩） (1.4s)
+  ok 37 [func] › tests\identity.spec.ts:175:1 › ID-S6 小屏目录可滚动，切换业务系统不沿用前一系统授权 (1.3s)
+  ok 38 [func] › tests\jwt.spec.ts:31:1 › JWT 刷新页面恢复身份，凭证仅在内存与HttpOnly刷新Cookie (810ms)
+  ok 39 [func] › tests\jwt.spec.ts:48:1 › JWT 两标签页并发过期只轮换一次，Cookie入口由共享协调器串行执行 (2.2s)
+  ok 40 [func] › tests\jwt.spec.ts:71:1 › JWT 同版退出同步全部标签页，重新打开不能靠旧身份继续 (965ms)
+  ok 41 [func] › tests\jwt.spec.ts:83:1 › JWT 切换账号丢弃旧身份在途响应，不在新账号页面展示 (1.3s)
+  ok 42 [func] › tests\jwt.spec.ts:120:1 › JWT 网络结果未知的写入不自动重放 (945ms)
+  ok 43 [func] › tests\jwt.spec.ts:139:1 › JWT 只有确定的过期允许写入重试一次，后端只创建一条 (1.3s)
+  ok 44 [func] › tests\jwt.spec.ts:162:1 › JWT 普通403不刷新凭证，也不清除已登录身份 (1.2s)
+  x  45 [func] › tests\jwt.spec.ts:174:1 › JWT 刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录 (5.8s)
+(node:26048) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 46 [func] › tests\oo-entry.spec.ts:4:1 › C2-08 首页进入指定版本 (663ms)
+  ok 47 [func] › tests\request-read.spec.ts:5:1 › C2-15 撤销查看权后原页面清空列表和详情，重授后恢复读取 (2.5s)
+  ok 48 [func] › tests\role-permissions.spec.ts:85:1 › C2-01 角色权限按系统名称选动作并显示演示继承权限 (1.1s)
+  ok 49 [func] › tests\role-permissions.spec.ts:111:1 › C2-01 撤销同名直接授权保留继承权限 (2.0s)
+  ok 50 [func] › tests\role-permissions.spec.ts:136:1 › C2-02 / C2-04 两个来源的权限去重，最后一条继承边移除后消失 (2.6s)
+(node:59500) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 51 [dual] › tests\isolation.spec.ts:14:1 › C2-10 同一浏览器两标签页各自登录、写入和退出 (10.4s)
+
+
+  1) [oo] › tests\authorization.spec.ts:105:1 › C2-04 / C2-11 演示申请人和继承审批人分工，乙公司无法进入工程系统 ────────────
+
+    Error: page.goto: Navigation to "http://127.0.0.1:15173/oo/" is interrupted by another navigation to "http://127.0.0.1:15173/oo/"
+    Call log:
+      - navigating to "http://127.0.0.1:15173/oo/", waiting until "load"
+
+
+      11 |
+      12 | async function login(page: Page, username: string) {
+    > 13 |   await page.goto(prefix() + '/')
+         |              ^
+      14 |   trackAuth(page)
+      15 |   await page.getByLabel('用户名').fill(username)
+      16 |   await page.getByLabel('密码').fill(demoPassword)
+        at login (D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\前端\tests\authorization.spec.ts:13:14)
+        at D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\前端\tests\authorization.spec.ts:124:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\结果\JWT前端与整体验收-20261121\浏览器交付\browser-artifacts\authorization-C2-04-C2-11-演示申请人和继承审批人分工，乙公司无法进入工程系统-oo\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\结果\JWT前端与整体验收-20261121\浏览器交付\browser-artifacts\authorization-C2-04-C2-11-演示申请人和继承审批人分工，乙公司无法进入工程系统-oo\error-context.md
+
+  2) [oo] › tests\jwt.spec.ts:174:1 › JWT 刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录 ───────────────────────
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('region', { name: '我的角色与权限' }).getByRole('alert')
+    Expected substring: "无法连接后端"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('region', { name: '我的角色与权限' }).getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('region', { name: '我的角色与权限' }).getByRole('alert')
+
+
+      187 |     await context.setOffline(true)
+      188 |     await access(page).getByRole('button', { name: '检查前端权限', exact: true }).click()
+    > 189 |     await expect(access(page).getByRole('alert')).toContainText('无法连接后端')
+          |                                                   ^
+      190 |     await expect(page.getByText('engineering-requester', { exact: true })).toBeVisible()
+      191 |     expect((await context.cookies()).find(item => item.name === cookieName)!.value === cookie).toBe(true)
+      192 |     await context.setOffline(false)
+        at D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\前端\tests\jwt.spec.ts:189:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\结果\JWT前端与整体验收-20261121\浏览器交付\browser-artifacts\jwt-JWT-刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录-oo\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\结果\JWT前端与整体验收-20261121\浏览器交付\browser-artifacts\jwt-JWT-刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录-oo\error-context.md
+
+  3) [func] › tests\jwt.spec.ts:174:1 › JWT 刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录 ─────────────────────
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByRole('region', { name: '我的角色与权限' }).getByRole('alert')
+    Expected substring: "无法连接后端"
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toContainText" getByRole('region', { name: '我的角色与权限' }).getByRole('alert') with timeout 5000ms
+      - waiting for getByRole('region', { name: '我的角色与权限' }).getByRole('alert')
+
+
+      187 |     await context.setOffline(true)
+      188 |     await access(page).getByRole('button', { name: '检查前端权限', exact: true }).click()
+    > 189 |     await expect(access(page).getByRole('alert')).toContainText('无法连接后端')
+          |                                                   ^
+      190 |     await expect(page.getByText('engineering-requester', { exact: true })).toBeVisible()
+      191 |     expect((await context.cookies()).find(item => item.name === cookieName)!.value === cookie).toBe(true)
+      192 |     await context.setOffline(false)
+        at D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\测试\前端\tests\jwt.spec.ts:189:51
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ..\结果\JWT前端与整体验收-20261121\浏览器交付\browser-artifacts\jwt-JWT-刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录-func\test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ..\结果\JWT前端与整体验收-20261121\浏览器交付\browser-artifacts\jwt-JWT-刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录-func\error-context.md
+
+  3 failed
+    [oo] › tests\authorization.spec.ts:105:1 › C2-04 / C2-11 演示申请人和继承审批人分工，乙公司无法进入工程系统 ─────────────
+    [oo] › tests\jwt.spec.ts:174:1 › JWT 刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录 ────────────────────────
+    [func] › tests\jwt.spec.ts:174:1 › JWT 刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录 ──────────────────────
+  48 passed (2.2m)

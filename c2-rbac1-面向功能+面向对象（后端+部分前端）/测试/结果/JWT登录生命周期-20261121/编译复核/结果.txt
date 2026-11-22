@@ -1,0 +1,17 @@
+{
+  "edition": "func",
+  "startedUtc": "2026-11-21T12:24:38.086509+00:00",
+  "completedUtc": "2026-11-21T12:24:50.876269+00:00",
+  "exitCode": 1,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "7f498b36bcb518ab4cfbd8e2b594d2795825cbce7f8b019139f84179cd167b22",
+  "tests": {
+    "tests": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {},
+  "jwtTestPublicKeySha256": "b4256d1e981b82a32e75519724aac2eed4d15106f3b642a8de283955e144c0f9",
+  "authNamespace": "rbac1:func:jwt-test:navvtnu2"
+}

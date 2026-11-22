@@ -1,0 +1,301 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config=playwright.local-switch.config.ts"
+    ],
+    "configFile": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\playwright.local-switch.config.ts",
+    "rootDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/前端/本机切换",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/结果/JWT本机切换-20261122/浏览器验收/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "func",
+        "name": "func",
+        "testDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/前端/本机切换",
+        "testIgnore": [],
+        "testMatch": [
+          "**/pages.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/结果/JWT本机切换-20261122/浏览器验收/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "oo",
+        "name": "oo",
+        "testDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/前端/本机切换",
+        "testIgnore": [],
+        "testMatch": [
+          "**/pages.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/结果/JWT本机切换-20261122/浏览器验收/browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "dual",
+        "name": "dual",
+        "testDir": "D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/前端/本机切换",
+        "testIgnore": [],
+        "testMatch": [
+          "**/isolation.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\结果\\JWT本机切换-20261122\\浏览器验收\\browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "func",
+        "testDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\本机切换",
+        "snapshotDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\本机切换",
+        "testIgnore": [],
+        "testMatch": "**/pages.spec.ts",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "channel": "msedge",
+          "trace": "off",
+          "screenshot": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "func"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\结果\\JWT本机切换-20261122\\浏览器验收\\browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "oo",
+        "testDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\本机切换",
+        "snapshotDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\本机切换",
+        "testIgnore": [],
+        "testMatch": "**/pages.spec.ts",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "channel": "msedge",
+          "trace": "off",
+          "screenshot": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "oo"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\结果\\JWT本机切换-20261122\\浏览器验收\\browser-artifacts",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "name": "dual",
+        "testDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\本机切换",
+        "snapshotDir": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\前端\\本机切换",
+        "testIgnore": [],
+        "testMatch": "**/isolation.spec.ts",
+        "timeout": 60000,
+        "use": {
+          "baseURL": "http://127.0.0.1:5173",
+          "channel": "msedge",
+          "trace": "off",
+          "screenshot": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "dual"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\结果\\JWT本机切换-20261122\\浏览器验收\\browser-results.json"
+        }
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "D:\\lesson\\26-27 SEM1\\ooad-rbac-project\\c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\结果\\JWT本机切换-20261122\\浏览器验收\\browser-report",
+          "open": "never"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.65.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "pages.spec.ts",
+      "file": "pages.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "本机JWT切换：页面恢复、Bearer、权限与目录读取",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "func",
+              "projectName": "func",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2283,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:58:31.713Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            },
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "oo",
+              "projectName": "oo",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2485,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:58:35.490Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9bb6bb2ed574bebb3c58-dc8007948fe2eeb8427c",
+          "file": "pages.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "isolation.spec.ts",
+      "file": "isolation.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "本机JWT切换：同版退出同步，另一版刷新后仍保持登录",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "dual",
+              "projectName": "dual",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4339,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-22T00:58:39.072Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8603831629f4016ade15-f0d48e98ec977b20bc24",
+          "file": "isolation.spec.ts",
+          "line": 13,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-22T00:58:31.171Z",
+    "duration": 12847.243,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

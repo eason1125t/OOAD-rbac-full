@@ -1,15 +1,17 @@
+import { apiFetch, apiGet, trackAuth } from './support/auth'
 // 用同一组浏览器测试验收两版的业务操作与权限管理，真实会话之间相互隔离。
 import { expect, test, type Page } from '@playwright/test'
 import { openRoleDialog, selectInheritanceSource, selectRegrantRole } from './support/management'
 
 const demoPassword = '1234'
 const prefix = () => '/' + test.info().project.name
-const cookieName = () => test.info().project.name === 'oo' ? 'RBAC1_OO_SESSION' : 'RBAC1_FUNC_SESSION'
+const cookieName = () => test.info().project.name === 'oo' ? 'RBAC1_OO_REFRESH' : 'RBAC1_FUNC_REFRESH'
 const requestPanel = (page: Page) => page.getByRole('region', { name: '申请详情' })
 const receipt = (page: Page) => page.getByRole('region', { name: '操作结果' })
 
 async function login(page: Page, username: string) {
   await page.goto(prefix() + '/')
+  trackAuth(page)
   await page.getByLabel('用户名').fill(username)
   await page.getByLabel('密码').fill(demoPassword)
   await page.getByRole('button', { name: '登录', exact: true }).click()
@@ -31,9 +33,9 @@ async function create(page: Page, title: string) {
 }
 
 async function writeWithSession(page: Page, method: 'POST' | 'PUT' | 'DELETE', path: string, data?: object) {
-  const csrf = await page.request.get(prefix() + '/api/auth/csrf')
+  const csrf = await apiGet(page, prefix() + '/api/auth/csrf')
   expect(csrf.ok()).toBeTruthy()
-  const response = await page.request.fetch(prefix() + path, {
+  const response = await apiFetch(page, prefix() + path, {
     method, data, headers: { 'X-CSRF-TOKEN': (await csrf.json()).token },
   })
   expect(response.ok(), `${method} ${path} ${response.status()}`).toBeTruthy()
@@ -82,7 +84,7 @@ test('C2-11 至 C2-14 三个系统完成申请操作并回查状态', async ({ b
     await expect(page.getByRole('combobox', { name: '当前系统' }).getByRole('option', {
       name: '示例工程申请系统',
     })).toHaveCount(0)
-    const denied = await page.request.get(prefix() + '/api/business-systems/demo-engineering-app/requests')
+    const denied = await apiGet(page, prefix() + '/api/business-systems/demo-engineering-app/requests')
     expect(denied.status()).toBe(403)
     await create(page, `财务验收 ${Date.now()}`)
     await requestPanel(page).getByRole('button', { name: '审批', exact: true }).click()
@@ -103,7 +105,7 @@ test('C2-11 至 C2-14 三个系统完成申请操作并回查状态', async ({ b
 test('C2-04 / C2-11 演示申请人和继承审批人分工，乙公司无法进入工程系统', async ({ page }) => {
   const collection = '/api/business-systems/demo-engineering-app/requests'
   async function allowedActions() {
-    const response = await page.request.get(prefix() + collection + '?pageSize=1')
+    const response = await apiGet(page, prefix() + collection + '?pageSize=1')
     expect(response.status()).toBe(200)
     return (await response.json()).allowedActions.sort()
   }
@@ -132,14 +134,14 @@ test('C2-04 / C2-11 演示申请人和继承审批人分工，乙公司无法进
   await expect(page.getByRole('combobox', { name: '当前系统' }).getByRole('option', {
     name: '示例工程申请系统',
   })).toHaveCount(0)
-  const denied = await page.request.get(prefix() + collection)
+  const denied = await apiGet(page, prefix() + collection)
   expect(denied.status()).toBe(403)
   expect(await denied.json()).toMatchObject({ code: 'SYSTEM_ACCESS_DENIED' })
 })
 
 test('C2-03 环路被拒绝后可继续维护该角色的继承关系', async ({ page }) => {
   await login(page, 'super-admin')
-  const systems = await (await page.request.get(prefix() + '/api/business-systems')).json()
+  const systems = await (await apiGet(page, prefix() + '/api/business-systems')).json()
   const engineering = systems.find((system: { code: string }) => system.code === 'demo-engineering-app')
   expect(engineering).toBeTruthy()
   const stamp = Date.now()
@@ -171,7 +173,7 @@ test('C2-03 环路被拒绝后可继续维护该角色的继承关系', async ({
     await inheritance.getByRole('button', { name: '添加继承' }).click()
     await expect(inheritance.getByRole('listitem')).toHaveCount(1)
     await expect(inheritance.getByRole('listitem')).toContainText(junior.name)
-    const original = await page.request.get(prefix() + `/api/roles/${senior.id}/parents`)
+    const original = await apiGet(page, prefix() + `/api/roles/${senior.id}/parents`)
     expect(original.ok()).toBeTruthy()
     expect((await original.json()).items).toEqual([expect.objectContaining({ id: middle.id })])
   } finally {
@@ -188,7 +190,7 @@ test('C2-05 共享边仅全局管理员可维护，部门管理员无法查询�
     await login(admin, 'super-admin')
     const local = await localContext.newPage()
     await login(local, 'engineering-admin')
-    const systems = await (await admin.request.get(prefix() + '/api/business-systems')).json()
+    const systems = await (await apiGet(admin, prefix() + '/api/business-systems')).json()
     const other = systems.find((system: { code: string }) => system.code === 'demo-company-b-app')
     expect(other).toBeTruthy()
     for (const owner of [null, null, other.ownerOrganizationId]) {
@@ -200,16 +202,16 @@ test('C2-05 共享边仅全局管理员可维护，部门管理员无法查询�
     const [senior, source, outside] = created
     const parents = `/api/roles/${senior}/parents`
     await writeWithSession(admin, 'PUT', `${parents}/${source}`)
-    const localCsrf = await (await local.request.get(prefix() + '/api/auth/csrf')).json()
-    const deleteAttempt = await local.request.delete(prefix() + `${parents}/${source}`, {
+    const localCsrf = await (await apiGet(local, prefix() + '/api/auth/csrf')).json()
+    const deleteAttempt = await apiFetch(local, prefix() + `${parents}/${source}`, { method: 'DELETE',
       headers: { 'X-CSRF-TOKEN': localCsrf.token },
     })
     expect(deleteAttempt.status()).toBe(403)
     expect(await deleteAttempt.json()).toMatchObject({ code: 'PERMISSION_DENIED' })
-    const outsideQuery = await local.request.get(prefix() + `/api/roles/${outside}/parents`)
+    const outsideQuery = await apiGet(local, prefix() + `/api/roles/${outside}/parents`)
     expect(outsideQuery.status()).toBe(403)
     expect(await outsideQuery.json()).toMatchObject({ code: 'PERMISSION_DENIED' })
-    const globalQuery = await admin.request.get(prefix() + parents)
+    const globalQuery = await apiGet(admin, prefix() + parents)
     expect(globalQuery.status()).toBe(200)
     expect((await globalQuery.json()).items).toEqual([expect.objectContaining({ id: source })])
   } finally {
@@ -227,16 +229,16 @@ test('C2-01、C2-02、C2-04、C2-06 直接与传递继承、权限去重及逐�
     const worker = await workerContext.newPage()
     await login(admin, 'super-admin')
     await login(worker, 'engineering-admin')
-    const systemRows = await (await admin.request.get(prefix() + '/api/business-systems')).json()
+    const systemRows = await (await apiGet(admin, prefix() + '/api/business-systems')).json()
     const app = systemRows.find((row: { code: string }) => row.code === 'demo-engineering-app')
-    const operators = (await (await admin.request.get(prefix() + '/api/employees?pageSize=100')).json()).items
+    const operators = (await (await apiGet(admin, prefix() + '/api/employees?pageSize=100')).json()).items
     const employee = operators.find((row: { username: string }) => row.username === 'engineering-admin')
     expect(employee).toBeTruthy()
-    const definitions = (await (await admin.request.get(prefix() + '/api/permissions?pageSize=100')).json()).items
+    const definitions = (await (await apiGet(admin, prefix() + '/api/permissions?pageSize=100')).json()).items
     const approval = definitions.find((row: { code: string; systemId: number }) =>
       row.code === 'request:approve' && row.systemId === app.id)
     const policyPath = `/api/organizations/${app.ownerOrganizationId}/business-systems/demo-engineering-app/permissions/request:approve`
-    const initialPolicy = await (await admin.request.get(prefix() + policyPath)).json()
+    const initialPolicy = await (await apiGet(admin, prefix() + policyPath)).json()
     if (initialPolicy.status === 'DISABLED') await writeWithSession(admin, 'DELETE', `${policyPath}/disabled`)
     const suffix = Date.now()
     const seniorName = `继承验收主管 ${suffix}`
@@ -281,7 +283,7 @@ test('C2-01、C2-02、C2-04、C2-06 直接与传递继承、权限去重及逐�
       await effective.getByRole('button', { name: '关闭' }).click()
     }
     async function checkInheritedApproval() {
-      const result = await admin.request.get(prefix() + `/api/roles/${senior.id}/inherited-permissions?pageSize=1`)
+      const result = await apiGet(admin, prefix() + `/api/roles/${senior.id}/inherited-permissions?pageSize=1`)
       expect(result.status()).toBe(200)
       expect(await result.json()).toMatchObject({
         total: 1,
@@ -308,7 +310,7 @@ test('C2-01、C2-02、C2-04、C2-06 直接与传递继承、权限去重及逐�
     await writeWithSession(admin, 'POST', collection, { title: approvedTitle })
     await writeWithSession(admin, 'POST', collection, { title: fallbackTitle })
     await writeWithSession(admin, 'POST', collection, { title: revokedTitle })
-    const total = (await (await admin.request.get(prefix() + collection + '?pageSize=1')).json()).total
+    const total = (await (await apiGet(admin, prefix() + collection + '?pageSize=1')).json()).total
     await worker.getByRole('combobox', { name: '当前系统' }).selectOption('/business/demo-engineering-app/')
     let page = 1
     async function goTo(index: number) {
@@ -319,7 +321,7 @@ test('C2-01、C2-02、C2-04、C2-06 直接与传递继承、权限去重及逐�
       }
     }
     const employeeCookie = (await workerContext.cookies()).find(cookie => cookie.name === cookieName())
-    expect(employeeCookie?.path).toBe(prefix() + '/')
+    expect(employeeCookie?.path).toBe(prefix() + '/api/auth/')
     await goTo(total - 2)
     await worker.getByRole('row').filter({ hasText: approvedTitle })
       .getByRole('button', { name: '审批', exact: true }).click()
@@ -367,14 +369,14 @@ test('C2-01、C2-02、C2-04、C2-06 直接与传递继承、权限去重及逐�
     await expect(receipt(worker)).toContainText('鉴权结果')
     await expect(receipt(worker)).toContainText('拒绝')
     await expect(pending.first()).toContainText('待审批')
-    expect((await workerContext.cookies()).find(cookie => cookie.name === cookieName())?.value)
-      .toBe(employeeCookie?.value)
+    expect((await workerContext.cookies()).find(cookie => cookie.name === cookieName())?.value.split('.')[0])
+      .toBe(employeeCookie?.value.split('.')[0])
     await worker.screenshot({ path: info.outputPath('revocation.png'), fullPage: true })
     await inheritance.getByRole('button', { name: '关闭' }).click()
     await checkEffectiveApproval(0)
 
     // 恢复工程员工演示权限，测试角色只存在于隔离的浏览器验收库。
-    const roles = (await (await admin.request.get(prefix() + '/api/roles?pageSize=100')).json()).items
+    const roles = (await (await apiGet(admin, prefix() + '/api/roles?pageSize=100')).json()).items
     const originalSources = roles.filter((row: { ownerOrganizationId: number; name: string }) =>
       row.ownerOrganizationId === app.ownerOrganizationId &&
       ['示例工程审批员', '示例申请经办员', '示例继承审批来源'].includes(row.name))

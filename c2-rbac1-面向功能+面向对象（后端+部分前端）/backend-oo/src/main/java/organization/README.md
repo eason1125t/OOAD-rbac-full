@@ -11,8 +11,10 @@
 | 文件 / 函数 | 实现重点 |
 | --- | --- |
 | [ManagementQueryController](ManagementQueryController.java) | 校验分页与路径，将 Page/实体映射为公开 VO，设置 `no-store` |
-| [ManagementQueryService.scope](ManagementQueryService.java) | 先验证 `MANAGEMENT_READ`，再区分可见组织 `ids` 与可查看上级策略的 `policyIds` |
-| `employees/organizations/roles/permissions/catalog` | 各按管理员可见范围查询；原表清单为管理员核对目录，不等同员工业务权限 |
+| [DirectoryVisibilityService](DirectoryVisibilityService.java) | 集中普通员工/管理员读取范围；ids与上级策略policyIds分开 |
+| [DirectoryQueryService](DirectoryQueryService.java) | 员工与部门模式筛选；Specification同时约束列表和count，批量hasChildren |
+| [ManagementQueryService.scope](ManagementQueryService.java) | 委托统一可见范围，原管理详情/授权查询仍要求管理员 |
+| `companies/roles/permissions/catalog` | 各按管理员可见范围查询；原表清单为管理员核对目录，不等同员工业务权限 |
 | `employeeRoles/roleParents/rolePermissions/inheritedRolePermissions` | 分别查询员工直接角色、一跳继承、直接权限和继承来源配置 |
 | `effectivePermissions` | 核对管理员能查看目标员工及目标系统后，调用统一授权入口计算实际权限，再在内存切页 |
 | [ManagementMaintenanceController](ManagementMaintenanceController.java) | 接收受 Bean Validation 保护的可写字段，调用维护 Service，创建返回 201 和 Location |
@@ -21,7 +23,7 @@
 
 ## 查询实现与三个权限概念
 
-`scope` 对 GLOBAL 开放全局目录；局部管理员可见本级，公司管理员增加直属部门。部门管理员的 `policyIds` 额外包含父公司，以便显示上级开放的权限，这不表示能修改上级资源。
+管理读取的 `scope` 委托 DirectoryVisibilityService，对 GLOBAL 开放全局目录；局部管理员可见本级，公司管理员增加直属部门。部门管理员的 `policyIds` 额外包含父公司，以便显示上级开放的权限，这不表示能修改上级资源。
 
 目录分页主要在数据库执行，列表和总数接受同一范围条件。全局员工列表含待匹配记录；局部列表仅包含明确归属的员工。部门原表目录查询还保留 `xlsx-%` 来源行，因此原表中的某些行即使被建模为 COMPANY，仍可在原表目录核对。
 
@@ -55,4 +57,16 @@
 
 `ManagementQueryController.employee` 遮盖电话：空值保持 null，短号全遮盖，长度至少 9 时保留前 3 后 4。脱敏属于响应映射，数据库原字段不因此改写。
 
-准确路径和响应见 [共同 OpenAPI](../../../../../api/openapi.yaml)。现有 `AuthSessionTest` 及前端目录、角色权限测试验证范围、拒绝与分页；本次源码说明整理不代表重新完成全量数据库或浏览器验收。历史证据及后续测试重做见 [双版本测试记录](../../../../../测试/历史/双版本测试记录.md)、[收尾清单](../../../../../收尾清单.md)。
+第4步目录扩展已经完整后端验证，见 [目录验证](../../../../../测试/README.md)；前端与集群未重跑。准确路径和响应见 [共同 OpenAPI](../../../../../api/openapi.yaml)。现有 `AuthSessionTest` 及前端目录、角色权限测试验证范围、拒绝与分页；本次源码说明整理不代表重新完成全量数据库或浏览器验收。历史证据及后续测试重做见 [双版本测试记录](../../../../../测试/README.md)、[开发规划与进度](../../../../../docs/项目总结.md)。
+
+## 第四步：正式树、员工检索与兼容
+
+GET /api/departments 默认 directory 保留 DEPARTMENT 或 xlsx-% 来源行，仅管理员；显式 view=tree 使用真实parentId。无父级/有效搜索词时默认可见根；parentId只查直接子级，与任何显式rootsOnly互斥。rootsOnly=false为范围内平铺，仅q在范围内搜索，rootsOnly=true+q仅查根。hasChildren只统计可见直接子级，与q对子级的匹配无关；按本页ID批量查询，不逐节点发SQL。普通员工根可以是本部门，parentId保留真实值。
+
+GET /api/employees 支持departmentId（仅DEPARTMENT直接归属）、q、原分页。普通员工只看本组织启用员工及id/username/name/organizationId；直接属于公司的普通员工不自动看到下属部门。部门管理员看本部门，公司管理员看公司与直属部门，全局管理员保留待匹配员工核对；管理员旧字段及电话遮盖不变。公司节点用于树分组展开，不可作为departmentId筛选值。
+
+DirectoryQueryService将范围AND部门AND（姓名OR账号）传入JPA Specification，Page内容和count同条件。q去首尾空白，LIKE显式用!转义!/%/_；不以全量加载后过滤实现隔离，不宣称contains可由普通B-tree加速。目录与员工DAO移除了无调用的旧固定目录方法，原公司/角色/权限/关系查询共用DirectoryVisibilityService，没有保留第二套范围算法。
+
+HTTP输入由DTO约束，目录参数组合及非部门ID由Service抛VALIDATION_FAILED映射400；未知组织404、存在但越界403。普通用户的员工详情/角色/权限和所有写路由仍由原管理资格保护。权限组撤销后下一请求会降为普通投影和范围；不取消已通过检查的在途请求。维护写入的组织规则、锁顺序和申请/角色领域不改。
+
+新增VO为不可变record和派生字段，显式映射；旧原表OrganizationVO仍走CloneFactory。未新增表、迁移、索引或组织层级写入，权限语义仍为公司→直属部门。运行、RED/GREEN及待办见 [第四步验证](../../../../../测试/README.md)。

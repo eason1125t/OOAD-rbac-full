@@ -6,6 +6,7 @@ import assignment.EmployeeRoleRepository;
 import assignment.OrganizationPermissionRepository;
 import assignment.RolePermissionRepository;
 import authorization.AdministratorScope;
+import authorization.ApiOperationRegistry;
 import authorization.AdministratorScopeRepository;
 import authorization.AuthorizationService;
 import contract.BusinessAccessException.Reason;
@@ -38,6 +39,7 @@ public class ManagementMaintenanceService {
     private final RbacRoleRepository roles;
     private final RoleInheritanceStore hierarchy;
     private final PermissionRepository permissions;
+    private final ApiOperationRegistry apiOperations;
     private final RolePermissionRepository rolePermissions;
     private final OrganizationPermissionRepository organizationPermissions;
 
@@ -147,8 +149,9 @@ public class ManagementMaintenanceService {
         AdministratorScope scope = scope(actor);
         Permission permission = lockedPermission(id);
         requireManaged(scope, organization(permission.getOwnerOrganizationId()));
-        if (rolePermissions.existsByPermissionId(id) || organizationPermissions.existsByPermissionId(id)) {
-            throw conflict("该权限仍被角色分配或组织策略引用");
+        if (rolePermissions.existsByPermissionId(id) || organizationPermissions.existsByPermissionId(id)
+                || apiOperations.referencesPermission(id)) {
+            throw conflict("该权限仍被角色分配、组织策略或API映射引用");
         }
         permissions.delete(permission);
     }

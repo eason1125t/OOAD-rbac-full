@@ -1,0 +1,48 @@
+{
+  "edition": "oo",
+  "startedUtc": "2026-11-21T14:56:02.422135+00:00",
+  "completedUtc": "2026-11-21T14:58:04.217479+00:00",
+  "exitCode": 0,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "52a0d16d5171dac11766342cd455ee18eb59b9dabcdd3409468a54bb8cfd912e",
+  "tests": {
+    "tests": 196,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {
+    "INSTRUCTION": {
+      "missed": 493,
+      "covered": 10741,
+      "ratio": 0.9561153640733487
+    },
+    "BRANCH": {
+      "missed": 129,
+      "covered": 644,
+      "ratio": 0.833117723156533
+    },
+    "LINE": {
+      "missed": 83,
+      "covered": 1739,
+      "ratio": 0.9544456641053787
+    },
+    "COMPLEXITY": {
+      "missed": 139,
+      "covered": 767,
+      "ratio": 0.8465783664459161
+    },
+    "METHOD": {
+      "missed": 24,
+      "covered": 494,
+      "ratio": 0.9536679536679536
+    },
+    "CLASS": {
+      "missed": 2,
+      "covered": 134,
+      "ratio": 0.9852941176470589
+    }
+  },
+  "jwtTestPublicKeySha256": "3fb41ff8819646938b25374fd2900a07ee9b30708d44e84308015a53da40ff44",
+  "authNamespace": "rbac1:oo:jwt-test:x2iu21aq"
+}

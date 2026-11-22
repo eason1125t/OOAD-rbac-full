@@ -1,0 +1,52 @@
+日期：2026-11-21（Asia/Shanghai）
+工作目录：C2根目录
+范围：最终本机验收；课程Swarm用户确认由队友部署。
+
+后端（分别归档真实命令、退出码、源码摘要、Surefire及JaCoCo）：
+python 测试/脚本/run_backend.py func --output-dir 测试/结果/最终验收-20261121/后端/func --build-dir target/identity-final
+python 测试/脚本/run_backend.py oo --output-dir 测试/结果/最终验收-20261121/后端/oo --build-dir target/identity-final
+实际：func88/oo92项，verify及package退出码0，无失败、错误、跳过。
+
+完整前端与原表（生产构建后预览）：
+python 测试/脚本/run_frontend_identity.py --output-dir 测试/结果/最终验收-20261121/浏览器 --suite full --excel-dir ../excel --backend-build-dir target/identity-final
+实际：35项通过，退出码0；21既有非Excel、12新身份、2原表。
+独立新测试库、临时端口28181/28182及15173；临时后端/预览已停止。
+
+覆盖率结果图：
+node 测试/前端/report-images.mjs 测试/结果/最终验收-20261121/后端
+实际退出码0；两版JaCoCo结果.png已归档。
+
+原生图件：
+python docs/design/build_staruml.py
+./docs/design/export-staruml.ps1 -ExportOnly
+实际：47图，3339唯一图元，7338引用，86类框。签名注解问题修正后又按生成器完整导出，最新CLI日志独立归档。
+python docs/design/build_staruml.py --check
+python 测试/图件/test_diagram_checks.py
+实际：图件检查退出0，工具9项通过。PNG已复查，试用水印保留。
+
+部署工具：
+python 测试/部署/test_manage.py
+实际：5项通过，退出0；本轮未构建/推送镜像，不等于集群验收。
+
+契约（使用此前测试专用PyYAML/OpenAPI验证依赖）：
+$env:PYTHONPATH = Join-Path $env:TEMP 'c2-contract-validation-20261121'
+python 测试/契约/check_identity_contract.py
+实际退出码0；八项契约、12示例、11负向/空集合输入及本轮链接验证。
+
+差异格式：
+git -c core.autocrlf=false -c core.whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol diff --check
+实际对本轮维护范围执行，退出0，原始差异检查.txt保留。
+
+源码与交付复核：
+实际重算两版主源码、Java测试及POM摘要与最终后端结果一致；
+前端/TypeScript测试摘要与35项浏览器记录一致；对应JAR摘要一致；
+47图PNG/SVG存在，Apifox同步源摘要与主OpenAPI一致；
+15份本轮文档的597个本地链接存在。结果见交付复核.json。
+工作区未提交，Git HEAD仅为旧基线，未当作新代码提交号。
+
+Apifox：
+computer-use读取真实项目9046536、C2模块8918000。
+通过本机临时只读OpenAPI URL导入；选既有C2、Method/Path覆盖、保留目录、不删除未匹配资源、不导入环境、不生成调试用例。
+导入成功：新增2接口/修改3，新增13模型/修改4；模块回读48接口/42模型。
+已回读me系统参数、API-check参数/响应及错误码，截图与文本归档。
+临时18888服务停止；未发送课程Swarm真实业务请求。

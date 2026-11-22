@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BusinessRequestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">simulation</a> &gt; <span class="el_source">BusinessRequestController.java</span></div><h1>BusinessRequestController.java</h1><pre class="source lang-java linenums">// 文件职责：适配申请列表、详情及生命周期操作的 HTTP 请求。
+// 协作关系：校验 RequestTitleDTO，调用 BusinessRequestService 后映射公开 VO。
+package simulation;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.http.CacheControl;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import simulation.BusinessRequestService.RequestDetail;
+import simulation.BusinessRequestService.RequestPage;
+import simulation.dto.RequestTitleDTO;
+import simulation.vo.ApprovalResultVO;
+import simulation.vo.RequestDetailVO;
+import simulation.vo.RequestPageVO;
+import simulation.vo.RequestSummaryVO;
+
+/** 提供申请分页、详情和生命周期 HTTP 接口，实时授权及状态规则由 Service 核验。 */
+@RestController
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@RequiredArgsConstructor
+public class BusinessRequestController {
+    private final BusinessRequestService requests;
+
+    /** 校验分页参数，委托 Service 同时检查系统准入和申请查看权。 */
+    @GetMapping(&quot;/api/business-systems/{systemCode}/requests&quot;)
+    public ResponseEntity&lt;RequestPageVO&gt; list(@AuthenticationPrincipal Long employeeId,
+            @PathVariable @Size(min = 1, max = 64) String systemCode,
+            @RequestParam(defaultValue = &quot;1&quot;) @Min(1) int page,
+            @RequestParam(defaultValue = &quot;20&quot;) @Min(1) @Max(100) int pageSize) {
+<span class="nc" id="L45">        RequestPage result = requests.list(employeeId, systemCode, page, pageSize);</span>
+<span class="nc" id="L46">        List&lt;RequestSummaryVO&gt; items = result.items().stream().map(RequestSummaryVO::from).toList();</span>
+<span class="nc" id="L47">        return ResponseEntity.ok().cacheControl(CacheControl.noStore())</span>
+<span class="nc" id="L48">                .body(new RequestPageVO(items, page, pageSize, result.total(), result.allowedActions()));</span>
+    }
+
+    /** 按系统发起待审批申请，申请人身份由可信会话确定。 */
+    @PostMapping(&quot;/api/business-systems/{systemCode}/requests&quot;)
+    public ResponseEntity&lt;RequestDetailVO&gt; create(@AuthenticationPrincipal Long employeeId,
+            @PathVariable @Size(min = 1, max = 64) String systemCode, @Valid @RequestBody RequestTitleDTO input) {
+<span class="nc" id="L55">        return detailResponse(HttpStatus.CREATED, requests.create(employeeId, systemCode, input.getTitle()));</span>
+    }
+
+    /** 读取未删除申请并校验所属系统的查看权。 */
+    @GetMapping(&quot;/api/requests/{requestId}&quot;)
+    public ResponseEntity&lt;RequestDetailVO&gt; detail(@AuthenticationPrincipal Long employeeId,
+            @PathVariable @Min(1) Long requestId) {
+<span class="nc" id="L62">        return detailResponse(HttpStatus.OK, requests.detail(employeeId, requestId));</span>
+    }
+
+    /** 在查看权和修改权通过后，修改本人待审批申请的标题。 */
+    @PatchMapping(&quot;/api/requests/{requestId}&quot;)
+    public ResponseEntity&lt;RequestDetailVO&gt; update(@AuthenticationPrincipal Long employeeId,
+            @PathVariable @Min(1) Long requestId, @Valid @RequestBody RequestTitleDTO input) {
+<span class="nc" id="L69">        return detailResponse(HttpStatus.OK, requests.update(employeeId, requestId, input.getTitle()));</span>
+    }
+
+    /** 在实时授权后撤回本人待审批申请，原单保留且不可重提。 */
+    @PostMapping(&quot;/api/requests/{requestId}/withdraw&quot;)
+    public ResponseEntity&lt;RequestDetailVO&gt; withdraw(@AuthenticationPrincipal Long employeeId,
+            @PathVariable @Min(1) Long requestId) {
+<span class="nc" id="L76">        return detailResponse(HttpStatus.OK, requests.withdraw(employeeId, requestId));</span>
+    }
+
+    /** 在查看权和驳回权通过后将待审批申请置为已驳回。 */
+    @PostMapping(&quot;/api/requests/{requestId}/reject&quot;)
+    public ResponseEntity&lt;RequestDetailVO&gt; reject(@AuthenticationPrincipal Long employeeId,
+            @PathVariable @Min(1) Long requestId) {
+<span class="nc" id="L83">        return detailResponse(HttpStatus.OK, requests.reject(employeeId, requestId));</span>
+    }
+
+    /** 仅逻辑删除本人已驳回申请，后续列表与详情隐藏记录。 */
+    @DeleteMapping(&quot;/api/requests/{requestId}&quot;)
+    public ResponseEntity&lt;Void&gt; delete(@AuthenticationPrincipal Long employeeId, @PathVariable @Min(1) Long requestId) {
+<span class="nc" id="L89">        requests.delete(employeeId, requestId);</span>
+<span class="nc" id="L90">        return ResponseEntity.noContent().cacheControl(CacheControl.noStore()).build();</span>
+    }
+
+    /** 以 CloneFactory 映射公开详情，并禁止浏览器缓存敏感响应。 */
+    private static ResponseEntity&lt;RequestDetailVO&gt; detailResponse(HttpStatus status, RequestDetail result) {
+<span class="nc" id="L95">        return ResponseEntity.status(status).cacheControl(CacheControl.noStore())</span>
+<span class="nc" id="L96">                .body(RequestDetailVO.from(result));</span>
+    }
+
+    /** 事务提交成功后才返回已审批。 */
+    @PostMapping(&quot;/api/requests/{requestId}/approve&quot;)
+    public ResponseEntity&lt;ApprovalResultVO&gt; approve(@AuthenticationPrincipal Long employeeId,
+            @PathVariable @Min(1) Long requestId) {
+<span class="nc" id="L103">        requests.approve(employeeId, requestId);</span>
+<span class="nc" id="L104">        return ResponseEntity.ok().cacheControl(CacheControl.noStore())</span>
+<span class="nc" id="L105">                .body(new ApprovalResultVO(&quot;GRANTED&quot;, &quot;SUCCEEDED&quot;, requestId, &quot;APPROVED&quot;));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

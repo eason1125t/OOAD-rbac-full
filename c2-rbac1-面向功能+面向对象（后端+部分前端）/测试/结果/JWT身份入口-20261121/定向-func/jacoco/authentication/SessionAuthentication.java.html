@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SessionAuthentication.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authentication</a> &gt; <span class="el_source">SessionAuthentication.java</span></div><h1>SessionAuthentication.java</h1><pre class="source lang-java linenums">// 文件职责：建立和结束现有可信 Session，账号密码核验已移交 AccountAuthentication。
+// 协作关系：仅衔接 Spring Security 与 Spring Session Redis；JWT 切换时退出正式认证链路。
+package authentication;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.context.SecurityContextRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.stereotype.Component;
+import lombok.RequiredArgsConstructor;
+
+/** 只管理 Spring Security 上下文在 Redis 会话中的生命周期。 */
+@Component
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@RequiredArgsConstructor
+public class SessionAuthentication {
+    private final SecurityContextRepository contexts;
+    private final CsrfTokenRepository tokens;
+
+    /** 轮换匿名会话，清除旧令牌，只保存可信员工 ID。 */
+    public void start(Long employeeId, HttpServletRequest request, HttpServletResponse response) {
+<span class="nc" id="L29">        request.getSession();</span>
+<span class="nc" id="L30">        request.changeSessionId();</span>
+<span class="nc" id="L31">        tokens.saveToken(null, request, response);</span>
+
+<span class="nc" id="L33">        Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(employeeId, null, List.of());</span>
+<span class="nc" id="L34">        SecurityContext context = SecurityContextHolder.createEmptyContext();</span>
+<span class="nc" id="L35">        context.setAuthentication(authentication);</span>
+<span class="nc" id="L36">        contexts.saveContext(context, request, response);</span>
+<span class="nc" id="L37">        SecurityContextHolder.setContext(context);</span>
+<span class="nc" id="L38">    }</span>
+
+    /** 失效服务端会话并清除当前身份。 */
+    public void end(HttpServletRequest request, HttpServletResponse response) {
+<span class="nc" id="L42">        new SecurityContextLogoutHandler().logout(request, response,</span>
+<span class="nc" id="L43">                SecurityContextHolder.getContext().getAuthentication());</span>
+<span class="nc" id="L44">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

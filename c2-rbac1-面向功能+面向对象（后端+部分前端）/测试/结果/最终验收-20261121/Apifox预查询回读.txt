@@ -1,0 +1,296 @@
+Window: "OOAD RBAC", App: Apifox.exe.
+	0 pane (窗格) OOAD RBAC Secondary Actions: Raise
+		15 document (文档) OOAD RBAC Value: file:///D:/codetool/Apifox-windows-latest/resources/app.asar/dist/renderer/index.html#/project/9046536 ID: 13329840
+			16 image (未加标签的图片) 要获取缺失的图片说明，请打开上下文菜单。
+			17 image (图像)
+			18 hyperlink (链接) 接口管理
+				19 image (图像)
+			20 hyperlink (链接) 自动化测试
+				21 image (图像)
+			22 hyperlink (链接) 分享文档
+				23 image (图像)
+			24 hyperlink (链接) 请求历史
+				25 image (图像)
+			26 hyperlink (链接) 项目设置
+				27 image (图像)
+			28 button (按钮) 邀请成员
+				29 image (图像)
+				30 text (文本) 邀请成员
+			31 image (图像)
+			32 text (文本) 接口管理
+			33 image (图像)
+			34 text (文本) main
+			35 image (图像)
+			884 image (图像)
+			885 combo box (组合框) (settable, string) ID: rc_select_4
+			886 button (按钮)
+				887 image (图像)
+			888 button (按钮)
+				889 image (图像)
+			890 tree (树)
+				891 text field (编辑) (settable, string) for screen reader
+				892 image (图像)
+				893 text (文本) C1-RBAC0
+				894 image (图像)
+				895 image (图像)
+				896 text (文本) 接口
+				897 image (图像)
+				1070 text (文本) 根目录
+				898 image (图像)
+				899 image (图像)
+				900 text (文本) 登录与会话
+				901 text (文本) (
+				902 text (文本) 4
+				903 text (文本) )
+				904 image (图像)
+				905 image (图像)
+				906 text (文本) 业务模拟
+				907 text (文本) (
+				908 text (文本) 3
+				909 text (文本) )
+				910 image (图像)
+				911 image (图像)
+				912 text (文本) 授权配置
+				913 text (文本) (
+				914 text (文本) 4
+				915 text (文本) )
+				916 image (图像)
+				917 text (文本) 数据模型
+				918 image (图像)
+				919 image (图像)
+				920 text (文本) 组件库
+				921 image (图像)
+				922 image (图像)
+				923 text (文本) C2-RBAC1
+				924 image (图像)
+				925 image (图像)
+				926 text (文本) 接口
+				927 image (图像)
+				1071 text (文本) 根目录
+				928 image (图像)
+				929 image (图像)
+				930 text (文本) 登录与会话
+				931 text (文本) (
+				932 text (文本) 6
+				933 text (文本) )
+				934 text (文本) GET
+				935 text (文本) 获取 CSRF 令牌
+				936 text (文本) POST
+				937 text (文本) 登录
+				938 text (文本) POST
+				939 text (文本) 退出登录
+				940 text (文本) GET
+				941 text (文本) 查询当前员工、工作区及可选系统角色与权限
+				942 text (文本) GET
+				943 text (文本) 校验当前用户的单项前端权限
+				944 text (文本) GET
+				945 text (文本) 判断当前用户调用指定业务API的系统级权限
+				1072 image (图像)
+				946 image (图像)
+				947 image (图像)
+				948 text (文本) 业务模拟
+				949 text (文本) (
+				950 text (文本) 9
+				951 text (文本) )
+				952 image (图像)
+				953 image (图像)
+				954 text (文本) 授权配置
+				955 text (文本) (
+				956 text (文本) 33
+				957 text (文本) )
+			958 text (文本) HiFox
+			959 button (按钮)
+				960 image (图像)
+			961 text (文本) Jira、TAPD 已过时，HiFox - 让 Coding Agent 入驻到你的协作平台里
+			962 button (按钮) 了解详情
+				963 image (图像)
+			115 custom (disabled) panel
+			964 tab (选项卡)
+				965 tab item (选项卡项目) (selectable) GET 查询可进入的业务系统 ID: rc-tabs-0-tab-apiDetail.538471291
+					966 text (文本) GET
+					967 text (文本) 查询可进入的业务系统
+					968 text (文本) 
+				969 tab item (选项卡项目) (selectable) GET 查询当前员工、工作区及可选系统角色与权限 ID: rc-tabs-0-tab-apiDetail.538471289
+					970 text (文本) GET
+					971 text (文本) 查询当前员工、工作区及可选系统角色与权限
+					972 text (文本) 
+				973 tab item (选项卡项目) (selectable) C2-RBAC1 ID: rc-tabs-0-tab-module.8918000
+					974 image (图像)
+					975 text (文本) C2-RBAC1
+					976 text (文本) 
+				1075 tab item (选项卡项目) (selectable) GET 判断当前用户调用指定业务API的系统级权限 ID: rc-tabs-0-tab-apiDetail.539815478
+					1076 text (文本) GET
+					1077 text (文本) 判断当前用户调用指定业务API的系统级权限
+					1078 text (文本) 
+				977 button (按钮) Add tab
+					978 image (图像)
+				979 combo box (组合框) (settable, string) ID: rc_select_1
+				980 text (文本) C2
+				981 text (文本) C2-RBAC1-功能版
+				982 button (按钮)
+					983 image (图像)
+			1079 custom (选项卡面板) GET 判断当前用户调用指定业务API的系统级权限 ID: rc-tabs-0-panel-apiDetail.539815478
+				1080 tab (选项卡)
+					1081 tab item (选项卡项目) (selectable) 文档 ID: rc-tabs-6-tab-view
+					1082 tab item (选项卡项目) (selectable) 编辑 ID: rc-tabs-6-tab-edit
+					1083 tab item (选项卡项目) (selectable) 调试 ID: rc-tabs-6-tab-run
+					1084 tab item (选项卡项目) (selectable) 测试用例 ID: rc-tabs-6-tab-case
+					1085 tab item (选项卡项目) (selectable) Mock ID: rc-tabs-6-tab-advancedMock
+					1086 button (按钮)
+						1087 image (图像)
+					1088 separator (分隔符)
+					1089 button (按钮)
+						1090 image (图像)
+					1091 button (按钮)
+						1092 image (图像)
+					1093 button (按钮)
+						1094 image (图像)
+					1095 button (按钮)
+						1096 image (图像)
+				1097 custom (选项卡面板) 文档 ID: rc-tabs-6-panel-view
+					1098 text (文本) 判断当前用户调用指定业务API的系统级权限
+					1099 text (文本) GET
+					1100 text (文本) /api/auth/me/api-check
+					1101 combo box (组合框) ID: rc_select_18
+					1102 text (文本) 已发布
+					1103 button (按钮) AI Coding
+						1104 image (图像)
+					1105 button (按钮)
+						1106 image (图像)
+					1107 button (按钮) 生成代码
+						1108 image (图像)
+					1109 button (按钮)
+						1110 image (图像)
+					1111 button (按钮) 调试
+						1112 image (图像)
+					1113 combo box (组合框) ID: rc_select_19
+					1114 image (图像)
+					1115 text (文本) 共享
+					1116 text (文本) 登录与会话
+					1117 text (文本) 创建时间
+					1118 text (文本) 2026年11月21日
+					1119 text (文本) 修改时间
+					1120 text (文本) 3 分钟前
+					1121 text (文本) 修改者
+					1122 text (文本) 晨鱼
+					1123 text (文本) 创建者
+					1124 text (文本) 晨鱼
+					1125 text (文本) 责任人
+					1126 text (文本) 未设置
+					1127 text (文本) 目录
+					1128 text (文本) 登录与会话
+					1129 text (文本) x-implementation-status
+					1130 text (文本) 
+					1131 text (文本) implemented
+					1132 text (文本) 已知目标无权返回200 allowed=false；未知目标404、无系统准入403。复用角色继承、组织策略和重授，不替代实际业务授权或对象状态检查。 映射缺失返回404 API_NOT_FOUND；空集合、跨系统引用或与规范定义不一致返回503 AUTHORIZATION_UNAVAILABLE。首批仅注册四个demo申请系统、每系统八个申请操作，固定ALL。
+					1133 button (按钮) right Mock
+						1134 image (图像) right
+						1135 text (文本) Mock
+					1136 text (文本) 请求参数
+					1137 button (按钮) Authorization
+						1138 image (图像)
+						1139 text (文本) Authorization
+					1140 text (文本) Query 参数
+					1141 button (按钮) 生成代码
+						1142 image (图像)
+					1143 text (文本) systemCode
+					1144 text (文本) string
+					1145 text (文本) 
+					1146 text (文本) 必需
+					1147 text (文本) 显式指定业务系统，不代表版本前缀；系统准入必须验证。
+					1148 text (文本) >= 1 字符
+					1149 text (文本) <= 64 字符
+					1150 text (文本) 匹配模式
+					1151 text (文本) :
+					1152 text (文本) \S
+					1153 text (文本) operationId
+					1154 text (文本) string
+					1155 text (文本) 
+					1156 text (文本) 必需
+					1157 text (文本) 已注册的目标业务 API operationId。
+					1158 text (文本) >= 1 字符
+					1159 text (文本) <= 128 字符
+					1160 text (文本) 匹配模式
+					1161 text (文本) :
+					1162 text (文本) \S
+					1163 text (文本) 返回响应
+					1164 table (表格)
+						1165 list (列表)
+							1166 list item (列表项目) (selectable)
+							1167 list item (列表项目) (selectable)
+							1168 list item (列表项目) (selectable)
+					1169 text (文本) 请求示例代码
+					1170 table (表格)
+						1171 list (列表)
+							1172 list item (列表项目) (selectable)
+							1173 list item (列表项目) (selectable)
+							1174 list item (列表项目) (selectable)
+			1055 button (按钮)
+				1056 image (图像)
+			1175 radio button (单选按钮) (selectable) 文档模式
+			1176 text (文本) 文档模式
+			1177 radio button (单选按钮) (selectable) 调试模式
+			1178 text (文本) 调试模式
+			1057 button (按钮) 在线
+				1058 image (图像)
+			1059 button (按钮) 请求代理
+				1060 image (图像)
+				1061 image (图像)
+			1062 button (按钮) Cookie 管理
+				1063 image (图像)
+			1064 button (按钮) 回收站
+				1065 image (图像)
+			1066 button (按钮) 文档 & 交流群
+				1067 image (图像)
+			1068 button (按钮)
+				1069 image (图像)
+		250 document (文档) Shell ID: 13316288
+			251 image (图像)
+			252 image (图像)
+			253 text (文本) 主窗口
+			254 button (按钮) 在独立窗口中打开
+				255 image (图像)
+			256 text (文本) OOAD RBAC
+			257 button (按钮)
+				258 image (图像)
+			259 image (图像) ellipsis
+			260 button (按钮)
+				261 image (图像)
+			262 button (按钮)
+				263 image (图像)
+			264 button (按钮)
+				265 image (图像)
+			266 image (未加标签的图片) avatar. 要获取缺失的图片说明，请打开上下文菜单。
+			267 button (按钮)
+				268 image (图像)
+			269 button (按钮)
+				270 image (图像)
+			271 button (按钮)
+				272 image (图像)
+			273 button (按钮)
+				274 image (图像)
+			275 image (图像)
+			276 text (文本) 主窗口
+			277 button (按钮) 在独立窗口中打开
+				278 image (图像)
+			279 text (文本) OOAD RBAC
+			280 button (按钮)
+				281 image (图像)
+			282 pane (窗格) ID: iframe_realtime_sync
+				283 document (文档) Value: about:blank
+		3 pane (窗格) (disabled)
+		4 title bar (标题栏) (settable, string) Value: OOAD RBAC
+		5 pane (窗格)
+			6 pane (窗格)
+				7 pane (窗格)
+					8 pane (窗格)
+						9 pane (窗格)
+							10 pane (窗格)
+								11 custom
+							12 pane (窗格)
+								13 pane (窗格)
+								14 pane (窗格)
+
+Document text: ```
+主窗口   OOAD RBAC                     主窗口   OOAD RBAC
+```

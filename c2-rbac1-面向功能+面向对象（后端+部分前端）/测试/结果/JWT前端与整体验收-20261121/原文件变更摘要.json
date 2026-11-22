@@ -1,0 +1,28 @@
+{
+  "baselineFiles": 384,
+  "changed": [
+    "backend-func/src/main/java/authentication/README.md",
+    "backend-oo/src/main/java/authentication/README.md",
+    "frontend/src/api.ts",
+    "frontend/src/App.vue",
+    "测试/前端/playwright.config.ts",
+    "测试/前端/tests/authorization.spec.ts",
+    "测试/前端/tests/excel-review.spec.ts",
+    "测试/前端/tests/identity.spec.ts",
+    "测试/前端/tests/isolation.spec.ts",
+    "测试/前端/tests/request-read.spec.ts",
+    "测试/前端/tests/role-permissions.spec.ts",
+    "测试/脚本/run_frontend_identity.py",
+    "部署/.env.example",
+    "部署/backend-entrypoint.sh",
+    "部署/manage.py",
+    "部署/README.md",
+    "部署/stack.yaml",
+    "部署/部署交接文档.md"
+  ],
+  "removed": [
+    "backend-func/src/main/java/authentication/SessionAuthentication.java",
+    "backend-oo/src/main/java/authentication/SessionAuthentication.java"
+  ],
+  "scope": "Compared with stage 4 starting snapshot; new files are listed separately in delivery inventory."
+}

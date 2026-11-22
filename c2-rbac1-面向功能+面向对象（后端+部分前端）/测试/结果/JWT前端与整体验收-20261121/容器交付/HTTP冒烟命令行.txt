@@ -1,0 +1,8 @@
+PASS C2-DEPLOY static routes, deep links and JavaScript
+PASS C2-08 func Bearer login, refresh rotation, Cookie boundary and API routing
+PASS C2-11/12 func create, update, withdraw and reject terminal transition
+PASS C2-08 oo Bearer login, refresh rotation, Cookie boundary and API routing
+PASS C2-11/12 oo create, update, withdraw and reject terminal transition
+PASS C2-08 independent database writes
+PASS C2-08 foreign JWT rejected; func logout revokes old Bearer and preserves oo login
+PASS: 7 deployment check groups; not a replacement for the full regression suite

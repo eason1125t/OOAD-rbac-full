@@ -1,0 +1,33 @@
+日期：2026-11-21（Asia/Shanghai）
+工作目录：C2根目录；所有运行使用两版各自target/jwt-lifecycle。
+环境：运行器读取本机Docker依赖，专用_test库、独立Redis认证空间、Cookie路径/；OpenSSL生成工作区外临时RSA测试密钥，私钥不归档。
+
+实际批次（每个目录均保留命令、原始TXT、结果JSON和实际Surefire）：
+首次编译：基础三类，0项，脚本资源构造API编译失败。
+编译复核：基础三类，0项，目录夹具身份类型编译失败。
+仓储与基础：AccountAuthenticationTest,JwtAccessTokensTest,JwtEmployeeAuthenticationTest,RedisLoginStoreTest；72项通过。
+HTTP首轮：AuthHttpTest,JwtLoginHttpTest；78项，2失败（旧登录/me全字段比较、Bearer清CSRF）。
+HTTP边界复核：JwtLoginHttpTest,AuthHttpTest#currentCompatibility,JwtEmployeeAuthenticationTest；24项通过。
+完整-func / 完整-oo：Maven verify；190/194项通过。
+最终-func / 最终-oo：补启动配置测试后Maven verify；192/196项通过。
+到期边界：LoginAuthenticationTest,JwtLoginHttpTest#cookieEntrancesRequireCsrfAndDoNotAcceptBodyRefreshAlias；3项通过。
+交付-func / 交付-oo：补签名前跨期限及签名失败边界后完整Maven verify；以各目录结果JSON为准。
+
+交付运行命令：
+python 测试/脚本/run_backend.py func --output-dir 测试/结果/JWT登录生命周期-20261121/交付-func --build-dir target/jwt-lifecycle
+python 测试/脚本/run_backend.py oo --output-dir 测试/结果/JWT登录生命周期-20261121/交付-oo --build-dir target/jwt-lifecycle
+
+静态契约：
+$env:PYTHONIOENCODING='utf-8'
+$env:PYTHONPATH="$env:TEMP/c2-contract-validation-20261121"
+python 测试/契约/check_identity_contract.py
+结果归档静态契约.txt；当前规范49操作/44模型，快照8操作/12示例/14非法和空值边界。
+首次校验发现组件插入缩进范围错误及尚未生成的说明链接，修正后完整重验；不当作运行测试通过数。
+
+git diff --check -- .
+输出归档diff-check.txt；LF/CRLF提示不属于校验错误。
+
+截图：测试/前端现有Playwright，headless msedge打开交付批次实际JaCoCo HTML，保存JaCoCo-func.png、JaCoCo-oo.png并目视复核。
+交付核对：逐文件SHA-256、同版测试源码一致、两版认证行为文件一致、Lua与JAR资源一致、无Spring Session Redis/PEM打包、无新增迁移、文档链接/编码/索引。
+
+没有执行clean、批量删除、演示库修改、现有开发进程重启、前端JWT验收、Apifox同步、Swarm部署、提交或推送。

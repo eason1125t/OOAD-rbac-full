@@ -1,0 +1,14 @@
+
+Running 3 tests using 1 worker
+
+(node:10580) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [func] › 本机切换\pages.spec.ts:5:1 › 本机JWT切换：页面恢复、Bearer、权限与目录读取 (2.3s)
+(node:21904) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [oo] › 本机切换\pages.spec.ts:5:1 › 本机JWT切换：页面恢复、Bearer、权限与目录读取 (2.5s)
+(node:55368) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [dual] › 本机切换\isolation.spec.ts:13:1 › 本机JWT切换：同版退出同步，另一版刷新后仍保持登录 (4.3s)
+
+  3 passed (12.8s)

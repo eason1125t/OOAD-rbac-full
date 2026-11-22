@@ -1,0 +1,5 @@
+首轮两项失败的4个trace ZIP（含HTML报告副本）已逐个重写为说明占位，未保留认证网络内容；原失败JSON、TXT、截图和页面错误上下文保留。后续禁用网络trace，避免Authorization/登录响应进入归档。
+browser-artifacts\jwt-JWT-切换账号丢弃旧身份在途响应，不在新账号页面展示-func\trace.zip
+browser-artifacts\jwt-JWT-切换账号丢弃旧身份在途响应，不在新账号页面展示-oo\trace.zip
+browser-report\data\01c358803f3c984c4afc88d28abc2d459992cbc3.zip
+browser-report\data\fef763e670955bea9d22557a24859630d6439310.zip

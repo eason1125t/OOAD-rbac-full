@@ -10,9 +10,12 @@ public class BusinessAccessException extends RuntimeException {
     /** 对应首批 OpenAPI 的稳定错误码。 */
     public enum Reason {
         AUTHENTICATION_REQUIRED("请登录后重试"),
+        VALIDATION_FAILED("请求参数无效"),
         SYSTEM_ACCESS_DENIED("无权进入该业务系统"),
         PERMISSION_DENIED("缺少审批权限或操作已停用"),
         SYSTEM_NOT_FOUND("业务系统不存在"),
+        PERMISSION_NOT_FOUND("目标系统的权限不存在"),
+        API_NOT_FOUND("目标系统的API映射不存在"),
         REQUEST_NOT_FOUND("申请不存在"),
         REQUEST_ALREADY_APPROVED("申请已审批"),
         REQUEST_STATE_CONFLICT("当前申请状态不允许该操作"),

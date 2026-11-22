@@ -6,20 +6,18 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 /** 对 organization 提供 Spring Data JPA 数据访问。 */
-public interface OrganizationRepository extends JpaRepository<Organization, Long> {
-    /** 原表目录包含建模为公司的原表行，同时保留演示部门。 */
-    @Query("select o from Organization o where o.organizationType = 'DEPARTMENT' or o.code like 'xlsx-%'")
-    Page<Organization> findDepartmentDirectory(Pageable pageable);
-
-    /** 公司和部门管理员只读取其可管理范围内的目录行。 */
+public interface OrganizationRepository extends JpaRepository<Organization, Long>, JpaSpecificationExecutor<Organization> {
+    /** 为当前页批量判定可见直接子级，避免逐节点查询或泄露隐藏分支。 */
     @Query("""
-            select o from Organization o where o.id in :ids
-              and (o.organizationType = 'DEPARTMENT' or o.code like 'xlsx-%')
+            select distinct child.parentId from Organization child
+            where child.parentId in :parentIds and (:global = true or child.id in :visibleIds)
             """)
-    Page<Organization> findDepartmentDirectoryIn(Set<Long> ids, Pageable pageable);
+    Set<Long> findParentsWithVisibleChildren(Set<Long> parentIds, boolean global, Set<Long> visibleIds);
+
     /** 按组织类型分页读取全局目录。 */
     Page<Organization> findByOrganizationType(String organizationType, Pageable pageable);
 

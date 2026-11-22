@@ -3,10 +3,12 @@
 package authentication.vo;
 
 import authentication.WorkspaceService.CurrentSession;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 /** 登录与当前身份接口共用的导航响应，不暴露 JPA 对象。 */
-public record CurrentSessionVO(EmployeeVO employee, List<WorkspaceVO> workspaces, String defaultWorkspaceKey) {
+public record CurrentSessionVO(EmployeeVO employee, List<WorkspaceVO> workspaces, String defaultWorkspaceKey,
+                               @JsonInclude(JsonInclude.Include.NON_NULL) CurrentAuthorizationVO authorization) {
     /** 将当前身份和业务导航映射为公开响应。 */
     public static CurrentSessionVO from(CurrentSession session) {
         return new CurrentSessionVO(
@@ -15,7 +17,12 @@ public record CurrentSessionVO(EmployeeVO employee, List<WorkspaceVO> workspaces
                 session.workspaces().stream()
                         .map(workspace -> new WorkspaceVO(workspace.key(), workspace.type(), workspace.name(), workspace.path()))
                         .toList(),
-                session.defaultWorkspaceKey());
+                session.defaultWorkspaceKey(), null);
+    }
+
+    /** 只在显式指定系统时增加授权；登录和无参数me继续省略该字段。 */
+    public CurrentSessionVO withAuthorization(CurrentAuthorizationVO value) {
+        return new CurrentSessionVO(employee, workspaces, defaultWorkspaceKey, value);
     }
 
     /** 当前登录员工的公开身份。 */

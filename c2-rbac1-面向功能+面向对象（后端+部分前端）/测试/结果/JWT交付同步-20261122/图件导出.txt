@@ -1,0 +1,3 @@
+StarUML CLI：已导出 49 张 svg
+StarUML CLI：已导出 49 张 png
+PASS: 49 diagrams; 3534 unique elements; 7683 resolved references; 96 rendered class boxes; PNG/SVG present

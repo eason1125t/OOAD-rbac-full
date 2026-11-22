@@ -1,0 +1,263 @@
+Window: "OOAD RBAC", App: Apifox.exe.
+	0 pane (窗格) OOAD RBAC Secondary Actions: Raise
+		1 document (文档) OOAD RBAC Value: file:///D:/codetool/Apifox-windows-latest/resources/app.asar/dist/renderer/index.html#/project/9046536 ID: 13329840
+			2 image (未加标签的图片) 要获取缺失的图片说明，请打开上下文菜单。
+			3 image (图像)
+			4 hyperlink (链接) 接口管理
+				5 image (图像)
+			6 hyperlink (链接) 自动化测试
+				7 image (图像)
+			8 hyperlink (链接) 分享文档
+				9 image (图像)
+			10 hyperlink (链接) 请求历史
+				11 image (图像)
+			12 hyperlink (链接) 项目设置
+				13 image (图像)
+			14 button (按钮) 邀请成员
+				15 image (图像)
+				16 text (文本) 邀请成员
+			17 image (图像)
+			18 text (文本) 接口管理
+			19 image (图像)
+			20 text (文本) main
+			21 image (图像)
+			1196 image (图像)
+			1197 combo box (组合框) (settable, string) ID: rc_select_4
+			1198 button (按钮)
+				1199 image (图像)
+			1200 button (按钮)
+				1201 image (图像)
+			1202 tree (树)
+				1203 text field (编辑) (settable, string) for screen reader
+				1204 image (图像)
+				1205 text (文本) C1-RBAC0
+				1206 image (图像)
+				1207 image (图像)
+				1208 text (文本) 接口
+				1209 image (图像)
+				1210 image (图像)
+				1211 image (图像)
+				1212 text (文本) 登录与会话
+				1213 text (文本) (
+				1214 text (文本) 4
+				1215 text (文本) )
+				1216 image (图像)
+				1217 image (图像)
+				1218 text (文本) 业务模拟
+				1219 text (文本) (
+				1220 text (文本) 3
+				1221 text (文本) )
+				1222 image (图像)
+				1223 image (图像)
+				1224 text (文本) 授权配置
+				1225 text (文本) (
+				1226 text (文本) 4
+				1227 text (文本) )
+				1228 image (图像)
+				1229 text (文本) 数据模型
+				1230 image (图像)
+				1231 image (图像)
+				1232 text (文本) 组件库
+				1233 image (图像)
+				1234 image (图像)
+				1235 text (文本) C2-RBAC1
+				1236 image (图像)
+				1237 image (图像)
+				1238 text (文本) 接口
+				1239 image (图像)
+				1240 image (图像)
+				1241 image (图像)
+				1242 text (文本) 登录与会话
+				1243 text (文本) (
+				1244 text (文本) 6
+				1245 text (文本) )
+				1246 text (文本) GET
+				1247 text (文本) 获取 CSRF 令牌
+				1248 text (文本) POST
+				1249 text (文本) 登录
+				1250 text (文本) POST
+				1251 text (文本) 退出登录
+				1252 text (文本) GET
+				1253 text (文本) 校验当前用户的单项前端权限
+				1254 text (文本) GET
+				1255 text (文本) 查询当前员工、工作区及可选系统角色与权限
+				1256 text (文本) GET
+				1257 text (文本) 判断当前用户调用指定业务API的系统级权限
+				1258 image (图像)
+				1259 image (图像)
+				1260 text (文本) 业务模拟
+				1261 text (文本) (
+				1262 text (文本) 9
+				1263 text (文本) )
+				1264 image (图像)
+				1265 image (图像)
+				1266 text (文本) 授权配置
+				1267 text (文本) (
+				1268 text (文本) 33
+				1269 text (文本) )
+			1270 text (文本) HiFox
+			1271 button (按钮)
+				1272 image (图像)
+			1273 text (文本) Jira、TAPD 已过时，HiFox - 让 Coding Agent 入驻到你的协作平台里
+			1274 button (按钮) 了解详情
+				1275 image (图像)
+			102 custom (disabled) panel
+			1276 tab (选项卡)
+				1277 tab item (选项卡项目) (selectable) GET 查询可进入的业务系统 ID: rc-tabs-0-tab-apiDetail.538471291
+					1278 text (文本) GET
+					1279 text (文本) 查询可进入的业务系统
+					1280 text (文本) 
+				1281 tab item (选项卡项目) (selectable) GET 查询当前员工、工作区及可选系统角色与权限 ID: rc-tabs-0-tab-apiDetail.538471289
+					1282 text (文本) GET
+					1283 text (文本) 查询当前员工、工作区及可选系统角色与权限
+					1284 text (文本) 
+				1285 tab item (选项卡项目) (selectable) C2-RBAC1 ID: rc-tabs-0-tab-module.8918000
+					1286 image (图像)
+					1287 text (文本) C2-RBAC1
+					1288 text (文本) 
+				1289 tab item (选项卡项目) (selectable) GET 判断当前用户调用指定业务API的系统级权限 ID: rc-tabs-0-tab-apiDetail.539815478
+					1290 text (文本) GET
+					1291 text (文本) 判断当前用户调用指定业务API的系统级权限
+					1292 text (文本) 
+				1293 button (按钮) Add tab
+					1294 image (图像)
+				1295 combo box (组合框) (settable, string) ID: rc_select_1
+				1296 text (文本) C2
+				1297 text (文本) C2-RBAC1-功能版
+				1298 button (按钮)
+					1299 image (图像)
+			1300 custom (选项卡面板) C2-RBAC1 ID: rc-tabs-0-panel-module.8918000
+				1301 text (文本) C2-RBAC1
+				1302 tab (选项卡)
+					1303 tab item (选项卡项目) (selectable) 概览 ID: rc-tabs-5-tab-overview
+					1304 tab item (选项卡项目) (selectable) 模块变量 ID: rc-tabs-5-tab-variables
+					1305 tab item (选项卡项目) (selectable) 设置 ID: rc-tabs-5-tab-settings
+				1306 custom (选项卡面板) 概览 ID: rc-tabs-5-panel-overview
+					1307 image (图像)
+					1308 text (文本) 统计
+					1309 text (文本) 49
+					1310 text (文本) 接口数
+					1311 text (文本) 0
+					1312 text (文本) 文档数
+					1313 text (文本) 44
+					1314 text (文本) 数据模型数
+					1315 combo box (组合框) ID: rc_select_17
+					1316 image (图像)
+					1317 text (文本) 单接口用例覆盖
+					1318 text (文本) **
+					1319 text (文本) 单接口用例总数
+					1320 text (文本) **
+					1321 text (文本) 单接口用例覆盖率
+					1322 image (图像)
+					1323 text (文本) **
+					1324 text (文本) 平均每个接口带有的单接口用例数
+					1325 text (文本) **
+					1326 text (文本) 不带单接口用例的接口数
+					1327 image (图像)
+					1328 text (文本) 场景用例覆盖
+					1329 text (文本) **
+					1330 text (文本) 场景用例总数
+					1331 text (文本) **
+					1332 text (文本) 场景用例覆盖率
+					1333 image (图像)
+					1334 text (文本) **
+					1335 text (文本) 不被场景用例覆盖的接口数
+					1336 text (文本) 模块类型
+					1337 button (按钮) (disabled) 切换
+						1338 image (图像)
+					1339 image (图像)
+					1340 text (文本) 通用 API
+					1341 text (文本) 完全可视化：通过可视化的方式设计、修改接口 OpenAPI YAML：直接编辑 OpenAPI/Swagger 格式的 YAML/JSON 文件 只读模式：禁止在 Apifox 内手动添加或修改，使用自动导入方式更新数据
+					1342 text (文本) 绑定数据源
+					1343 button (按钮) 添加数据源
+						1344 image (图像)
+						1345 text (文本) 添加数据源
+					1346 table (表格)
+						1347 list (列表)
+							1348 list item (列表项目) (selectable)
+							1349 list item (列表项目) (selectable)
+							1350 list item (列表项目) (selectable)
+					1351 text (文本) 导出/备份 API 规格
+					1352 image (未加标签的图片)
+					1353 text (文本) OOAD RBAC
+					1354 text (文本) 2.0.0-draft
+					1355 button (按钮)
+						1356 image (图像)
+					1357 text (文本) 说明
+					1358 text (文本) 沿用 C1 接口，扩展角色继承、员工有效权限查询与业务申请 CRUD。申请契约供两版审阅与实施。
+					1359 image (图像)
+					1360 text (文本) 快捷分享
+					1361 image (图像)
+					1362 text (文本) 文档站
+					1363 image (图像)
+					1364 text (文本) 生成代码
+					1365 image (图像)
+					1366 text (文本) 导入数据
+					1367 image (图像)
+					1368 text (文本) 导出数据
+					1369 image (图像)
+					1370 text (文本) 更多功能设置
+			1371 button (按钮)
+				1372 image (图像)
+			1373 button (按钮) 在线
+				1374 image (图像)
+			1375 button (按钮) 请求代理
+				1376 image (图像)
+				1377 image (图像)
+			1378 button (按钮) Cookie 管理
+				1379 image (图像)
+			1380 button (按钮) 回收站
+				1381 image (图像)
+			1382 button (按钮) 文档 & 交流群
+				1383 image (图像)
+			1384 button (按钮)
+				1385 image (图像)
+		383 document (文档) Shell ID: 13316288
+			384 image (图像)
+			385 image (图像)
+			386 text (文本) 主窗口
+			387 button (按钮) 在独立窗口中打开
+				388 image (图像)
+			389 text (文本) OOAD RBAC
+			390 button (按钮)
+				391 image (图像)
+			392 image (图像) ellipsis
+			393 button (按钮)
+				394 image (图像)
+			395 button (按钮)
+				396 image (图像)
+			397 button (按钮)
+				398 image (图像)
+			399 image (未加标签的图片) avatar. 要获取缺失的图片说明，请打开上下文菜单。
+			400 button (按钮)
+				401 image (图像)
+			402 button (按钮)
+				403 image (图像)
+			404 button (按钮)
+				405 image (图像)
+			406 button (按钮)
+				407 image (图像)
+			408 image (图像)
+			409 text (文本) 主窗口
+			410 button (按钮) 在独立窗口中打开
+				411 image (图像)
+			412 text (文本) OOAD RBAC
+			413 button (按钮)
+				414 image (图像)
+			415 pane (窗格) ID: iframe_realtime_sync
+				416 document (文档) Value: about:blank
+		417 pane (窗格) (disabled)
+		419 pane (窗格)
+			420 pane (窗格)
+				421 pane (窗格)
+					422 pane (窗格)
+						423 pane (窗格)
+							424 pane (窗格)
+								425 custom
+							426 pane (窗格)
+								427 pane (窗格)
+								428 pane (窗格)
+
+Document text: ```
+主窗口   OOAD RBAC                       主窗口   OOAD RBAC
+```

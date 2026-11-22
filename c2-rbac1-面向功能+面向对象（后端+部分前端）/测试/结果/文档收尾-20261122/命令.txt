@@ -1,0 +1,7 @@
+工作目录：C2根目录
+python 测试/契约/check_identity_contract.py
+python 测试/脚本/check_jwt_delivery.py --evidence-dir 测试/结果/JWT前端与整体验收-20261121 --output-dir 测试/结果/文档收尾-20261122
+python 测试/部署/test_manage.py -v
+python 测试/图件/test_diagram_checks.py
+Git差异空白、全说明链接、候选凭据和私密路径检查另见同批JSON。
+本轮只改文档和交付检查路径，没有重跑194/198/51完整业务套件。

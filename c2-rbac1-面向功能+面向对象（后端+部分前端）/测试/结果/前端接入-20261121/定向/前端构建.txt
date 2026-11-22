@@ -1,0 +1,13 @@
+
+> rbac1-frontend@0.1.0 build
+> vue-tsc --noEmit && vite build --emptyOutDir=false
+
+vite v7.3.8 building client environment for production...
+transforming...
+✓ 36 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.46 kB │ gzip:  0.32 kB
+dist/assets/index-ldG0A6-Y.css   11.54 kB │ gzip:  3.37 kB
+dist/assets/index-B3ms6_o-.js   126.13 kB │ gzip: 44.57 kB
+✓ built in 808ms

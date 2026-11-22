@@ -1,0 +1,15 @@
+{
+  "edition": "func",
+  "startedUtc": "2026-11-21T09:01:08.990706+00:00",
+  "completedUtc": "2026-11-21T09:03:00.952566+00:00",
+  "exitCode": 1,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "b93605372671be23425f30d274ba87a2c55a4999ac95fad8f9124517435025fc",
+  "tests": {
+    "tests": 87,
+    "failures": 0,
+    "errors": 2,
+    "skipped": 0
+  },
+  "coverage": {}
+}

@@ -2,7 +2,7 @@
 // 协作关系：协作 RoleInheritanceStore、AuthorizationService 和分配仓储。
 package assignment;
 
-import authentication.WorkspaceService;
+import authentication.CurrentEmployeeService;
 import authorization.AdministratorScope;
 import authorization.AuthorizationService;
 import contract.BusinessAccessException.Reason;
@@ -63,7 +63,7 @@ public class AssignmentService {
         if (!grant) {
             employeeRoles.deleteById(key);
         } else if (!employeeRoles.existsById(key)) {
-            if (!WorkspaceService.canSignIn(employee)) {
+            if (!CurrentEmployeeService.canSignIn(employee)) {
                 throw new BusinessAccessException(Reason.ASSIGNMENT_CONFLICT);
             }
             requireGrantableSources(scope, hierarchy.snapshot().inheritedRoles(Set.of(roleId)), target);

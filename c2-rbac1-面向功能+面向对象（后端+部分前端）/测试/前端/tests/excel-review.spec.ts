@@ -1,3 +1,4 @@
+import { apiGet, trackAuth } from './support/auth'
 // 从同一真实浏览器会话分页核对三份原表，日志仅保留摘要。
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
@@ -23,7 +24,7 @@ const demoDepartments = new Set(['示例工程部', '示例财务部'])
 async function collect(page: Page, endpoint: Sheet): Promise<Entry[]> {
   const size = 100
   const get = async (index: number) => {
-    const response = await page.request.get(`/${test.info().project.name}/api/${endpoint}?page=${index}&pageSize=${size}`)
+    const response = await apiGet(page, `/${test.info().project.name}/api/${endpoint}?page=${index}&pageSize=${size}`)
     expect(response.ok(), `${endpoint} 第 ${index} 页读取成功`).toBeTruthy()
     return response.json() as Promise<{ items: Entry[]; total: number }>
   }
@@ -55,6 +56,7 @@ test('C2-09 从管理端全量对照员工、部门和功能权限原表', async
   test.setTimeout(120_000)
   const expected = JSON.parse(execFileSync('python', [sourceScript, input!], { encoding: 'utf8' }))
   await page.goto(`/${test.info().project.name}/`)
+  trackAuth(page)
   await page.getByLabel('用户名').fill('super-admin')
   await page.getByLabel('密码').fill('1234')
   await page.getByRole('button', { name: '登录', exact: true }).click()

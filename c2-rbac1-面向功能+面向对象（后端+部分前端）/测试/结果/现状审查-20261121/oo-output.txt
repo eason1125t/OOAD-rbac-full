@@ -1,0 +1,59 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< cn.edu.ooad:rbac1-oo >------------------------
+[INFO] Building rbac1-oo 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rbac1-oo ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 8 resources from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ rbac1-oo ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- build-helper:3.6.1:add-test-source (shared-contract-tests) @ rbac1-oo ---
+[INFO] Test Source directory: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-������+������󣨺��+����ǰ�ˣ�\backend-oo\..\����\���\common\java added.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rbac1-oo ---
+[INFO] skip non existing resourceDirectory D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-������+������󣨺��+����ǰ�ˣ�\backend-oo\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ rbac1-oo ---
+[INFO] Nothing to compile - all classes are up to date.
+[INFO] 
+[INFO] --- surefire:3.5.6:test (default-test) @ rbac1-oo ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running initialization.InitializationCommandTest
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\kaoyu\.m2\repository\net\bytebuddy\byte-buddy-agent\1.17.8\byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+��ʾ�����Ѿ���
+������ɣ�Ա�� 2����֯ 1���嵥 3��Ա����֯��ƥ�� 1
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.180 s -- in initialization.InitializationCommandTest
+[INFO] Running initialization.WorkbookReaderTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.976 s -- in initialization.WorkbookReaderTest
+[INFO] Running rolepermission.domain.RoleHierarchyTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.076 s -- in rolepermission.domain.RoleHierarchyTest
+[INFO] Running simulation.domain.BusinessRequestTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.016 s -- in simulation.domain.BusinessRequestTest
+[INFO] Running simulation.RequestArchitectureTest
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.024 s -- in simulation.RequestArchitectureTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  8.294 s
+[INFO] Finished at: 2026-11-21T14:56:18+08:00
+[INFO] ------------------------------------------------------------------------
+PROCESS_EXIT_CODE=0

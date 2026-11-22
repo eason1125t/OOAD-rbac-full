@@ -1,0 +1,873 @@
+{
+  "scope": "C2 only; no filesystem deletion; no volume deletion",
+  "projects": [
+    "c2-delivery-check",
+    "c2-jwt-check-20261121154321",
+    "c2-jwt-check-20261121154541",
+    "c2-jwt-check-20261121155125"
+  ],
+  "containers": [
+    {
+      "id": "c0549e6c9e04c52099e8def7d8d216e9a5a01945f3fa4d9bf1c78c0ca8835851",
+      "name": "c2-jwt-check-20261121155125-frontend-1",
+      "project": "c2-jwt-check-20261121155125",
+      "state": "exited",
+      "image": "rbac-c2/frontend:jwt-20261121155125",
+      "volumeNames": [],
+      "configuredPorts": {
+        "8080/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18081"
+          }
+        ]
+      }
+    },
+    {
+      "id": "a058fa98174ec6d3d2d4ea8250217d84a43a30e808f5a2a41554a562d25c9478",
+      "name": "c2-jwt-check-20261121155125-backend-oo-1",
+      "project": "c2-jwt-check-20261121155125",
+      "state": "exited",
+      "image": "rbac-c2/backend-oo:jwt-20261121155125",
+      "volumeNames": [],
+      "configuredPorts": {}
+    },
+    {
+      "id": "99e6ff96b475477af385688bfbcb2b21e72b90927340dcca19d9e3c7701fc30c",
+      "name": "c2-jwt-check-20261121155125-backend-func-1",
+      "project": "c2-jwt-check-20261121155125",
+      "state": "exited",
+      "image": "rbac-c2/backend-func:jwt-20261121155125",
+      "volumeNames": [],
+      "configuredPorts": {}
+    },
+    {
+      "id": "b2aaa93d392ed7e2f6db7927720da0326a34216104b4b325c7961221f622c9d8",
+      "name": "c2-jwt-check-20261121155125-redis-1",
+      "project": "c2-jwt-check-20261121155125",
+      "state": "exited",
+      "image": "redis:7.4.6-alpine",
+      "volumeNames": [
+        "c2-jwt-check-20261121155125_redis-data"
+      ],
+      "configuredPorts": {}
+    },
+    {
+      "id": "6775096a05d4a4941f2ba1928a01a2f8c7ebf75ef489388267928ed4dfa4de60",
+      "name": "c2-jwt-check-20261121155125-mysql-1",
+      "project": "c2-jwt-check-20261121155125",
+      "state": "exited",
+      "image": "mysql:8.4.7",
+      "volumeNames": [
+        "c2-jwt-check-20261121155125_mysql-data"
+      ],
+      "configuredPorts": {}
+    },
+    {
+      "id": "a8cb28184ac269180eea3507580d7c5a409d48b40418496f2a8a66ea7a7596b0",
+      "name": "c2-jwt-check-20261121154541-frontend-1",
+      "project": "c2-jwt-check-20261121154541",
+      "state": "exited",
+      "image": "rbac-c2/frontend:jwt-20261121154541",
+      "volumeNames": [],
+      "configuredPorts": {
+        "8080/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18081"
+          }
+        ]
+      }
+    },
+    {
+      "id": "78c6ba1aa02a42004d4e9e2a22e2c463c507c493426230fba40a2234b0de8c24",
+      "name": "c2-jwt-check-20261121154541-backend-oo-1",
+      "project": "c2-jwt-check-20261121154541",
+      "state": "exited",
+      "image": "rbac-c2/backend-oo:jwt-20261121154541",
+      "volumeNames": [],
+      "configuredPorts": {}
+    },
+    {
+      "id": "dfa47faba4ecb292c06aa649897a2510837ec3ec1e93baa9028a1eeaa8bb7ee2",
+      "name": "c2-jwt-check-20261121154541-backend-func-1",
+      "project": "c2-jwt-check-20261121154541",
+      "state": "exited",
+      "image": "rbac-c2/backend-func:jwt-20261121154541",
+      "volumeNames": [],
+      "configuredPorts": {}
+    },
+    {
+      "id": "e2684e7814a3fa2116dd4e8fef2ddd3572590f2700216f19aaea29f40c232e06",
+      "name": "c2-jwt-check-20261121154541-redis-1",
+      "project": "c2-jwt-check-20261121154541",
+      "state": "exited",
+      "image": "redis:7.4.6-alpine",
+      "volumeNames": [
+        "c2-jwt-check-20261121154541_redis-data"
+      ],
+      "configuredPorts": {}
+    },
+    {
+      "id": "c945f141134916617d6dd84fce83849d6ab581ad66215e66e4ccbdfb010aff48",
+      "name": "c2-jwt-check-20261121154541-mysql-1",
+      "project": "c2-jwt-check-20261121154541",
+      "state": "exited",
+      "image": "mysql:8.4.7",
+      "volumeNames": [
+        "c2-jwt-check-20261121154541_mysql-data"
+      ],
+      "configuredPorts": {}
+    },
+    {
+      "id": "c9255a820692f67b566c0b54826663b21235d27775bbaa023818af906793e91a",
+      "name": "c2-jwt-check-20261121154321-frontend-1",
+      "project": "c2-jwt-check-20261121154321",
+      "state": "created",
+      "image": "rbac-c2/frontend:jwt-20261121154321",
+      "volumeNames": [],
+      "configuredPorts": {
+        "8080/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18081"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cfda3c95a2b05914b4e3ab3880490b8e930cecc0a5b66c989aa1a42e77bbe13d",
+      "name": "c2-jwt-check-20261121154321-backend-oo-1",
+      "project": "c2-jwt-check-20261121154321",
+      "state": "exited",
+      "image": "rbac-c2/backend-oo:jwt-20261121154321",
+      "volumeNames": [],
+      "configuredPorts": {}
+    },
+    {
+      "id": "04c1478d9ac54417e165a650cdc10329610f05893745c13f575bd40e704ffa4d",
+      "name": "c2-jwt-check-20261121154321-backend-func-1",
+      "project": "c2-jwt-check-20261121154321",
+      "state": "exited",
+      "image": "rbac-c2/backend-func:jwt-20261121154321",
+      "volumeNames": [],
+      "configuredPorts": {}
+    },
+    {
+      "id": "9e19563b64aab8f7e2f7dad0138cf9df8b91ffe2b98086b27aaca383d493dc0d",
+      "name": "c2-jwt-check-20261121154321-redis-1",
+      "project": "c2-jwt-check-20261121154321",
+      "state": "exited",
+      "image": "redis:7.4.6-alpine",
+      "volumeNames": [
+        "c2-jwt-check-20261121154321_redis-data"
+      ],
+      "configuredPorts": {}
+    },
+    {
+      "id": "e5349e465246ac123b5b7ba6399e78760a13e180c6cffc095fcaf3d5e75dcaa1",
+      "name": "c2-jwt-check-20261121154321-mysql-1",
+      "project": "c2-jwt-check-20261121154321",
+      "state": "exited",
+      "image": "mysql:8.4.7",
+      "volumeNames": [
+        "c2-jwt-check-20261121154321_mysql-data"
+      ],
+      "configuredPorts": {}
+    },
+    {
+      "id": "c6942e5f52e001cf28ba1ff69b380feda76cef788c23faddf7604842cc5d0d1a",
+      "name": "c2-delivery-check-frontend-1",
+      "project": "c2-delivery-check",
+      "state": "exited",
+      "image": "rbac-c2/frontend:delivery",
+      "volumeNames": [],
+      "configuredPorts": {
+        "8080/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "18080"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ae36f3320cc3a6b9b8d79abc3b02f248f8c3b8acd7070cc6ce1762b6fd172dcc",
+      "name": "c2-delivery-check-backend-oo-1",
+      "project": "c2-delivery-check",
+      "state": "exited",
+      "image": "rbac-c2/backend-oo:delivery",
+      "volumeNames": [],
+      "configuredPorts": {}
+    },
+    {
+      "id": "8bba96d6c7aece8f0c5f243a13e60d9d2cb73b4df6195cf2d7ae8d8857d448b7",
+      "name": "c2-delivery-check-backend-func-1",
+      "project": "c2-delivery-check",
+      "state": "exited",
+      "image": "rbac-c2/backend-func:delivery",
+      "volumeNames": [],
+      "configuredPorts": {}
+    },
+    {
+      "id": "31668b10cdca39c1c94bc6f8bf1db49781c1b584bf2980dc8e2b3da5eb48d6df",
+      "name": "c2-delivery-check-mysql-1",
+      "project": "c2-delivery-check",
+      "state": "exited",
+      "image": "mysql:8.4.7",
+      "volumeNames": [
+        "c2-delivery-check_mysql-data"
+      ],
+      "configuredPorts": {}
+    },
+    {
+      "id": "d765d7b285b0ea4a95ede096261c05fee94f95eba763d12a7c31d2f2bf0931ca",
+      "name": "c2-delivery-check-redis-1",
+      "project": "c2-delivery-check",
+      "state": "exited",
+      "image": "redis:7.4.6-alpine",
+      "volumeNames": [
+        "c2-delivery-check_redis-data"
+      ],
+      "configuredPorts": {}
+    }
+  ],
+  "networks": [
+    {
+      "id": "901bcb507391fab00aedd098421add41519e1d8aa1bb6de0f60d3e8b29aa3e3b",
+      "name": "c2-delivery-check_app"
+    },
+    {
+      "id": "bd0e857d758a29f09784fdb711fd7694def7d521795ca0e580d1f7975c4af444",
+      "name": "c2-jwt-check-20261121154321_app"
+    },
+    {
+      "id": "98bcd800ec69f50be0bd6ad4526c3737273095d167fe4610b4de9978cf8ed58a",
+      "name": "c2-jwt-check-20261121154541_app"
+    },
+    {
+      "id": "2834060a4f2cd00754e53a06cd12a23d8312f4b9ec5ac11dd0362644a1af251f",
+      "name": "c2-jwt-check-20261121155125_app"
+    }
+  ],
+  "images": [
+    {
+      "tag": "rbac-c2/frontend:delivery",
+      "id": "sha256:c084cf202d83d6f9faa7ef2192f9ffba238901e95dd3b88c7cfbe6745fa93e00"
+    },
+    {
+      "tag": "rbac-c2/backend-func:delivery",
+      "id": "sha256:8ba390f450d5546bc554f7331607598ca1d1cfd8bb293551986a71a00e9803d6"
+    },
+    {
+      "tag": "rbac-c2/backend-oo:delivery",
+      "id": "sha256:fdd51c6bd1c539ff812e545747837f1575e16b615edfcfdf903a3afc63aa1d9e"
+    },
+    {
+      "tag": "rbac-c2/frontend:jwt-20261121154321",
+      "id": "sha256:4161fd32d7b59b3855da1be75f43eb0d4437c2ce5c0da92c20099b8426b68fb2"
+    },
+    {
+      "tag": "rbac-c2/backend-func:jwt-20261121154321",
+      "id": "sha256:39af5d675df5b2ed082554d40ecd53112219ad8dc687d350ea7d3fdba5d56433"
+    },
+    {
+      "tag": "rbac-c2/backend-oo:jwt-20261121154321",
+      "id": "sha256:5d9d1d3c8fc6b50cf815267ddc9a7d2fb3284c768fd81c7aa576d50216c2adc8"
+    },
+    {
+      "tag": "rbac-c2/frontend:jwt-20261121154541",
+      "id": "sha256:3f2fbfc4303d2f4577d305bf944ba90b1d22c182b02c898a7a942a15fb2b52ea"
+    },
+    {
+      "tag": "rbac-c2/backend-func:jwt-20261121154541",
+      "id": "sha256:d5eb9e86a5a191f7832608e9b33dd73912bca15be0b81a0fa4a3c5afd0261761"
+    },
+    {
+      "tag": "rbac-c2/backend-oo:jwt-20261121154541",
+      "id": "sha256:3b34bbe43fd18b4fea2caa0cbedbe48227e609090768a4c0e053ad50c58d0009"
+    }
+  ],
+  "preservedTestVolumes": [
+    "c2-delivery-check_mysql-data",
+    "c2-delivery-check_redis-data",
+    "c2-jwt-check-20261121154321_mysql-data",
+    "c2-jwt-check-20261121154321_redis-data",
+    "c2-jwt-check-20261121154541_mysql-data",
+    "c2-jwt-check-20261121154541_redis-data",
+    "c2-jwt-check-20261121155125_mysql-data",
+    "c2-jwt-check-20261121155125_redis-data"
+  ],
+  "allVolumesBefore": [
+    "17f465fb3780065f77f2b7265718c039eb0fa64d7d26f85c37c0a61dc31309d7",
+    "1ded91d323646720c8864b36e5268e7ba9ebc4ca12b857100af05f90aa25a7d0",
+    "2db765594ea1e3654c92f5e452224d81a9e26d249e98a72acc34fd4fd22bad7d",
+    "43066b23b937778cd4f9138323991ac53626a0db193c6198c9a74ca756c4d6a3",
+    "c2-delivery-check_mysql-data",
+    "c2-delivery-check_redis-data",
+    "c2-jwt-check-20261121154321_mysql-data",
+    "c2-jwt-check-20261121154321_redis-data",
+    "c2-jwt-check-20261121154541_mysql-data",
+    "c2-jwt-check-20261121154541_redis-data",
+    "c2-jwt-check-20261121155125_mysql-data",
+    "c2-jwt-check-20261121155125_redis-data",
+    "ooad-rbac-c1-full-regression_mysql-data",
+    "ooad-rbac-c1-full-regression_redis-data",
+    "ooad-rbac-c1-verify_mysql-data",
+    "ooad-rbac-c1-verify_redis-data",
+    "ooad-rbac-clean-20261026-083021_mysql-data",
+    "ooad-rbac-clean-20261026-083021_redis-data",
+    "ooad-rbac-clean-20261026-084407_mysql-data",
+    "ooad-rbac-clean-20261026-084407_redis-data",
+    "ooad-rbac_redis-data"
+  ],
+  "preservedContainers": [
+    {
+      "id": "8ac1d72acc6a319e138552dbf1d18ed54f8a6418fedad55abc33a021f9b6f7d2",
+      "name": "ooad-rbac-c2-dev-redis",
+      "state": "running"
+    },
+    {
+      "id": "80e0e8f0cf086eb5fa79e29ed0133a6e8f1fc5272c21908995785623742c8a72",
+      "name": "ooad-rbac-c2-dev-mysql",
+      "state": "running"
+    },
+    {
+      "id": "1a2b852e6c6f1e90967de351a3ffea911d53fa1015e6bbde89d89461a125ab5d",
+      "name": "ooad-rbac-c1-full-regression-backend-1",
+      "state": "exited"
+    },
+    {
+      "id": "bd578069089089e48c11e151670051f3bb95912e0b497560a65f17d7091a59cd",
+      "name": "ooad-rbac-c1-full-regression-redis-1",
+      "state": "exited"
+    },
+    {
+      "id": "994314657dab02acd43432237a12d079e0b9c02b8e120931467c1301d3d2a84f",
+      "name": "ooad-rbac-c1-full-regression-mysql-1",
+      "state": "exited"
+    },
+    {
+      "id": "f65f09456d3a0413b80fe60a88b058947c69d3e996d3327d6022c75a1a4d0ac0",
+      "name": "ooad-rbac-excel-review-final",
+      "state": "exited"
+    },
+    {
+      "id": "0d38a99a4f4058f9824bee3e344bfb9b2ba1ff80e3608b58c57cb22bb3634744",
+      "name": "ooad-rbac-excel-review",
+      "state": "exited"
+    },
+    {
+      "id": "9307c6a1ee0b7ac79b2e20b06aca03cc8314ce65fb3d00748bc957dace4ca8b9",
+      "name": "ooad-rbac-console-next-test",
+      "state": "exited"
+    },
+    {
+      "id": "03e484c88dad78e4da59611269ff3005d3eff2fc537b10a95c356500f53ac527",
+      "name": "ooad-rbac-admin-ui-test",
+      "state": "exited"
+    },
+    {
+      "id": "f7e9aee7029687b2cc019dae8b7ef29b04b000078f8b355f4fee68bea2779f38",
+      "name": "ooad-rbac-c1-verify-backend-1",
+      "state": "exited"
+    },
+    {
+      "id": "44ad0d3291d741d8fa0ef51d6a69447081644d07b96974eb512abbcffc5d2e70",
+      "name": "ooad-rbac-c1-verify-redis-1",
+      "state": "exited"
+    },
+    {
+      "id": "e1959dad87a38613eea4ed9783de13c1fb97956c64824d697f1ccc0f76018294",
+      "name": "ooad-rbac-c1-verify-mysql-1",
+      "state": "exited"
+    },
+    {
+      "id": "3bb76e98c813cb686d1f78c2478d1f04efe136bd51750540c66e57ba5cb70a9d",
+      "name": "ooad-rbac-m2-mysql",
+      "state": "exited"
+    },
+    {
+      "id": "26e6b75ac999a010de71252de8fb14d17cb0e82350b1ff4f07dd1a06fbbf5195",
+      "name": "ooad-rbac-m2-redis",
+      "state": "exited"
+    },
+    {
+      "id": "15bcde7b965a85f03bebc9f7ba0e906dd5fae1059da8fe555d050c2719fdfe7a",
+      "name": "ooad-rbac-redis-1",
+      "state": "exited"
+    }
+  ],
+  "manualFolders": [
+    {
+      "path": "backend-func\\target\\classes",
+      "fileCount": 124,
+      "bytes": 400064,
+      "MiB": 0.38,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\generated-sources",
+      "fileCount": 1,
+      "bytes": 3948,
+      "MiB": 0.0,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\generated-test-sources",
+      "fileCount": 0,
+      "bytes": 0,
+      "MiB": 0.0,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\identity-final",
+      "fileCount": 431,
+      "bytes": 97218943,
+      "MiB": 92.72,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\identity-step2",
+      "fileCount": 375,
+      "bytes": 96373943,
+      "MiB": 91.91,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\identity-step3",
+      "fileCount": 393,
+      "bytes": 96608611,
+      "MiB": 92.13,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\identity-step4",
+      "fileCount": 417,
+      "bytes": 96948630,
+      "MiB": 92.46,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\identity-step5",
+      "fileCount": 434,
+      "bytes": 97219839,
+      "MiB": 92.72,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\jwt-identity",
+      "fileCount": 457,
+      "bytes": 98701644,
+      "MiB": 94.13,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\jwt-lifecycle",
+      "fileCount": 512,
+      "bytes": 99141431,
+      "MiB": 94.55,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\maven-archiver",
+      "fileCount": 1,
+      "bytes": 68,
+      "MiB": 0.0,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\maven-status",
+      "fileCount": 4,
+      "bytes": 18991,
+      "MiB": 0.02,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\site",
+      "fileCount": 219,
+      "bytes": 2740937,
+      "MiB": 2.61,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\surefire-reports",
+      "fileCount": 46,
+      "bytes": 865169,
+      "MiB": 0.83,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-func\\target\\test-classes",
+      "fileCount": 8,
+      "bytes": 113521,
+      "MiB": 0.11,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\classes",
+      "fileCount": 131,
+      "bytes": 413764,
+      "MiB": 0.39,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\generated-sources",
+      "fileCount": 1,
+      "bytes": 3950,
+      "MiB": 0.0,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\generated-test-sources",
+      "fileCount": 0,
+      "bytes": 0,
+      "MiB": 0.0,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\identity-final",
+      "fileCount": 460,
+      "bytes": 97392021,
+      "MiB": 92.88,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\identity-step2",
+      "fileCount": 404,
+      "bytes": 96551937,
+      "MiB": 92.08,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\identity-step3",
+      "fileCount": 422,
+      "bytes": 96785232,
+      "MiB": 92.3,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\identity-step4",
+      "fileCount": 446,
+      "bytes": 97122710,
+      "MiB": 92.62,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\identity-step5",
+      "fileCount": 463,
+      "bytes": 97392997,
+      "MiB": 92.88,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\jwt-identity",
+      "fileCount": 484,
+      "bytes": 98876936,
+      "MiB": 94.3,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\jwt-lifecycle",
+      "fileCount": 537,
+      "bytes": 99313153,
+      "MiB": 94.71,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\maven-archiver",
+      "fileCount": 1,
+      "bytes": 66,
+      "MiB": 0.0,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\maven-status",
+      "fileCount": 4,
+      "bytes": 20387,
+      "MiB": 0.02,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\site",
+      "fileCount": 235,
+      "bytes": 2812955,
+      "MiB": 2.68,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\surefire-reports",
+      "fileCount": 51,
+      "bytes": 930408,
+      "MiB": 0.89,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "backend-oo\\target\\test-classes",
+      "fileCount": 10,
+      "bytes": 121550,
+      "MiB": 0.12,
+      "reason": "可再生成的旧构建/报告缓存；交付证据已在测试/结果归档"
+    },
+    {
+      "path": "frontend\\test-results",
+      "fileCount": 9,
+      "bytes": 557039,
+      "MiB": 0.53,
+      "reason": "可重新生成；当前Vite开发服务不依赖该目录"
+    },
+    {
+      "path": "frontend\\dist",
+      "fileCount": 22,
+      "bytes": 1609620,
+      "MiB": 1.54,
+      "reason": "可重新生成；当前Vite开发服务不依赖该目录"
+    },
+    {
+      "path": "docs\\design\\__pycache__",
+      "fileCount": 4,
+      "bytes": 174833,
+      "MiB": 0.17,
+      "reason": "Python字节码缓存，可自动重建"
+    },
+    {
+      "path": "测试\\脚本\\__pycache__",
+      "fileCount": 4,
+      "bytes": 52584,
+      "MiB": 0.05,
+      "reason": "Python字节码缓存，可自动重建"
+    },
+    {
+      "path": "测试\\部署\\__pycache__",
+      "fileCount": 2,
+      "bytes": 20660,
+      "MiB": 0.02,
+      "reason": "Python字节码缓存，可自动重建"
+    },
+    {
+      "path": "部署\\__pycache__",
+      "fileCount": 1,
+      "bytes": 19611,
+      "MiB": 0.02,
+      "reason": "Python字节码缓存，可自动重建"
+    }
+  ],
+  "manualFiles": [
+    {
+      "path": "backend-func\\target\\c2-read-browser.log",
+      "bytes": 2498531,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-read-demo.log",
+      "bytes": 6675,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-read-green.log",
+      "bytes": 1035980,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-read-package.log",
+      "bytes": 2334,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-read-ports-green.log",
+      "bytes": 620838,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-read-ports-verify.log",
+      "bytes": 645758,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-read-red.log",
+      "bytes": 20476,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-read-ui-red.log",
+      "bytes": 2121,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-role-ui-browser.log",
+      "bytes": 2232180,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-role-ui-demo.log",
+      "bytes": 6421,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-role-ui-red.log",
+      "bytes": 24771,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-role-ui-verify.log",
+      "bytes": 519724,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\c2-verify.log",
+      "bytes": 305880,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\func-crud-red.log",
+      "bytes": 11237,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\jacoco.exec",
+      "bytes": 792389,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-func\\target\\rbac1-func-0.1.0-SNAPSHOT.jar",
+      "bytes": 181455,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-ports-red.log",
+      "bytes": 4935,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-read-browser.log",
+      "bytes": 2142126,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-read-demo.log",
+      "bytes": 6597,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-read-package.log",
+      "bytes": 2408,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-read-ports-e2e.log",
+      "bytes": 3672,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-read-ports-green.log",
+      "bytes": 503761,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-read-ports-verify.log",
+      "bytes": 637725,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-role-ui-browser.log",
+      "bytes": 2131483,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-role-ui-demo.log",
+      "bytes": 6347,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-role-ui-e2e.log",
+      "bytes": 2879,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-role-ui-red.log",
+      "bytes": 24503,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-role-ui-verify.log",
+      "bytes": 516202,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\c2-verify.log",
+      "bytes": 301956,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\crud-create-green.log",
+      "bytes": 14858,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\crud-create-red.log",
+      "bytes": 11133,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\crud-lifecycle-red.log",
+      "bytes": 36989,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\crud-oo-verify.log",
+      "bytes": 510008,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\jacoco.exec",
+      "bytes": 793338,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\oo-browser-excel.log",
+      "bytes": 6084,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\oo-browser-server-18182.log",
+      "bytes": 833986,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\oo-browser-server.log",
+      "bytes": 6994,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\oo-priority-smoke.log",
+      "bytes": 107086,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "backend-oo\\target\\rbac1-oo-0.1.0-SNAPSHOT.jar",
+      "bytes": 188901,
+      "reason": "旧构建包或构建运行输出，当前进程不使用"
+    },
+    {
+      "path": "部署\\init-func.log",
+      "bytes": 5705,
+      "reason": "旧启动输出；当前local.ps1日志在用户私有目录"
+    },
+    {
+      "path": "部署\\init-oo.log",
+      "bytes": 5645,
+      "reason": "旧启动输出；当前local.ps1日志在用户私有目录"
+    },
+    {
+      "path": "部署\\构建临时输出.log",
+      "bytes": 259151,
+      "reason": "旧启动输出；当前local.ps1日志在用户私有目录"
+    }
+  ],
+  "manualCandidateBytes": 1394499394,
+  "retainedCurrentImages": [
+    "rbac-c2/frontend:jwt-20261121155125",
+    "rbac-c2/backend-func:jwt-20261121155125",
+    "rbac-c2/backend-oo:jwt-20261121155125"
+  ]
+}

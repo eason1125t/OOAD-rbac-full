@@ -1,0 +1,3 @@
+工作目录: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）
+命令: mvn -f backend-oo/pom.xml verify -Drbac.build.directory=target/jwt-identity
+环境: RBAC_DB_URL=专用测试库; RBAC_DB_USER=root; RBAC_DB_PASSWORD=<进程环境>; RBAC_REDIS_PORT=36390

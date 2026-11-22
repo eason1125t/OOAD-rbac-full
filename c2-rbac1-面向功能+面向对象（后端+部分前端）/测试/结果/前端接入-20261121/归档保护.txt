@@ -1,0 +1,5 @@
+usage: run_frontend_identity.py [-h] --output-dir OUTPUT_DIR
+                                [--suite {identity,regression}]
+run_frontend_identity.py: error: 请选择新的空归档目录，不能覆盖已有浏览器证据
+
+预期退出码：2；实际退出码：2

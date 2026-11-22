@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManagementWriteDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">organization.dto</a> &gt; <span class="el_source">ManagementWriteDTO.java</span></div><h1>ManagementWriteDTO.java</h1><pre class="source lang-java linenums">// 文件职责：集中声明管理维护请求的可写字段及格式约束。
+// 协作关系：由维护 Controller 接收，组织范围和引用规则交给 Service。
+package organization.dto;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
+/** 维护接口输入，仅声明可写字段，组织范围由 Service 校验。 */
+public final class ManagementWriteDTO {
+    /** 禁止实例化仅提供静态规则或嵌套模型的工具容器。 */
+    private ManagementWriteDTO() {
+    }
+
+    /** 新增员工资料。 */
+<span class="nc" id="L18">    public record EmployeeCreate(@NotBlank @Size(max = 128) String username, @NotBlank @Size(max = 128) String name,</span>
+                                 @NotNull @Positive Long organizationId, @Size(max = 128) String jobTitle,
+                                 @Size(max = 32) String phone) {
+    }
+
+    /** 员工 PATCH，省略字段保持原值，空字符串清除可选的岗位或电话。 */
+<span class="nc" id="L24">    public record EmployeePatch(@Size(max = 128) @Pattern(regexp = &quot;(?s).*\\S.*&quot;) String name,</span>
+                                @Positive Long organizationId, @Size(max = 128) String jobTitle,
+                                @Size(max = 32) String phone) {
+    }
+
+    /** 新建角色，空归属代表全局共享。 */
+<span class="nc" id="L30">    public record RoleCreate(@NotBlank @Size(max = 128) String name, @Positive Long ownerOrganizationId) {</span>
+    }
+
+    /** 新建运行时权限，保留系统与权限码作为稳定标识。 */
+<span class="nc" id="L34">    public record PermissionCreate(@NotBlank @Size(max = 128) @Pattern(regexp = &quot;[A-Za-z0-9][A-Za-z0-9:_.-]*&quot;) String code,</span>
+                                   @NotBlank @Size(max = 128) String name, @Positive Long systemId,
+                                   @Positive Long ownerOrganizationId) {
+    }
+
+    /** 角色和权限均只允许修改展示名称。 */
+<span class="nc" id="L40">    public record Rename(@NotBlank @Size(max = 128) String name) {</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

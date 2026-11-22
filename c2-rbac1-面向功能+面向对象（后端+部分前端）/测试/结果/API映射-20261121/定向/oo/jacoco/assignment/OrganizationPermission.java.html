@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrganizationPermission.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">assignment</a> &gt; <span class="el_source">OrganizationPermission.java</span></div><h1>OrganizationPermission.java</h1><pre class="source lang-java linenums">// 文件职责：映射组织对某权限的停用或重新开放策略。
+// 协作关系：由 OrganizationPermissionService 维护，授权和分配时共同读取。
+package assignment;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/** organization_permission 表的 JPA 映射，供初始化和后续业务查询使用。 */
+@Entity
+@Table(name = &quot;organization_permission&quot;)
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@IdClass(OrganizationPermission.Key.class)
+public class OrganizationPermission {
+    public static final String OPEN = &quot;OPEN&quot;;
+    public static final String DISABLED = &quot;DISABLED&quot;;
+    public static final String REOPENED = &quot;REOPENED&quot;;
+
+    @Id
+    private Long organizationId;
+    @Id
+    private Long permissionId;
+    private String status;
+
+    /** 构建待保存记录，由数据库维护审计时间。 */
+<span class="nc" id="L31">    public OrganizationPermission(Long organizationId, Long permissionId, String status) {</span>
+<span class="nc" id="L32">        this.organizationId = organizationId;</span>
+<span class="nc" id="L33">        this.permissionId = permissionId;</span>
+<span class="nc" id="L34">        this.status = status;</span>
+<span class="nc" id="L35">    }</span>
+
+    /** organization_permission 关系两端的组合键。 */
+<span class="nc" id="L38">    public record Key(Long organizationId, Long permissionId) implements java.io.Serializable {</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

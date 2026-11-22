@@ -1,0 +1,48 @@
+{
+  "edition": "func",
+  "startedUtc": "2026-11-21T12:27:59.158305+00:00",
+  "completedUtc": "2026-11-21T12:28:18.077772+00:00",
+  "exitCode": 0,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "44e72d9a4626d0ddcdfa653f119089d8729d61ece9bbdfd4200df838b5724ac3",
+  "tests": {
+    "tests": 72,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {
+    "INSTRUCTION": {
+      "missed": 9862,
+      "covered": 1150,
+      "ratio": 0.10443152924082819
+    },
+    "BRANCH": {
+      "missed": 646,
+      "covered": 117,
+      "ratio": 0.15334207077326342
+    },
+    "LINE": {
+      "missed": 1591,
+      "covered": 199,
+      "ratio": 0.1111731843575419
+    },
+    "COMPLEXITY": {
+      "missed": 803,
+      "covered": 79,
+      "ratio": 0.08956916099773243
+    },
+    "METHOD": {
+      "missed": 455,
+      "covered": 42,
+      "ratio": 0.08450704225352113
+    },
+    "CLASS": {
+      "missed": 118,
+      "covered": 14,
+      "ratio": 0.10606060606060606
+    }
+  },
+  "jwtTestPublicKeySha256": "352ed0ebf12521068f220b32fe2d2e6dca09e64b58894ea3ca733fed5b8a4bdf",
+  "authNamespace": "rbac1:func:jwt-test:dioih0n4"
+}

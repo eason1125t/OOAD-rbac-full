@@ -1,0 +1,169 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< cn.edu.ooad:rbac1-func >-----------------------
+[INFO] Building rbac1-func 0.1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ rbac1-func ---
+[INFO] Copying 1 resource from src\main\resources to target\jwt-lifecycle\classes
+[INFO] Copying 10 resources from src\main\resources to target\jwt-lifecycle\classes
+[INFO] 
+[INFO] --- compiler:3.14.1:compile (default-compile) @ rbac1-func ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 100 source files with javac [debug parameters release 21] to target\jwt-lifecycle\classes
+[INFO] CopyFromProcessor start
+[INFO] Processing: RequestDetail
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [id, deletedAt, title, status, systemId, applicantId]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestDetail
+[INFO] Processing: RequestSummary
+[INFO] Entry: value, value: {simulation.SimulatedRequest.class}
+[INFO] Source fields: [id, deletedAt, title, status, systemId, applicantId]simulation.SimulatedRequest
+[INFO] Target element: simulation.BusinessRequestService.RequestSummary
+[INFO] Processing: RequestDetailVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestDetail.class}
+[INFO] Source fields: [id, applicantId, title, status]simulation.BusinessRequestService.RequestDetail
+[INFO] Target element: simulation.vo.RequestDetailVO
+[INFO] Processing: RequestSummaryVO
+[INFO] Entry: value, value: {simulation.BusinessRequestService.RequestSummary.class}
+[INFO] Source fields: [id, status, title]simulation.BusinessRequestService.RequestSummary
+[INFO] Target element: simulation.vo.RequestSummaryVO
+[INFO] Processing: CatalogVO
+[INFO] Entry: value, value: {rolepermission.CatalogEntry.class}
+[INFO] Source fields: [projectManagerCell, description, administratorCell, id, systemName, departmentManagerCell, featureName, moduleName, executiveCell, employeeCell]rolepermission.CatalogEntry
+[INFO] Target element: organization.vo.CatalogVO
+[INFO] Processing: OrganizationVO
+[INFO] Entry: value, value: {organization.Organization.class}
+[INFO] Source fields: [parentId, sourceParentName, organizationType, id, code, managerName, name]organization.Organization
+[INFO] Target element: organization.vo.OrganizationVO
+[INFO] CopyToProcessor start
+[INFO] CopyNotNullToProcessor start
+[INFO] 
+[INFO] --- build-helper:3.6.1:add-test-source (shared-contract-tests) @ rbac1-func ---
+[INFO] Test Source directory: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\..\测试\后端\common\java added.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ rbac1-func ---
+[INFO] skip non existing resourceDirectory D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.14.1:testCompile (default-testCompile) @ rbac1-func ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 11 source files with javac [debug parameters release 21] to target\jwt-lifecycle\test-classes
+[INFO] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/CurrentEmployeeServiceTest.java: D:\lesson\26-27 SEM1\ooad-rbac-project\c2-rbac1-面向功能+面向对象（后端+部分前端）\backend-func\..\测试\后端\common\java\authentication\CurrentEmployeeServiceTest.java使用了未经检查或不安全的操作。
+[INFO] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/authentication/CurrentEmployeeServiceTest.java: 有关详细信息, 请使用 -Xlint:unchecked 重新编译。
+[INFO] 某些消息已经过简化; 请使用 -Xdiags:verbose 重新编译以获得完整输出
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1705,86] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1711,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1716,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1719,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1721,32] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1728,84] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1734,80] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1738,36] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1741,32] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1757,64] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1766,65] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1769,56] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1770,55] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1783,71] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1784,71] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1789,75] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1792,74] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1793,91] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1808,83] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1811,37] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1813,82] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1814,86] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1829,94] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1834,92] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1838,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1840,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1842,32] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1855,59] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1857,68] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1860,84] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1863,36] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1865,59] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1879,55] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1881,32] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1882,56] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1883,55] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1884,96] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1886,96] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1888,98] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1890,96] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1904,91] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1910,91] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1919,68] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1921,68] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1923,74] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1927,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1929,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1956,24] 不兼容的类型: contract.AuthHttpTest.Browser无法转换为java.lang.String
+[INFO] 48 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.875 s
+[INFO] Finished at: 2026-11-21T20:24:50+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:testCompile (default-testCompile) on project rbac1-func: Compilation failure: Compilation failure: 
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1705,86] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1711,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1716,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1719,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1721,32] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1728,84] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1734,80] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1738,36] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1741,32] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1757,64] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1766,65] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1769,56] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1770,55] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1783,71] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1784,71] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1789,75] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1792,74] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1793,91] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1808,83] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1811,37] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1813,82] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1814,86] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1829,94] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1834,92] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1838,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1840,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1842,32] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1855,59] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1857,68] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1860,84] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1863,36] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1865,59] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1879,55] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1881,32] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1882,56] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1883,55] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1884,96] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1886,96] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1888,98] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1890,96] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1904,91] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1910,91] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1919,68] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1921,68] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1923,74] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1927,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1929,33] 不兼容的类型: java.lang.String无法转换为contract.AuthHttpTest.Browser
+[ERROR] /D:/lesson/26-27 SEM1/ooad-rbac-project/c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/后端/common/java/contract/AuthHttpTest.java:[1956,24] 不兼容的类型: contract.AuthHttpTest.Browser无法转换为java.lang.String
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException

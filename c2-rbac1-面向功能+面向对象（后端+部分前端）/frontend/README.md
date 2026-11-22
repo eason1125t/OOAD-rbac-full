@@ -1,45 +1,11 @@
-# C2 前端运行与验收
+# C2 共用前端
 
-`/func/` 连接面向功能后端，`/oo/` 连接面向对象后端。两个入口使用同一个 Vue 构建，由同源代理按路径选择后端和会话。
+一份Vue/TypeScript源码提供/func/、/oo/，分别连接两套后端。当前认证为JWT、HttpOnly刷新Cookie及SharedWorker内存协调，已接入工作区、权限面板、申请按钮和部门员工查询；后端继续执行实际授权。
 
-1. 在两套后端的独立演示库各运行一次 `--init-demo`。启用 `RBAC_DEMO_ACCOUNTS_ENABLED=true` 后，命令会创建或更新以下八个演示账号，密码统一为 `1234`。
-2. 对需要全量验收的库分别运行 `--import-excel=<原表目录>`。两种初始化命令执行后退出。
-3. 启动功能版后端使用 `SERVER_PORT=18181`，对象版使用 `SERVER_PORT=18182`，再在本目录运行 `npm ci` 和 `npm run dev`。若使用其他端口，可配置 `RBAC_FUNC_API_TARGET` 和 `RBAC_OO_API_TARGET`。打开 [本机首页](http://127.0.0.1:5173/) 选择版本。
+本目录不再重复维护进度和验收结果：
 
-| 账号 | 用途 |
-| --- | --- |
-| `super-admin` | 全局管理 |
-| `company-a-admin` | 公司管理与公司申请 |
-| `engineering-employee` | 工程部申请 |
-| `engineering-admin` | 部门管理与继承验收 |
-| `finance-employee` | 财务部申请与部门隔离 |
-| `engineering-requester` | 发起、修改、撤回本人的工程申请，删除本人已驳回申请 |
-| `engineering-inherited-approver` | 通过「示例继承审批主管 → 示例继承审批来源」获得工程审批。移除该边可验证同会话实时撤权 |
-| `company-b-employee` | 查看乙公司系统的申请，验证跨公司和无动作权限场景 |
+- [项目总结](../docs/项目总结.md)：功能、两版设计及Session到JWT的变化。
+- [部署说明](../部署/README.md)：启动、生产网关、密钥和Swarm交接。
+- [测试说明](../测试/README.md)：安装、构建、浏览器与部署后验收。
 
-对已经初始化的演示库运行同一命令可补齐新增账号。演示初始化保留用户对继承关系和组织策略的修改。如果工程审批已重新开放，需由管理员对「示例继承审批来源」重授后再用继承账号审批。
-
-读取申请需要该系统的 `request:read`。八个演示账号按所属工作区配置了查看角色，全局管理员按既有规则授权。其他账号升级后由管理员显式授予查看权。撤销查看权后，原页面下一次读取会清空旧列表和详情。处理已有申请还需要相应动作权限。
-
-用 `super-admin` 登录后，打开「角色管理 → 测试工程主管 → 管理权限」。这个角色从「示例继承审批来源」继承「工程申请审批」，权限页会标出继承权限的只读状态。直接授权时先选择业务系统，再选择动作。角色配置与员工在组织策略下的实际权限可分别在「管理权限」和「员工管理 → 有效权限」核对。
-
-在独立演示库上运行生产构建验收。浏览器用例会提交申请、修改角色和组织策略。
-
-```powershell
-npm run build
-$env:RBAC_BROWSER_PREVIEW = 'true'
-$env:RBAC_BROWSER_CHANNEL = 'msedge'
-$env:RBAC_EXCEL_REVIEW_DIR = '<已导入的三份课程工作簿目录>'
-npm run test:e2e -- --timeout=60000
-```
-
-设置 `RBAC_EXCEL_REVIEW_DIR` 时，用 Python 3 核对两版的三份 Excel 全量分页内容。测试报告保留摘要，不包含原表行内容。业务日志归口 `rbac1.func.request` 和 `rbac1.oo.request`。参见 [C2 后端运行说明](../README.md)。
-
-浏览器测试已迁入 C2 的 `测试/前端/`，本页 npm 入口转发到新目录。完整安装、运行、结果和覆盖率说明见 [测试说明](../测试/README.md) 和 [执行报告](../测试/执行报告.md)。
-
-
-## 生产入口与交接
-
-只发布这一份前端构建，分别通过 /func/、/oo/ 访问两个 Swarm 后端。Vite 的本地 server/preview 代理不会随 dist 生效；生产网关须实现 API 前缀去除、Cookie/CSRF 透传与页面深链回退，API 优先于 SPA 回退。前端、两后端和数据库均进入 Swarm；具体参数、Apifox 环境与双版服务器 Logback 验收见 [部署交接文档](../部署交接文档.md)。
-
-现有 Playwright 默认运行本地 Vite；本机 23 项报告不等于集群验收结果。部署后从浏览器/Apifox 请求真实入口验证，新增远程配置通过 RBAC_DEPLOY_BASE_URL 直接访问站点，复用 3 项入口/隔离测试；见 [部署验证](../测试/部署/README.md)。项目整体讲解见 [项目总结](../项目总结.md)，老师追问见 `答辩文档.md`（本地待完善，暂不上传）。
+日常在本目录执行npm ci、npm run dev；前端5173同源代理到18181/18182，可用RBAC_FUNC_API_TARGET、RBAC_OO_API_TARGET调整目标。npm run build产出dist，生产仍需Nginx代理，Vite配置不会随dist生效。

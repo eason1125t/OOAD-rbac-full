@@ -1,0 +1,14 @@
+{
+  "employees": {
+    "rows": 10000,
+    "digest": "13961d476ae4ac95d7f9f77de4d352efa66152939f2483567e6aed342c54b638"
+  },
+  "departments": {
+    "rows": 111,
+    "digest": "950f7e8238df6ac7f281b6cb0c40776f9424809dcf10a0e7cdc312d73e29376b"
+  },
+  "catalog-entries": {
+    "rows": 359,
+    "digest": "95a07807b5fa1fb01940e50f708bd81e3ce2b794d7c5941cc1d9e2704358f4c6"
+  }
+}

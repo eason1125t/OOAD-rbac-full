@@ -1,0 +1,72 @@
+backend-func-1  | Picked up JAVA_TOOL_OPTIONS: -XX:MaxRAMPercentage=65.0 -Dfile.encoding=UTF-8
+backend-func-1  | 
+backend-func-1  |   .   ____          _            __ _ _
+backend-func-1  |  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+backend-func-1  | ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+backend-func-1  |  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+backend-func-1  |   '  |____| .__|_| |_|_| |_\__, | / / / /
+backend-func-1  |  =========|_|==============|___/=/_/_/_/
+backend-func-1  | 
+backend-func-1  |  :: Spring Boot ::               (v3.5.16)
+backend-func-1  | 
+backend-func-1  | 2026-11-21T15:46:08.745Z  INFO 1 --- [rbac1-func] [           main] app.RbacApplication                      : Starting RbacApplication v0.1.0-SNAPSHOT using Java 21.0.13 with PID 1 (/app/rbac1.jar started by ? in /app)
+backend-func-1  | 2026-11-21T15:46:08.749Z  INFO 1 --- [rbac1-func] [           main] app.RbacApplication                      : No active profile set, falling back to 1 default profile: "default"
+backend-func-1  | 2026-11-21T15:46:09.725Z  INFO 1 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+backend-func-1  | 2026-11-21T15:46:09.726Z  INFO 1 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+backend-func-1  | 2026-11-21T15:46:09.906Z  INFO 1 --- [rbac1-func] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 171 ms. Found 14 JPA repository interfaces.
+backend-func-1  | 2026-11-21T15:46:11.527Z  INFO 1 --- [rbac1-func] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+backend-func-1  | 2026-11-21T15:46:11.554Z  INFO 1 --- [rbac1-func] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+backend-func-1  | 2026-11-21T15:46:11.554Z  INFO 1 --- [rbac1-func] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.55]
+backend-func-1  | 2026-11-21T15:46:11.601Z  INFO 1 --- [rbac1-func] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+backend-func-1  | 2026-11-21T15:46:11.603Z  INFO 1 --- [rbac1-func] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2762 ms
+backend-func-1  | 2026-11-21T15:46:12.057Z  INFO 1 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+backend-func-1  | 2026-11-21T15:46:12.486Z  INFO 1 --- [rbac1-func] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@9880a15
+backend-func-1  | 2026-11-21T15:46:12.488Z  INFO 1 --- [rbac1-func] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+backend-func-1  | 2026-11-21T15:46:12.549Z  INFO 1 --- [rbac1-func] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mysql://mysql:3306/ooad_rbac1_func (MySQL 8.4)
+backend-func-1  | 2026-11-21T15:46:12.657Z  WARN 1 --- [rbac1-func] [           main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: MySQL 8.4 is newer than this version of Flyway and support has not been tested. The latest supported version of MySQL is 8.1.
+backend-func-1  | 2026-11-21T15:46:12.698Z  INFO 1 --- [rbac1-func] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `ooad_rbac1_func`.`flyway_schema_history` does not exist yet
+backend-func-1  | 2026-11-21T15:46:12.704Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 9 migrations (execution time 00:00.030s)
+backend-func-1  | 2026-11-21T15:46:12.728Z  INFO 1 --- [rbac1-func] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `ooad_rbac1_func`.`flyway_schema_history` ...
+backend-func-1  | 2026-11-21T15:46:12.913Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `ooad_rbac1_func`: << Empty Schema >>
+backend-func-1  | 2026-11-21T15:46:12.951Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func` to version "1 - create rbac0 schema"
+backend-func-1  | 2026-11-21T15:46:14.025Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func` to version "2 - preserve organization source parent"
+backend-func-1  | 2026-11-21T15:46:14.242Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func` to version "3 - add login accounts and default systems"
+backend-func-1  | 2026-11-21T15:46:14.847Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func` to version "4 - create simulated request"
+backend-func-1  | 2026-11-21T15:46:14.959Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func` to version "5 - add scoped permission regrants"
+backend-func-1  | 2026-11-21T15:46:15.355Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func` to version "6 - create role inheritance"
+backend-func-1  | 2026-11-21T15:46:15.545Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func` to version "7 - extend simulated request lifecycle"
+backend-func-1  | 2026-11-21T15:46:15.846Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func` to version "8 - add request read permission"
+backend-func-1  | 2026-11-21T15:46:15.884Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema `ooad_rbac1_func` to version "9 - api operation permissions"
+backend-func-1  | 2026-11-21T15:46:16.087Z  INFO 1 --- [rbac1-func] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 9 migrations to schema `ooad_rbac1_func`, now at version v9 (execution time 00:02.849s)
+backend-func-1  | 2026-11-21T15:46:16.193Z  INFO 1 --- [rbac1-func] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+backend-func-1  | 2026-11-21T15:46:16.243Z  INFO 1 --- [rbac1-func] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.53.Final
+backend-func-1  | 2026-11-21T15:46:16.271Z  INFO 1 --- [rbac1-func] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+backend-func-1  | 2026-11-21T15:46:16.476Z  INFO 1 --- [rbac1-func] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+backend-func-1  | 2026-11-21T15:46:16.543Z  INFO 1 --- [rbac1-func] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+backend-func-1  | 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+backend-func-1  | 	Database driver: undefined/unknown
+backend-func-1  | 	Database version: 8.4.7
+backend-func-1  | 	Autocommit mode: undefined/unknown
+backend-func-1  | 	Isolation level: undefined/unknown
+backend-func-1  | 	Minimum pool size: undefined/unknown
+backend-func-1  | 	Maximum pool size: undefined/unknown
+backend-func-1  | 2026-11-21T15:46:17.603Z  INFO 1 --- [rbac1-func] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+backend-func-1  | 2026-11-21T15:46:17.653Z  INFO 1 --- [rbac1-func] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+backend-func-1  | 2026-11-21T15:46:18.233Z  INFO 1 --- [rbac1-func] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+backend-func-1  | 2026-11-21T15:46:23.730Z  INFO 1 --- [rbac1-func] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+backend-func-1  | 2026-11-21T15:46:23.747Z  INFO 1 --- [rbac1-func] [           main] app.RbacApplication                      : Started RbacApplication in 15.664 seconds (process running for 16.41)
+backend-func-1  | 2026-11-21T15:46:27.610Z  INFO 1 --- [rbac1-func] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+backend-func-1  | 2026-11-21T15:46:27.611Z  INFO 1 --- [rbac1-func] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+backend-func-1  | 2026-11-21T15:46:27.612Z  INFO 1 --- [rbac1-func] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+backend-func-1  | 2026-11-21T15:47:15.284Z  INFO 1 --- [rbac1-func] [nio-8080-exec-7] rbac1.func.request                       : version=func action=LIST actorId=1 systemId=1 requestId=null outcome=SUCCEEDED code=-
+backend-func-1  | 2026-11-21T15:47:15.476Z  INFO 1 --- [rbac1-func] [nio-8080-exec-8] rbac1.func.request                       : version=func action=CREATE actorId=1 systemId=1 requestId=25 outcome=COMMITTED code=-
+backend-func-1  | 2026-11-21T15:47:15.620Z  INFO 1 --- [rbac1-func] [nio-8080-exec-9] rbac1.func.request                       : version=func action=UPDATE actorId=1 systemId=1 requestId=25 outcome=COMMITTED code=-
+backend-func-1  | 2026-11-21T15:47:15.731Z  INFO 1 --- [rbac1-func] [io-8080-exec-10] rbac1.func.request                       : version=func action=WITHDRAW actorId=1 systemId=1 requestId=25 outcome=COMMITTED code=-
+backend-func-1  | 2026-11-21T15:47:15.808Z  INFO 1 --- [rbac1-func] [nio-8080-exec-1] rbac1.func.request                       : version=func action=WITHDRAW actorId=1 systemId=1 requestId=25 outcome=REJECTED code=REQUEST_STATE_CONFLICT
+backend-func-1  | 2026-11-21T15:47:18.391Z  INFO 1 --- [rbac1-func] [nio-8080-exec-4] rbac1.func.request                       : version=func action=DETAIL actorId=1 systemId=1 requestId=25 outcome=SUCCEEDED code=-
+backend-func-1  | 2026-11-21T15:47:29.881Z  INFO 1 --- [rbac1-func] [nio-8080-exec-9] rbac1.func.request                       : version=func action=LIST actorId=5 systemId=3 requestId=null outcome=SUCCEEDED code=-
+backend-func-1  | 2026-11-21T15:47:30.903Z  INFO 1 --- [rbac1-func] [nio-8080-exec-1] rbac1.func.request                       : version=func action=LIST actorId=5 systemId=3 requestId=null outcome=SUCCEEDED code=-
+backend-func-1  | 2026-11-21T15:47:34.135Z  INFO 1 --- [rbac1-func] [nio-8080-exec-2] rbac1.func.request                       : version=func action=CREATE actorId=5 systemId=3 requestId=26 outcome=COMMITTED code=-
+backend-func-1  | 2026-11-21T15:47:34.385Z  INFO 1 --- [rbac1-func] [nio-8080-exec-4] rbac1.func.request                       : version=func action=LIST actorId=5 systemId=3 requestId=null outcome=SUCCEEDED code=-
+backend-func-1  | 2026-11-21T15:47:36.160Z  INFO 1 --- [rbac1-func] [nio-8080-exec-5] rbac1.func.request                       : version=func action=APPROVE actorId=5 systemId=3 requestId=26 outcome=COMMITTED code=-
+backend-func-1  | 2026-11-21T15:47:36.323Z  INFO 1 --- [rbac1-func] [nio-8080-exec-6] rbac1.func.request                       : version=func action=LIST actorId=5 systemId=3 requestId=null outcome=SUCCEEDED code=-

@@ -1,0 +1,26 @@
+{
+  "func": {
+    "productionJavaFiles": 99,
+    "sourceSha256": "3d26282b17896b0faeeaee030f4c24767ecc55e6171612f62f90e20b5a1cb3e2",
+    "jarSha256": "a4981a332367673239017cfbce38355f6393db9f7c376eb6247e7e26840b6980",
+    "luaMatchesSource": true,
+    "retiredSessionAbsent": true,
+    "keyFilesAbsent": true
+  },
+  "oo": {
+    "productionJavaFiles": 106,
+    "sourceSha256": "9ef99193b7bb808f6c63048dfa7c4bd3914d3d5e5237765d060fd0733d0c021d",
+    "jarSha256": "67a4567692801a514c046e683ddfba0524b00dde263177a34e8c510990b28044",
+    "luaMatchesSource": true,
+    "retiredSessionAbsent": true,
+    "keyFilesAbsent": true
+  },
+  "status": "passed",
+  "openApiVersion": "2.5.0",
+  "operations": 49,
+  "schemas": 44,
+  "checkedDocuments": 34,
+  "localLinks": 1025,
+  "shellLineEndings": "LF",
+  "scope": "static artifact validation only"
+}

@@ -1,0 +1,1 @@
+mvn -f backend-oo/pom.xml '-Dtest=RoleHierarchyTest,BusinessRequestTest,RequestArchitectureTest,WorkbookReaderTest,InitializationCommandTest' test

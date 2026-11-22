@@ -1,0 +1,43 @@
+日期：2026-11-21（Asia/Shanghai）
+工作目录：C2 根目录。构建目录均为两版各自 target/jwt-identity。
+运行器：测试/脚本/run_backend.py；所有实际 Maven 命令、源码摘要、结果及原始输出位于相应批次子目录。
+数据库/Redis 凭据只进入子进程环境；未写入本记录。
+
+1. 测试先行 RED
+python 测试/脚本/run_backend.py func --output-dir 测试/结果/JWT身份入口-20261121/RED --build-dir target/jwt-identity --tests AccountAuthenticationTest,JwtAccessTokensTest,JwtEmployeeAuthenticationTest
+结果：编译失败，待实现类不存在；测试执行数 0，不称为运行期断言 RED。
+
+2. 初轮定向
+python 测试/脚本/run_backend.py func --output-dir 测试/结果/JWT身份入口-20261121/定向-func --build-dir target/jwt-identity --tests AccountAuthenticationTest,JwtAccessTokensTest,JwtEmployeeAuthenticationTest
+结果：56 项通过，0 失败/错误/跳过。
+
+3. 完整回归首次运行（失败记录保留）
+python 测试/脚本/run_backend.py func --output-dir 测试/结果/JWT身份入口-20261121/完整-func --build-dir target/jwt-identity
+python 测试/脚本/run_backend.py oo --output-dir 测试/结果/JWT身份入口-20261121/完整-oo --build-dir target/jwt-identity
+结果：151/155 项各 1 个 numeric-sub 边界失败；确认解码库发生字符串规范化。
+
+4. 边界修正后定向
+python 测试/脚本/run_backend.py func --output-dir 测试/结果/JWT身份入口-20261121/边界修正-func --build-dir target/jwt-identity --tests AccountAuthenticationTest,JwtAccessTokensTest,JwtEmployeeAuthenticationTest
+结果：63 项通过；保留 JSON 原始数字类型的样本断言，不放宽拒绝规则。
+
+5. 最终完整回归与打包
+python 测试/脚本/run_backend.py func --output-dir 测试/结果/JWT身份入口-20261121/最终-func --build-dir target/jwt-identity
+python 测试/脚本/run_backend.py oo --output-dir 测试/结果/JWT身份入口-20261121/最终-oo --build-dir target/jwt-identity
+结果：151/155 项均通过，0 失败/错误/跳过。Maven verify 包含打包与 JaCoCo；没有执行 clean。
+
+6. 正式契约及差异检查
+$env:PYTHONIOENCODING='utf-8'
+$env:PYTHONPATH="$env:TEMP/c2-contract-validation-20261121"
+python 测试/契约/check_identity_contract.py
+git diff --check -- .
+结果：现有 8 操作/12 示例/11 非法及空值边界通过；正式契约仍为 Session。最终输出归档静态契约.txt、diff-check.txt。
+
+7. JaCoCo 真实结果图
+在 测试/前端 使用已有 @playwright/test，内联 Node 脚本启动 headless msedge，依次打开最终-func/jacoco/index.html 与最终-oo/jacoco/index.html，保存 JaCoCo-func.png、JaCoCo-oo.png 后关闭本次浏览器。
+结果：两张真实报告截图，经工具查看复核；无现有浏览器页面或运行服务操作。
+
+8. 交付核对
+内联 Python 逐文件对比修改前 352 项摘要、检查预期改动范围；核对两版新组件和认证文件一致、测试源码摘要与实际报告一致、构建 JAR 摘要及安全依赖版本；校验本步文档链接、索引条目和代码顶部说明。
+结果：交付核对.json。没有新 Flyway 迁移、tokenVersion 字段或用户版本计数器；前端/部署/API 文件摘要不变。
+
+未执行：正式 JWT HTTP 切换、Redis 登录仓储/刷新/撤销、JWT 浏览器验收、Apifox 同步、旧开发进程重启、Swarm 部署、提交/推送。

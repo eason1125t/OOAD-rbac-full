@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthorizationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authorization</a> &gt; <span class="el_source">AuthorizationService.java</span></div><h1>AuthorizationService.java</h1><pre class="source lang-java linenums">// 文件职责：统一计算目标系统中的实时直接与继承授权。
+// 协作关系：协作 CurrentEmployeeService、WorkspaceService、继承快照、权限和组织策略仓储。
+package authorization;
+
+import assignment.EmployeeRoleRepository;
+import assignment.OrganizationPermission;
+import assignment.OrganizationPermissionRepository;
+import assignment.RolePermissionRepository;
+import authentication.CurrentEmployeeService;
+import authentication.WorkspaceService;
+import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import organization.Employee;
+import organization.Organization;
+import organization.OrganizationRepository;
+import rolepermission.Permission;
+import rolepermission.PermissionRepository;
+import rolepermission.RoleInheritanceStore;
+import simulation.BusinessSystem;
+
+/** 业务用例的实时鉴权入口，复用工作区范围并查询最新直接分配及继承关系。 */
+@Service
+@RequiredArgsConstructor
+public class AuthorizationService {
+    public static final String EMPLOYEE_ROLE_WRITE = &quot;employee-role:write&quot;;
+    public static final String ROLE_PERMISSION_WRITE = &quot;role-permission:write&quot;;
+    public static final String MANAGEMENT_READ = &quot;management:read&quot;;
+    public static final String MANAGEMENT_WRITE = &quot;management:write&quot;;
+    public static final String ORGANIZATION_PERMISSION_WRITE = &quot;organization-permission:write&quot;;
+
+    private final CurrentEmployeeService currentEmployees;
+    private final WorkspaceService workspaces;
+    private final AdministratorScopeRepository administratorScopes;
+    private final OrganizationRepository organizations;
+    private final PermissionRepository permissions;
+    private final OrganizationPermissionRepository organizationPermissions;
+    private final EmployeeRoleRepository employeeRoles;
+    private final RolePermissionRepository rolePermissions;
+    private final RoleInheritanceStore hierarchy;
+
+    /** C1 分配管理动作基于管理员范围，组织权限策略只允许全局管理员。 */
+    public Optional&lt;AdministratorScope&gt; assignmentScope(Long employeeId, String action) {
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (ORGANIZATION_PERMISSION_WRITE.equals(action)) {</span>
+<span class="fc" id="L52">            return administratorScopes.findById(employeeId).filter(scope -&gt; &quot;GLOBAL&quot;.equals(scope.getScopeType()));</span>
+        }
+<span class="fc bfc" id="L54" title="All 4 branches covered.">        if (!EMPLOYEE_ROLE_WRITE.equals(action) &amp;&amp; !ROLE_PERMISSION_WRITE.equals(action)</span>
+<span class="pc bpc" id="L55" title="1 of 4 branches missed.">                &amp;&amp; !MANAGEMENT_READ.equals(action) &amp;&amp; !MANAGEMENT_WRITE.equals(action)) {</span>
+<span class="nc" id="L56">            return Optional.empty();</span>
+        }
+<span class="fc" id="L58">        return administratorScopes.findById(employeeId);</span>
+    }
+
+    /** 动作必须属于目标系统，适用的组织停用早于超级管理员及角色判权。 */
+    public void requireBusinessPermission(Long employeeId, BusinessSystem system, String code) {
+<span class="fc" id="L63">        WorkspaceService.Context context = systemContext(employeeId, system);</span>
+<span class="fc" id="L64">        Permission permission = permissions.findBySystemIdAndCode(system.getId(), code)</span>
+<span class="pc" id="L65">                .orElseThrow(() -&gt; new BusinessAccessException(Reason.PERMISSION_DENIED));</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (!isAllowed(permission.getId(), permissionContext(employeeId, system, context))) {</span>
+<span class="fc" id="L67">            throw new BusinessAccessException(Reason.PERMISSION_DENIED);</span>
+        }
+<span class="fc" id="L69">    }</span>
+
+    /** 逐动作使用与业务入口相同的判定，结果按权限 ID 升序。 */
+    public List&lt;Permission&gt; effectivePermissions(Long employeeId, BusinessSystem system) {
+<span class="fc" id="L73">        WorkspaceService.Context context = systemContext(employeeId, system);</span>
+<span class="fc" id="L74">        PermissionContext target = permissionContext(employeeId, system, context);</span>
+<span class="fc" id="L75">        return effectivePermissions(system, target);</span>
+    }
+
+    /** 自身单项检查与实际操作共用isAllowed；未知权限单独返回404而不改变旧业务403。 */
+    public boolean hasBusinessPermission(Employee employee, BusinessSystem system, String code) {
+<span class="fc" id="L80">        WorkspaceService.Context context = systemContext(employee, system);</span>
+<span class="fc" id="L81">        Permission permission = permissions.findBySystemIdAndCode(system.getId(), code)</span>
+<span class="fc" id="L82">                .orElseThrow(() -&gt; new BusinessAccessException(Reason.PERMISSION_NOT_FOUND));</span>
+<span class="fc" id="L83">        return isAllowed(permission.getId(), permissionContext(employee.getId(), system, context));</span>
+    }
+
+    /** 一次图快照用于来源、配置相关性及有效权限，不跨请求缓存。 */
+    public SystemAuthorization describe(Employee employee, BusinessSystem system) {
+<span class="fc" id="L88">        WorkspaceService.Context context = systemContext(employee, system);</span>
+<span class="fc" id="L89">        Set&lt;Long&gt; roots = employeeRoles.findDirectRoleIds(employee.getId());</span>
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if (roots.isEmpty()) {</span>
+<span class="fc" id="L91">            return new SystemAuthorization(context.global(), List.of(),</span>
+<span class="fc" id="L92">                    effectivePermissions(system, permissionContext(system, context, Set.of())));</span>
+        }
+<span class="fc" id="L94">        var graph = hierarchy.snapshot();</span>
+<span class="fc" id="L95">        Map&lt;Long, Set&lt;Long&gt;&gt; closures = roots.stream().collect(Collectors.toMap(</span>
+<span class="fc" id="L96">                root -&gt; root, root -&gt; graph.inheritedRoles(Set.of(root))));</span>
+<span class="fc" id="L97">        Set&lt;Long&gt; sources = closures.values().stream().flatMap(Set::stream).collect(Collectors.toSet());</span>
+<span class="fc" id="L98">        Set&lt;Long&gt; applicable = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (Long owner : rolePermissions.findSystemPermissionSourceRoleIds(system.getId(), sources)) {</span>
+<span class="fc" id="L100">            applicable.addAll(graph.dependingRoles(owner));</span>
+<span class="fc" id="L101">        }</span>
+<span class="fc" id="L102">        List&lt;RoleSource&gt; roleSources = sources.stream().sorted().map(roleId -&gt; {</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">            List&lt;Long&gt; inheritedFrom = roots.stream().filter(root -&gt; !root.equals(roleId))</span>
+<span class="fc" id="L104">                    .filter(root -&gt; closures.get(root).contains(roleId)).sorted().toList();</span>
+<span class="fc" id="L105">            return new RoleSource(roleId, roots.contains(roleId), inheritedFrom, applicable.contains(roleId));</span>
+<span class="fc" id="L106">        }).toList();</span>
+<span class="fc" id="L107">        return new SystemAuthorization(context.global(), roleSources,</span>
+<span class="fc" id="L108">                effectivePermissions(system, permissionContext(system, context, sources)));</span>
+    }
+
+    /** 角色来源描述不包含名称和持久化对象，由查询用例补齐公开字段。 */
+<span class="fc" id="L112">    public record RoleSource(Long roleId, boolean direct, List&lt;Long&gt; inheritedFromRoleIds, boolean appliesToSystem) {</span>
+    }
+
+    /** 当前系统的授权计算结果，HTTP层使用明确白名单映射。 */
+<span class="fc" id="L116">    public record SystemAuthorization(boolean globalAdministrator, List&lt;RoleSource&gt; roles,</span>
+                                      List&lt;Permission&gt; effectivePermissions) {
+    }
+
+    private List&lt;Permission&gt; effectivePermissions(BusinessSystem system, PermissionContext target) {
+<span class="fc" id="L121">        return permissions.findBySystemIdOrderByIdAsc(system.getId()).stream()</span>
+<span class="fc" id="L122">                .filter(permission -&gt; isAllowed(permission.getId(), target)).toList();</span>
+    }
+
+    /** 汇总系统及员工适用组织，并从直接角色根展开本次授权来源。 */
+    private PermissionContext permissionContext(Long employeeId, BusinessSystem system,
+                                                WorkspaceService.Context context) {
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        Set&lt;Long&gt; roots = context.global() ? Set.of() : employeeRoles.findDirectRoleIds(employeeId);</span>
+<span class="fc bfc" id="L129" title="All 2 branches covered.">        Set&lt;Long&gt; sources = roots.isEmpty() ? Set.of() : hierarchy.snapshot().inheritedRoles(roots);</span>
+<span class="fc" id="L130">        return permissionContext(system, context, sources);</span>
+    }
+
+    /** 全局身份只受系统组织链策略约束，保持既有停用和重授语义。 */
+    private PermissionContext permissionContext(BusinessSystem system, WorkspaceService.Context context,
+                                                Set&lt;Long&gt; sources) {
+<span class="fc" id="L136">        Organization owner = organizations.findById(system.getOwnerOrganizationId()).orElseThrow();</span>
+<span class="fc" id="L137">        Set&lt;Long&gt; affected = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L138">        includeScope(affected, owner);</span>
+<span class="fc bfc" id="L139" title="All 2 branches covered.">        if (!context.global()) {</span>
+<span class="fc" id="L140">            includeScope(affected, context.organization());</span>
+        }
+<span class="fc" id="L142">        return new PermissionContext(context.global(), affected, sources);</span>
+    }
+
+    /** 先拒绝停用，再判断全局身份或满足全部重开范围的同一权限来源。 */
+    private boolean isAllowed(Long permissionId, PermissionContext target) {
+<span class="fc" id="L147">        List&lt;OrganizationPermission&gt; policies = organizationPermissions</span>
+<span class="fc" id="L148">                .findByPermissionIdAndOrganizationIdIn(permissionId, target.organizations());</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (policies.stream().anyMatch(policy -&gt; OrganizationPermission.DISABLED.equals(policy.getStatus()))) {</span>
+<span class="fc" id="L150">            return false;</span>
+        }
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (target.global()) {</span>
+<span class="fc" id="L153">            return true;</span>
+        }
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (target.sources().isEmpty()) {</span>
+<span class="fc" id="L156">            return false;</span>
+        }
+<span class="fc" id="L158">        Set&lt;Long&gt; reopened = policies.stream()</span>
+<span class="fc" id="L159">                .filter(policy -&gt; OrganizationPermission.REOPENED.equals(policy.getStatus()))</span>
+<span class="fc" id="L160">                .map(OrganizationPermission::getOrganizationId)</span>
+<span class="fc" id="L161">                .collect(Collectors.toSet());</span>
+<span class="fc bfc" id="L162" title="All 2 branches covered.">        return reopened.isEmpty()</span>
+<span class="fc" id="L163">                ? rolePermissions.existsByPermissionIdAndRoleIdIn(permissionId, target.sources())</span>
+<span class="fc" id="L164">                : rolePermissions.hasRegrantedSource(permissionId, target.sources(), reopened, reopened.size());</span>
+    }
+
+    /** 本次判权的适用组织和可达直接权限来源，不跨请求缓存。 */
+<span class="fc" id="L168">    private record PermissionContext(boolean global, Set&lt;Long&gt; organizations, Set&lt;Long&gt; sources) {</span>
+    }
+
+    /** 系统准入基于服务端身份及组织范围，与登录导航一致。 */
+    private WorkspaceService.Context systemContext(Long employeeId, BusinessSystem system) {
+<span class="fc" id="L173">        return systemContext(currentEmployees.requireActive(employeeId), system);</span>
+    }
+
+    /** 接收上层已读取的可信员工，不重复读取请求身份或员工记录。 */
+    private WorkspaceService.Context systemContext(Employee employee, BusinessSystem system) {
+<span class="fc" id="L178">        WorkspaceService.Context context = workspaces.context(employee);</span>
+<span class="fc bfc" id="L179" title="All 2 branches covered.">        if (!context.canEnter(system)) {</span>
+<span class="fc" id="L180">            throw new BusinessAccessException(Reason.SYSTEM_ACCESS_DENIED);</span>
+        }
+<span class="fc" id="L182">        return context;</span>
+    }
+
+    /** 用部门及其公司匹配停用范围。 */
+    private void includeScope(Set&lt;Long&gt; scope, Organization organization) {
+<span class="fc" id="L187">        scope.add(organization.getId());</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">        if (organization.getParentId() != null) {</span>
+<span class="fc" id="L189">            scope.add(organization.getParentId());</span>
+        }
+<span class="fc" id="L191">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

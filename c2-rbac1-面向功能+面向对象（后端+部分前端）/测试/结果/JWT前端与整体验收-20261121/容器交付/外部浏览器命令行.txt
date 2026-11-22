@@ -1,0 +1,14 @@
+
+Running 3 tests using 1 worker
+
+(node:22128) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [func] › tests\oo-entry.spec.ts:4:1 › C2-08 首页进入指定版本 (720ms)
+(node:47356) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [oo] › tests\oo-entry.spec.ts:4:1 › C2-08 首页进入指定版本 (732ms)
+(node:63144) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 3 [dual] › tests\isolation.spec.ts:14:1 › C2-10 同一浏览器两标签页各自登录、写入和退出 (11.4s)
+
+  3 passed (17.2s)

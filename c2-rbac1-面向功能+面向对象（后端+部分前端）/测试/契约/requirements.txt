@@ -1,0 +1,6 @@
+# 文件职责：锁定身份契约静态验证的直接依赖，不影响生产或前端依赖。
+# 协作关系：供 check_identity_contract.py 校验 YAML、OpenAPI 与响应示例。
+PyYAML==6.0.4
+openapi-spec-validator==0.9.0
+openapi-schema-validator==0.9.0
+referencing==0.37.0

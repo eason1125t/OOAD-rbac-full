@@ -1,0 +1,43 @@
+{
+  "baselineFiles": 238,
+  "changed": [
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authorization\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authorization\\SecurityConfiguration.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\contract\\ApiExceptionHandler.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\contract\\BusinessAccessException.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\contract\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\EmployeeRepository.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\ManagementQueryController.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\ManagementQueryService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\OrganizationRepository.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authorization\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authorization\\SecurityConfiguration.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\contract\\ApiExceptionHandler.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\contract\\BusinessAccessException.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\contract\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\EmployeeRepository.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\ManagementQueryController.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\ManagementQueryService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\OrganizationRepository.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\api\\openapi.identity-planned.yaml",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\api\\openapi.yaml",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\api\\统一身份鉴权接口契约.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\后端\\common\\java\\contract\\AuthSessionTest.java"
+  ],
+  "added": [
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\DirectoryQueryService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\DirectoryVisibilityService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\dto\\DepartmentDirectoryQueryDTO.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\dto\\EmployeeDirectoryQueryDTO.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\organization\\vo\\DirectoryVO.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\DirectoryQueryService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\DirectoryVisibilityService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\dto\\DepartmentDirectoryQueryDTO.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\dto\\EmployeeDirectoryQueryDTO.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\organization\\vo\\DirectoryVO.java"
+  ],
+  "removed": [],
+  "protectedUnchanged": true
+}

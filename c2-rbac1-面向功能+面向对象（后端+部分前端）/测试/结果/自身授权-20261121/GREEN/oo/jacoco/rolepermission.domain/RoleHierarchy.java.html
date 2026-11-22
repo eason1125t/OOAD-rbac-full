@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RoleHierarchy.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">rolepermission.domain</a> &gt; <span class="el_source">RoleHierarchy.java</span></div><h1>RoleHierarchy.java</h1><pre class="source lang-java linenums">// 文件职责：封装不可变角色关系快照及双向可达性规则。
+// 协作关系：由继承仓储装载，被继承、分配及授权用例调用。
+package rolepermission.domain;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+/** 封装不可变角色关系快照及双向可达性规则，由继承仓储装载，被继承、分配及授权用例调用。 */
+public final class RoleHierarchy {
+    private final Map&lt;Long, Set&lt;Long&gt;&gt; parents;
+
+    /** 复制邻接表及各级集合为不可变快照，避免调用方修改已装载关系。 */
+<span class="fc" id="L18">    public RoleHierarchy(Map&lt;Long, Set&lt;Long&gt;&gt; parents) {</span>
+<span class="fc" id="L19">        this.parents = parents.entrySet().stream()</span>
+<span class="fc" id="L20">                .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, entry -&gt; Set.copyOf(entry.getValue())));</span>
+<span class="fc" id="L21">    }</span>
+
+    /** 当低级角色可达高级角色时，新增边会闭环。 */
+    public boolean wouldFormCycle(long seniorRoleId, long juniorRoleId) {
+<span class="fc" id="L25">        return inheritedRoles(Set.of(juniorRoleId)).contains(seniorRoleId);</span>
+    }
+
+    /** 包含入口角色向权限来源展开，访问集合消除多路径重复。 */
+    public Set&lt;Long&gt; inheritedRoles(Set&lt;Long&gt; roots) {
+<span class="fc" id="L30">        return reachable(parents, roots);</span>
+    }
+
+    /** 反向展开所有依赖该角色的高级角色，供新增授权影响检查使用。 */
+    public Set&lt;Long&gt; dependingRoles(Long roleId) {
+<span class="fc" id="L35">        return reachable(reverse(), Set.of(roleId));</span>
+    }
+
+    /** 将高级到低级的边反向，用于查找被权限变更影响的高级角色。 */
+    private Map&lt;Long, Set&lt;Long&gt;&gt; reverse() {
+<span class="fc" id="L40">        Map&lt;Long, Set&lt;Long&gt;&gt; reversed = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L41">        parents.forEach((senior, juniors) -&gt; juniors.forEach(junior -&gt;</span>
+<span class="fc" id="L42">                reversed.computeIfAbsent(junior, unused -&gt; new HashSet&lt;&gt;()).add(senior)));</span>
+<span class="fc" id="L43">        return reversed;</span>
+    }
+
+    /** 用队列和访问集合计算可达闭包，每个角色至多展开一次，时间为 O(V+E)。 */
+    private static Set&lt;Long&gt; reachable(Map&lt;Long, Set&lt;Long&gt;&gt; edges, Set&lt;Long&gt; roots) {
+<span class="fc" id="L48">        Deque&lt;Long&gt; pending = new ArrayDeque&lt;&gt;(roots);</span>
+<span class="fc" id="L49">        Set&lt;Long&gt; visited = new HashSet&lt;&gt;();</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        while (!pending.isEmpty()) {</span>
+<span class="fc" id="L51">            Long roleId = pending.removeFirst();</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (visited.add(roleId)) {</span>
+<span class="fc" id="L53">                pending.addAll(edges.getOrDefault(roleId, Set.of()));</span>
+            }
+<span class="fc" id="L55">        }</span>
+<span class="fc" id="L56">        return visited;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

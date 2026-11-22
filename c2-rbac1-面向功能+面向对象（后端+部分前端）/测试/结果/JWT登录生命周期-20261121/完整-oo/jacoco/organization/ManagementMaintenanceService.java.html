@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ManagementMaintenanceService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">organization</a> &gt; <span class="el_source">ManagementMaintenanceService.java</span></div><h1>ManagementMaintenanceService.java</h1><pre class="source lang-java linenums">// 文件职责：维护 C2 员工、角色及权限定义并保护已有引用。
+// 协作关系：协作 AuthorizationService、继承写锁和各实体仓储。
+package organization;
+
+import assignment.EmployeeRoleRepository;
+import assignment.OrganizationPermissionRepository;
+import assignment.RolePermissionRepository;
+import authorization.AdministratorScope;
+import authorization.ApiOperationRegistry;
+import authorization.AdministratorScopeRepository;
+import authorization.AuthorizationService;
+import contract.BusinessAccessException.Reason;
+import contract.BusinessAccessException;
+import java.util.Objects;
+import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+import rolepermission.Permission;
+import rolepermission.PermissionRepository;
+import rolepermission.RbacRole;
+import rolepermission.RbacRoleRepository;
+import rolepermission.RoleInheritanceStore;
+import simulation.BusinessSystem;
+import simulation.BusinessSystemRepository;
+
+/** 维护 C2 员工、角色及权限定义，与分配和继承写入共用锁及引用保护。 */
+@Service
+@RequiredArgsConstructor
+@Transactional(isolation = Isolation.READ_COMMITTED)
+public class ManagementMaintenanceService {
+    private final AuthorizationService authorization;
+    private final AdministratorScopeRepository administratorScopes;
+    private final EmployeeRepository employees;
+    private final EmployeeRoleRepository employeeRoles;
+    private final OrganizationRepository organizations;
+    private final BusinessSystemRepository systems;
+    private final RbacRoleRepository roles;
+    private final RoleInheritanceStore hierarchy;
+    private final PermissionRepository permissions;
+    private final ApiOperationRegistry apiOperations;
+    private final RolePermissionRepository rolePermissions;
+    private final OrganizationPermissionRepository organizationPermissions;
+
+    /** 创建有明确归属的员工资料，账号凭据由登录模块维护。 */
+    public Employee createEmployee(Long actor, String username, String name, Long organizationId, String jobTitle,
+                                   String phone) {
+<span class="fc" id="L49">        requireManaged(scope(actor), organization(organizationId));</span>
+        try {
+<span class="fc" id="L51">            return employees.save(new Employee(username, name, organizationId, null, null, jobTitle, phone));</span>
+<span class="nc" id="L52">        } catch (DataIntegrityViolationException failure) {</span>
+<span class="nc" id="L53">            throw conflict(&quot;用户名已存在&quot;);</span>
+        }
+    }
+
+    /** 变更归属前检查两端范围及现有角色和管理员配置。 */
+    public Employee updateEmployee(Long actor, Long id, String name, Long organizationId, String jobTitle, String phone) {
+<span class="fc" id="L59">        AdministratorScope scope = scope(actor);</span>
+<span class="fc" id="L60">        Employee employee = lockedEmployee(id);</span>
+<span class="fc" id="L61">        AdministratorScope targetAdmin = requireEmployeeAccess(scope, employee);</span>
+<span class="pc bpc" id="L62" title="1 of 4 branches missed.">        if (organizationId != null &amp;&amp; !Objects.equals(organizationId, employee.getOrganizationId())) {</span>
+<span class="fc" id="L63">            requireManaged(scope, organization(organizationId));</span>
+<span class="pc bpc" id="L64" title="1 of 4 branches missed.">            if (targetAdmin != null || employeeRoles.existsByEmployeeId(id)) {</span>
+<span class="fc" id="L65">                throw new BusinessAccessException(Reason.ASSIGNMENT_CONFLICT, &quot;调岗前请先解除角色和管理员配置&quot;);</span>
+            }
+        }
+<span class="fc" id="L68">        employee.updateProfile(name, organizationId, jobTitle, phone);</span>
+<span class="fc" id="L69">        return employee;</span>
+    }
+
+    /** 停用在下一次受保护请求生效，重复停用幂等。 */
+    public void disableEmployee(Long actor, Long id) {
+<span class="fc" id="L74">        AdministratorScope scope = scope(actor);</span>
+<span class="fc" id="L75">        Employee employee = lockedEmployee(id);</span>
+<span class="fc" id="L76">        requireEmployeeAccess(scope, employee);</span>
+<span class="fc" id="L77">        employee.disable();</span>
+<span class="fc" id="L78">    }</span>
+
+    /** 创建本范围或由超级管理员维护的共享角色。 */
+    public RbacRole createRole(Long actor, String name, Long organizationId) {
+<span class="fc" id="L82">        requireManaged(scope(actor), organization(organizationId));</span>
+        try {
+<span class="fc" id="L84">            return roles.save(new RbacRole(name, organizationId));</span>
+<span class="fc" id="L85">        } catch (DataIntegrityViolationException failure) {</span>
+<span class="fc" id="L86">            throw conflict(&quot;相同组织范围内的角色名称已存在&quot;);</span>
+        }
+    }
+
+    /** 更新角色名称，数据库保证范围内唯一。 */
+    public RbacRole renameRole(Long actor, Long id, String name) {
+<span class="fc" id="L92">        AdministratorScope scope = scope(actor);</span>
+<span class="fc" id="L93">        RbacRole role = lockedRole(id);</span>
+<span class="nc" id="L94">        requireManaged(scope, organization(role.getOwnerOrganizationId()));</span>
+<span class="nc" id="L95">        role.rename(name);</span>
+        try {
+<span class="nc" id="L97">            return roles.saveAndFlush(role);</span>
+<span class="nc" id="L98">        } catch (DataIntegrityViolationException failure) {</span>
+<span class="nc" id="L99">            throw conflict(&quot;相同组织范围内的角色名称已存在&quot;);</span>
+        }
+    }
+
+    /** 员工、权限分配或任一方向继承边仍引用角色时拒绝删除。 */
+    public void deleteRole(Long actor, Long id) {
+<span class="fc" id="L105">        AdministratorScope scope = scope(actor);</span>
+<span class="fc" id="L106">        hierarchy.lockWrites();</span>
+<span class="fc" id="L107">        RbacRole role = lockedRole(id);</span>
+<span class="fc" id="L108">        requireManaged(scope, organization(role.getOwnerOrganizationId()));</span>
+<span class="pc bpc" id="L109" title="1 of 4 branches missed.">        if (employeeRoles.existsByRoleId(id) || rolePermissions.existsByRoleId(id)) {</span>
+<span class="fc" id="L110">            throw conflict(&quot;请先解除角色的员工和权限分配&quot;);</span>
+        }
+<span class="fc bfc" id="L112" title="All 2 branches covered.">        if (hierarchy.references(id)) {</span>
+<span class="fc" id="L113">            throw conflict(&quot;请先解除该角色的继承关系&quot;);</span>
+        }
+<span class="fc" id="L115">        roles.delete(role);</span>
+<span class="fc" id="L116">    }</span>
+
+    /** 局部管理员只能在自己管理的系统内创建本范围权限。 */
+    public Permission createPermission(Long actor, String code, String name, Long systemId, Long organizationId) {
+<span class="fc" id="L120">        AdministratorScope scope = scope(actor);</span>
+<span class="fc" id="L121">        requireManaged(scope, organization(organizationId));</span>
+<span class="pc bpc" id="L122" title="1 of 2 branches missed.">        if (systemId != null) {</span>
+<span class="fc" id="L123">            BusinessSystem system = systems.findById(systemId).orElseThrow(ManagementMaintenanceService::missing);</span>
+<span class="fc" id="L124">            requireManaged(scope, organization(system.getOwnerOrganizationId()));</span>
+<span class="pc bpc" id="L125" title="2 of 4 branches missed.">            if (organizationId != null &amp;&amp; !contains(organization(organizationId), system.getOwnerOrganizationId())) {</span>
+<span class="nc" id="L126">                throw conflict(&quot;权限归属须位于业务系统范围内&quot;);</span>
+            }
+<span class="pc bnc" id="L128" title="All 2 branches missed.">        } else if (!isGlobal(scope)) {</span>
+<span class="nc" id="L129">            throw denied();</span>
+        }
+        try {
+<span class="fc" id="L132">            return permissions.save(new Permission(code, name, systemId, organizationId));</span>
+<span class="fc" id="L133">        } catch (DataIntegrityViolationException failure) {</span>
+<span class="fc" id="L134">            throw conflict(&quot;该系统中的权限码已存在&quot;);</span>
+        }
+    }
+
+    /** 更新权限展示名称，保留权限身份和现有授权。 */
+    public Permission renamePermission(Long actor, Long id, String name) {
+<span class="fc" id="L140">        AdministratorScope scope = scope(actor);</span>
+<span class="fc" id="L141">        Permission permission = lockedPermission(id);</span>
+<span class="fc" id="L142">        requireManaged(scope, organization(permission.getOwnerOrganizationId()));</span>
+<span class="fc" id="L143">        permission.rename(name);</span>
+<span class="fc" id="L144">        return permission;</span>
+    }
+
+    /** 角色分配或组织策略仍引用权限时拒绝物理删除。 */
+    public void deletePermission(Long actor, Long id) {
+<span class="fc" id="L149">        AdministratorScope scope = scope(actor);</span>
+<span class="fc" id="L150">        Permission permission = lockedPermission(id);</span>
+<span class="fc" id="L151">        requireManaged(scope, organization(permission.getOwnerOrganizationId()));</span>
+<span class="pc bpc" id="L152" title="1 of 4 branches missed.">        if (rolePermissions.existsByPermissionId(id) || organizationPermissions.existsByPermissionId(id)</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">                || apiOperations.referencesPermission(id)) {</span>
+<span class="fc" id="L154">            throw conflict(&quot;该权限仍被角色分配、组织策略或API映射引用&quot;);</span>
+        }
+<span class="fc" id="L156">        permissions.delete(permission);</span>
+<span class="fc" id="L157">    }</span>
+
+    /** 局部管理员不能通过员工维护影响其范围外的管理员。 */
+    private AdministratorScope requireEmployeeAccess(AdministratorScope scope, Employee employee) {
+<span class="fc" id="L161">        requireManaged(scope, organization(employee.getOrganizationId()));</span>
+<span class="fc" id="L162">        AdministratorScope target = administratorScopes.findById(employee.getId()).orElse(null);</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">        if (target != null) {</span>
+<span class="nc" id="L164">            requireManaged(scope, organization(target.getOrganizationId()));</span>
+        }
+<span class="fc" id="L166">        return target;</span>
+    }
+
+    /** 事务内以最新管理员配置复核写入资格。 */
+    private AdministratorScope scope(Long actor) {
+<span class="fc" id="L171">        return authorization.assignmentScope(actor, AuthorizationService.MANAGEMENT_WRITE)</span>
+<span class="fc" id="L172">                .orElseThrow(ManagementMaintenanceService::denied);</span>
+    }
+
+    /** 超级管理员维护共享定义，局部管理员限其组织范围。 */
+    private void requireManaged(AdministratorScope scope, Organization target) {
+<span class="pc bpc" id="L177" title="1 of 6 branches missed.">        if (!isGlobal(scope) &amp;&amp; (target == null || !contains(target, scope.getOrganizationId()))) {</span>
+<span class="fc" id="L178">            throw denied();</span>
+        }
+<span class="fc" id="L180">    }</span>
+
+    /** C1 管理范围覆盖组织自身和直属部门。 */
+    private boolean contains(Organization target, Long scopeId) {
+<span class="fc bfc" id="L184" title="All 4 branches covered.">        return Objects.equals(target.getId(), scopeId) || Objects.equals(target.getParentId(), scopeId);</span>
+    }
+
+    /** 全局范围来源于数据库管理员记录。 */
+    private boolean isGlobal(AdministratorScope scope) {
+<span class="fc" id="L189">        return &quot;GLOBAL&quot;.equals(scope.getScopeType());</span>
+    }
+
+    /** 查找正式归属，空值保留待匹配或全局的语义。 */
+    private Organization organization(Long id) {
+<span class="fc bfc" id="L194" title="All 2 branches covered.">        return id == null ? null : organizations.findById(id).orElseThrow(ManagementMaintenanceService::missing);</span>
+    }
+
+    /** 锁定员工行，角色分配使用相同的锁。 */
+    private Employee lockedEmployee(Long id) {
+<span class="fc" id="L199">        return employees.findLockedById(id).orElseThrow(ManagementMaintenanceService::missing);</span>
+    }
+
+    /** 锁定角色行，确保删除和授予有一致的顺序。 */
+    private RbacRole lockedRole(Long id) {
+<span class="fc" id="L204">        return roles.findLockedById(id).orElseThrow(ManagementMaintenanceService::missing);</span>
+    }
+
+    /** 锁定权限行，使引用检查和组织策略写入相互协调。 */
+    private Permission lockedPermission(Long id) {
+<span class="fc" id="L209">        return permissions.findLockedById(id).orElseThrow(ManagementMaintenanceService::missing);</span>
+    }
+
+    /** 统一维护接口的范围错误。 */
+    private static BusinessAccessException denied() {
+<span class="fc" id="L214">        return new BusinessAccessException(Reason.PERMISSION_DENIED, &quot;无权维护该资源&quot;);</span>
+    }
+
+    /** 统一资源不存在的响应。 */
+    private static BusinessAccessException missing() {
+<span class="nc" id="L219">        return new BusinessAccessException(Reason.RESOURCE_NOT_FOUND, &quot;员工、组织、系统、角色或权限不存在&quot;);</span>
+    }
+
+    /** 将资源唯一键和引用冲突转换为契约错误。 */
+    private static BusinessAccessException conflict(String message) {
+<span class="fc" id="L224">        return new BusinessAccessException(Reason.RESOURCE_CONFLICT, message);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

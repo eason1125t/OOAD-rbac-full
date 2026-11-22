@@ -2,123 +2,238 @@
 openapi: "3.0.3"
 info:
   title: "OOAD RBAC · C2 双后端接口"
-  version: "2.1.0"
-  description: "沿用 C1 接口，扩展角色继承、员工有效权限查询与业务申请 CRUD。两版共用申请查看权限、动作权限与验收场景。"
+  version: "2.5.0"
+  description: "沿用 C1 接口，扩展角色继承、员工有效权限查询与业务申请 CRUD。两版共用申请查看权限、动作权限与验收场景。新增指定系统的自身角色/有效权限查询和单项前端权限判断，登录增加JWT凭证，保留无参数me身份响应。扩展正式组织树和范围内员工搜索分页，保留原表目录及管理员投影。"
 servers:
   - url: "/func"
     description: "面向功能版"
   - url: "/oo"
     description: "面向对象版"
 tags:
-  - name: "登录与会话"
+  - name: "身份与认证"
   - name: "业务模拟"
   - name: "授权配置"
 security:
-  - FuncSessionCookie: []
-  - OoSessionCookie: []
+- BearerAuth: []
 paths:
-  "/api/auth/csrf":
+  /api/auth/csrf:
     get:
-      operationId: "getCsrf"
+      operationId: getCsrf
       tags:
-        - "登录与会话"
-      summary: "获取 CSRF 令牌"
-      description: "登录前可调用。保留匿名会话 Cookie，登录成功后重新获取令牌。"
+      - 身份与认证
+      summary: 获取 CSRF 令牌
+      description: 领取独立HttpOnly CSRF Cookie及JSON中的掩码token，不创建Session或Redis登录记录。用于登录、刷新和退出。
       security: []
       responses:
-        "200":
-          description: "返回当前会话的令牌"
+        '200':
+          description: CSRF token；后续认证写入口使用X-CSRF-TOKEN。
           headers:
             Set-Cookie:
-              $ref: "#/components/headers/SessionCookie"
+              $ref: '#/components/headers/AuthCookie'
             Cache-Control:
-              $ref: "#/components/headers/NoStore"
+              $ref: '#/components/headers/NoStore'
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/CsrfToken"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/auth/login":
+                $ref: '#/components/schemas/CsrfToken'
+  /api/auth/login:
     post:
-      operationId: "login"
+      operationId: login
       tags:
-        - "登录与会话"
-      summary: "登录"
-      description: "提交匿名会话的 CSRF 令牌及 JSON 凭据。成功时轮换会话 ID，旧令牌失效。账号不存在、密码错误、待匹配或停用均返回相同错误。"
-      security: []
+      - 身份与认证
+      summary: 登录
+      description: 账号密码与Cookie CSRF校验成功后，返回身份/工作区及访问JWT，并设置HttpOnly刷新Cookie。成功替换当前浏览器旧登录；失败不撤销已有登录。
+      security:
+      - FuncCsrfCookie: []
+      - OoCsrfCookie: []
       parameters:
-        - $ref: "#/components/parameters/Csrf"
+      - $ref: '#/components/parameters/Csrf'
       requestBody:
         required: true
         content:
-          "application/json":
+          application/json:
             schema:
-              $ref: "#/components/schemas/LoginRequest"
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              username: example-user
+              password: example-password
       responses:
-        "200":
-          description: "登录成功，返回身份与工作区"
+        '200':
+          description: 身份/工作区及15分钟内访问JWT；刷新凭证仅通过Cookie交付。
           headers:
             Set-Cookie:
-              $ref: "#/components/headers/SessionCookie"
+              $ref: '#/components/headers/AuthCookie'
             Cache-Control:
-              $ref: "#/components/headers/NoStore"
+              $ref: '#/components/headers/NoStore'
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/CurrentSession"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/BadLogin"
-        "403":
-          $ref: "#/components/responses/Csrf"
-        "415":
-          $ref: "#/components/responses/MediaType"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/auth/me":
+                $ref: '#/components/schemas/LoginResponse'
+              example:
+                employee:
+                  id: 101
+                  username: example-user
+                  name: 示例员工
+                  organizationId: 2
+                workspaces: []
+                defaultWorkspaceKey: null
+                accessToken: <signed-access-jwt>
+                tokenType: Bearer
+                expiresIn: 900
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/BadLogin'
+        '403':
+          $ref: '#/components/responses/Csrf'
+        '415':
+          $ref: '#/components/responses/MediaType'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/auth/me:
     get:
-      operationId: "getCurrentSession"
+      operationId: getCurrentSession
       tags:
-        - "登录与会话"
-      summary: "查询当前身份与工作区"
-      description: "每次按最新组织和授权状态查询，当前账号来自会话。"
+      - 身份与认证
+      summary: 查询当前员工、工作区及可选系统角色与权限
+      description: 省略systemCode保留旧响应；提供后增加authorization。角色来源与有效权限分开，直接和继承可同时成立。身份仅来自已验证Bearer JWT和Redis登录记录。
       responses:
-        "200":
-          description: "当前身份与导航信息"
+        '200':
+          description: 当前身份；有systemCode时包含授权信息。
           headers:
             Cache-Control:
-              $ref: "#/components/headers/NoStore"
+              $ref: '#/components/headers/NoStore'
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/CurrentSession"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/auth/logout":
-    post:
-      operationId: "logout"
-      tags:
-        - "登录与会话"
-      summary: "退出登录"
-      description: "注销 Redis 会话并清除当前版本的会话 Cookie。CSRF 校验先失败时返回 403。"
+                $ref: '#/components/schemas/CurrentSessionResult'
+              examples:
+                withoutSystem:
+                  value:
+                    employee:
+                      id: 101
+                      username: engineering-employee
+                      name: 示例员工
+                      organizationId: 2
+                    workspaces:
+                    - key: business:demo-engineering-app
+                      type: BUSINESS
+                      name: 示例工程申请系统
+                      path: /business/demo-engineering-app/
+                    defaultWorkspaceKey: business:demo-engineering-app
+                withSystem:
+                  value:
+                    employee:
+                      id: 101
+                      username: engineering-employee
+                      name: 示例员工
+                      organizationId: 2
+                    workspaces:
+                    - key: business:demo-engineering-app
+                      type: BUSINESS
+                      name: 示例工程申请系统
+                      path: /business/demo-engineering-app/
+                    defaultWorkspaceKey: business:demo-engineering-app
+                    authorization:
+                      systemCode: demo-engineering-app
+                      roles:
+                      - id: 10
+                        name: 示例高级角色
+                        direct: true
+                        inherited: false
+                        inheritedFromRoleIds: []
+                        appliesToSystem: true
+                      - id: 11
+                        name: 示例基础角色
+                        direct: false
+                        inherited: true
+                        inheritedFromRoleIds:
+                        - 10
+                        appliesToSystem: true
+                      effectivePermissions:
+                      - id: 20
+                        code: request:read
+                        name: 查看申请
+                      globalAdministrator: false
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '403':
+          $ref: '#/components/responses/CurrentSystemForbidden'
+        '404':
+          $ref: '#/components/responses/MissingSystem'
+      x-implementation-status: implemented
       parameters:
-        - $ref: "#/components/parameters/Csrf"
+      - $ref: '#/components/parameters/OptionalIdentitySystemCode'
+  /api/auth/me/permission-check:
+    get:
+      operationId: checkCurrentPermission
+      tags:
+      - 身份与认证
+      summary: 校验当前用户的单项前端权限
+      description: 已知目标无权返回200 allowed=false；未知目标404、无系统准入403。复用角色继承、组织策略和重授，不替代实际业务授权或对象状态检查。
+      x-implementation-status: implemented
+      parameters:
+      - $ref: '#/components/parameters/IdentitySystemCode'
+      - $ref: '#/components/parameters/IdentityPermissionCode'
       responses:
-        "204":
-          description: "退出成功"
+        '200':
+          description: 当前判断结果，不构成后续调用凭证。
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/NoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentPermissionCheck'
+              examples:
+                result:
+                  value:
+                    systemCode: demo-engineering-app
+                    permissionCode: request:approve
+                    allowed: false
+                allowed:
+                  value:
+                    systemCode: demo-engineering-app
+                    permissionCode: request:approve
+                    allowed: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/CurrentSystemForbidden'
+        '404':
+          $ref: '#/components/responses/MissingCurrentPermission'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/auth/logout:
+    post:
+      operationId: logout
+      tags:
+      - 身份与认证
+      summary: 退出登录
+      description: Cookie CSRF通过后撤销当前刷新凭证对应的独立sid，清除认证Cookie。无需有效访问JWT；无/未知刷新Cookie幂等204，不影响其他浏览器或另一版。认证存储故障503。
+      parameters:
+      - $ref: '#/components/parameters/Csrf'
+      responses:
+        '204':
+          description: 退出成功
           headers:
             Set-Cookie:
-              $ref: "#/components/headers/SessionCookie"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/Csrf"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+              $ref: '#/components/headers/AuthCookie'
+            Cache-Control:
+              $ref: '#/components/headers/NoStore'
+        '403':
+          $ref: '#/components/responses/Csrf'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+      security:
+      - FuncCsrfCookie: []
+      - OoCsrfCookie: []
   "/api/business-systems":
     get:
       operationId: "listBusinessSystems"
@@ -139,422 +254,484 @@ paths:
           $ref: "#/components/responses/NoSession"
         "503":
           $ref: "#/components/responses/Unavailable"
-  "/api/business-systems/{systemCode}/requests":
+  /api/business-systems/{systemCode}/requests:
     parameters:
-      - $ref: "#/components/parameters/SystemCode"
+    - $ref: '#/components/parameters/SystemCode'
     get:
-      operationId: "listSystemRequests"
+      operationId: listSystemRequests
       tags:
-        - "业务模拟"
-      summary: "查询系统申请"
-      description: "要求系统准入及目标系统的 request:read。分页返回全部未删除状态，含已撤回、已驳回记录。按申请 ID 升序；无查看权返回 403，allowedActions 仅列写动作。"
+      - 业务模拟
+      summary: 查询系统申请
+      description: 要求系统准入及目标系统的 request:read。分页返回全部未删除状态，含已撤回、已驳回记录。按申请 ID 升序；无查看权返回 403，allowedActions 仅列写动作。
       parameters:
-        - $ref: "#/components/parameters/Page"
-        - $ref: "#/components/parameters/PageSize"
+      - $ref: '#/components/parameters/Page'
+      - $ref: '#/components/parameters/PageSize'
       responses:
-        "200":
-          description: "模拟申请分页"
+        '200':
+          description: 模拟申请分页
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/RequestPage"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/BusinessForbidden"
-        "404":
-          $ref: "#/components/responses/MissingSystem"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                $ref: '#/components/schemas/RequestPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/BusinessForbidden'
+        '404':
+          $ref: '#/components/responses/MissingSystem'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     post:
-      operationId: "createRequest"
-      tags: ["业务模拟"]
-      summary: "发起模拟申请"
-      description: "要求系统准入及 request:create。服务端从会话取得申请人，创建 PENDING 申请。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
+      operationId: createRequest
+      tags:
+      - 业务模拟
+      summary: 发起模拟申请
+      description: 要求系统准入及 request:create。服务端从已验证Bearer的可信员工身份取得申请人，创建 PENDING 申请。
       requestBody:
         required: true
         content:
-          "application/json":
-            schema: {$ref: "#/components/schemas/RequestTitleInput"}
-      responses:
-        "201":
-          description: "申请已创建"
-          content:
-            "application/json":
-              schema: {$ref: "#/components/schemas/RequestDetail"}
-        "400": {$ref: "#/components/responses/BadRequest"}
-        "401": {$ref: "#/components/responses/NoSession"}
-        "403": {$ref: "#/components/responses/RequestActionForbidden"}
-        "404": {$ref: "#/components/responses/MissingSystem"}
-        "503": {$ref: "#/components/responses/Unavailable"}
-  "/api/requests/{requestId}":
-    parameters:
-      - $ref: "#/components/parameters/RequestId"
-    get:
-      operationId: "getRequest"
-      tags: ["业务模拟"]
-      summary: "查询申请详情"
-      description: "按申请记录所属系统检查准入及 request:read，历史申请与全部状态同样适用。无查看权返回 403，已删除的申请返回 404。"
-      responses:
-        "200":
-          description: "申请详情"
-          content:
-            "application/json":
-              schema: {$ref: "#/components/schemas/RequestDetail"}
-        "400": {$ref: "#/components/responses/BadRequest"}
-        "401": {$ref: "#/components/responses/NoSession"}
-        "403": {$ref: "#/components/responses/BusinessForbidden"}
-        "404": {$ref: "#/components/responses/MissingRequest"}
-        "503": {$ref: "#/components/responses/Unavailable"}
-    patch:
-      operationId: "updateRequest"
-      tags: ["业务模拟"]
-      summary: "修改待审批申请"
-      description: "要求系统准入、request:read 及 request:update、申请人本人及 PENDING 状态。仅修改可编辑字段，仍为 PENDING。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      requestBody:
-        required: true
-        content:
-          "application/json":
-            schema: {$ref: "#/components/schemas/RequestTitleInput"}
-      responses:
-        "200":
-          description: "申请已修改"
-          content:
-            "application/json":
-              schema: {$ref: "#/components/schemas/RequestDetail"}
-        "400": {$ref: "#/components/responses/BadRequest"}
-        "401": {$ref: "#/components/responses/NoSession"}
-        "403": {$ref: "#/components/responses/RequestActionForbidden"}
-        "404": {$ref: "#/components/responses/MissingRequest"}
-        "409": {$ref: "#/components/responses/RequestStateConflict"}
-        "503": {$ref: "#/components/responses/Unavailable"}
-    delete:
-      operationId: "deleteRejectedRequest"
-      tags: ["业务模拟"]
-      summary: "删除本人已驳回的申请"
-      description: "要求系统准入、request:read 及 request:delete、申请人本人及 REJECTED 状态。成功后数据从列表和详情隐藏，保留操作日志。重复访问已删除申请返回 404。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "204":
-          description: "申请已删除"
-        "400": {$ref: "#/components/responses/BadRequest"}
-        "401": {$ref: "#/components/responses/NoSession"}
-        "403": {$ref: "#/components/responses/RequestActionForbidden"}
-        "404": {$ref: "#/components/responses/MissingRequest"}
-        "409": {$ref: "#/components/responses/RequestStateConflict"}
-        "503": {$ref: "#/components/responses/Unavailable"}
-  "/api/requests/{requestId}/withdraw":
-    parameters:
-      - $ref: "#/components/parameters/RequestId"
-    post:
-      operationId: "withdrawRequest"
-      tags: ["业务模拟"]
-      summary: "撤回待审批申请"
-      description: "要求系统准入、request:read 及 request:withdraw、申请人本人及 PENDING 状态。撤回后为 WITHDRAWN，原单不可重提。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "200":
-          description: "撤回待审批申请成功"
-          content:
-            "application/json":
-              schema: {$ref: "#/components/schemas/RequestDetail"}
-        "400": {$ref: "#/components/responses/BadRequest"}
-        "401": {$ref: "#/components/responses/NoSession"}
-        "403": {$ref: "#/components/responses/RequestActionForbidden"}
-        "404": {$ref: "#/components/responses/MissingRequest"}
-        "409": {$ref: "#/components/responses/RequestStateConflict"}
-        "503": {$ref: "#/components/responses/Unavailable"}
-  "/api/requests/{requestId}/reject":
-    parameters:
-      - $ref: "#/components/parameters/RequestId"
-    post:
-      operationId: "rejectRequest"
-      tags: ["业务模拟"]
-      summary: "驳回待审批申请"
-      description: "要求系统准入、request:read 及 request:reject 及 PENDING 状态。驳回后为 REJECTED。有对应权限的申请人可以驳回自己的申请。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "200":
-          description: "驳回待审批申请成功"
-          content:
-            "application/json":
-              schema: {$ref: "#/components/schemas/RequestDetail"}
-        "400": {$ref: "#/components/responses/BadRequest"}
-        "401": {$ref: "#/components/responses/NoSession"}
-        "403": {$ref: "#/components/responses/RequestActionForbidden"}
-        "404": {$ref: "#/components/responses/MissingRequest"}
-        "409": {$ref: "#/components/responses/RequestStateConflict"}
-        "503": {$ref: "#/components/responses/Unavailable"}
-  "/api/requests/{requestId}/approve":
-    parameters:
-      - $ref: "#/components/parameters/RequestId"
-    post:
-      operationId: "approveRequest"
-      tags:
-        - "业务模拟"
-      summary: "审批模拟申请"
-      description: "从申请记录确定所属系统，检查系统准入、组织停用和该系统的 request:read、request:approve 权限。超级管理员默认具有仍开放的权限。仅待审批申请可提交更新。有对应权限的申请人可以审批自己的申请。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "200":
-          description: "鉴权通过且审批成功"
-          content:
-            "application/json":
-              schema:
-                $ref: "#/components/schemas/ApprovalResult"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ApprovalForbidden"
-        "404":
-          $ref: "#/components/responses/MissingRequest"
-        "409":
-          $ref: "#/components/responses/ApprovalConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/employees/{employeeId}/roles/{roleId}":
-    parameters:
-      - $ref: "#/components/parameters/EmployeeId"
-      - $ref: "#/components/parameters/RoleId"
-    put:
-      operationId: "grantEmployeeRole"
-      tags:
-        - "授权配置"
-      summary: "授予员工角色"
-      description: "要求 employee-role:write。Service 检查管理准入、范围及关系两端。关系已存在时允许幂等重试；待匹配或停用员工、已停用权限不能新增相应分配。提交成功后响应。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "204":
-          description: "关系已建立"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/AssignmentConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-    delete:
-      operationId: "revokeEmployeeRole"
-      tags:
-        - "授权配置"
-      summary: "撤销员工角色"
-      description: "要求 employee-role:write。Service 检查管理准入、范围及关系两端。两端存在且关系已移除时允许幂等重试。提交成功后响应。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "204":
-          description: "关系已撤销"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/roles/{roleId}/permissions/{permissionId}":
-    parameters:
-      - $ref: "#/components/parameters/RoleId"
-      - $ref: "#/components/parameters/PermissionId"
-    put:
-      operationId: "grantRolePermission"
-      tags:
-        - "授权配置"
-      summary: "授予角色权限"
-      description: "要求 role-permission:write。Service 检查管理准入、范围及关系两端。关系已存在时允许幂等重试；待匹配或停用员工、已停用权限不能新增相应分配。提交成功后响应。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "204":
-          description: "关系已建立"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/AssignmentConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-    delete:
-      operationId: "revokeRolePermission"
-      tags:
-        - "授权配置"
-      summary: "撤销角色权限"
-      description: "要求 role-permission:write。Service 检查管理准入、范围及关系两端。两端存在且关系已移除时允许幂等重试。提交成功后响应。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "204":
-          description: "关系已撤销"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/organizations/{organizationId}/business-systems/{systemCode}/permissions/{permissionCode}/disabled":
-    parameters:
-      - $ref: "#/components/parameters/OrganizationId"
-      - $ref: "#/components/parameters/SystemCode"
-      - $ref: "#/components/parameters/PermissionCode"
-    put:
-      operationId: "disableOrganizationPermission"
-      tags:
-        - "授权配置"
-      summary: "停用组织动作"
-      description: "仅超级管理员可操作。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "204":
-          description: "操作已提交，重复提交幂等"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-    delete:
-      operationId: "reopenOrganizationPermission"
-      tags:
-        - "授权配置"
-      summary: "重新开放组织动作"
-      description: "仅超级管理员可操作。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "204":
-          description: "操作已提交，重复提交幂等"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/organizations/{organizationId}/business-systems/{systemCode}/permissions/{permissionCode}/regrants/{roleId}":
-    parameters:
-      - $ref: "#/components/parameters/OrganizationId"
-      - $ref: "#/components/parameters/SystemCode"
-      - $ref: "#/components/parameters/PermissionCode"
-      - $ref: "#/components/parameters/RoleId"
-    put:
-      operationId: "regrantOrganizationPermission"
-      tags:
-        - "授权配置"
-      summary: "按角色重授组织动作"
-      description: "仅超级管理员可操作。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      responses:
-        "204":
-          description: "操作已提交，重复提交幂等"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/AssignmentConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/employees":
-    post:
-      operationId: "createManagementEmployee"
-      tags: ["授权配置"]
-      summary: "新增员工"
-      description: "按当前管理员的组织范围创建员工资料。登录凭据单独配置。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
-      requestBody:
-        required: true
-        content:
-          "application/json":
+          application/json:
             schema:
-              $ref: "#/components/schemas/ManagementEmployeeCreate"
+              $ref: '#/components/schemas/RequestTitleInput'
       responses:
-        "201":
-          description: "资源资料"
+        '201':
+          description: 申请已创建
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/RequestActionForbidden'
+        '404':
+          $ref: '#/components/responses/MissingSystem'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/requests/{requestId}:
+    parameters:
+    - $ref: '#/components/parameters/RequestId'
+    get:
+      operationId: getRequest
+      tags:
+      - 业务模拟
+      summary: 查询申请详情
+      description: 按申请记录所属系统检查准入及 request:read，历史申请与全部状态同样适用。无查看权返回 403，已删除的申请返回 404。
+      responses:
+        '200':
+          description: 申请详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/BusinessForbidden'
+        '404':
+          $ref: '#/components/responses/MissingRequest'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+    patch:
+      operationId: updateRequest
+      tags:
+      - 业务模拟
+      summary: 修改待审批申请
+      description: 要求系统准入、request:read 及 request:update、申请人本人及 PENDING 状态。仅修改可编辑字段，仍为 PENDING。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestTitleInput'
+      responses:
+        '200':
+          description: 申请已修改
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/RequestActionForbidden'
+        '404':
+          $ref: '#/components/responses/MissingRequest'
+        '409':
+          $ref: '#/components/responses/RequestStateConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+    delete:
+      operationId: deleteRejectedRequest
+      tags:
+      - 业务模拟
+      summary: 删除本人已驳回的申请
+      description: 要求系统准入、request:read 及 request:delete、申请人本人及 REJECTED 状态。成功后数据从列表和详情隐藏，保留操作日志。重复访问已删除申请返回 404。
+      responses:
+        '204':
+          description: 申请已删除
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/RequestActionForbidden'
+        '404':
+          $ref: '#/components/responses/MissingRequest'
+        '409':
+          $ref: '#/components/responses/RequestStateConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/requests/{requestId}/withdraw:
+    parameters:
+    - $ref: '#/components/parameters/RequestId'
+    post:
+      operationId: withdrawRequest
+      tags:
+      - 业务模拟
+      summary: 撤回待审批申请
+      description: 要求系统准入、request:read 及 request:withdraw、申请人本人及 PENDING 状态。撤回后为 WITHDRAWN，原单不可重提。
+      responses:
+        '200':
+          description: 撤回待审批申请成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/RequestActionForbidden'
+        '404':
+          $ref: '#/components/responses/MissingRequest'
+        '409':
+          $ref: '#/components/responses/RequestStateConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/requests/{requestId}/reject:
+    parameters:
+    - $ref: '#/components/parameters/RequestId'
+    post:
+      operationId: rejectRequest
+      tags:
+      - 业务模拟
+      summary: 驳回待审批申请
+      description: 要求系统准入、request:read 及 request:reject 及 PENDING 状态。驳回后为 REJECTED。有对应权限的申请人可以驳回自己的申请。
+      responses:
+        '200':
+          description: 驳回待审批申请成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RequestDetail'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/RequestActionForbidden'
+        '404':
+          $ref: '#/components/responses/MissingRequest'
+        '409':
+          $ref: '#/components/responses/RequestStateConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/requests/{requestId}/approve:
+    parameters:
+    - $ref: '#/components/parameters/RequestId'
+    post:
+      operationId: approveRequest
+      tags:
+      - 业务模拟
+      summary: 审批模拟申请
+      description: 从申请记录确定所属系统，检查系统准入、组织停用和该系统的 request:read、request:approve 权限。超级管理员默认具有仍开放的权限。仅待审批申请可提交更新。有对应权限的申请人可以审批自己的申请。
+      responses:
+        '200':
+          description: 鉴权通过且审批成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApprovalResult'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ApprovalForbidden'
+        '404':
+          $ref: '#/components/responses/MissingRequest'
+        '409':
+          $ref: '#/components/responses/ApprovalConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/employees/{employeeId}/roles/{roleId}:
+    parameters:
+    - $ref: '#/components/parameters/EmployeeId'
+    - $ref: '#/components/parameters/RoleId'
+    put:
+      operationId: grantEmployeeRole
+      tags:
+      - 授权配置
+      summary: 授予员工角色
+      description: 要求 employee-role:write。Service 检查管理准入、范围及关系两端。关系已存在时允许幂等重试；待匹配或停用员工、已停用权限不能新增相应分配。提交成功后响应。
+      responses:
+        '204':
+          description: 关系已建立
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/AssignmentConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+    delete:
+      operationId: revokeEmployeeRole
+      tags:
+      - 授权配置
+      summary: 撤销员工角色
+      description: 要求 employee-role:write。Service 检查管理准入、范围及关系两端。两端存在且关系已移除时允许幂等重试。提交成功后响应。
+      responses:
+        '204':
+          description: 关系已撤销
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/roles/{roleId}/permissions/{permissionId}:
+    parameters:
+    - $ref: '#/components/parameters/RoleId'
+    - $ref: '#/components/parameters/PermissionId'
+    put:
+      operationId: grantRolePermission
+      tags:
+      - 授权配置
+      summary: 授予角色权限
+      description: 要求 role-permission:write。Service 检查管理准入、范围及关系两端。关系已存在时允许幂等重试；待匹配或停用员工、已停用权限不能新增相应分配。提交成功后响应。
+      responses:
+        '204':
+          description: 关系已建立
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/AssignmentConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+    delete:
+      operationId: revokeRolePermission
+      tags:
+      - 授权配置
+      summary: 撤销角色权限
+      description: 要求 role-permission:write。Service 检查管理准入、范围及关系两端。两端存在且关系已移除时允许幂等重试。提交成功后响应。
+      responses:
+        '204':
+          description: 关系已撤销
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/organizations/{organizationId}/business-systems/{systemCode}/permissions/{permissionCode}/disabled:
+    parameters:
+    - $ref: '#/components/parameters/OrganizationId'
+    - $ref: '#/components/parameters/SystemCode'
+    - $ref: '#/components/parameters/PermissionCode'
+    put:
+      operationId: disableOrganizationPermission
+      tags:
+      - 授权配置
+      summary: 停用组织动作
+      description: 仅超级管理员可操作。
+      responses:
+        '204':
+          description: 操作已提交，重复提交幂等
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+    delete:
+      operationId: reopenOrganizationPermission
+      tags:
+      - 授权配置
+      summary: 重新开放组织动作
+      description: 仅超级管理员可操作。
+      responses:
+        '204':
+          description: 操作已提交，重复提交幂等
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/organizations/{organizationId}/business-systems/{systemCode}/permissions/{permissionCode}/regrants/{roleId}:
+    parameters:
+    - $ref: '#/components/parameters/OrganizationId'
+    - $ref: '#/components/parameters/SystemCode'
+    - $ref: '#/components/parameters/PermissionCode'
+    - $ref: '#/components/parameters/RoleId'
+    put:
+      operationId: regrantOrganizationPermission
+      tags:
+      - 授权配置
+      summary: 按角色重授组织动作
+      description: 仅超级管理员可操作。
+      responses:
+        '204':
+          description: 操作已提交，重复提交幂等
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/AssignmentConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/employees:
+    post:
+      operationId: createManagementEmployee
+      tags:
+      - 授权配置
+      summary: 新增员工
+      description: 按当前管理员的组织范围创建员工资料。登录凭据单独配置。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManagementEmployeeCreate'
+      responses:
+        '201':
+          description: 资源资料
           headers:
             Location:
-              schema: {type: "string"}
-          content:
-            "application/json":
               schema:
-                $ref: "#/components/schemas/ManagementEmployee"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementWriteForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/ManagementConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagementEmployee'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementWriteForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/ManagementConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     get:
-      operationId: "listManagementEmployees"
-      tags: ["授权配置"]
-      summary: "查看范围内员工及原表字段"
-      description: "限当前管理员的可见范围，结果按 ID 升序，total 为范围内总数。"
+      operationId: listManagementEmployees
+      tags:
+      - 授权配置
+      summary: 按可见范围查询员工，支持部门和姓名/账号筛选
+      description: 普通员工仅所属组织启用员工及最小字段；管理员保留旧范围与字段。departmentId仅DEPARTMENT直接归属，列表与total同范围。普通员工列表不开放详情、角色、权限或写入。
       parameters:
-        - $ref: "#/components/parameters/ManagementPageNumber"
-        - $ref: "#/components/parameters/PageSize"
+      - $ref: '#/components/parameters/DepartmentFilter'
+      - $ref: '#/components/parameters/DirectoryKeyword'
+      - $ref: '#/components/parameters/ManagementPageNumber'
+      - $ref: '#/components/parameters/PageSize'
       responses:
-        "200":
-          description: "管理员可见结果"
+        '200':
+          description: 投影按管理员资格决定，不返回原始联系方式。
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/NoStore'
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementEmployeePage"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementReadForbidden"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                $ref: '#/components/schemas/EmployeeDirectoryResult'
+              examples:
+                ordinary:
+                  value:
+                    items:
+                    - id: 101
+                      username: engineering-employee
+                      name: 示例员工
+                      organizationId: 2
+                    page: 1
+                    pageSize: 20
+                    total: 1
+                administrator:
+                  value:
+                    items:
+                    - id: 101
+                      username: engineering-employee
+                      name: 示例员工
+                      organizationId: 2
+                      sourceBranchName: null
+                      sourceDepartmentName: null
+                      jobTitle: null
+                      phone: 138****0000
+                      enabled: true
+                    page: 1
+                    pageSize: 20
+                    total: 1
+                emptyPage:
+                  value:
+                    items: []
+                    page: 2
+                    pageSize: 20
+                    total: 1
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/DirectoryReadForbidden'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+      x-implementation-status: implemented
   "/api/companies":
     get:
       operationId: "listManagementCompanies"
@@ -581,146 +758,184 @@ paths:
           $ref: "#/components/responses/Unavailable"
   "/api/departments":
     get:
-      operationId: "listManagementDepartments"
-      tags: ["授权配置"]
-      summary: "查询部门原表三列及正式组织引用"
-      description: "含原表中归类为公司的组织行和演示部门。按管理员可见范围分页，total 为范围内总数。"
+      operationId: listManagementDepartments
+      tags:
+      - 授权配置
+      summary: 查询原表目录或逐层展开正式组织树
+      description: 默认directory仅管理员，保留原表公司行；tree按用户范围查询COMPANY/DEPARTMENT。parentId与rootsOnly不得同传；directory不接受二者。仅q搜索可见节点，parentId+q只搜子级，rootsOnly=true+q只搜根。hasChildren只计算可见子级。
       parameters:
-        - $ref: "#/components/parameters/ManagementPageNumber"
-        - $ref: "#/components/parameters/PageSize"
+      - $ref: '#/components/parameters/DirectoryView'
+      - $ref: '#/components/parameters/DirectoryParent'
+      - $ref: '#/components/parameters/DirectoryRoots'
+      - $ref: '#/components/parameters/DirectoryKeyword'
+      - $ref: '#/components/parameters/ManagementPageNumber'
+      - $ref: '#/components/parameters/PageSize'
       responses:
-        "200":
-          description: "管理员可见结果"
+        '200':
+          description: 投影由view确定；列表和total使用相同范围。
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/NoStore'
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementOrganizationPage"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementReadForbidden"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/roles":
+                $ref: '#/components/schemas/DepartmentDirectoryResult'
+              examples:
+                tree:
+                  value:
+                    items:
+                    - id: 2
+                      code: demo-engineering
+                      name: 示例工程部
+                      parentId: 1
+                      organizationType: DEPARTMENT
+                      hasChildren: false
+                    page: 1
+                    pageSize: 20
+                    total: 1
+                directory:
+                  value:
+                    items:
+                    - id: 2
+                      code: demo-engineering
+                      name: 示例工程部
+                      parentId: 1
+                      managerName: null
+                      sourceParentName: null
+                    page: 1
+                    pageSize: 20
+                    total: 1
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/DirectoryReadForbidden'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+      x-implementation-status: implemented
+  /api/roles:
     post:
-      operationId: "createManagementRole"
-      tags: ["授权配置"]
-      summary: "新增角色"
-      description: "按组织范围新增角色。空归属表示全局共享，仅超级管理员可创建。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
+      operationId: createManagementRole
+      tags:
+      - 授权配置
+      summary: 新增角色
+      description: 按组织范围新增角色。空归属表示全局共享，仅超级管理员可创建。
       requestBody:
         required: true
         content:
-          "application/json":
+          application/json:
             schema:
-              $ref: "#/components/schemas/ManagementRoleCreate"
+              $ref: '#/components/schemas/ManagementRoleCreate'
       responses:
-        "201":
-          description: "资源资料"
+        '201':
+          description: 资源资料
           headers:
             Location:
-              schema: {type: "string"}
-          content:
-            "application/json":
               schema:
-                $ref: "#/components/schemas/ManagementRole"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementWriteForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/ManagementConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagementRole'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementWriteForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/ManagementConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     get:
-      operationId: "listManagementRoles"
-      tags: ["授权配置"]
-      summary: "查询角色定义"
-      description: "限当前管理员的可见范围，结果按 ID 升序，total 为范围内总数。"
+      operationId: listManagementRoles
+      tags:
+      - 授权配置
+      summary: 查询角色定义
+      description: 限当前管理员的可见范围，结果按 ID 升序，total 为范围内总数。
       parameters:
-        - $ref: "#/components/parameters/ManagementPageNumber"
-        - $ref: "#/components/parameters/PageSize"
+      - $ref: '#/components/parameters/ManagementPageNumber'
+      - $ref: '#/components/parameters/PageSize'
       responses:
-        "200":
-          description: "管理员可见结果"
+        '200':
+          description: 管理员可见结果
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementRolePage"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementReadForbidden"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/permissions":
+                $ref: '#/components/schemas/ManagementRolePage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementReadForbidden'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/permissions:
     post:
-      operationId: "createManagementPermission"
-      tags: ["授权配置"]
-      summary: "新增权限"
-      description: "新增运行时权限。系统及权限码确定权限身份，全局定义仅超级管理员可创建。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
+      operationId: createManagementPermission
+      tags:
+      - 授权配置
+      summary: 新增权限
+      description: 新增运行时权限。系统及权限码确定权限身份，全局定义仅超级管理员可创建。
       requestBody:
         required: true
         content:
-          "application/json":
+          application/json:
             schema:
-              $ref: "#/components/schemas/ManagementPermissionCreate"
+              $ref: '#/components/schemas/ManagementPermissionCreate'
       responses:
-        "201":
-          description: "资源资料"
+        '201':
+          description: 资源资料
           headers:
             Location:
-              schema: {type: "string"}
-          content:
-            "application/json":
               schema:
-                $ref: "#/components/schemas/ManagementPermission"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementWriteForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/ManagementConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManagementPermission'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementWriteForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/ManagementConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     get:
-      operationId: "listManagementPermissions"
-      tags: ["授权配置"]
-      summary: "查询运行时权限定义"
-      description: "限当前管理员的可见范围，结果按 ID 升序，total 为范围内总数。"
+      operationId: listManagementPermissions
+      tags:
+      - 授权配置
+      summary: 查询运行时权限定义
+      description: 限当前管理员的可见范围，结果按 ID 升序，total 为范围内总数。
       parameters:
-        - $ref: "#/components/parameters/ManagementPageNumber"
-        - $ref: "#/components/parameters/PageSize"
+      - $ref: '#/components/parameters/ManagementPageNumber'
+      - $ref: '#/components/parameters/PageSize'
       responses:
-        "200":
-          description: "管理员可见结果"
+        '200':
+          description: 管理员可见结果
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementPermissionPage"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementReadForbidden"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                $ref: '#/components/schemas/ManagementPermissionPage'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementReadForbidden'
+        '503':
+          $ref: '#/components/responses/Unavailable'
   "/api/catalog-entries":
     get:
       operationId: "listManagementCatalog"
@@ -821,249 +1036,252 @@ paths:
         "403": {$ref: "#/components/responses/ManagementReadForbidden"}
         "404": {$ref: "#/components/responses/MissingResource"}
         "503": {$ref: "#/components/responses/Unavailable"}
-  "/api/employees/{employeeId}":
+  /api/employees/{employeeId}:
     get:
-      operationId: "getManagementEmployee"
-      tags: ["授权配置"]
-      summary: "查询员工详情"
-      description: "检查资源的管理可见范围。"
+      operationId: getManagementEmployee
+      tags:
+      - 授权配置
+      summary: 查询员工详情
+      description: 检查资源的管理可见范围。
       parameters:
-        - $ref: "#/components/parameters/EmployeeId"
+      - $ref: '#/components/parameters/EmployeeId'
       responses:
-        "200":
-          description: "资源资料"
+        '200':
+          description: 资源资料
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementEmployee"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementReadForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                $ref: '#/components/schemas/ManagementEmployee'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementReadForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     patch:
-      operationId: "updateManagementEmployee"
-      tags: ["授权配置"]
-      summary: "修改员工"
-      description: "员工调岗前须解除现有角色和管理员配置。"
+      operationId: updateManagementEmployee
+      tags:
+      - 授权配置
+      summary: 修改员工
+      description: 员工调岗前须解除现有角色和管理员配置。
       parameters:
-        - $ref: "#/components/parameters/EmployeeId"
-        - $ref: "#/components/parameters/Csrf"
+      - $ref: '#/components/parameters/EmployeeId'
       requestBody:
         required: true
         content:
-          "application/json":
+          application/json:
             schema:
-              $ref: "#/components/schemas/ManagementEmployeePatch"
+              $ref: '#/components/schemas/ManagementEmployeePatch'
       responses:
-        "200":
-          description: "资源资料"
+        '200':
+          description: 资源资料
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementEmployee"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementWriteForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/ManagementConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                $ref: '#/components/schemas/ManagementEmployee'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementWriteForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/ManagementConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     delete:
-      operationId: "deleteManagementEmployee"
-      tags: ["授权配置"]
-      summary: "停用员工"
-      description: "历史分配继续保留，已有登录会话从下一次请求失效。"
+      operationId: deleteManagementEmployee
+      tags:
+      - 授权配置
+      summary: 停用员工
+      description: 历史分配继续保留，已有sid登录从下一次请求起拒绝，观察到员工资格失效后撤销该sid。
       parameters:
-        - $ref: "#/components/parameters/EmployeeId"
-        - $ref: "#/components/parameters/Csrf"
+      - $ref: '#/components/parameters/EmployeeId'
       responses:
-        "204":
-          description: "操作已完成"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementWriteForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/ManagementConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/roles/{roleId}":
+        '204':
+          description: 操作已完成
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementWriteForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/ManagementConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/roles/{roleId}:
     get:
-      operationId: "getManagementRole"
-      tags: ["授权配置"]
-      summary: "查询角色详情"
-      description: "检查资源的管理可见范围。"
+      operationId: getManagementRole
+      tags:
+      - 授权配置
+      summary: 查询角色详情
+      description: 检查资源的管理可见范围。
       parameters:
-        - $ref: "#/components/parameters/RoleId"
+      - $ref: '#/components/parameters/RoleId'
       responses:
-        "200":
-          description: "资源资料"
+        '200':
+          description: 资源资料
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementRole"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementReadForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                $ref: '#/components/schemas/ManagementRole'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementReadForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     patch:
-      operationId: "updateManagementRole"
-      tags: ["授权配置"]
-      summary: "修改角色"
-      description: "只修改名称，保留定义的现有归属。"
+      operationId: updateManagementRole
+      tags:
+      - 授权配置
+      summary: 修改角色
+      description: 只修改名称，保留定义的现有归属。
       parameters:
-        - $ref: "#/components/parameters/RoleId"
-        - $ref: "#/components/parameters/Csrf"
+      - $ref: '#/components/parameters/RoleId'
       requestBody:
         required: true
         content:
-          "application/json":
+          application/json:
             schema:
-              $ref: "#/components/schemas/ManagementRename"
+              $ref: '#/components/schemas/ManagementRename'
       responses:
-        "200":
-          description: "资源资料"
+        '200':
+          description: 资源资料
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementRole"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementWriteForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/ManagementConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                $ref: '#/components/schemas/ManagementRole'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementWriteForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/ManagementConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     delete:
-      operationId: "deleteManagementRole"
-      tags: ["授权配置"]
-      summary: "删除角色"
-      description: "须先解除关联引用。"
+      operationId: deleteManagementRole
+      tags:
+      - 授权配置
+      summary: 删除角色
+      description: 须先解除关联引用。
       parameters:
-        - $ref: "#/components/parameters/RoleId"
-        - $ref: "#/components/parameters/Csrf"
+      - $ref: '#/components/parameters/RoleId'
       responses:
-        "204":
-          description: "操作已完成"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementWriteForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/ManagementConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
-  "/api/permissions/{permissionId}":
+        '204':
+          description: 操作已完成
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementWriteForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/ManagementConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/permissions/{permissionId}:
     get:
-      operationId: "getManagementPermission"
-      tags: ["授权配置"]
-      summary: "查询权限详情"
-      description: "检查资源的管理可见范围。"
+      operationId: getManagementPermission
+      tags:
+      - 授权配置
+      summary: 查询权限详情
+      description: 检查资源的管理可见范围。
       parameters:
-        - $ref: "#/components/parameters/PermissionId"
+      - $ref: '#/components/parameters/PermissionId'
       responses:
-        "200":
-          description: "资源资料"
+        '200':
+          description: 资源资料
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementPermission"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementReadForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                $ref: '#/components/schemas/ManagementPermission'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementReadForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     patch:
-      operationId: "updateManagementPermission"
-      tags: ["授权配置"]
-      summary: "修改权限"
-      description: "只修改名称，保留定义的现有归属。"
+      operationId: updateManagementPermission
+      tags:
+      - 授权配置
+      summary: 修改权限
+      description: 只修改名称，保留定义的现有归属。
       parameters:
-        - $ref: "#/components/parameters/PermissionId"
-        - $ref: "#/components/parameters/Csrf"
+      - $ref: '#/components/parameters/PermissionId'
       requestBody:
         required: true
         content:
-          "application/json":
+          application/json:
             schema:
-              $ref: "#/components/schemas/ManagementRename"
+              $ref: '#/components/schemas/ManagementRename'
       responses:
-        "200":
-          description: "资源资料"
+        '200':
+          description: 资源资料
           content:
-            "application/json":
+            application/json:
               schema:
-                $ref: "#/components/schemas/ManagementPermission"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementWriteForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/ManagementConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+                $ref: '#/components/schemas/ManagementPermission'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementWriteForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/ManagementConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
     delete:
-      operationId: "deleteManagementPermission"
-      tags: ["授权配置"]
-      summary: "删除权限"
-      description: "须先解除关联引用。"
+      operationId: deleteManagementPermission
+      tags:
+      - 授权配置
+      summary: 删除权限
+      description: 须先解除关联引用。
       parameters:
-        - $ref: "#/components/parameters/PermissionId"
-        - $ref: "#/components/parameters/Csrf"
+      - $ref: '#/components/parameters/PermissionId'
       responses:
-        "204":
-          description: "操作已完成"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/NoSession"
-        "403":
-          $ref: "#/components/responses/ManagementWriteForbidden"
-        "404":
-          $ref: "#/components/responses/MissingResource"
-        "409":
-          $ref: "#/components/responses/ManagementConflict"
-        "503":
-          $ref: "#/components/responses/Unavailable"
+        '204':
+          description: 操作已完成
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/ManagementWriteForbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          $ref: '#/components/responses/ManagementConflict'
+        '503':
+          $ref: '#/components/responses/Unavailable'
   "/api/organizations/{organizationId}/business-systems/{systemCode}/permissions/{permissionCode}":
     parameters:
       - $ref: "#/components/parameters/OrganizationId"
@@ -1112,52 +1330,71 @@ paths:
         "403": {$ref: "#/components/responses/ManagementReadForbidden"}
         "404": {$ref: "#/components/responses/MissingResource"}
         "503": {$ref: "#/components/responses/Unavailable"}
-  "/api/roles/{roleId}/parents/{parentRoleId}":
+  /api/roles/{roleId}/parents/{parentRoleId}:
     parameters:
-      - $ref: "#/components/parameters/RoleId"
-      - $ref: "#/components/parameters/ParentRoleId"
+    - $ref: '#/components/parameters/RoleId'
+    - $ref: '#/components/parameters/ParentRoleId'
     put:
-      operationId: "addRoleParent"
-      tags: ["授权配置"]
-      summary: "添加角色继承"
-      description: "要求可管理两端且归属相同，检查当前分配和权限变化。合法重复添加幂等。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
+      operationId: addRoleParent
+      tags:
+      - 授权配置
+      summary: 添加角色继承
+      description: 要求可管理两端且归属相同，检查当前分配和权限变化。合法重复添加幂等。
       responses:
-        "204": {description: "继承关系已建立"}
-        "400": {$ref: "#/components/responses/BadRequest"}
-        "401": {$ref: "#/components/responses/NoSession"}
-        "403": {$ref: "#/components/responses/Forbidden"}
-        "404": {$ref: "#/components/responses/MissingResource"}
-        "409":
-          description: "继承或分配规则冲突"
+        '204':
+          description: 继承关系已建立
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '409':
+          description: 继承或分配规则冲突
           content:
-            "application/json":
-              schema: {$ref: "#/components/schemas/Error"}
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
               examples:
                 selfInheritance:
-                  value: {code: "SELF_ROLE_INHERITANCE", message: "角色不能继承自身"}
+                  value:
+                    code: SELF_ROLE_INHERITANCE
+                    message: 角色不能继承自身
                 cycle:
-                  value: {code: "ROLE_INHERITANCE_CYCLE", message: "角色继承关系不能形成环路"}
+                  value:
+                    code: ROLE_INHERITANCE_CYCLE
+                    message: 角色继承关系不能形成环路
                 scope:
-                  value: {code: "ROLE_INHERITANCE_SCOPE_MISMATCH", message: "角色归属必须相同"}
+                  value:
+                    code: ROLE_INHERITANCE_SCOPE_MISMATCH
+                    message: 角色归属必须相同
                 assignment:
-                  value: {code: "ASSIGNMENT_CONFLICT", message: "当前状态不允许建立分配"}
-        "503": {$ref: "#/components/responses/Unavailable"}
+                  value:
+                    code: ASSIGNMENT_CONFLICT
+                    message: 当前状态不允许建立分配
+        '503':
+          $ref: '#/components/responses/Unavailable'
     delete:
-      operationId: "removeRoleParent"
-      tags: ["授权配置"]
-      summary: "删除角色继承"
-      description: "要求可管理两端。两端均存在且可操作时，重复删除不存在的边返回 204。"
-      parameters:
-        - $ref: "#/components/parameters/Csrf"
+      operationId: removeRoleParent
+      tags:
+      - 授权配置
+      summary: 删除角色继承
+      description: 要求可管理两端。两端均存在且可操作时，重复删除不存在的边返回 204。
       responses:
-        "204": {description: "继承关系已移除"}
-        "400": {$ref: "#/components/responses/BadRequest"}
-        "401": {$ref: "#/components/responses/NoSession"}
-        "403": {$ref: "#/components/responses/Forbidden"}
-        "404": {$ref: "#/components/responses/MissingResource"}
-        "503": {$ref: "#/components/responses/Unavailable"}
+        '204':
+          description: 继承关系已移除
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/MissingResource'
+        '503':
+          $ref: '#/components/responses/Unavailable'
   "/api/employees/{employeeId}/effective-permissions":
     get:
       operationId: "listEmployeeEffectivePermissions"
@@ -1198,30 +1435,125 @@ paths:
                 systemNotFound:
                   value: {code: "SYSTEM_NOT_FOUND", message: "业务系统不存在"}
         "503": {$ref: "#/components/responses/Unavailable"}
+  /api/auth/me/api-check:
+    get:
+      operationId: checkCurrentApiPermission
+      tags:
+      - 身份与认证
+      summary: 判断当前用户调用指定业务API的系统级权限
+      description: 已知目标无权返回200 allowed=false；未知目标404、无系统准入403。复用角色继承、组织策略和重授，不替代实际业务授权或对象状态检查。 映射缺失返回404 API_NOT_FOUND；空集合、跨系统引用或与规范定义不一致返回503
+        AUTHORIZATION_UNAVAILABLE。首批仅注册四个demo申请系统、每系统八个申请操作，固定ALL。
+      x-implementation-status: implemented
+      parameters:
+      - $ref: '#/components/parameters/IdentitySystemCode'
+      - $ref: '#/components/parameters/IdentityOperationId'
+      responses:
+        '200':
+          description: 当前判断结果，不构成后续调用凭证。
+          headers:
+            Cache-Control:
+              $ref: '#/components/headers/NoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentApiCheck'
+              examples:
+                result:
+                  value:
+                    systemCode: demo-engineering-app
+                    operationId: approveRequest
+                    allowed: true
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/NoSession'
+        '403':
+          $ref: '#/components/responses/CurrentSystemForbidden'
+        '404':
+          $ref: '#/components/responses/MissingCurrentApi'
+        '503':
+          $ref: '#/components/responses/Unavailable'
+  /api/auth/refresh:
+    post:
+      operationId: refreshLogin
+      tags:
+      - 身份与认证
+      summary: 刷新访问凭证并严格轮换刷新Cookie
+      description: 仅从本版HttpOnly Cookie读取刷新凭证，X-CSRF-TOKEN必需。忽略Authorization；不从body/query读取刷新凭证。绝对登录上限8小时不延长。已消费摘要重用将撤销当前sid。
+      security:
+      - FuncRefreshCookie: []
+        FuncCsrfCookie: []
+      - OoRefreshCookie: []
+        OoCsrfCookie: []
+      parameters:
+      - $ref: '#/components/parameters/Csrf'
+      responses:
+        '200':
+          description: 新访问JWT及剩余秒数；刷新Cookie同步轮换。
+          headers:
+            Set-Cookie:
+              $ref: '#/components/headers/AuthCookie'
+            Cache-Control:
+              $ref: '#/components/headers/NoStore'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessToken'
+        '401':
+          $ref: '#/components/responses/BadRefresh'
+        '403':
+          $ref: '#/components/responses/Csrf'
+        '503':
+          $ref: '#/components/responses/Unavailable'
 components:
   securitySchemes:
-    FuncSessionCookie:
-      type: "apiKey"
-      in: "cookie"
-      name: "RBAC1_FUNC_SESSION"
-      description: "功能版 Cookie。HttpOnly，Path=/func/，SameSite=Lax，HTTPS 部署启用 Secure。"
-    OoSessionCookie:
-      type: "apiKey"
-      in: "cookie"
-      name: "RBAC1_OO_SESSION"
-      description: "对象版 Cookie。HttpOnly，Path=/oo/，SameSite=Lax，HTTPS 部署启用 Secure。"
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: RS256访问JWT；同时核对Redis随机sid登录记录和当前员工，业务权限实时计算。
+    FuncRefreshCookie:
+      type: apiKey
+      in: cookie
+      name: RBAC1_FUNC_REFRESH
+      description: func版认证入口Cookie，HttpOnly、SameSite=Strict，公开Path=/func/api/auth/；生产HTTPS启用Secure。
+    FuncCsrfCookie:
+      type: apiKey
+      in: cookie
+      name: RBAC1_FUNC_CSRF
+      description: func版认证入口Cookie，HttpOnly、SameSite=Strict，公开Path=/func/api/auth/；生产HTTPS启用Secure。
+    OoRefreshCookie:
+      type: apiKey
+      in: cookie
+      name: RBAC1_OO_REFRESH
+      description: oo版认证入口Cookie，HttpOnly、SameSite=Strict，公开Path=/oo/api/auth/；生产HTTPS启用Secure。
+    OoCsrfCookie:
+      type: apiKey
+      in: cookie
+      name: RBAC1_OO_CSRF
+      description: oo版认证入口Cookie，HttpOnly、SameSite=Strict，公开Path=/oo/api/auth/；生产HTTPS启用Secure。
   headers:
-    SessionCookie:
-      description: "建立、轮换或清除会话 Cookie"
+    AuthCookie:
+      description: 认证Cookie可能包含多行Set-Cookie，请分别保存，不按逗号合并；不再设置Session Cookie。
       schema:
-        type: "string"
+        type: string
     NoStore:
-      description: "会话响应禁止缓存"
+      description: "认证及身份响应禁止缓存"
       schema:
         type: "string"
         enum:
           - "no-store"
   parameters:
+    IdentityOperationId:
+      name: operationId
+      in: query
+      required: true
+      description: 已注册的目标业务 API operationId。
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 128
+        pattern: \S
     ParentRoleId:
       name: "parentRoleId"
       in: "path"
@@ -1290,12 +1622,12 @@ components:
         minLength: 1
         maxLength: 64
     Csrf:
-      name: "X-CSRF-TOKEN"
-      in: "header"
+      name: X-CSRF-TOKEN
+      in: header
       required: true
-      description: "使用相同会话获取的 CSRF 令牌"
+      description: 仅登录/刷新/退出必需：先GET /api/auth/csrf，携带该Cookie及JSON token作为X-CSRF-TOKEN。Bearer业务写入不要求此头。
       schema:
-        type: "string"
+        type: string
         minLength: 1
     Page:
       name: "page"
@@ -1320,7 +1652,114 @@ components:
         minimum: 1
         maximum: 100
         default: 20
+    IdentitySystemCode:
+      name: systemCode
+      in: query
+      required: true
+      description: 显式指定业务系统，不代表版本前缀；系统准入必须验证。
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 64
+        pattern: \S
+    OptionalIdentitySystemCode:
+      name: systemCode
+      in: query
+      required: false
+      description: 显式指定业务系统，不代表版本前缀；系统准入必须验证。
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 64
+        pattern: \S
+    IdentityPermissionCode:
+      name: permissionCode
+      in: query
+      required: true
+      description: 目标系统中现有权限码。
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 128
+        pattern: \S
+    DirectoryView:
+      name: view
+      in: query
+      required: false
+      description: directory保留旧管理员原表目录；tree使用正式层级和身份范围。
+      schema:
+        type: string
+        enum:
+        - directory
+        - tree
+        default: directory
+    DirectoryParent:
+      name: parentId
+      in: query
+      required: false
+      description: 只适用tree，查可见正式组织的直接子级；与rootsOnly互斥。
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
+    DirectoryRoots:
+      name: rootsOnly
+      in: query
+      required: false
+      description: 只适用tree；true只查可见根，false查全部可见节点；无parentId/q时省略默认true。
+      schema:
+        type: boolean
+    DirectoryKeyword:
+      name: q
+      in: query
+      required: false
+      description: 去首尾空白；空白无筛选；包含匹配，%/_为普通字符。
+      schema:
+        type: string
+        maxLength: 128
+    DepartmentFilter:
+      name: departmentId
+      in: query
+      required: false
+      description: 只查直接归属；必须为可见 DEPARTMENT，类型错误400、不存在404、越界403。
+      schema:
+        type: integer
+        format: int64
+        minimum: 1
   responses:
+    BadRefresh:
+      description: 刷新凭证无效/到期或确认重用；清除本次客户端认证Cookie，重用同时撤销对应登录。
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            REFRESH_TOKEN_INVALID:
+              value:
+                code: REFRESH_TOKEN_INVALID
+                message: 刷新凭证无效，请重新登录
+            REFRESH_TOKEN_REUSED:
+              value:
+                code: REFRESH_TOKEN_REUSED
+                message: 登录凭证已失效，请重新登录
+    MissingCurrentApi:
+      description: 未知系统或目标系统未登记该API；先验证系统准入。
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/NoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            SYSTEM_NOT_FOUND:
+              value:
+                code: SYSTEM_NOT_FOUND
+                message: 业务系统不存在
+            API_NOT_FOUND:
+              value:
+                code: API_NOT_FOUND
+                message: 目标系统的API映射不存在
     BadRequest:
       description: "请求格式或参数无效"
       content:
@@ -1333,16 +1772,25 @@ components:
                 code: "VALIDATION_FAILED"
                 message: "请求参数无效"
     NoSession:
-      description: "需要有效登录会话"
+      description: 缺少/无效/已撤销Bearer身份或员工不可登录；单纯访问JWT过期单独返回ACCESS_TOKEN_EXPIRED。
       content:
-        "application/json":
+        application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           examples:
             AUTHENTICATION_REQUIRED:
               value:
-                code: "AUTHENTICATION_REQUIRED"
-                message: "请登录后重试"
+                code: AUTHENTICATION_REQUIRED
+                message: 请登录后重试
+            ACCESS_TOKEN_EXPIRED:
+              value:
+                code: ACCESS_TOKEN_EXPIRED
+                message: 访问凭证已过期
+      headers:
+        WWW-Authenticate:
+          description: 业务认证错误保留Bearer challenge。
+          schema:
+            type: string
     BadLogin:
       description: "账号不可登录或凭据无效"
       content:
@@ -1522,25 +1970,144 @@ components:
                 code: "UNSUPPORTED_MEDIA_TYPE"
                 message: "请使用 application/json"
     Unavailable:
-      description: "所需依赖暂不可用"
+      description: 认证Redis或授权数据库暂不可用，不降级为登录失败、无权限或allowed=false。
       content:
-        "application/json":
+        application/json:
           schema:
-            $ref: "#/components/schemas/Error"
+            $ref: '#/components/schemas/Error'
           examples:
-            SESSION_UNAVAILABLE:
-              value:
-                code: "SESSION_UNAVAILABLE"
-                message: "会话服务暂不可用"
             AUTHORIZATION_UNAVAILABLE:
               value:
-                code: "AUTHORIZATION_UNAVAILABLE"
-                message: "授权数据暂不可用"
+                code: AUTHORIZATION_UNAVAILABLE
+                message: 授权数据暂不可用
             SERVICE_UNAVAILABLE:
               value:
-                code: "SERVICE_UNAVAILABLE"
-                message: "业务数据服务暂不可用"
+                code: SERVICE_UNAVAILABLE
+                message: 业务数据服务暂不可用
+            AUTHENTICATION_UNAVAILABLE:
+              value:
+                code: AUTHENTICATION_UNAVAILABLE
+                message: 认证服务暂不可用
+    CurrentSystemForbidden:
+      description: 目标业务系统存在，但当前用户不可进入。
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/NoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            denied:
+              value:
+                code: SYSTEM_ACCESS_DENIED
+                message: 无权进入该业务系统
+    MissingCurrentPermission:
+      description: 系统不存在；或已准入但目标权限不存在。
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/NoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          examples:
+            SYSTEM_NOT_FOUND:
+              value:
+                code: SYSTEM_NOT_FOUND
+                message: 业务系统不存在
+            PERMISSION_NOT_FOUND:
+              value:
+                code: PERMISSION_NOT_FOUND
+                message: 目标系统的权限不存在
+    DirectoryReadForbidden:
+      description: 无原表目录管理资格，或指定组织超出当前目录读取范围。普通树和员工列表不要求管理员资格。
+      headers:
+        Cache-Control:
+          $ref: '#/components/headers/NoStore'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: PERMISSION_DENIED
+            message: 无权查看该组织的数据
   schemas:
+    AccessToken:
+      type: object
+      additionalProperties: false
+      properties:
+        accessToken:
+          type: string
+          description: 短期RS256签名访问JWT，仅存于前端内存；业务请求使用Bearer。
+        tokenType:
+          type: string
+          enum:
+          - Bearer
+        expiresIn:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 900
+          description: 实际剩余秒数，临近登录上限时可能小于900。
+      required:
+      - accessToken
+      - tokenType
+      - expiresIn
+    LoginResponse:
+      type: object
+      properties:
+        employee:
+          $ref: '#/components/schemas/EmployeeIdentity'
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+        defaultWorkspaceKey:
+          type: string
+          nullable: true
+          description: 管理员选 admin；员工优先部门默认系统，再选公司默认系统；无可用默认项时为 null。非 null 值必须存在于 workspaces。
+        accessToken:
+          type: string
+          description: 短期RS256签名访问JWT，仅存于前端内存；业务请求使用Bearer。
+        tokenType:
+          type: string
+          enum:
+          - Bearer
+        expiresIn:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 900
+          description: 实际剩余秒数，临近登录上限时可能小于900。
+      required:
+      - employee
+      - workspaces
+      - defaultWorkspaceKey
+      - accessToken
+      - tokenType
+      - expiresIn
+      additionalProperties: false
+    CurrentApiCheck:
+      type: object
+      additionalProperties: false
+      properties:
+        systemCode:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: \S
+        operationId:
+          type: string
+          minLength: 1
+          maxLength: 128
+          pattern: \S
+        allowed:
+          type: boolean
+      required:
+      - systemCode
+      - operationId
+      - allowed
     Error:
       type: "object"
       properties:
@@ -1858,22 +2425,142 @@ components:
         - "name"
         - "path"
     CurrentSession:
-      type: "object"
+      type: object
       properties:
         employee:
-          $ref: "#/components/schemas/EmployeeIdentity"
+          $ref: '#/components/schemas/EmployeeIdentity'
         workspaces:
-          type: "array"
+          type: array
           items:
-            $ref: "#/components/schemas/Workspace"
+            $ref: '#/components/schemas/Workspace'
         defaultWorkspaceKey:
-          type: "string"
+          type: string
           nullable: true
-          description: "管理员选 admin；员工优先部门默认系统，再选公司默认系统；无可用默认项时为 null。非 null 值必须存在于 workspaces。"
+          description: 管理员选 admin；员工优先部门默认系统，再选公司默认系统；无可用默认项时为 null。非 null 值必须存在于 workspaces。
       required:
-        - "employee"
-        - "workspaces"
-        - "defaultWorkspaceKey"
+      - employee
+      - workspaces
+      - defaultWorkspaceKey
+      additionalProperties: false
+    CurrentRole:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 1
+        name:
+          type: string
+        direct:
+          type: boolean
+        inherited:
+          type: boolean
+        inheritedFromRoleIds:
+          type: array
+          uniqueItems: true
+          items:
+            type: integer
+            format: int64
+            minimum: 1
+        appliesToSystem:
+          type: boolean
+      required:
+      - id
+      - name
+      - direct
+      - inherited
+      - inheritedFromRoleIds
+      - appliesToSystem
+    CurrentPermission:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 1
+        code:
+          type: string
+          minLength: 1
+          maxLength: 128
+          pattern: \S
+        name:
+          type: string
+      required:
+      - id
+      - code
+      - name
+    CurrentAuthorization:
+      type: object
+      additionalProperties: false
+      properties:
+        systemCode:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: \S
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrentRole'
+        effectivePermissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/CurrentPermission'
+        globalAdministrator:
+          type: boolean
+      required:
+      - systemCode
+      - roles
+      - effectivePermissions
+      - globalAdministrator
+    AuthorizedCurrentSession:
+      type: object
+      properties:
+        employee:
+          $ref: '#/components/schemas/EmployeeIdentity'
+        workspaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/Workspace'
+        defaultWorkspaceKey:
+          type: string
+          nullable: true
+          description: 管理员选 admin；员工优先部门默认系统，再选公司默认系统；无可用默认项时为 null。非 null 值必须存在于 workspaces。
+        authorization:
+          $ref: '#/components/schemas/CurrentAuthorization'
+      required:
+      - employee
+      - workspaces
+      - defaultWorkspaceKey
+      - authorization
+      additionalProperties: false
+    CurrentSessionResult:
+      oneOf:
+      - $ref: '#/components/schemas/CurrentSession'
+      - $ref: '#/components/schemas/AuthorizedCurrentSession'
+      description: 无systemCode时无authorization字段；有systemCode成功时必须包含authorization。
+    CurrentPermissionCheck:
+      type: object
+      additionalProperties: false
+      properties:
+        systemCode:
+          type: string
+          minLength: 1
+          maxLength: 64
+          pattern: \S
+        permissionCode:
+          type: string
+          minLength: 1
+          maxLength: 128
+          pattern: \S
+        allowed:
+          type: boolean
+      required:
+      - systemCode
+      - permissionCode
+      - allowed
     RequestTitleInput:
       type: "object"
       additionalProperties: false
@@ -1927,7 +2614,7 @@ components:
         allowedActions:
           type: "array"
           uniqueItems: true
-          description: "当前会话在目标系统的有效申请动作。修改、撤回与删除仍须符合申请人和状态约束。"
+          description: "当前用户在目标系统的有效申请动作。修改、撤回与删除仍须符合申请人和状态约束。"
           items:
             type: "string"
             enum: ["request:create", "request:update", "request:withdraw", "request:approve", "request:reject", "request:delete"]
@@ -1977,3 +2664,115 @@ components:
         execution: "SUCCEEDED"
         requestId: 301
         status: "APPROVED"
+    DirectoryEmployee:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 1
+        username:
+          type: string
+        name:
+          type: string
+        organizationId:
+          type: integer
+          format: int64
+          minimum: 1
+      required:
+      - id
+      - username
+      - name
+      - organizationId
+    DirectoryEmployeePage:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DirectoryEmployee'
+        page:
+          type: integer
+          minimum: 1
+          maximum: 21474836
+        pageSize:
+          type: integer
+          minimum: 1
+          maximum: 100
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+      required:
+      - items
+      - page
+      - pageSize
+      - total
+    EmployeeDirectoryResult:
+      anyOf:
+      - $ref: '#/components/schemas/DirectoryEmployeePage'
+      - $ref: '#/components/schemas/ManagementEmployeePage'
+      description: 普通员工仅最小字段；管理员保留旧投影。空页可同时符合两个Schema，故用anyOf。
+    OrganizationTreeNode:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+          minimum: 1
+        code:
+          type: string
+        name:
+          type: string
+        parentId:
+          type: integer
+          format: int64
+          minimum: 1
+          nullable: true
+        organizationType:
+          type: string
+          enum:
+          - COMPANY
+          - DEPARTMENT
+        hasChildren:
+          type: boolean
+      required:
+      - id
+      - code
+      - name
+      - parentId
+      - organizationType
+      - hasChildren
+    OrganizationTreePage:
+      type: object
+      additionalProperties: false
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationTreeNode'
+        page:
+          type: integer
+          minimum: 1
+          maximum: 21474836
+        pageSize:
+          type: integer
+          minimum: 1
+          maximum: 100
+        total:
+          type: integer
+          format: int64
+          minimum: 0
+      required:
+      - items
+      - page
+      - pageSize
+      - total
+    DepartmentDirectoryResult:
+      anyOf:
+      - $ref: '#/components/schemas/ManagementOrganizationPage'
+      - $ref: '#/components/schemas/OrganizationTreePage'
+      description: directory为旧目录字段，tree为正式树字段；投影由view确定。

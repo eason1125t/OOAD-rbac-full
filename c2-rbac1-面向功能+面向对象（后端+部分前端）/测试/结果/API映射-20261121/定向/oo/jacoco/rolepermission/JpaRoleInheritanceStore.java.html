@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JpaRoleInheritanceStore.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">rolepermission</a> &gt; <span class="el_source">JpaRoleInheritanceStore.java</span></div><h1>JpaRoleInheritanceStore.java</h1><pre class="source lang-java linenums">// 文件职责：适配对象版角色继承端口到 JPA。
+// 协作关系：通过 RoleInheritanceRepository 加锁和写边，装载 RoleHierarchy。
+package rolepermission;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+import rolepermission.domain.RoleHierarchy;
+
+/** 适配对象版角色继承端口到 JPA，通过 RoleInheritanceRepository 加锁和写边，装载 RoleHierarchy。 */
+@Repository
+@RequiredArgsConstructor
+class JpaRoleInheritanceStore implements RoleInheritanceStore {
+    private final RoleInheritanceRepository repository;
+
+    /** 锁定唯一层级锁记录，写入方先持锁再读取关系快照。 */
+    public void lockWrites() {
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        if (repository.lockGraph() == null) {</span>
+<span class="nc" id="L22">            throw new org.springframework.dao.DataRetrievalFailureException(&quot;角色层级锁记录不存在&quot;);</span>
+        }
+<span class="nc" id="L24">    }</span>
+
+    /** 从直接继承边构造邻接表，供本次业务检查和权限展开使用。 */
+    public RoleHierarchy snapshot() {
+<span class="nc" id="L28">        Map&lt;Long, Set&lt;Long&gt;&gt; parents = new HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">        for (RoleInheritance edge : repository.findAll()) {</span>
+<span class="nc" id="L30">            parents.computeIfAbsent(edge.getSeniorRoleId(), unused -&gt; new HashSet&lt;&gt;()).add(edge.getJuniorRoleId());</span>
+<span class="nc" id="L31">        }</span>
+<span class="nc" id="L32">        return new RoleHierarchy(parents);</span>
+    }
+
+    /** 检查直接继承边是否已存在，使合法重复添加保持幂等。 */
+    public boolean contains(RoleInheritanceKey key) {
+<span class="nc" id="L37">        return repository.existsById(key);</span>
+    }
+
+    /** 保存直接继承边；调用方须已持图写锁并完成业务校验。 */
+    public void add(RoleInheritanceKey key) {
+<span class="nc" id="L42">        repository.save(new RoleInheritance(key));</span>
+<span class="nc" id="L43">    }</span>
+
+    /** 删除直接继承边；同一事务内的锁和范围检查由调用方负责。 */
+    public void remove(RoleInheritanceKey key) {
+<span class="nc" id="L47">        repository.deleteById(key);</span>
+<span class="nc" id="L48">    }</span>
+
+    /** 检查角色任一方向的继承引用，删除角色前必须全部解除。 */
+    public boolean references(Long roleId) {
+<span class="nc" id="L52">        return repository.existsBySeniorRoleIdOrJuniorRoleId(roleId, roleId);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

@@ -1,0 +1,33 @@
+{
+  "originalFiles": 229,
+  "changed": [
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\assignment\\AssignmentService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\assignment\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authentication\\AuthController.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authentication\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authentication\\SessionAuthentication.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authentication\\WorkspaceService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authorization\\AuthorizationService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authorization\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authorization\\SecurityConfiguration.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\assignment\\AssignmentService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\assignment\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authentication\\AuthController.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authentication\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authentication\\SessionAuthentication.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authentication\\WorkspaceService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authorization\\AuthorizationService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authorization\\README.md",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authorization\\SecurityConfiguration.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\后端\\common\\java\\contract\\AuthSessionTest.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\pom.xml",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\pom.xml"
+  ],
+  "added": [
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-func\\src\\main\\java\\authentication\\CurrentEmployeeService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\backend-oo\\src\\main\\java\\authentication\\CurrentEmployeeService.java",
+    "c2-rbac1-面向功能+面向对象（后端+部分前端）\\测试\\后端\\common\\java\\authentication\\CurrentEmployeeServiceTest.java"
+  ],
+  "removed": [],
+  "protectedUnchanged": true
+}

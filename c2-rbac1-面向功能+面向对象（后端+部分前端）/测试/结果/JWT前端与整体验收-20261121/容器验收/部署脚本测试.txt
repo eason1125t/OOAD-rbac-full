@@ -1,0 +1,17 @@
+test_creates_unique_secrets (__main__.DeploymentSettingsTest.test_creates_unique_secrets)
+四个新凭据各自随机，且满足数据库/Redis 初始化的安全格式。 ... ok
+test_does_not_execute_or_expand_values (__main__.DeploymentSettingsTest.test_does_not_execute_or_expand_values)
+环境值只是配置数据，不触发 shell 展开。 ... ok
+test_jwt_keys_are_independent_and_preserved (__main__.DeploymentSettingsTest.test_jwt_keys_are_independent_and_preserved) ... ok
+test_mismatched_jwt_key_is_not_overwritten (__main__.DeploymentSettingsTest.test_mismatched_jwt_key_is_not_overwritten) ... ok
+test_preserves_existing_credentials (__main__.DeploymentSettingsTest.test_preserves_existing_credentials)
+重复准备不能意外旋转已经使用的数据库密码。 ... ok
+test_rejects_ambiguous_settings (__main__.DeploymentSettingsTest.test_rejects_ambiguous_settings)
+重复键、非法项目名和端口拒绝，避免误用另一组服务或宿主机端口。 ... ok
+test_rejects_invalid_existing_secret (__main__.DeploymentSettingsTest.test_rejects_invalid_existing_secret)
+已有非法凭据应报告错误，不能偷偷覆盖后导致数据库认证不一致。 ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 1.178s
+
+OK

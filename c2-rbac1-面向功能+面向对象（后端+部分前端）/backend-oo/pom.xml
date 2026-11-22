@@ -18,6 +18,8 @@
         <java.version>21</java.version>
         <clonefactory.version>0.0.1-SNAPSHOT</clonefactory.version>
         <jacoco.version>0.8.14</jacoco.version>
+        <!-- 可选隔离验证目录，避免占用运行中的默认 JAR；默认构建位置不变。 -->
+        <rbac.build.directory>target</rbac.build.directory>
     </properties>
     <dependencies>
         <dependency>
@@ -38,11 +40,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -102,6 +104,7 @@
         </dependency>
     </dependencies>
     <build>
+        <directory>${rbac.build.directory}</directory>
         <!-- 测试集中在 C2/测试；本版源码与公共契约分别接入。 -->
         <testSourceDirectory>${project.basedir}/../测试/后端/oo/java</testSourceDirectory>
         <plugins>
@@ -157,7 +160,7 @@
                 <configuration>
                     <systemPropertyVariables><rbac.test.edition>oo</rbac.test.edition></systemPropertyVariables>
                     <!-- 相对目标路径避免 Windows 测试进程损坏中文目录名。 -->
-                    <argLine>-javaagent:"${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar"=destfile=target/jacoco.exec,append=false</argLine>
+                    <argLine>-javaagent:"${settings.localRepository}/org/jacoco/org.jacoco.agent/${jacoco.version}/org.jacoco.agent-${jacoco.version}-runtime.jar"=destfile=${rbac.build.directory}/jacoco.exec,append=false</argLine>
                 </configuration>
             </plugin>
             <plugin>

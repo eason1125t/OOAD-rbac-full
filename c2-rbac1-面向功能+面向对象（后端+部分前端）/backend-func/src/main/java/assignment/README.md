@@ -16,7 +16,7 @@
 
 ### `changeEmployeeRole`
 
-READ_COMMITTED 事务中先验证管理员动作，再按“图锁 → 角色行 → 员工行”获取锁，校验两端管理范围。局部管理员对新增和撤销都要求角色归属属于员工部门/公司链。只有新增且关系尚不存在时，才用 `WorkspaceService.canSignIn` 拒绝无组织或停用员工，展开角色带来的全部权限来源，通过 `requireGrantableSources` 验证后保存。
+READ_COMMITTED 事务中先验证管理员动作，再按“图锁 → 角色行 → 员工行”获取锁，校验两端管理范围。局部管理员对新增和撤销都要求角色归属属于员工部门/公司链。只有新增且关系尚不存在时，才用 `CurrentEmployeeService.canSignIn` 拒绝无组织或停用员工，展开角色带来的全部权限来源，通过 `requireGrantableSources` 验证后保存。
 
 撤销分配不应受当前停用策略阻拦；合法重复增删保持幂等。撤销只移除该直接关系，员工仍有其他有效路径时不会失去相应权限。
 
@@ -47,8 +47,8 @@ READ_COMMITTED 事务中先验证管理员动作，再按“图锁 → 角色行
 
 继承、员工授角、角色授权及角色删除共同使用图写锁。组织停用仅锁权限，重授锁角色再锁权限。不能将所有写入笼统描述为同一种锁顺序，也不为解释简单而更换现有顺序。
 
-调用链：`AssignmentController → AssignmentService → AuthorizationService / WorkspaceService / 图快照与各 JPA 仓储`；`OrganizationPermissionController → OrganizationPermissionService → 组织、系统、角色、权限、策略与重授仓储`。反向调用方包括继承服务的新增授权检查及实时授权对提交配置的读取。
+调用链：`AssignmentController → AssignmentService → AuthorizationService / CurrentEmployeeService 资格谓词 / 图快照与各 JPA 仓储`；`OrganizationPermissionController → OrganizationPermissionService → 组织、系统、角色、权限、策略与重授仓储`。反向调用方包括继承服务的新增授权检查及实时授权对提交配置的读取。
 
 特别技术包括 `@Transactional(READ_COMMITTED)`、JPA `PESSIMISTIC_WRITE`、复合主键、`TreeMap` 稳定锁顺序、`@Modifying` 的范围重授清理及数据库外键级联。`requireManaged` 当前覆盖公司及直属部门，不承诺任意深组织树。
 
-API 为 `/api/employees/{employeeId}/roles/{roleId}`、`/api/roles/{roleId}/permissions/{permissionId}` 和组织系统动作策略资源。身份来自 `@AuthenticationPrincipal`，管理或归属越权为 403，缺失为 404，停用等分配规则冲突为 409。准确契约及现有验证见 [OpenAPI](../../../../../api/openapi.yaml)、[双版本测试记录](../../../../../测试/历史/双版本测试记录.md)。
+API 为 `/api/employees/{employeeId}/roles/{roleId}`、`/api/roles/{roleId}/permissions/{permissionId}` 和组织系统动作策略资源。身份来自 `@AuthenticationPrincipal`，管理或归属越权为 403，缺失为 404，停用等分配规则冲突为 409。准确契约及现有验证见 [OpenAPI](../../../../../api/openapi.yaml)、[双版本测试记录](../../../../../测试/README.md)。

@@ -1,0 +1,17 @@
+{
+  "edition": "func",
+  "startedUtc": "2026-11-21T12:24:00.364291+00:00",
+  "completedUtc": "2026-11-21T12:24:09.080260+00:00",
+  "exitCode": 1,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "f1030240318cd4004b0409d28dbd188c0dcb567810fe495367d771745d169653",
+  "tests": {
+    "tests": 0,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {},
+  "jwtTestPublicKeySha256": "c0939e7fc91ac75e1bff0024a2911274c7d51f7d6d3092d86e8641fa072134b9",
+  "authNamespace": "rbac1:func:jwt-test:79hdva02"
+}

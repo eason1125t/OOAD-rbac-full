@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Employee.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">organization</a> &gt; <span class="el_source">Employee.java</span></div><h1>Employee.java</h1><pre class="source lang-java linenums">// 文件职责：映射员工资料、原表归属和启用状态。
+// 协作关系：供初始化、登录有效性验证及管理查询维护共用。
+package organization;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+/** employee 表的 JPA 映射，供初始化和后续业务查询使用。 */
+@Entity
+@Table(name = &quot;employee&quot;)
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String username;
+    private String name;
+    private Long organizationId;
+    private String sourceBranchName;
+    private String sourceDepartmentName;
+    private String jobTitle;
+    private String phone;
+<span class="fc" id="L31">    private boolean enabled = true;</span>
+
+    /** 构建待保存记录，由数据库维护审计时间。 */
+    public Employee(String username, String name, Long organizationId, String sourceBranchName,
+<span class="fc" id="L35">                    String sourceDepartmentName, String jobTitle, String phone) {</span>
+<span class="fc" id="L36">        this.username = username;</span>
+<span class="fc" id="L37">        this.name = name;</span>
+<span class="fc" id="L38">        this.organizationId = organizationId;</span>
+<span class="fc" id="L39">        this.sourceBranchName = sourceBranchName;</span>
+<span class="fc" id="L40">        this.sourceDepartmentName = sourceDepartmentName;</span>
+<span class="fc" id="L41">        this.jobTitle = jobTitle;</span>
+<span class="fc" id="L42">        this.phone = phone;</span>
+<span class="fc" id="L43">    }</span>
+
+    /** 更新可维护资料，保留用户名及原表归属字段。 */
+    public void updateProfile(String name, Long organizationId, String jobTitle, String phone) {
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (name != null) {</span>
+<span class="nc" id="L48">            this.name = name;</span>
+        }
+<span class="nc bnc" id="L50" title="All 2 branches missed.">        if (organizationId != null) {</span>
+<span class="nc" id="L51">            this.organizationId = organizationId;</span>
+        }
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (jobTitle != null) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            this.jobTitle = jobTitle.isBlank() ? null : jobTitle;</span>
+        }
+<span class="nc bnc" id="L56" title="All 2 branches missed.">        if (phone != null) {</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">            this.phone = phone.isBlank() ? null : phone;</span>
+        }
+<span class="nc" id="L59">    }</span>
+
+    /** 停用员工，保留历史分配和账号引用。 */
+    public void disable() {
+<span class="nc" id="L63">        enabled = false;</span>
+<span class="nc" id="L64">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

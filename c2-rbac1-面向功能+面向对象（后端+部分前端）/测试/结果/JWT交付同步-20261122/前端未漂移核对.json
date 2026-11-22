@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "sha256": "6968691fad4911469930abd3c8217d7497750b4bb41040d61db8519dc083002a",
+  "comparedWith": "JWT前端与整体验收-20261121/最终完整验收",
+  "scope": "production frontend and TS browser tests unchanged"
+}

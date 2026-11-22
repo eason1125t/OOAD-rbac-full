@@ -1,3 +1,4 @@
+import { apiFetch, apiGet, trackAuth } from './support/auth'
 // 对两版运行相同的角色权限页检查，写操作只作用于用例自身创建的测试角色。
 import { randomUUID } from 'node:crypto'
 import { expect, test, type Page } from '@playwright/test'
@@ -18,6 +19,7 @@ const approval = '工程申请审批'
 
 test.beforeEach(async ({ page }) => {
   await page.goto(prefix() + '/')
+  trackAuth(page)
   await page.getByLabel('用户名').fill('super-admin')
   await page.getByLabel('密码').fill('1234')
   await page.getByRole('button', { name: '登录', exact: true }).click()
@@ -25,14 +27,14 @@ test.beforeEach(async ({ page }) => {
 })
 
 async function get<T>(page: Page, path: string): Promise<T> {
-  const response = await page.request.get(prefix() + path)
+  const response = await apiGet(page, prefix() + path)
   expect(response.status(), path).toBe(200)
   return response.json()
 }
 
 async function write(page: Page, method: 'POST' | 'PUT' | 'DELETE', path: string, body?: object) {
   const { token } = await get<{ token: string }>(page, '/api/auth/csrf')
-  const response = await page.request.fetch(prefix() + path, {
+  const response = await apiFetch(page, prefix() + path, {
     method, data: body, headers: { 'X-CSRF-TOKEN': token },
   })
   expect(response.status(), `${method} ${path}`).toBe(method === 'POST' ? 201 : 204)

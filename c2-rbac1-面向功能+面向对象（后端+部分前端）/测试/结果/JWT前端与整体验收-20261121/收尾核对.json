@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "completedLocal": "2026-11-22T00:01:07.766872+08:00",
+  "backendTests": {
+    "func": {
+      "tests": 194,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "oo": {
+      "tests": 198,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "browserTests": {
+    "startTime": "2026-11-21T15:59:11.421Z",
+    "duration": 116142.58099999999,
+    "expected": 51,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "deployment": {
+    "unitTests": 7,
+    "httpGroups": 7,
+    "browserTests": 3,
+    "temporaryContainersStopped": true
+  },
+  "frontendAndTestSha256": "6968691fad4911469930abd3c8217d7497750b4bb41040d61db8519dc083002a",
+  "evidenceCredentialPatternMatches": 0,
+  "oldDevelopmentServices": "18181/18182 left running; temporary 28181/28182/15173/18081 stopped",
+  "pending": [
+    "JWT design diagrams and final Apifox synchronization (stage 6)",
+    "teammate Swarm/TLS/persistence acceptance",
+    "cross-project integration and CORS"
+  ]
+}

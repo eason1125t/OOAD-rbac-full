@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurrentSessionVO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-func</a> &gt; <a href="index.source.html" class="el_package">authentication.vo</a> &gt; <span class="el_source">CurrentSessionVO.java</span></div><h1>CurrentSessionVO.java</h1><pre class="source lang-java linenums">// 文件职责：返回当前员工、管理员范围和可选工作区。
+// 协作关系：由 WorkspaceService 构造，AuthController 输出给前端。
+package authentication.vo;
+
+import authentication.WorkspaceService.CurrentSession;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import java.util.List;
+
+/** 登录与当前身份接口共用的导航响应，不暴露 JPA 对象。 */
+<span class="nc" id="L10">public record CurrentSessionVO(EmployeeVO employee, List&lt;WorkspaceVO&gt; workspaces, String defaultWorkspaceKey,</span>
+                               @JsonInclude(JsonInclude.Include.NON_NULL) CurrentAuthorizationVO authorization) {
+    /** 将当前身份和业务导航映射为公开响应。 */
+    public static CurrentSessionVO from(CurrentSession session) {
+<span class="nc" id="L14">        return new CurrentSessionVO(</span>
+<span class="nc" id="L15">                new EmployeeVO(session.employee().id(), session.employee().username(), session.employee().name(),</span>
+<span class="nc" id="L16">                        session.employee().organizationId()),</span>
+<span class="nc" id="L17">                session.workspaces().stream()</span>
+<span class="nc" id="L18">                        .map(workspace -&gt; new WorkspaceVO(workspace.key(), workspace.type(), workspace.name(), workspace.path()))</span>
+<span class="nc" id="L19">                        .toList(),</span>
+<span class="nc" id="L20">                session.defaultWorkspaceKey(), null);</span>
+    }
+
+    /** 只在显式指定系统时增加授权；登录和无参数me继续省略该字段。 */
+    public CurrentSessionVO withAuthorization(CurrentAuthorizationVO value) {
+<span class="nc" id="L25">        return new CurrentSessionVO(employee, workspaces, defaultWorkspaceKey, value);</span>
+    }
+
+    /** 当前登录员工的公开身份。 */
+<span class="nc" id="L29">    public record EmployeeVO(Long id, String username, String name, Long organizationId) {</span>
+    }
+
+    /** 当前员工可进入的同源工作区。 */
+<span class="nc" id="L33">    public record WorkspaceVO(String key, String type, String name, String path) {</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

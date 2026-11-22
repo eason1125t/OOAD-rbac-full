@@ -1,0 +1,15 @@
+[WebServer] (node:25468) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] (node:52928) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:33192) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 1 [oo] › tests\jwt.spec.ts:175:1 › JWT 刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录 (3.1s)
+(node:60004) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ok 2 [func] › tests\jwt.spec.ts:175:1 › JWT 刷新网络故障保留Cookie并停止自动重试，恢复网络后可显式重新登录 (3.1s)
+
+  2 passed (11.0s)

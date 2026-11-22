@@ -1,0 +1,8 @@
+本次最终验证工作目录：D:/lesson/26-27 SEM1/ooad-rbac-project
+先生成git检查证据，再检查包含证据链接的文档：
+git diff --check
+$env:PYTHONPATH = "$env:TEMP/c2-contract-validation-20261121"
+python 'c2-rbac1-面向功能+面向对象（后端+部分前端）/测试/契约/check_identity_contract.py'
+文件范围检查：比较本轮开始前与结束时234个受保护文件SHA-256，变化0，详见文件范围检查.json。
+依赖安装位于系统临时目录，未修改项目生产/前端依赖；复现依赖见测试/契约/requirements.txt。
+输出文件各自追加PROCESS_EXIT_CODE；曾因证据文件先引用后生成失败一次，已另存首次失败输出。

@@ -1,0 +1,74 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile.backend
+#1 transferring dockerfile: 1.33kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for public.ecr.aws/docker/library/eclipse-temurin:21-jre-noble
+#2 DONE 0.1s
+
+#3 [internal] load metadata for public.ecr.aws/docker/library/maven:3.9.11-eclipse-temurin-21
+#3 DONE 0.1s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 353B done
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 DONE 0.0s
+
+#6 [stage-1 1/5] FROM public.ecr.aws/docker/library/eclipse-temurin:21-jre-noble@sha256:0d57a8e90c2bb844c5a8e1b2b71e11eff06dad7edcfd803cd21ed4ae203b2515
+#6 resolve public.ecr.aws/docker/library/eclipse-temurin:21-jre-noble@sha256:0d57a8e90c2bb844c5a8e1b2b71e11eff06dad7edcfd803cd21ed4ae203b2515 0.1s done
+#6 DONE 0.1s
+
+#7 [build 1/7] FROM public.ecr.aws/docker/library/maven:3.9.11-eclipse-temurin-21@sha256:6fdc855a6ed81d288ca7ca37ac6ff5e9308b612485c0801d70b25a858c83d237
+#7 resolve public.ecr.aws/docker/library/maven:3.9.11-eclipse-temurin-21@sha256:6fdc855a6ed81d288ca7ca37ac6ff5e9308b612485c0801d70b25a858c83d237 0.1s done
+#7 DONE 0.1s
+
+#5 [internal] load build context
+#5 transferring context: 454.15kB 0.0s done
+#5 DONE 0.1s
+
+#8 [build 2/7] WORKDIR /workspace
+#8 CACHED
+
+#9 [build 3/7] COPY backend-oo/tools/clonefactory/ tools/clonefactory/
+#9 CACHED
+
+#10 [build 5/7] COPY backend-oo/pom.xml pom.xml
+#10 CACHED
+
+#11 [build 4/7] RUN --mount=type=cache,target=/root/.m2/repository mvn -B -f tools/clonefactory/pom.xml install
+#11 CACHED
+
+#12 [build 6/7] COPY backend-oo/src/ src/
+#12 CACHED
+
+#13 [build 7/7] RUN --mount=type=cache,target=/root/.m2/repository mvn -B -Dmaven.test.skip=true package     && cp target/rbac1-oo-0.1.0-SNAPSHOT.jar /workspace/rbac1.jar
+#13 CACHED
+
+#14 [stage-1 2/5] WORKDIR /app
+#14 CACHED
+
+#15 [stage-1 3/5] COPY --from=build /workspace/rbac1.jar /app/rbac1.jar
+#15 CACHED
+
+#16 [stage-1 4/5] COPY 部署/backend-entrypoint.sh /app/entrypoint.sh
+#16 DONE 0.1s
+
+#17 [stage-1 5/5] RUN chmod 0555 /app/entrypoint.sh
+#17 DONE 0.3s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 0.3s done
+#18 exporting manifest sha256:a705118eb2cdad6caf00ec9997da154faece68635fb3e7f5a6318f6612e58b50 0.0s done
+#18 exporting config sha256:c0343ba236131ce472d376b8dd9103b96f202ec03b923ba8c1d13397f75f728b 0.0s done
+#18 exporting attestation manifest sha256:49aa1d2667eae2bc97fd0fc28b3544e087f2cf12f623f30491894044a9625ce0
+#18 exporting attestation manifest sha256:49aa1d2667eae2bc97fd0fc28b3544e087f2cf12f623f30491894044a9625ce0 0.0s done
+#18 exporting manifest list sha256:3b34bbe43fd18b4fea2caa0cbedbe48227e609090768a4c0e053ad50c58d0009 0.0s done
+#18 naming to docker.io/rbac-c2/backend-oo:jwt-20261121154541 done
+#18 unpacking to docker.io/rbac-c2/backend-oo:jwt-20261121154541 0.1s done
+#18 DONE 0.6s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/jnhtjzbm4zwa7i56jbjw6xdgk

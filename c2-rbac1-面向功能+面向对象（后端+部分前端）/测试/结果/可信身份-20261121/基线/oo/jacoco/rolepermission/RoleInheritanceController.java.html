@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RoleInheritanceController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">rbac1-oo</a> &gt; <a href="index.source.html" class="el_package">rolepermission</a> &gt; <span class="el_source">RoleInheritanceController.java</span></div><h1>RoleInheritanceController.java</h1><pre class="source lang-java linenums">// 文件职责：提供直接继承边的幂等增删 API。
+// 协作关系：将可信操作者及角色 ID 传给 RoleInheritanceService。
+package rolepermission;
+
+import jakarta.validation.constraints.Positive;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/** 提供直接继承边的幂等增删 API，将可信操作者及角色 ID 传给 RoleInheritanceService。 */
+@RestController
+@ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
+@RequiredArgsConstructor
+public class RoleInheritanceController {
+    private static final String EDGE = &quot;/api/roles/{roleId}/parents/{parentRoleId}&quot;;
+
+    private final RoleInheritanceService inheritance;
+
+    /** 新增直接继承边，由 Service 校验范围、环路与增量授权后返回 204。 */
+    @PutMapping(EDGE)
+    public ResponseEntity&lt;Void&gt; add(@AuthenticationPrincipal Long actor, @PathVariable @Positive Long roleId,
+                                    @PathVariable @Positive Long parentRoleId) {
+<span class="fc" id="L28">        inheritance.change(actor, roleId, parentRoleId, true);</span>
+<span class="fc" id="L29">        return ResponseEntity.noContent().build();</span>
+    }
+
+    /** 移除直接继承边，合法重复移除保持幂等并返回 204。 */
+    @DeleteMapping(EDGE)
+    public ResponseEntity&lt;Void&gt; remove(@AuthenticationPrincipal Long actor, @PathVariable @Positive Long roleId,
+                                       @PathVariable @Positive Long parentRoleId) {
+<span class="fc" id="L36">        inheritance.change(actor, roleId, parentRoleId, false);</span>
+<span class="fc" id="L37">        return ResponseEntity.noContent().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

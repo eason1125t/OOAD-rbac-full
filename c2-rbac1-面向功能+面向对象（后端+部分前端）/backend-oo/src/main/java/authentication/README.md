@@ -1,61 +1,48 @@
-# 登录、会话与工作区
+# 认证、独立登录状态与工作区
 
-## 核心功能
+## 当前实现
 
-本模块把账号密码转换为可信员工身份，管理登录和退出，并计算该员工可进入的管理台及业务系统。系统准入和具体动作授权是两个判断：能进入系统不代表能查看或审批申请。两版本模块实现相同，隔离由各自 Cookie、Redis 命名空间和 MySQL 库实现。
+两版后端使用 Spring Security Bearer JWT + Redis 独立 sid 登录记录。账号密码验证、登录生命周期、HTTP Cookie 与业务授权分开；继续使用原 PBKDF2、员工资格、工作区和实时 RBAC1 授权。不使用 tokenVersion、用户版本字段或全账号递增计数器。
+
+第3部分的后端实现及真实测试见 [生命周期验证](../../../../../测试/README.md)，契约见 [JWT方案](../../../../../docs/项目总结.md) 和 [主OpenAPI](../../../../../api/openapi.yaml)。第4部分已接入内存JWT与同版SharedWorker协调，并完成部署密钥挂载；第4/5部分进度及证据见[前端与整体验收](../../../../../测试/README.md)。现有旧运行服务没有替换。
 
 ## 文件分工
 
-| 文件 | 主要职责 |
+| 文件 | 职责及协作 |
 | --- | --- |
-| [AuthController](AuthController.java) | 登录、CSRF、当前会话、系统列表及退出的 HTTP 适配 |
-| [SessionAuthentication](SessionAuthentication.java) | 凭据核验、轮换会话 ID、保存 SecurityContext、结束会话 |
-| [WorkspaceService](WorkspaceService.java) | 活跃员工、组织上下文、系统准入和默认工作区 |
-| [LoginAccount](LoginAccount.java) / [LoginAccountRepository](LoginAccountRepository.java) | 员工与账号密码哈希的 JPA 映射及查询 |
-| [PasswordConfiguration](PasswordConfiguration.java) | 提供 PBKDF2 `PasswordEncoder` |
-| [DemoLoginAccounts](DemoLoginAccounts.java) | 显式演示开关及命令下初始化八个合成账号 |
-| [SessionStoreFailure](SessionStoreFailure.java) | 沿异常原因链识别 Spring Redis 与 Lettuce 会话故障 |
-| [LoginDTO](dto/LoginDTO.java)、[CurrentSessionVO](vo/CurrentSessionVO.java) 等 | 请求校验及公开身份、系统、CSRF 响应；不暴露账号实体 |
+| [AuthController](AuthController.java) | 登录/刷新/退出、CSRF、自身身份/权限和系统列表；准备工作区后调用生命周期，不从请求参数选择自身身份 |
+| [AccountAuthentication](AccountAuthentication.java) | 账号密码校验及有效员工资格；未知账号执行备用哈希验证，统一失败响应 |
+| [AuthenticationConfiguration](AuthenticationConfiguration.java) / [AuthenticationProperties](AuthenticationProperties.java) | 配置绑定、UTC时钟、外部PEM密钥和Cookie CSRF；非Web初始化不读取JWT密钥 |
+| [LoginAuthentication](LoginAuthentication.java) | 创建sid、准备JWT、提交Redis登录、严格刷新和当前登录撤销；成功前不发布凭证 |
+| [RedisLoginStore](RedisLoginStore.java) / [登录状态Lua](../../resources/authentication/login-state.lua) | 原子检查、消费旧摘要、重用撤销、归属校验和绝对期限；同sid使用同一hash tag |
+| [RefreshCredential](RefreshCredential.java) | sid加256位随机secret，规范解析及SHA-256摘要；Redis不接收原始值 |
+| [JwtAccessTokens](JwtAccessTokens.java) | Spring/Nimbus RS256签发验签、原始sub类型、issuer/audience及时间校验 |
+| [JwtEmployeeAuthentication](JwtEmployeeAuthentication.java) | 强制在线登录记录和最新员工检查，返回Long principal；不信任JWT roles/scope作为业务权限 |
+| [AuthCookies](AuthCookies.java) | 分版HttpOnly刷新Cookie的读取/写入/清理；重复同名Cookie按无效处理 |
+| [AuthenticationFailure](AuthenticationFailure.java) / [AuthenticationStoreFailure](AuthenticationStoreFailure.java) | 区分确定性401与认证存储503，不泄露凭证或存储记录 |
+| [CurrentEmployeeService](CurrentEmployeeService.java) | 依据可信ID读取最新员工，要求启用且有组织归属；不建立凭证或计算权限 |
+| [CurrentAuthorizationService](CurrentAuthorizationService.java) | 自身角色来源/有效权限和两类预查询，复用原授权计算 |
+| [WorkspaceService](WorkspaceService.java) | 可进入的管理/业务工作区与默认导航，不替代动作授权 |
+| [LoginAccount](LoginAccount.java) / [LoginAccountRepository](LoginAccountRepository.java) / [PasswordConfiguration](PasswordConfiguration.java) | 员工账号、PBKDF2及仓储；原密码策略不变 |
+| [DemoLoginAccounts](DemoLoginAccounts.java) | 显式演示开关与--init-demo，保留原合成账号初始化，不开放任意员工默认密码 |
+| [LoginResponseVO](vo/LoginResponseVO.java) / [AccessTokenVO](vo/AccessTokenVO.java) / [CurrentSessionVO](vo/CurrentSessionVO.java) | 登录在原身份字段上增加访问凭证；刷新仅三字段；me保留旧身份结构。toString不输出凭证 |
 
-## 核心函数的实现
+## 核心流程与失败边界
 
-### 登录：`AuthController.login` 与 `SessionAuthentication.verify/start`
+登录先验证账号、读取最新员工并准备工作区，再准备JWT、建立独立Redis登录记录；只有整个流程成功才返回访问JWT和刷新Cookie。同浏览器已有可证明归属的刷新凭证时，成功替换登录会撤销该旧sid，其他浏览器不受影响；失败的密码校验不先撤销原登录。新记录建立后若旧记录撤销失败，会尝试撤销未发布的新记录并返回故障。
 
-1. Controller 用 `@Valid` 校验登录 DTO。身份和密码不能通过 URL 中的角色参数替代。
-2. `verify` 按用户名找员工，再读取员工关联的 `LoginAccount`。即使没有账号，也使用构造时生成的备用密码哈希执行一次 `matches`，减少未知账号直接早退造成的密码计算成本差异。
-3. 密码错误、缺账号、员工停用或组织未匹配统一拒绝，不在登录响应中区分具体账号状态。
-4. Controller 先调用 `workspaces.current(employee)` 并形成响应，再调用 `sessions.start` 建立登录上下文，避免工作区计算失败后仍留下成功登录。
-5. `start` 创建或取得会话、`changeSessionId` 抵御会话固定，清除旧 CSRF，再将仅含可信员工 ID 的认证上下文保存到 `HttpSessionSecurityContextRepository` 和当前线程上下文。
-6. 登录后客户端重新领取 CSRF。会话不保存密码、角色闭包或永久有效权限。
+刷新先验证凭证格式和摘要，读取所属登录并核对最新员工。签发准备成功后，Lua原子核对当前摘要、记录已消费摘要、保存新摘要，并保留原绝对到期。两次并发提交同一凭证只有一次成功，另一次确认重用会撤销整个sid；已成功签发的访问JWT也会在下一次认证时被拒绝。未知secret仅拒绝，不能凭sid撤销他人。刷新网络结果不确定时不自动重试。
 
-### 工作区：`WorkspaceService.context/current/listSystems`
+业务请求完整验签、校验字段后，先核对Redis记录与employeeId，再读最新员工；员工停用或无归属时撤销当前sid，重新启用不能复活这次已观察到失效的登录。数据库/Redis故障不降级为无权限、allowed=false或验签即放行。角色、继承和组织权限策略仍由原AuthorizationService实时计算。
 
-`findActiveEmployee` 每次从 MySQL 读取员工，`canSignIn` 要求启用且有明确组织。`context` 将员工、组织及管理员配置转换为不可变上下文：GLOBAL 可进入所有系统；普通员工覆盖所属组织及父公司；局部管理员依据管理组织计算范围，公司管理员另含直属部门。当前模型支持公司及直接下属部门，不是任意深度组织树。
+登录绝对上限8小时，访问JWT最多15分钟且不超过登录期限，刷新/业务访问均不续期。时钟偏差只用于JWT校验，不延长Redis登录期限。退出核验当前或已消费摘要后撤销sid；无/未知刷新Cookie幂等返回204，但存储故障不假报成功。并发撤销不承诺中断已进入执行的事务。
 
-`current` 给管理员优先选择管理工作区，再加入可见业务系统；普通员工依次尝试本部门默认系统、父公司默认系统，无可用项时允许默认值为空。业务路由本身为 `/business/{code}/`，`/func/`、`/oo/` 由前端版本导航和代理保留。
+Cookie CSRF仅用于登录、刷新、退出。JSON提供掩码token，Cookie为HttpOnly，写入口使用X-CSRF-TOKEN；业务Bearer无需CSRF。Controller在登录成功和退出时清理CSRF，关闭框架对每次Bearer认证自动清理CSRF的行为，避免并发业务请求破坏刷新。访问JWT已过期不会阻止Cookie认证入口。
 
-`listSystems` 读取可进入系统并补组织名称。此列表不替代 `AuthorizationService` 的逐动作实时判权。
+## 工作区、授权及运行
 
-### 退出和演示初始化
+管理员优先管理工作区，再加入可进入的业务系统；员工优先部门默认系统，再选父公司默认系统，无可用项允许默认值为空。当前组织模型为公司及直属部门，不扩大为任意深度。GLOBAL/组织管理员的管理资格、数据范围、继承、组织停用/重开/同源重授保持原实现。
 
-`end` 通过 `SecurityContextLogoutHandler` 清理安全上下文并使本版会话失效。另一版的会话由不同 Cookie 和 Redis 命名空间保存，因此不会一并退出。
+Web启动必须提供稳定外部PKCS#8私钥和X.509公钥，两版密钥独立，同版多个副本配置一致；缺失/无效密钥启动失败，不随机生成生产密钥。运行变量见 [本步运行说明](../../../../../测试/README.md)。初始化命令仍显式使用--init-demo或--import-excel，非Web流程不需要JWT私钥。
 
-`DemoLoginAccounts.run` 同时要求 `rbac.demo.accounts-enabled=true` 和 `--init-demo`，并在员工初始化之后运行。当前演示密码为代码中的 `1234` 常量，只用于合成账号；真实哈希由 PBKDF2 产生。已有同密码账号不重复编码，密码不一致时重置演示账号。这里不能写成演示密码已由环境变量注入。
-
-## 调用其他模块与被调用
-
-- `AuthController → SessionAuthentication → EmployeeRepository / LoginAccountRepository / PasswordEncoder`。
-- `AuthController → WorkspaceService → Employee / Organization / AdministratorScope / BusinessSystem Repository`。
-- [SecurityConfiguration](../authorization/SecurityConfiguration.java) 每次请求复验活跃员工；[AuthorizationService](../authorization/AuthorizationService.java) 复用工作区上下文检查系统准入。
-- [AssignmentService](../assignment/AssignmentService.java) 用 `canSignIn` 阻止向不可登录员工新增角色。
-- [LayerLoggingAspect](../contract/LayerLoggingAspect.java) 显式跟踪 `verify/start/end`，不在认证类中记录凭据。
-
-## 使用的技术及原因
-
-Spring MVC 与 Bean Validation 处理 JSON 和输入边界；Spring Security 的 `@AuthenticationPrincipal` 与 SecurityContext 提供可信身份；PBKDF2 加盐哈希避免明文密码存储；Spring Session Redis 支持服务端会话失效；只读事务、不可变 record/集合使工作区上下文可明确传递。`CurrentSessionVO`、`BusinessSystemVO` 当前使用显式字段映射，不把所有 VO 都描述为 CloneFactory 生成。
-
-## API、失败与验证
-
-`GET /api/auth/csrf`、`POST /api/auth/login`、`GET /api/auth/me`、`POST /api/auth/logout`、`GET /api/business-systems` 的精确响应见 [共同 OpenAPI](../../../../../api/openapi.yaml)。响应采用 `no-store`。
-
-凭据失败为 `401 INVALID_CREDENTIALS`；失效身份为 `401 AUTHENTICATION_REQUIRED`；非 JSON 登录为 415。Redis 故障由外层过滤器或统一异常处理转换为 `503 SESSION_UNAVAILABLE`，不是由每个 Controller 重复捕获。现有验证入口为 `测试/后端/common/java/contract/AuthSessionTest.java`；结果与环境见 [历史测试记录](../../../../../测试/历史/双版本测试记录.md)，测试重组已完成，后续按 [收尾清单](../../../../../收尾清单.md) 执行。
+测试集中在C2测试目录，原65项HTTP业务场景已改为Bearer而非降低授权断言；新增真实Redis并发、JWT生命周期HTTP、Cookie/配置和启动边界。测试临时密钥由运行器在工作区外生成，不归档私钥，不改演示库、不停止共享依赖。

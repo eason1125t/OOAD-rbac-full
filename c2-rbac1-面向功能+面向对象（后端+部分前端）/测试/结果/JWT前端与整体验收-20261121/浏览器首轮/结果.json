@@ -1,0 +1,33 @@
+{
+  "startedUtc": "2026-11-21T15:38:28.380395+00:00",
+  "suite": "identity",
+  "databases": {
+    "func": "ooad_rbac1_func_ui_test",
+    "oo": "ooad_rbac1_oo_ui_test"
+  },
+  "ports": [
+    28181,
+    28182,
+    15173
+  ],
+  "jars": {
+    "func": "a4981a332367673239017cfbce38355f6393db9f7c376eb6247e7e26840b6980",
+    "oo": "67a4567692801a514c046e683ddfba0524b00dde263177a34e8c510990b28044"
+  },
+  "authNamespaces": {
+    "func": "rbac1:func:ui-jwt-test:20261121153834_532339ff",
+    "oo": "rbac1:oo:ui-jwt-test:20261121153834_c8c2dc1b"
+  },
+  "exitCode": 1,
+  "stats": {
+    "startTime": "2026-11-21T15:39:05.798Z",
+    "duration": 48602.383,
+    "expected": 24,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "frontendAndTestSha256": "b6f1416f3a912d36953e5107a95c2f5e162fbd249be1353de302c17a58797136",
+  "temporaryBackendsStopped": true,
+  "completedUtc": "2026-11-21T15:39:54.591666+00:00"
+}

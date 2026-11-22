@@ -1,0 +1,1 @@
+{"status": "passed", "operations": 8, "examples": 12, "negativeAndEmptyCases": 14, "localLinks": 57, "scope": "static contract validation only; no HTTP, database or browser"}

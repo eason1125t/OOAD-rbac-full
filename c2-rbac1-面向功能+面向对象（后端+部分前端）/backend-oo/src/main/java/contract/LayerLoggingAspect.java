@@ -19,9 +19,6 @@ public class LayerLoggingAspect {
     @Around("execution(public * *(..))"
             + " && (@within(org.springframework.web.bind.annotation.RestController)"
             + " || @within(org.springframework.stereotype.Service)"
-            + " || execution(* authentication.SessionAuthentication.verify(..))"
-            + " || execution(* authentication.SessionAuthentication.start(..))"
-            + " || execution(* authentication.SessionAuthentication.end(..))"
             + " || (execution(* org.springframework.boot.ApplicationRunner+.run(..))"
             + " && (within(initialization..*) || within(authentication..*))))")
     public Object trace(ProceedingJoinPoint invocation) throws Throwable {

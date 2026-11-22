@@ -1,0 +1,48 @@
+{
+  "edition": "func",
+  "startedUtc": "2026-11-21T14:56:02.432316+00:00",
+  "completedUtc": "2026-11-21T14:58:06.185957+00:00",
+  "exitCode": 0,
+  "gitHead": "d93fab384431dbdf3c206868dfb0bfb4d8c10474",
+  "sourceSha256": "beb0610cbe12167b3f6ae34f835106342438355893a15eb9e345b56cc0093484",
+  "tests": {
+    "tests": 192,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "coverage": {
+    "INSTRUCTION": {
+      "missed": 495,
+      "covered": 10552,
+      "ratio": 0.955191454693582
+    },
+    "BRANCH": {
+      "missed": 128,
+      "covered": 641,
+      "ratio": 0.8335500650195059
+    },
+    "LINE": {
+      "missed": 84,
+      "covered": 1712,
+      "ratio": 0.9532293986636972
+    },
+    "COMPLEXITY": {
+      "missed": 137,
+      "covered": 749,
+      "ratio": 0.845372460496614
+    },
+    "METHOD": {
+      "missed": 23,
+      "covered": 475,
+      "ratio": 0.9538152610441767
+    },
+    "CLASS": {
+      "missed": 2,
+      "covered": 130,
+      "ratio": 0.9848484848484849
+    }
+  },
+  "jwtTestPublicKeySha256": "abeafeecb680e81a50d4742875a826844f50535e742184a3467b400e1769cf47",
+  "authNamespace": "rbac1:func:jwt-test:6imox11s"
+}

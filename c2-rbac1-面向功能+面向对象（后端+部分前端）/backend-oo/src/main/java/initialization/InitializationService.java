@@ -9,6 +9,7 @@ import assignment.OrganizationPermissionRepository;
 import assignment.RolePermission;
 import assignment.RolePermissionRepository;
 import authorization.AdministratorScope;
+import authorization.ApiOperationRegistry;
 import authorization.AdministratorScopeRepository;
 import initialization.WorkbookReader.SourceRow;
 import java.io.IOException;
@@ -49,6 +50,7 @@ import simulation.SimulatedRequestRepository;
 @RequiredArgsConstructor
 public class InitializationService {
     private final WorkbookReader reader;
+    private final ApiOperationRegistry apiOperations;
     private final OrganizationRepository organizations;
     private final EmployeeRepository employees;
     private final CatalogEntryRepository catalog;
@@ -223,6 +225,7 @@ public class InitializationService {
                 "engineering-requester", "engineering-inherited-approver"));
         createDemoReadRole("demo-finance-app", List.of("company-a-admin", "finance-employee"));
         createDemoReadRole("demo-company-b-app", List.of("company-b-employee"));
+        apiOperations.initializeDemoMappings();
     }
 
     /** 补齐演示组织、员工、系统和初始授权；已有用户策略不在此重置。 */
