@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "commitMessage": "C2收尾++",
+  "scope": "design explanation and entry references; remove 29 already absent archive documents",
+  "localLinks": 1065,
+  "brokenLinks": 0,
+  "embeddedImages": 16,
+  "diagramToolTests": 9,
+  "identityContract": "passed",
+  "sourceAndJarCheck": "passed; no production code change",
+  "fullBusinessSuiteRerun": false
+}

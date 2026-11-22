@@ -149,4 +149,4 @@ sh 部署/mysql-backup.sh 明确的mysql容器ID /安全目录/c2-更新前.sql
 
 现有运行JAR在两版target/jwt-final。新检出机器先安装CloneFactory，再分别执行`mvn -f backend-func/pom.xml -Dmaven.test.skip=true -Drbac.build.directory=target/jwt-final package`及对象版同等命令；前端执行npm ci。此打包跳过测试，不算验收通过。之后配置私有环境运行local.ps1，不能复制个人凭据。
 
-独立容器复验命令集中在测试说明；它新建专用Compose项目、构建同一源码，结束仅停止该批容器，保留卷与证据，不操作课程Swarm。旧验收容器已清理，8个测试卷按用户决定保留。历史说明放部署/归档，不再另行维护当前步骤。
+独立容器复验命令集中在测试说明；它新建专用Compose项目、构建同一源码，结束仅停止该批容器，保留卷与证据，不操作课程Swarm。旧验收容器已清理，8个测试卷按用户决定保留。旧部署说明从最新目录移除，历史版本通过Git查阅，不再另行维护当前步骤。

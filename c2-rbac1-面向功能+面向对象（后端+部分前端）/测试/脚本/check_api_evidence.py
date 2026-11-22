@@ -42,7 +42,7 @@ def main():
         results[edition] = {"sourceSha256": digest.hexdigest(), "productionJavaFiles": sources,
                             "tests": record["tests"], "commonHttpTests": 65, "migrationTests": 2,
                             "jarBytes": jar.stat().st_size}
-    documents = [ROOT / "测试/归档/API权限映射验证.md", ROOT / "docs/design/数据库逻辑设计.md"]
+    documents = [ROOT / "测试/README.md", ROOT / "docs/design/数据库逻辑设计.md"]
     for edition in ["func", "oo"]:
         backend = ROOT / ("backend-" + edition)
         documents += [backend / "docs/模块索引.md", backend / "docs/源码索引.md"]

@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "document": "docs/数据库与关键图件设计说明.md",
+  "embeddedPngImages": 16,
+  "checkedLocalLinks": 47,
+  "applicationTables": 17,
+  "migrationsPerEdition": 9,
+  "tableNamesMatchBothEditions": true,
+  "chenDiagramScope": "existing role inheritance concept model; explicitly not a full database ER",
+  "businessCodeChanged": false,
+  "documentSha256": "d69df53cfe1d2ec042291a04ba2e1210948b99cca18cfb007ccf2635a80b8930",
+  "existingArchiveDeletions": "left untouched; no commit or push performed"
+}
